@@ -595,6 +595,10 @@ var QueryInputDialog = (function () {
                 target: { horizontal: 'right', vertical: 'middle' },
                 stem: { horizontal: 'left', vertical: 'top' }
             },
+            animation: {
+                effect: 'Fade',
+                speed: 500
+            },
             isBalloon: true,
             showShadow: true,
             showRoundedCorner: true,
@@ -648,6 +652,10 @@ var QueryInputDialog = (function () {
                         xValue: 10,
                         yValue: 100
                     }
+                },
+                animation: {
+                    effect: 'Fade',
+                    speed: 500
                 },
                 isBalloon: false,
                 showShadow: true,

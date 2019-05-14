@@ -195,6 +195,10 @@ var ODATADataSource = (function () {
                         yValue: 100
                     }
                 },
+                animation: {
+                    effect: 'Fade',
+                    speed: 500
+                },
                 isBalloon: false,
                 showShadow: true,
                 showRoundedCorner: true,
