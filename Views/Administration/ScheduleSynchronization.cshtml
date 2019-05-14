@@ -65,7 +65,10 @@
                             @Html.Label("every-x-hours", "[[[Every]]]", new { @class = "pointer normal-font notransition" })
                         </div>
                         <div class="clspad pull-left top-margin"><input type="text" class="time-format pull-left" id="every-x-hours-value" /></div>
-                        <div class="clspad pull-left"><label for="every-x-hours" class="pointer normal-font pull-left" id="time-format">HH:MM</label></div>                       
+                        <div class="clspad pull-left"><label for="every-x-hours" class="pointer normal-font pull-left" id="time-format">HH:MM</label></div>  
+                        <div>
+                            <span class="frequency-error">[[[Please enter minimum 10 minutes]]]</span>
+                        </div>
                     </div>
                 </div>
             </div>

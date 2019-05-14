@@ -96,6 +96,7 @@
     <Color>Color</Color>
     <ModifiedDate>ModifiedDate</ModifiedDate>
     <IsActive>IsActive</IsActive>
+    <DomainId>DomainId</DomainId>
   </DB_Group>
   <DB_GroupPermission>
     <DB_TableName>GroupPermission</DB_TableName>
@@ -310,6 +311,10 @@
     <ExportTypeId>ExportTypeId</ExportTypeId>
     <IsEnabled>IsEnabled</IsEnabled>
 	  <IsParameterEnabled>IsParameterEnabled</IsParameterEnabled>
+    <IsSaveAsFile>IsSaveAsFile</IsSaveAsFile>
+	  <IsSendAsMail>IsSendAsMail</IsSendAsMail>
+	  <ReportCount>ReportCount</ReportCount>
+	  <ExportPath>ExportPath</ExportPath>
     <CreatedById>CreatedById</CreatedById>
     <ModifiedById>ModifiedById</ModifiedById>
     <CreatedDate>CreatedDate</CreatedDate>
@@ -411,6 +416,29 @@
     <ModifiedDate>ModifiedDate</ModifiedDate>
     <IsActive>IsActive</IsActive>
   </DB_SystemSettings>
+  <DB_UmsCredential>
+    <DB_TableName>UmsCredential</DB_TableName>
+    <Id>Id</Id>
+    <UmsUrl>UmsUrl</UmsUrl>
+    <ClientId>ClientId</ClientId>
+    <ClientSecret>ClientSecret</ClientSecret>
+    <ModifiedById>ModifiedById</ModifiedById>
+    <IsActive>IsActive</IsActive>
+  </DB_UmsCredential>
+  <DB_UmsUser>
+    <DB_TableName>UmsUser</DB_TableName>
+    <Id>Id</Id>
+    <UmsUserId>UmsUserId</UmsUserId>
+    <UserId>UserId</UserId>
+    <IsActive>IsActive</IsActive>
+  </DB_UmsUser>
+  <DB_UmsGroup>
+    <DB_TableName>UmsGroup</DB_TableName>
+    <Id>Id</Id>
+    <UmsGroupId>UmsGroupId</UmsGroupId>
+    <GroupId>GroupId</GroupId>
+    <IsActive>IsActive</IsActive>
+  </DB_UmsGroup>
   <DB_User>
     <DB_TableName>User</DB_TableName>
     <Id>Id</Id>
@@ -434,6 +462,7 @@
     <IsActivated>IsActivated</IsActivated>
     <IsActive>IsActive</IsActive>
     <IsDeleted>IsDeleted</IsDeleted>
+    <DomainId>DomainId</DomainId>
   </DB_User>
   <DB_UserGroup>
     <DB_TableName>UserGroup</DB_TableName>

@@ -9,36 +9,49 @@
 			<Name>Territory Sales</Name>
 			<Description>This sample showcases the Tablix with Row Grouping by sales region and drill down (expand/collapse) the group details.</Description>
 			<FileName>Territory Sales.rdl</FileName>
+			<SortOrder>2</SortOrder>
 		  </Report>
 		  <Report>
 			<Name>Sales Order Detail</Name>
 			<Description>This sample showcases the sales order information based on order id.</Description>
 			<FileName>Sales Order Detail.rdl</FileName>
+			<SortOrder>3</SortOrder>
 		  </Report>
 		  <Report>
 			<Name>Invoice</Name>
 			<Description>This report showcases the Report Parameters, Expressions, Textbox and Tablix Report Item capabilities of the ReportViewer.</Description>
 			<FileName>Invoice.rdl</FileName>
+			<SortOrder>4</SortOrder>
 		  </Report>
 		  <Report>
 			<Name>Grouping Aggregate</Name>
 			<Description>This sample showcases the sorting, group total support in Tablix report item.</Description>
 			<FileName>Grouping Aggregate.rdl</FileName>
+			<SortOrder>5</SortOrder>
 		  </Report>
 		  <Report>
 			<Name>Conditional Row Formatting</Name>
 			<Description>This sample showcases the support to view shared dataset and Tablix rows with conditional formatting.</Description>
 			<FileName>Conditional Row Formatting.rdl</FileName>
+			<SortOrder>6</SortOrder>
 		  </Report>
 		  <Report>
 			<Name>Company Sales</Name>
 			<Description>This sample showcases the Sales data by year with grouping.</Description>
 			<FileName>Company Sales.rdl</FileName>
+			<SortOrder>7</SortOrder>
 		  </Report>
 		  <Report>
 			<Name>Product Line Sales</Name>
 			<Description>This sample showcases the cascading parameters support by listing the sub category products based on product category.</Description>
 			<FileName>Product Line Sales.rdl</FileName>
+			<SortOrder>8</SortOrder>
+		  </Report>
+		  <Report>
+			<Name>Sales Report</Name>
+			<Description>This report showcases the complete details of sales orders in Adventure Works.</Description>
+			<FileName>Sales Report.rdl</FileName>
+			<SortOrder>1</SortOrder>
 		  </Report>
 		</Reports>		
 	</Category>
@@ -50,36 +63,43 @@
 			<Name>Website Visitor Analysis (Random data)</Name>
 			<Description>This sample analyze the user behavior for a fictitious e-commerce website.</Description>
 			<FileName>Website Visitor Analysis (Random data).rdl</FileName>
+			<SortOrder>1</SortOrder>
 		  </Report>
 		   <Report>
 			<Name>Personal Expense Analysis (Random data)</Name>
 			<Description>This sample showcases the spending patterns of an individual.</Description>
 			<FileName>Personal Expense Analysis (Random data).rdl</FileName>
+			<SortOrder>2</SortOrder>
 		  </Report>
 		   <Report>
 			<Name>Tickets Sales Analysis (Random data)</Name>
 			<Description>This sample analyze the tickets sold in theater.</Description>
 			<FileName>Tickets Sales Analysis (Random data).rdl</FileName>
+			<SortOrder>3</SortOrder>
 		  </Report>
 		   <Report>
 			<Name>Northwind Products and Suppliers Report</Name>
 			<Description>This sample showcases the sales performance of different products.</Description>
 			<FileName>Northwind Products and Suppliers Report.rdl</FileName>
+			<SortOrder>4</SortOrder>
 		  </Report>
 		   <Report>
 			<Name>Patient Experience Analysis (Random data)</Name>
 			<Description>This sample analyze the patient satisfaction trends during hospital visits.</Description>
 			<FileName>Patient Experience Analysis (Random data).rdl</FileName>
+			<SortOrder>5</SortOrder>
 		  </Report>
 		   <Report>
 			<Name>Customer Support representative analysis (Random data)</Name>
 			<Description>This sample analyze the efficiency of a customer support representative to use as a child report for Customer Support Analysis</Description>
 			<FileName>Customer Support representative analysis (Random data).rdl</FileName>
+			<SortOrder>6</SortOrder>
 		  </Report>
 		   <Report>
 			<Name>Customer Support Analysis (Random data)</Name>
 			<Description>This sample analyze the efficiency of customer support.</Description>
 			<FileName>Customer Support Analysis (Random data).rdl</FileName>
+			<SortOrder>7</SortOrder>
 		  </Report>	 
 		</Reports>
 	</Category>	  

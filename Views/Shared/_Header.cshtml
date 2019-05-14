@@ -3,12 +3,13 @@
     var emailAddress = HttpContext.Current.Session["emailaddress"] != null ? HttpContext.Current.Session["emailaddress"].ToString() : string.Empty;
     var notificationCount = new NotificationManagement().GetUnreadNotificationCount();
     var appLogo = GlobalAppSettings.SystemSettings.StorageType == (int)StorageType.AzureBlob ?
-                    GlobalAppSettings.AzureBlob.AzureBlobStorageUri + "/" + GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName + "/" + GlobalAppSettings.GetStorageMode() + "/Content/Images/Application/" + GlobalAppSettings.SystemSettings.MainScreenLogo :
+                    GlobalAppSettings.AzureBlob.AzureBlobStorageUri.TrimEnd('/') + "/" + GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName + "/" + GlobalAppSettings.GetStorageMode() + "/Content/Images/Application/" + GlobalAppSettings.SystemSettings.MainScreenLogo :
                     Url.Content("~/Content/Images/Application/" + GlobalAppSettings.SystemSettings.MainScreenLogo);
     var defaultAppLogo = Url.Content("~/Content/Images/Application/Main_Logo.png");
 
     var requestUrl = HttpContext.Current.Request.Url.ToString();
     var absolutePath = HttpContext.Current.Request.Url.AbsolutePath;
+    var umsUrl = GlobalAppSettings.SystemSettings.UmsUrl;
 }
 
 <script>
@@ -36,7 +37,7 @@
         <div id="account-profile" class="dropdown no-padding">
             <span class="dropdown-toggle" data-toggle="dropdown">
                 <span class="profile-picture">
-                    <img alt="Profile Picture" src="@Url.Content("~/User/Avatar?Username=" + ((HttpContext.Current.User as ServerPrincipal).UserId) + "&ImageSize=64")" />
+                    <img alt="Profile Picture" src="@umsUrl/User/Avatar?Username=@((HttpContext.Current.User as ServerPrincipal).UserName)&ImageSize=64" />
                 </span>
             </span>
             <div class="dropdown-menu" id="profile-info-section" role="menu">
@@ -45,7 +46,7 @@
                         <tbody>
                             <tr>
                                 <td class="profile-picture-area">
-                                    <img alt="Profile Picture" src="@Url.Content("~/User/Avatar?Username=" + ((HttpContext.Current.User as ServerPrincipal).UserId) + "&ImageSize=64")" />
+                                    <img alt="Profile Picture" src="@umsUrl/User/Avatar?Username=@((HttpContext.Current.User as ServerPrincipal).UserName)&ImageSize=64" />
                                 </td>
                                 <td class="profile-info-area">
                                     <ul class="no-margin no-padding">

@@ -1,8 +1,13 @@
 /**
  * Default [en-US] localization for report viewer.
  */
+//ejDatePicker
+ej.DatePicker.Locale['en-US'] = {
+    watermarkText: "Select date",
+    buttonText: 'Today'
+};
 
-ej.ReportViewer.Locale = ej.ReportViewer.Locale || {};
+//ejReportViewer
 ej.ReportViewer.Locale["en-US"] = {
     toolbar: {
         print: {
@@ -111,7 +116,16 @@ ej.ReportViewer.Locale["en-US"] = {
         startMessage: 'Report Viewer encountered some problems loading this report. Please',
         middleMessage: ' Click here',
         endMessage: 'to see the details of the error',
-        closeMessage: 'Close this message'
+        closeMessage: 'Close this message',
+        exportAjaxFailureMsg: 'Unable to export the document due to failure of connecting Report Service.',
+        printAjaxFailureMsg: 'Unable to print the document due to failure of connecting Report Service.',
+        reportLoadAjaxFailureMsg: 'Unable to progress the Report action due to failure of connecting Report Service.',
+    },
+    progressMessage: {
+        exportLoadingMessage: 'Preparing exporting document... Please wait...',
+        printLoadingMessage: 'Preparing print data… Please wait...',
+        printPreparationMessage: 'Preparing print data... {0}% completed... Please wait...',
+        exportPreparationMessage: 'Preparing exporting document... {0}% completed... Please wait...',
     },
     alertMessage: {
         close: 'Close',
@@ -134,6 +148,6 @@ ej.ReportViewer.Locale["en-US"] = {
         RVERR0012: 'The value provided for the report parameter {parameterprompt} is not valid for its type.'
     },
     selectAll: 'Select All',
-    viewButton: 'View Report'
+    viewButton: 'View Report',
+    parameterProcessingMessage: 'Loading dependent parameters...'
 };
-                

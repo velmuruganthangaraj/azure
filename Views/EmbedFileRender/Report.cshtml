@@ -18,6 +18,7 @@
     var isMarkItemsPublic = GlobalAppSettings.SystemSettings.IsMarkItemsPublic;
     var publicreport = ViewBag.IsPublic;
     var language = Context.GetPrincipalAppLanguageForRequest().GetCultureInfo();
+    var canRead = ViewBag.CanRead;
 }
 <html style="height: 100%">
 <head>
@@ -32,7 +33,7 @@
     <script src="~/Scripts/Localization/ReportViewer/ej.localetexts.@string.Concat(language,".js")"></script>
 
     <script>
-
+        var filterParameters = JSON.parse('@Html.Raw(ViewBag.FilterParameters)');
         var itemViewShareIframeUrl = "@Url.Action("shareItemView", "items")";
         var getViewParameterUrl = "@Url.Action("GetReportViewParameter", "ReportViews")";
         var addViewUrl = "@Url.Action("onfiltersave", "ReportViews")";
@@ -72,66 +73,48 @@
     <title>@ViewBag.ItemName - [[[View Report]]] - @GlobalAppSettings.SystemSettings.OrganizationName</title>
     @if (GlobalAppSettings.SystemSettings.StorageType == (int)StorageType.AzureBlob)
     {
-        <link rel="icon" href="@GlobalAppSettings.AzureBlob.AzureBlobStorageUri/@GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName/@GlobalAppSettings.GetStorageMode()/Content/Images/Application/@GlobalAppSettings.SystemSettings.FavIcon" onerror="if (this.href != '~/Content/Images/Application/Favicon.png') this.href = '~/Content/Images/Application/Favicon.png';" />
+        <link rel="icon" href="@GlobalAppSettings.AzureBlob.AzureBlobStorageUri.TrimEnd('/')/@GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName/@GlobalAppSettings.GetStorageMode()/Content/Images/Application/@GlobalAppSettings.SystemSettings.FavIcon" onerror="if (this.href != '~/Content/Images/Application/Favicon.png') this.href = '~/Content/Images/Application/Favicon.png';" />
     }
     else
     {
         <link rel="icon" href="@Url.Content("~/Content/Images/Application/" +GlobalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '@Url.Content("~/Content/Images/Application/Favicon.png")') this.href = '@Url.Content("~/Content/Images/Application/Favicon.png")';" />
     }
-   @{    
-       if (HttpContext.Current.Request.QueryString["hascomments"] != null && HttpContext.Current.Request.QueryString["hascomments"].ToLower() == "true")
-       {
-           enableComment = "true";
-       }
-       else
-       {
-           enableComment = "false";
-       }
-
-       if (HttpContext.Current.Request.QueryString["hasviews"] != null && HttpContext.Current.Request.QueryString["hasviews"].ToLower() == "true")
-       {
-           enableView = "true";
-       }
-       else
-       {
-           enableView = "false";
-       }
-       if (!HttpContext.Current.Request.IsAuthenticated && isPublic == "true")
-       {
-           enableComment = "false";
-           enableView = "false";
-           isAuthenticated = "false";
-       }
-       else if (HttpContext.Current.Request.IsAuthenticated)
-       {
-           userId = (HttpContext.Current.User as ServerPrincipal).UserId;
-           userName = (HttpContext.Current.User as ServerPrincipal).UserName;
-           isAuthenticated = "true";
-       }
-       else
-       {
-           isAuthenticated = "false";
-       }
-    }
-
     @{
-        if (enableComment == "true")
+        if (HttpContext.Current.Request.QueryString["hascomments"] != null && HttpContext.Current.Request.QueryString["hascomments"].ToLower() == "true")
         {
-            <script src="~/signalr/hubs"></script>
-            @Scripts.Render("~/scripts/signalr-bundle")
-            <script>
-                $(function () {
-                    // Reference the auto-generated proxy for the hub.
-                    var userActivity = $.connection.signalrHub;
+            enableComment = "true";
+        }
+        else
+        {
+            enableComment = "false";
+        }
 
-                    userActivity.client.connection = function () {
-                    };
-
-                    SJ.iwc.SignalR.start();
-                });
-            </script>
+        if (HttpContext.Current.Request.QueryString["hasviews"] != null && HttpContext.Current.Request.QueryString["hasviews"].ToLower() == "true")
+        {
+            enableView = "true";
+        }
+        else
+        {
+            enableView = "false";
+        }
+        if (!HttpContext.Current.Request.IsAuthenticated && isPublic == "true")
+        {
+            enableComment = "false";
+            enableView = "false";
+            isAuthenticated = "false";
+        }
+        else if (HttpContext.Current.Request.IsAuthenticated)
+        {
+            userId = (HttpContext.Current.User as ServerPrincipal).UserId;
+            userName = (HttpContext.Current.User as ServerPrincipal).UserName;
+            isAuthenticated = "true";
+        }
+        else
+        {
+            isAuthenticated = "false";
         }
     }
+
 </head>
 <body style="overflow: hidden; position: static; margin: 0; padding: 0; width: 100%; height: 100%">
     <div id="sync_report_viewer" style="height: 100%; width: 100%; padding-right: 26px" class="sync_report"></div>
@@ -201,11 +184,11 @@
             </div>
         </nav>
     }
-    
-    @Html.Partial("_ReportViews") 
+
+    @Html.Partial("_ReportViews")
     @Html.Partial("../Error/EmbedReportError")
-   
-    
+
+
     <input id="comment_Type" type="hidden" data-item-type="report">
     <input id="report_Comment" type="hidden" data-item-id="@ViewBag.ItemId.Split('/')[0]">
     <input id="dashboard_Comment" type="hidden" data-item-id="@Guid.Empty">
@@ -213,8 +196,8 @@
         <iframe id="commentModuleContainer_iframe" class="comment-popup-frame" src="@Url.Action("CommentPartialView", "Comments")?itemId=@ViewBag.ItemId.Split('/')[0]" style="height: 100%; width: 100%;"></iframe>
     </div>
     <iframe id="delete_popup_iframe" class="comment-popup-frame displayNone" src="@Url.Action("CommentDeletePartialView", "Comments")" allowtransparency="true" style="position: absolute;"></iframe>
-    
-   
+
+
     <div id="viewShare_popup" class="col-md-12 DisplayNone">
         <div id="sharepopup_wrapper_WaitingPopup" class="e-waitpopup-sharepopup">
             <span class="e-image" style="top: 161px;"></span>
@@ -240,7 +223,7 @@
 @if (!HttpContext.Current.Request.IsAuthenticated)
 {
     <script>
-        $(document).ready(function () {                    
+        $(document).ready(function () {
             if (externalLogin != null && externalLogin.toLowerCase() == "windowsad" && sso != null && sso.toLowerCase() == "true") {
                 $.ajax({
                     type: "GET",
@@ -268,7 +251,7 @@
                                 enableComment = "false";
                                 enableView = "false";
                                 ReportViewer(viewToken);
-                            } 
+                            }
                             else {
                                 window.location.href = "@baseUrl"+"/login";
                             }
@@ -280,12 +263,13 @@
 
         var enableComment = "@enableComment";
         var enableView = "@enableView";
+
         $(document).ready(function () {
             window.addEventListener('message', receiveMessage, false);
-            function receiveMessage(event) {                
-                if(event.data){
+            function receiveMessage(event) {
+                if (event.data) {
                     var messageData = JSON.parse(event.data);
-                    if(messageData["access_token"] != ""){
+                    if (messageData["access_token"] != "") {
                         var embeddedToken = messageData["access_token"];
                         var itemLoc = "@Html.Raw(itemLocation)";
                         $.ajax({
@@ -295,26 +279,26 @@
                                 token: embeddedToken,
                                 itemPath: itemLoc
                             },
-                            success: function(obj) {
-                                if(obj.data != null && obj.data.Status == true){
+                            success: function (obj) {
+                                if (obj.data != null && obj.data.Status == true) {
                                     userId = obj.data.UserId;
                                     userName = obj.data.UserName;
                                     isAuthenticated = "true";
                                     document.getElementById('commentModuleContainer_iframe').contentWindow.location.reload(true)
                                     let params = (new URL(document.location)).searchParams;
                                     let hasviews = params.get("hasviews");
-                                    if(hasviews.toLowerCase() == "true"){
+                                    if (hasviews.toLowerCase() == "true") {
                                         enableView = "true";
                                     }
                                     $("#save-view, #reset-view").attr("disabled", false);
                                     $("[data-toggle=tooltip]").tooltip("enable");
-                                    
+
                                     let hascomments = params.get("hascomments");
-                                    if(hascomments.toLowerCase() == "true"){
+                                    if (hascomments.toLowerCase() == "true") {
                                         enableComment = "true";
                                         commentSection();
-                                    }                                    
-                                    if($("#sync_report_viewer").data("ejReportViewer") != null){
+                                    }
+                                    if ($("#sync_report_viewer").data("ejReportViewer") != null) {
                                         if (enableView.toString().toLowerCase() == "true") {
                                             $("#new-save,#saved-filter-update,#saved-filter-Saveas,#save-filter,#filter_name").removeClass("pointer-events");
                                             $("#new-save,#saved-filter-update,#saved-filter-Saveas,#save-filter,#filter_name").css("opacity", 1);
@@ -325,82 +309,85 @@
                                             $("#report-view-toogle").css("opacity", 0);
                                         }
                                     }
-                                    else{
+                                    else {
 
                                         reportToken = "bearer " + embeddedToken;
                                         ReportViewer(reportToken);
                                     }
                                 }
-                                else{
+                                else {
                                     if ("@isPublic" == "true" && isAuthenticated.toLowerCase() == "false") {
-                                        ReportViewer(viewToken);
-                                    } 
-                                    else{
-                                        if(obj.data.Status == false && obj.data.IsAuthorizedItem && "@isMarkItemsPublic"=="True" &&"@publicreport"=="false")
-                                        {
-                                            if($("#serverauthentication").css("display")== "block")
-                                            {
-                                                $("#serverauthentication").css("display","none")
-                                                $("#sync_report_viewer").css("display","none");
-                                                $("#report-view-toogle").css("display","none");
-                                                
-                                                $("#authorizationError").css("display","block");
-                                            }
-
+                                        if ("@isMarkItemsPublic" == "True") {
+                                            ReportViewer(viewToken);
                                         }
-
-                                        else if(obj.data.Status == false && obj.data.IsAuthorizedItem && "@isMarkItemsPublic"=="False" &&"@publicreport"=="false")
-                                        {
-                                            if($("#serverauthentication").css("display")== "block")
-                                            {
-                                                $("#serverauthentication").css("display","none")
-                                                $("#sync_report_viewer").css("display","none");
-                                                $("#report-view-toogle").css("display","none");
-                                                
-                                                $("#authorizationError").css("display","block");
-                                            }
-
+                                        else {
+                                            $("#serverauthentication").css("display", "none");
+                                            $("#sync_report_viewer").css("display", "none");
+                                            $("#report-view-toogle").css("display", "none");
+                                            $("#authorizationError").css("display", "none");
+                                            $("#renderError").css("display", "none");
+                                            $("#renderReportError").css("display", "block");
                                         }
-                                        else if(obj.data.Status == false && obj.data.IsAuthorizedItem && "@isMarkItemsPublic"=="False" &&"@publicreport"=="true")
-                                        {
-                                            if( $("#renderReportError").css("display")=="block")
-                                            {
-                                                $("#renderReportError").css("display","none")
-                                                $("#sync_report_viewer").css("display","none");
-                                                $("#report-view-toogle").css("display","none");
-                                                $("#renderError").css("display","block");
+                                    }
+
+                                    else {
+                                        if (obj.data.Status == false && obj.data.IsAuthorizedItem && "@isMarkItemsPublic" == "True" && "@publicreport" == "false") {
+                                              $("#serverauthentication").css("display", "block");
+                                                $("#sync_report_viewer").css("display", "none");
+                                                $("#report-view-toogle").css("display", "none");
+                                                $("#renderError").css("display", "none");
+                                                $("#authorizationError").css("display", "none");
                                             }
+
+                                        else if (obj.data.Status == false && obj.data.IsAuthorizedItem && "@isMarkItemsPublic" == "False" && "@publicreport" == "false") {
+                                               $("#serverauthentication").css("display", "block");
+                                                $("#sync_report_viewer").css("display", "none");
+                                                $("#report-view-toogle").css("display", "none");
+                                                $("#renderError").css("display", "none");
+                                                $("#authorizationError").css("display", "none");
+                                            }
+                                        else if (obj.data.Status == false && obj.data.IsAuthorizedItem && "@isMarkItemsPublic" == "False" && "@publicreport" == "true") {
+                                                $("#renderReportError").css("display", "none");
+                                                $("#sync_report_viewer").css("display", "none");
+                                                $("#report-view-toogle").css("display", "none");
+                                                $("#renderError").css("display", "none")
+                                                $("#renderReportError").css("display", "block");                                      
                                         }
                                     }
                                 }
-                             }
+                            }
                         });
                     }
-                    else{
+                    else {
                         reportToken = viewToken;
                     }
                 }
-            }
-            if("@isMarkItemsPublic"=="False" &&"@publicreport"=="false")
-            {
+                else {
+                    if ("@isMarkItemsPublic" == "False" && "@publicreport" == "false") {
 
-                $("#sync_report_viewer").css("display","none");
-                $("#report-view-toogle").css("display","none");
-                $("#serverauthentication").css("display","block");
+                        $("#sync_report_viewer").css("display", "none");
+                        $("#report-view-toogle").css("display", "none");
+                        $("#renderError").css("display", "none");
+                        $("#authorizationError").css("display", "none");
+                        $("#serverauthentication").css("display", "block");
 
-            }
-            else if("@isMarkItemsPublic"=="True" &&"@publicreport"=="false")
-            {
-                $("#sync_report_viewer").css("display","none");
-                $("#report-view-toogle").css("display","none");
-                $("#serverauthentication").css("display","block");
+                    }
+                    else if ("@isMarkItemsPublic" == "True" && "@publicreport" == "false") {
+                        $("#sync_report_viewer").css("display", "none");
+                        $("#report-view-toogle").css("display", "none");
+                        $("#renderError").css("display", "none");
+                        $("#authorizationError").css("display", "none");
+                        $("#serverauthentication").css("display", "block");
 
-            }
-            else if("@isMarkItemsPublic"=="False" &&"@publicreport"=="true")
-            {
-                $("#sync_report_viewer").css("display","none");
-                $("#report-view-toogle").css("display","none");
-                $("#renderReportError").css("display","block");
+                    }
+                    else if ("@isMarkItemsPublic" == "False" && "@publicreport" == "true") {
+                        $("#sync_report_viewer").css("display", "none");
+                        $("#report-view-toogle").css("display", "none");
+                        $("#renderError").css("display", "none");
+                        $("#authorizationError").css("display", "none");
+                        $("#renderReportError").css("display", "block");
+                    }
+                }
             }
         });
     </script>
@@ -537,9 +524,24 @@ else
         if ($("#is_mobile").val() == "true") {
             $("#sync_report_viewer").css("padding-right", "");
         }
-            if("@isAuthenticated" == "true"){
-                ReportViewer(viewToken);
-            }
+        if ("@isAuthenticated" == "true" && "@publicreport" == "false" && "@canRead" == "False") {
+            $("#serverauthentication").css("display", "none")
+            $("#sync_report_viewer").css("display", "none");
+            $("#report-view-toogle").css("display", "none");
+
+            $("#authorizationError").css("display", "block");
+        }
+        else if ("@isAuthenticated" == "true" && "@publicreport" == "true" && "@canRead" == "False" && "@isMarkItemsPublic" == "False")
+        {
+            $("#serverauthentication").css("display", "none")
+            $("#sync_report_viewer").css("display", "none");
+            $("#report-view-toogle").css("display", "none");
+
+            $("#renderError").css("display", "block");
+        }       
+        else if("@isAuthenticated" == "true"){
+            ReportViewer(viewToken);
+        }
                 reportviewerObj = $("#sync_report_viewer").data("ejReportViewer");
                 window.onresize = SavedViewHeight;
         });
@@ -588,7 +590,8 @@ else
                     renderingComplete: 'filterView',
                     isResponsive: true,
                     reportPrint: "onReportPrint",
-                    locale: '@language'
+                    locale: '@language',
+                    parameters: filterParameters
                 });
             if ($("#sync_report_viewer_toolicon_com").length < 1) {
                if ("@enableComment" == "true") {

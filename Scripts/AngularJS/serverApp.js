@@ -20,15 +20,21 @@ serverApp.directive("navItem", function () {
 });
 
 serverApp.service("ajaxService", ["$http", "$q", function ($http, $q) {
-
+  
+    var canceller,isSending = false;
     return ({
         getData: function (requestUrl, data) {
+            if (isSending) {
+                canceller.resolve();
+            }
+            isSending = true;
+            canceller = $q.defer();
             var request = $http({
                 method: "post",
                 url: requestUrl,
+                timeout: canceller.promise,
                 data: data
             });
-
             return (request.then(handleSuccess, handleError));
         },
 
@@ -41,6 +47,12 @@ serverApp.service("ajaxService", ["$http", "$q", function ($http, $q) {
             });
 
             return (request.then(handleSuccess, handleError));
+        },
+
+        cancelRequest: function () {
+            if (isSending) {
+                canceller.resolve();
+            }
         }
     });
 

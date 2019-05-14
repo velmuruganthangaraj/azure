@@ -1,14 +1,13 @@
 ﻿@{
     var userDetail = (User)ViewBag.UserDetail;
     var isAduser = ViewBag.IsAdUser;
-    var showResendButton = (userDetail.Status.ToString() == "InActive" && DateTime.UtcNow < userDetail.ActivationExpirationDate && !isAduser && GlobalAppSettings.SystemSettings.ActivationType == ActivationType.EmailActivation) ? "show" : "hide";
-    var showActivationButton = (userDetail.Status.ToString() == "InActive" && !isAduser && GlobalAppSettings.SystemSettings.ActivationType != ActivationType.EmailActivation) ? "show" : "hide";
-    var showDropdown = (userDetail.Status.ToString() == "Active" && userDetail.UserName.ToLower() != ViewBag.LoggedUser.ToLower() && !ViewBag.isAdUser) ? "show" : "hide";
+    var showDropdown = (userDetail.Status.ToString() == "Active" && userDetail.UserName.ToLower() != ViewBag.LoggedUser.ToLower()) ? "show" : "hide";
     var showActive = (userDetail.Status.ToString() == "Active" && userDetail.UserName.ToLower() == ViewBag.LoggedUser.ToLower()) ? "show" : "hide";
-    var showActiveUser = (userDetail.Status.ToString() == "Active" && ViewBag.IsAdUser) ? "show" : "hide";
+    var showActiveUser = (userDetail.Status.ToString() == "Active") ? "show" : "hide";
     var showInactive = (showDropdown == "hide" && showActive == "hide" && showActiveUser == "hide") ? "show" : "hide";
     var groupList = ViewBag.GroupList;
     ViewBag.Title = GlobalAppSettings.SystemSettings.OrganizationName + " - [[[User Profile]]]";
+    var umsUrl = GlobalAppSettings.SystemSettings.UmsUrl;
 }
 
 @section styles{
@@ -31,7 +30,7 @@
         var rootBaseUrl = "@Url.Content("~/")";
         if (rootBaseUrl.toLowerCase() == "/")
             rootBaseUrl = "";
-        var avatarUrl = "@Url.Action("Avatar", "UserManagement")";
+        var avatarUrl = "@umsUrl" + "/user/avatar";
         var deleteavatarUrl = "@Url.Action("deleteavatar", "User")";
         var getdefaultavatarUrl = "@Url.Action("getdefaultavatar", "User")";
         $(document).ready(function () {
@@ -91,10 +90,6 @@
                         </hgroup>
                     </div>
                     <div class="col-md-6 col-xs-12 col-sm-6 col-xs-12 no-padding">
-                        @if (userDetail.UserName.ToLower() != ViewBag.LoggedUser.ToLower())
-                        {
-                            <input type="button" id="edit-profile-delete" name="Cancel" class="critical-action-button user-delete pull-right" title="" value="[[[Delete User]]]" onclick="onDeleteDialogOpen();" />
-                        }
                         <a href="@Url.Action("userpermission", "permission")?userId=@userDetail.UserId" title="">
                             <input type="button" class="link-button pull-right" value="[[[Manage Permissions]]]">
                         </a>
@@ -102,7 +97,7 @@
                 </div>
                 <div class="user-profile-section col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
                     <div class="img-view-holder col-lg-12 col-md-12 col-sm-10 col-xs-12">
-                        <img id="user-profile-picture" src="@Url.Content("~/User/Avatar?Username=" + (@ViewBag.UserName)+ "&ImageSize=110")" />
+                        <img id="user-profile-picture" src="@umsUrl/User/Avatar?Username=@ViewBag.UserName&ImageSize=110" />
                         <span class="su su-edit-inverse profile-picture-edit-button" id="avatar-button-click" data-toggle="tooltip" data-placement="bottom" title="[[[Edit profile picture]]]"></span>
                         <span class="su su-delete profile-picture-edit-button" id="avatar-delete-click" data-toggle="tooltip" data-placement="bottom" title="[[[Delete profile picture]]]"></span>
                     </div>
@@ -167,12 +162,6 @@
                                     @Html.TextBox("status-user", "", new { id = "status-user", @class = "content-size status", @readonly = "readonly" })
                                 </div>
                                 <div class="col-sm-5 col-xs-12 group-list groups" id="status-dom">
-                                    <div class="@showDropdown" id="container-select">
-                                        <select id="user-status" class="selectpicker content-size no-padding">
-                                            <option value="true">[[[Active]]]</option>
-                                            <option value="false">[[[Inactive]]]</option>
-                                        </select>
-                                    </div>
                                     <div class="@showActive" id="show-active">
                                         <input type="hidden" id="user-status" value="true" />
                                         <span id="active-user" class="content-size status">[[[Active]]]</span>
@@ -187,23 +176,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group no-padding line-spacing" id="activation-div">
-                                <div class="col-sm-5 group-list" id="activation-dom">
-                                    <input class="primary-button pull-right @showResendButton" type="button" id="resend-button-click" value="[[[Resend Activation Code]]]" title="" />
-                                    <input class="primary-button password-save-button pull-right @showActivationButton" type="button" id="activate-button-click" value="[[[Activate User]]]" title="" />
-                                </div>
-                                <div id="alert-message"></div>
-                            </div>
                         </form>
                     </div>
-                    @if (!ViewBag.IsAdUser)
-                    {
-                        <div id="edit-button">
-                            <input type="button" class="secondary-button pull-right" id="edit" title="" value="[[[Edit Profile]]]">
-                            <input type="button" class="secondary-button pull-right popup-close" title="" id="cancel-button" value="[[[Cancel]]]">
-                            <input type="button" class="primary-button pull-right inactive-content" id="save-button" title="" onclick="SaveUserdetails()" value="Save">
-                        </div>
-                    }
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 no-padding" id="message">
                         <h5 id="updation-validation-message"></h5>
                     </div>
@@ -212,73 +186,7 @@
             <input type="hidden" id="image" value="" />
             <input type="hidden" id="user-id" value="@ViewBag.UserDetail.UserId" />
         </div>
-        @if (!ViewBag.IsAdUser)
-    {
-            <div id="change-password" class="change-password-div">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="change-password-content">
-                    <form class="col-xs-11 col-sm-11 col-md-11 col-lg-11 change-password-form no-padding">
-                        <div class="user-profile-table" cellpadding="20">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding password-div">
-                                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4 no-padding label-section text-right">
-                                    @Html.Label("new-password", "[[[New Password]]]", new { @class = "password-label" })
-                                    <span class="mandatory">*</span>
-                                </div>
-                                <div class="col-xs-11 col-sm-6 col-md-4 col-lg-3 password-section">
-                                    @Html.Password("fake-password", new { id = "fake-password", @class = "fake-password-avoid-autocomplete" })
-                                    @Html.Password("new-password", "", new { @class = "form-control password-fields-user-profile-edit", id = "new-password", name = "new-password", maxlength = "4000" })
-                                    <span class="su su-eye view-green show-hide-password"></span>
-                                    <span id="new-password-validate" class="password-validate-holder"></span>
-                                </div>
-                            </div>
-                            <div id="confirm-password-section" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding password-div">
-                                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4 no-padding confirm-section label-section text-right">
-                                    @Html.Label("confirm-password", "[[[Confirm Password]]]", new { @class = "password-label" })
-                                    <span class="mandatory">*</span>
-                                </div>
-                                <div class="col-xs-11 col-sm-6 col-md-4 col-lg-3 confirm-section password-section">
-                                    @Html.Password("confirm-password", "", new { @class = "form-control password-fields-user-profile-edit", id = "confirm-password", name = "confirm-password", maxlength = "4000" })
-                                    <span class="su su-eye view-green show-hide-password"></span>
-                                    <span id="confirm-password-validate" class="password-validate-holder"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="col-xs-1 no-padding button-section">
-                        <input type="button" class="primary-button password-save-button profile-save-button pull-right" value="[[[Update]]]" onclick="onUserChangePasswordClick()">
-                    </div>
-                    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 no-padding validation">
-                        <h5 id="password-validation" class="password-validate-holder"></h5>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-    <div id="userprofile-delete-confirmation" class="no-padding">
-        <div class="col-lg-12 no-padding modal-content" id="popup-container">
-            <div class="col-md-12 modal-header">
-                <div class="col-xs-8 no-padding">
-                    <span class="su su-delete head-icon"></span>
-                    <span class="modal-title">[[[Delete User]]]</span>
-                </div>
-                <div class="col-xs-4 no-padding">
-                    <a href="javascript:void(0);" onclick="onDeleteDialogClose()" class="popup-close pull-right"><span class="su su-close"></span></a>
-                    <div id="folder-setting-arrow" class="downArrow" style="left: 37px;"></div>
-                </div>
-            </div>
-            <div class="modal-body col-xs-12 no-padding">
-                <div class="col-xs-12 no-left-padding no-bottom-padding no-right-padding">
-                    <div class="delete-msg">[[[Are you sure you want to delete the User?]]]</div>
-                </div>
-            </div>
-            <div class="col-xs-12 modal-footer">
-                <div class="col-xs-12 no-padding margin-top pull-right">
-                    <input type="button" id="delete-item" onclick="deleteSingleUser(@ViewBag.UserDetail.UserId)" class="critical-action-button margin-right" value="[[[Yes]]]" tabindex="1" autofocus />
-                    <input type="button" onclick="onDeleteDialogClose()" class="secondary-button popup-close" value="[[[No]]]" tabindex="2" />
-                </div>
-            </div>
-        </div>
     </div>
 
     <span id="baseurl" data-url="@Url.Content("~/")"></span>
-    @Html.Partial("_ProfilePictureUploadBox")
 }

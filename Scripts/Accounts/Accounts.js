@@ -11,56 +11,6 @@ $(document).ready(function () {
     $("body").ejWaitingPopup("hide");
     removePlaceholder();
     addPlacehoder("body");
-    $("#re-password,#password").bind("keyup", function (event) {
-        if ($(this).attr('id').match($("#password"))) {
-            if ($("#re-password").val() != '' && $("#password").val() == $("#re-password").val()) {
-                $("#re-password").closest('div').removeClass('has-error');
-                $("#re-password").closest('div').find(">.validation-messages").html("");
-            }
-            else if ($("#re-password").val() != '') {
-                $("#re-password").closest('div').addClass("has-error");
-                $("#re-password").closest('div').find(">.validation-messages").html("[[[Password mismatch]]]");
-            }
-            createPasswordPolicyRules();
-        }
-
-        if (event.keyCode == 13) {
-            $("#save-activate").click();
-            this.blur();
-            return false;
-        }
-        if ($("#save-activate").length > 0) {
-            $(".succes-tick").css("left", "0").css("top", "9px");
-        }
-    });
-
-    if (i_am_ie9) {
-        $(".login-container").addClass("height-adjust");
-    }
-    else {
-        $(".login-container").removeClass("height-adjust");
-    }
-
-    $("#save-activate").on('click', function () {
-        if ($("#update-password-form").valid() && $("#password").val() != '' && $("#re-password").val() != '') {
-            $("body").ejWaitingPopup("show");
-            $.ajax({
-                type: "POST",
-                url: passwordActivateUrl,
-                data: { UserId: $("#userid").val(), Password: $("#password").val() },
-                success: function (data, result) {
-                    if (data != 'Failure') {
-                        $('#account-activation').remove();
-                        $(".account-activation-title").css("display", "block");
-                        $(".float-center").css("display", "none");
-                    } else {
-                        $("#password, #re-password").val("");
-                    }
-                    $("body").ejWaitingPopup("hide");
-                }
-            });
-        }
-    });
 
     $("#login-username, #key-input").bind("keyup", function (event) {
         var str = $(this).val();
@@ -79,127 +29,6 @@ $(document).ready(function () {
         }
     });
 
-    $.validator.addMethod("isValidPassword", function (value, element) {
-        var validateMethods = new Array();
-        validateMethods.push(validateUserpassword.p_policy_uppercase);
-        validateMethods.push(validateUserpassword.p_policy_lowercase);
-        validateMethods.push(validateUserpassword.p_policy_number);
-        validateMethods.push(validateUserpassword.p_policy_specialcharacter);
-        validateMethods.push(validateUserpassword.p_policy_length);
-        for (var n = 0; n < validateMethods.length ; n++) {
-            var currentMethodName = validateMethods[n];
-            if (currentMethodName(value) != "" && currentMethodName(value) != undefined) {
-                ruleName = currentMethodName(value);
-                if ($('#password_policy_rules').find('li#' + ruleName + ' span').attr("class") != "su-tick") {
-                    $('#password_policy_rules').find('li#' + ruleName + ' span').addClass("su su-tick").removeClass("su su-close");
-                    $('#password_policy_rules').find('li#' + ruleName).addClass("clear-error");
-                    ruleName = ""
-                }
-            }
-            else {
-                ruleName = name;
-                $(element).closest('div').addClass("has-error");
-                if ($('#password_policy_rules').find('li#' + ruleName + ' span').attr("class") == "su-tick") {
-                    $('#password_policy_rules').find('li#' + ruleName + ' span').addClass("su su-close").removeClass("su-tick");
-                    $('#password_policy_rules').find('li#' + ruleName).removeClass("clear-error");
-                    ruleName = "";
-                }
-            }
-        }
-        if ($('#password_policy_rules li>span.su-tick').length == $('#password_policy_rules').find('li>span').length)
-            return true;
-    }, "");
-
-    $.validator.addMethod("additionalSpecialCharValidation", function (value, element) {
-        if (/^[a-zA-Z_0-9`~!\$\^()=\-\.\{\} ]+$/.test(value) || value === "") {
-            return true;
-        }
-    }, "[[[Please avoid special characters]]]");
-
-    $("#update-password-form").validate({
-        onkeyup: function (element, event) {
-            if (event.keyCode != 9) {
-                isKeyUp = true;
-                $(element).valid();
-                isKeyUp = false;
-            }
-            else true;
-        },
-        onfocusout: function (element) { $(element).valid(); },
-        rules: {
-            "password": {
-                required: true,
-                isValidPassword: true
-            },
-            "re-password": {
-                required: true,
-                equalTo: "#password"
-            }
-        },
-        messages: {
-            "password": {
-                required: "[[[Please enter new password]]]"
-            },
-            "re-password": {
-                required: "[[[Please confirm new password]]]",
-                equalTo: "[[[Password mismatch]]]"
-            }
-        },
-        highlight: function (element) {
-            $(element).closest('div').addClass('has-error');
-            textboxHighlight(element);
-        },
-        unhighlight: function (element) {
-            $(element).closest('div').removeClass('has-error');
-            textboxUnhighlight(element);
-            $(element).closest('div').next("div").find("span").html("");
-        },
-        errorElement: 'span',
-        errorPlacement: function (error, element) {
-            $(element).closest('div').next("div").find("span").html(error.html());
-            $("body").ejWaitingPopup("hide");
-        }
-    });
-
-    $('#password').on("change", function () {
-        createPasswordPolicyRules();
-        $("#password").valid();
-    });
-
-    $("#forgot-password-form").validate({
-        errorElement: "span",
-        onkeyup: function (element, event) {
-            if (event.keyCode != 9) $(element).valid();
-            else true;
-        },
-        onfocusout: function (element) { $(element).valid(); },
-        rules: {
-            "key": {
-                required: true
-            }
-        },
-        highlight: function (element) {
-            $(element).closest(".forgot-form-input-field").addClass("has-error");
-        },
-        unhighlight: function (element) {
-            $(element).closest(".forgot-form-input-field").removeClass("has-error");
-            $(element).parent().find("p.validation-holder").html("");
-        },
-        errorPlacement: function (error, element) {
-            $(element).parent().find("p.validation-holder").html(error);
-        },
-        messages: {
-            "key": {
-                required: "[[[Please enter username or email address]]]"
-            }
-        }
-    });
-
-    $('#forgot-password-form').validate({
-        onkeyup: function (element) {
-            $("#username-validation").addClass("hide");
-        }
-    });
     if (regexIe8.test(userAgent)) {
         $("#drop-down").css("margin-top", "-10px");
         if (window.innerWidth > 1400) {
@@ -249,7 +78,7 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on("click", ".submit-button, .forgot-pwd-link, #mail-resend, .redirect-login", function () {
+    $(document).on("click", ".submit-button, .redirect-login", function () {
         $("body").ejWaitingPopup("show");
     });
 });
@@ -339,82 +168,6 @@ $(window).load(function () {
     }
 });
 
-$("#password").bind("keyup", function () {
-    if ($("#re-password").val() != '' && $("#password").val() == $("#re-password").val()) {
-        $("#re-password").closest('div').removeClass('has-error');
-        $("#re-password").closest('div').next("div").find("span").html("");
-    }
-    else if ($("#re-password").val() != '') {
-        $("#re-password").closest('div').addClass("has-error");
-        $("#re-password").closest('div').next("div").find("span").html("[[[Password mismatch]]]");
-    }
-    createPasswordPolicyRules();
-    setTimeout(function () {
-        if (window.IsChangePasswordPage) {
-            refreshChangePasswordFooter();
-        }
-        else if (window.AccountActivationPage) {
-            refreshActivationPageFooter();
-        }
-    }, 500);
-    if ($("#re-password").val() != "" && $("#password").val() != "") {
-        $(".update-button").prop('disabled', false);
-        $(".update-button").prop("title", "");
-    }
-    else {
-        $(".update-button").prop("disabled", true);
-        $(".update-button").prop("title", "[[[Please enter the password]]]");
-    }
-});
-
-$("#re-password").bind("keyup", function () {
-    if ($("#re-password").val() != "" && $("#password").val() != "") {
-        $(".update-button").prop('disabled', false);
-        $(".update-button").prop("title", "");
-    }
-    else {
-        $(".update-button").prop("disabled", true);
-        $(".update-button").prop("title", "[[[Please enter the password]]]");
-    }
-});
-
-function createPasswordPolicyRules() {
-    if ($("#password").val() != '' && $("#password").next("ul").length == 0) {
-        $("#password").after("<ul id='password_policy_rules'></ul>");
-        if (isSafari) {
-            $("#password_policy_rules").css("top", "50px");
-        }
-        else {
-            if (window.innerWidth < 990) {
-                $("#password_policy_rules").css("top", "40px");
-            }
-            else if (window.innerWidth < 1400) {
-                $("#password_policy_rules").css("top", "70px");
-            }
-            else {
-                $("#password_policy_rules").css("top", "80px");
-            }
-        }
-        $("#password_policy_rules").css("right", "18%");
-        $("#password_policy_rules").css("font-size", "12px");
-        $("#confirm-password-section").css("transition", "1s margin ease");
-        $("#password_policy_rules").append("<li id='p_policy_heading'>[[[Password must meet the following requirements.]]]<br/>[[[It must contain,]]]</li>");
-        $("#password_policy_rules").append("<li id='p_policy_length'><span class='su su-close'></span>[[[at least 6 characters.]]]</li>");
-        $("#password_policy_rules").append("<li id='p_policy_uppercase'><span class='su su-close'></span>[[[1 uppercase.]]]</li>");
-        $("#password_policy_rules").append("<li id='p_policy_lowercase'><span class='su su-close'></span>[[[1 lowercase.]]]</li>");
-        $("#password_policy_rules").append("<li id='p_policy_number'><span class='su su-close'></span>[[[1 numeric.]]]</li>");
-        $("#password_policy_rules").append("<li id='p_policy_specialcharacter'><span class='su su-close'></span>[[[1 special character.]]]</li>");
-    }
-    if ($("#password").val() != '' && $("#password").next("ul").length != 0) {
-        $("#confirm-password-section").css("margin-top", "130px");
-    }
-    if ($("#password").val() == '' && $("#password").next("ul").length != 0) {
-        $("#password").next("ul").remove();
-        $("#confirm-password-section").css("margin-top", "-5px");
-        $("#new_password-section").removeAttr("style");
-    }
-}
-
 function textboxHighlight(element) {
     for (var i = 0; i < $('#password_policy_rules').find('li>span').length; i++) {
         if ($($('#password_policy_rules').find('li>span')[i]).attr('class') == "su-tick")
@@ -440,15 +193,6 @@ function textboxUnhighlight(element) {
         rules = "";
     }
     $(element).closest('div').next("div").find("span").html("");
-}
-
-function changePasswordValidation() {
-    $("body").ejWaitingPopup("show");
-    return $("#update-password-form").valid() && $("#password").val() != '' && $("#re-password").val() != '';
-}
-
-function ForgotValidate() {
-    return $('#forgot-password-form').valid();
 }
 
 $(window).resize(function () {
@@ -520,16 +264,6 @@ function removePlaceholder() {
         $("#key-input").val($("#forgot-username").val());
     }
 }
-
-$(document).on("click", ".forgot-pwd-link", function (event) {
-    event.preventDefault();
-    if ($("#login-username").val() != "" && $("#login-username").val() != undefined) {
-        window.location.href = $(this).attr("href") + "?username=" + $("#login-username").val();
-    }
-    else {
-        window.location.href = $(this).attr("href");
-    }
-});
 
 $("#login-form").validate({
     errorElement: "span",

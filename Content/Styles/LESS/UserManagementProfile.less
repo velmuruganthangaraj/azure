@@ -516,39 +516,6 @@ body{
 
 //style-for-user-delete-confirmation
 
-#userprofile-delete-confirmation_wrapper {
-    height: 150px !important;
-    // To hide the scrollbar and titlebar
-    .e-titlebar {
-        display: none;
-    }
-
-    .e-scroller {
-        height: 150px !important;
-    }
-
-    .e-vscrollbar, .e-hsrcollbar {
-        display: none;
-    }
-
-    #userprofile-delete-confirmation {
-        height: 150px !important;
-        width: 400px !important;
-        .modal();
-
-        .modal-content {
-            height: 150px;
-
-            .modal-body {
-                display: table !important;
-                height: 50px;
-                .delete-msg{
-                    margin-top:4px !important;
-                }
-            }
-        }
-    }
-}
 @media screen and (max-width: 390px)
 {
     body
@@ -866,20 +833,6 @@ body{
         }
     }
      }
-@media screen and (min-width:1400px){
-   #userprofile-delete-confirmation_wrapper{
-        #userprofile-delete-confirmation {
-              .modal(@app-large-text-size,@textbox-height);
-              .modal-content{
-                  .modal-footer{
-                      .margin-top{
-                         margin-top:-2px !important;
-                      }
-                  }
-             }
-        }
-    }
-}
 
 .tooltip-inner {
     white-space:pre;

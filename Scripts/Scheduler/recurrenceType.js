@@ -262,7 +262,7 @@ function validateSchedule(current) {
             $("#schedule-name-validator").html("[[[Please avoid special characters]]]");
             return false;
         }
-        if ($(current).hasClass("parameter-popup-body")) {
+        if ($(current).hasClass("schedule-settings-password-body")) {
             switch ($("#recurrence-type").val().toString().toLowerCase()) {
                 case "daily":
                     break;

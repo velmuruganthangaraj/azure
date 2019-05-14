@@ -1,237 +1,486 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" style="-webkit-hyphens:none;background:#f3f3f3!important;hyphens:none;word-wrap:normal">
-
+﻿@model Syncfusion.Server.Base.DataClasses.EmailTemplateModel
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width" />   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Syncfusion Email Template</title>
+    <style type="text/css">
+        /* yahoo, hotmail */
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+            line-height: 100%;
+        }
+
+        /* outlook */
+        #outlook a {
+            padding: 0;
+        }
+
+        table {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            -ms-interpolation-mode: bicubic;
+            outline: none;
+            text-decoration: none;
+            border: none;
+        }
+
+        /*OSX/iOS*/
+        body {
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /*Windows Mobile*/
+        body {
+            -ms-text-size-adjust: 100%;
+        }
+    </style>
+    <style type="text/css">
+        /* RESET STYLES */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            border: 0 none;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        a img {
+            border: 0 none;
+        }
+
+        .imageFix {
+            display: block;
+        }
+
+        table, td {
+            border-collapse: collapse;
+        }
+
+        #bodyTable {
+            height: 100% !important;
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+        }
+    </style>
 </head>
+<body style="margin: 0;padding: 0;background-color: #f7f8f9;color: #919191;" alink="#cccccc" bgcolor="#f7f8f9" text="#919191" vlink="#cccccc">
+    <center>
 
-<body style="-moz-box-sizing:border-box;-ms-text-size-adjust:100%;-webkit-box-sizing:border-box;-webkit-hyphens:none;-webkit-text-size-adjust:100%;Margin:0;background:rgb(244,244,244);box-sizing:border-box;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;hyphens:none;line-height:1.3;margin:0;min-width:100%;padding:0;text-align:left;width:100%!important;word-wrap:normal">
-    <span class="preheader" style="color:#f3f3f3;display:none!important;font-size:1px;line-height:1px;max-height:0;max-width:0;mso-hide:all!important;opacity:0;overflow:hidden;visibility:hidden">
-        Permission Assigned Notification.
-    </span>
-    <table class="body" style="-webkit-hyphens:none;Margin:0;background:#f3f3f3!important;border-collapse:collapse;border-spacing:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;height:100%;hyphens:none;line-height:1.3;margin:0;padding:0;text-align:left;vertical-align:top;width:100%;word-wrap:normal">
-        <tr style="padding:0;text-align:left;vertical-align:top">
-            <td class="center" align="center" valign="top" style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;hyphens:auto;line-height:1.3;margin:0;padding:0;text-align:left;vertical-align:top;word-wrap:break-word">
-                <center data-parsed="" style="min-width:580px;width:100%">
-                    <table align="center" class="container body float-center" style="-webkit-hyphens:none;Margin:0;background:#f3f3f3!important;border-collapse:collapse;border-spacing:0;color:#0a0a0a;float:none;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;height:100%;hyphens:none;line-height:1.3;margin:0;padding:0;text-align:left;vertical-align:top;width:580px;word-wrap:normal">
-                        <tbody>
-                            <tr style="padding:0;text-align:left;vertical-align:top">
-                                <td style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;hyphens:auto;line-height:1.3;margin:0;padding:0;text-align:left;vertical-align:top;word-wrap:break-word">
-                                    <table bgcolor="#008E00" class="wrapper greenArea" align="center" style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
-                                        <tr style="padding:0;text-align:left;vertical-align:top">
-                                            <td class="wrapper-inner" style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;hyphens:auto;line-height:1.3;margin:0;padding:0;text-align:left;vertical-align:top;word-wrap:break-word">
-                                                <table class="spacer" style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
-                                                    <tbody>
-                                                        <tr style="padding:0;text-align:left;vertical-align:top">
-                                                            <td height="20px" style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:400;hyphens:auto;line-height:20px;margin:0;mso-line-height-rule:exactly;padding:0;text-align:left;vertical-align:top;word-wrap:break-word">&#xA0;</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <table class="row" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%">
-                                                    <tbody>
-                                                        <tr style="padding:0;text-align:left;vertical-align:top">
-                                                            <th class="small-12 large-12 columns first last" style="Margin:0 auto;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0 auto;padding:0;padding-bottom:16px;padding-left:38px;padding-right:38px;text-align:left;width:542px">
-                                                                <table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
-                                                                    <tr style="padding:0;text-align:left;vertical-align:top">
-                                                                        <th style="Margin:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left">
-                                                                            <p class="text-right" style="-webkit-hyphens:none;Margin:0;Margin-bottom:10px;color:#fff;font-family:Segoe UI,Helvetica,sans-serif;font-size:10px;font-weight:400;hyphens:none;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:right;word-wrap:normal">
-                                                                                @{
-                                                                                    var formatedHyperlink = "<a href='" + @Model.BaseUrl + "//" + @Model.Language + "/accounts/login' style='color: #ffffff; font-size: 10px; text-decoration: none;font-family: Segoe UI, Helvetica, sans-serif;'>LOGIN</a>";
-                                                                                }
-                                                                                @formatedHyperlink
-                                                                            </p>
-                                                                        </th>
-                                                                        <th class="expander" style="Margin:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>
-                                                                    </tr>
-                                                                </table>
-                                                            </th>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <table class="row" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%">
-                                                    <tbody>
-                                                        <tr style="padding:0;text-align:left;vertical-align:top">
-                                                            <th class="small-12 large-12 columns first last" style="Margin:0 auto;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0 auto;padding:0;padding-bottom:16px;padding-left:38px;padding-right:38px;text-align:left;width:542px">
-                                                                <table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
-                                                                    <tr style="padding:0;text-align:left;vertical-align:top">
-                                                                        <th style="Margin:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left">
-                                                                            <p class="server" style="-webkit-hyphens:none;Margin:0;Margin-bottom:10px;color:#ffffff;font-family:Segoe UI,Helvetica,sans-serif;font-size:16px;font-weight:600;hyphens:none;line-height:1.3;margin:0;margin-bottom:0;padding:0;text-align:left;word-wrap:normal">
-                                                                                @Model.OrganizationName
-                                                                            </p>
-                                                                        </th>
-                                                                        <th class="expander" style="Margin:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>
-                                                                    </tr>
-                                                                </table>
-                                                            </th>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <table class="row" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%">
-                                                    <tbody>
-                                                        <tr style="padding:0;text-align:left;vertical-align:top">
-                                                            <th class="small-12 large-12 columns first last" style="Margin:0 auto;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0 auto;padding:0;padding-bottom:16px;padding-left:38px;padding-right:38px;text-align:left;width:542px">
-                                                                <table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
-                                                                    <tr style="padding:0;text-align:left;vertical-align:top">
-                                                                        <th style="Margin:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left">
-                                                                            <table class="row" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%">
-                                                                                <tbody>
-                                                                                    <tr style="padding:0;text-align:left;vertical-align:top">
-                                                                                        <th class="symbol small-2 large-1 columns first" style="Margin:0 auto;border-top:1px solid #fff;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0 auto;padding:0;padding-bottom:16px;padding-left:0!important;padding-right:0!important;text-align:left;width:8.33333%">
-                                                                                            <table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
-                                                                                                <tr style="padding:0;text-align:left;vertical-align:top">
-                                                                                                    <th style="Margin:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left"></th>
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </th>
-                                                                                        <th class="small-10 large-11 columns last" style="Margin:0 auto;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0 auto;padding:0;padding-bottom:16px;padding-left:0!important;padding-right:0!important;text-align:left;width:91.66667%">
-                                                                                            <table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
-                                                                                                <tr style="padding:0;text-align:left;vertical-align:top">
-                                                                                                    <th style="Margin:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left"></th>
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </th>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </th>
-                                                                    </tr>
-                                                                </table>
-                                                            </th>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <table class="row" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%">
-                                                    <tbody>
-                                                        <tr style="padding:0;text-align:left;vertical-align:top">
-                                                            <th class="small-12 large-12 columns first last" style="Margin:0 auto;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0 auto;padding:0;padding-bottom:16px;padding-left:38px;padding-right:38px;text-align:left;width:542px">
-                                                                <table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
-                                                                    <tr style="padding:0;text-align:left;vertical-align:top">
-                                                                        <th style="Margin:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left">
-                                                                            <h3 style="-webkit-hyphens:none;Margin:0;Margin-bottom:10px;color:#ffffff;font-family:Segoe UI,Helvetica,sans-serif;font-size:30px;font-weight:400;hyphens:none;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left;word-wrap:normal">
-                                                                                You have been given @Model.PermissionType access to all the @(Model.ItemType + "s") in Category - @Model.ItemName
-                                                                            </h3>
-                                                                        </th>
-                                                                        <th class="expander" style="Margin:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>
-                                                                    </tr>
-                                                                </table>
-                                                            </th>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <table bgcolor="#ffffff" class="wrapper" align="center" style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
-                                        <tr style="padding:0;text-align:left;vertical-align:top">
-                                            <td class="wrapper-inner" style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;hyphens:auto;line-height:1.3;margin:0;padding:0;text-align:left;vertical-align:top;word-wrap:break-word">
-                                                <table class="spacer" style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
-                                                    <tbody>
-                                                        <tr style="padding:0;text-align:left;vertical-align:top">
-                                                            <td height="20px" style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:400;hyphens:auto;line-height:20px;margin:0;mso-line-height-rule:exactly;padding:0;text-align:left;vertical-align:top;word-wrap:break-word">&#xA0;</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <table class="row" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%">
-                                                    <tbody>
-                                                        <tr style="padding:0;text-align:left;vertical-align:top">
-                                                            <th class="small-12 large-12 columns first last" style="Margin:0 auto;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0 auto;padding:0;padding-bottom:16px;padding-left:38px;padding-right:38px;text-align:left;width:542px">
-                                                                <table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
-                                                                    <tr style="padding:0;text-align:left;vertical-align:top">
-                                                                        <th style="Margin:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left">
-                                                                            <p style="-webkit-hyphens:none;Margin:0;Margin-bottom:10px;color:#353535;font-family:Segoe UI,Helvetica,sans-serif;font-size:12px;font-weight:600;hyphens:none;line-height:1.3;margin-top: 15px;margin-bottom:10px;padding:0;text-align:left;word-wrap:normal">
-                                                                                    Hello
-                                                                                    @Model.FirstName @Model.LastName
-                                                                                    ,
-                                                                            </p>
-                                                                        </th>
-                                                                        <th class="expander" style="Margin:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>
-                                                                    </tr>
-                                                                </table>
-                                                            </th>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <table class="row" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%">
-                                                    <tbody>
-                                                        <tr style="padding:0;text-align:left;vertical-align:top">
-                                                            <th class="small-12 large-12 columns first last" style="Margin:0 auto;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0 auto;padding:0;padding-bottom:16px;padding-left:38px;padding-right:38px;text-align:left;width:542px">
-                                                                <table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
-                                                                    <tr style="padding:0;text-align:left;vertical-align:top">
-                                                                        <th style="Margin:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left">
-                                                                            <p style="-webkit-hyphens:none;Margin:0;Margin-bottom:10px;color:#0a0a0a;font-family:Segoe UI,Helvetica,sans-serif;font-size:12px;font-weight:400;hyphens:none;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left;word-wrap:normal">
-                                                                                @Model.Admin has given you @Model.PermissionType access to all the @(Model.ItemType + "s") in Category - @Model.ItemName.
-                                                                            </p>
-                                                                        </th>
-                                                                        <th class="expander" style="Margin:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>
-                                                                    </tr>
-                                                                </table>
-                                                            </th>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <table class="row" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%">
-                                                    <tbody>
-                                                        <tr style="padding:0;text-align:left;vertical-align:top">
-                                                            <th class="small-12 large-12 columns first last" style="Margin:0 auto;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0 auto;padding:0;padding-bottom:16px;padding-left:38px;padding-right:38px;text-align:left;width:542px">
-                                                                <table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
-                                                                    <tr style="padding:0;text-align:left;vertical-align:top">
-                                                                        <th style="Margin:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left">
-                                                                            <p style="-webkit-hyphens:none;Margin:0;Margin-bottom:10px;color:#0a0a0a;font-family:Segoe UI,Helvetica,sans-serif;font-size:16px;font-weight:400;hyphens:none;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left;word-wrap:normal">
-                                                                                @{
-                                                                                    var specificItemTypeLink = "<a href='" + @Model.BaseUrl + "//" + @Model.Language + "//" + @Model.ItemUrl + "' style='Margin:0;color:#00E;font-family:Helvetica,Arial,sans-serif;font-size:12px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left;text-decoration:none'>All " + @Model.ItemType + "s in the Category - " + @Model.ItemName + ".</a>";
-                                                                                }
-                                                                                @specificItemTypeLink
-                                                                            </p>
-                                                                        </th>
-                                                                        <th class="expander" style="Margin:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>
-                                                                    </tr>
-                                                                </table>
-                                                            </th>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <table class="spacer" style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
-                                                    <tbody>
-                                                        <tr style="padding:0;text-align:left;vertical-align:top">
-                                                            <td height="16px" style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;hyphens:auto;line-height:16px;margin:0;mso-line-height-rule:exactly;padding:0;text-align:left;vertical-align:top;word-wrap:break-word">&#xA0;</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <table class="row" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%">
-                                                    <tbody>
-                                                        <tr style="padding:0;text-align:left;vertical-align:top">
-                                                            <th class="small-12 large-12 columns first last" style="Margin:0 auto;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0 auto;padding:0;padding-bottom:16px;padding-left:38px;padding-right:38px;text-align:left;width:542px">
-                                                                <table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
-                                                                    <tr style="padding:0;text-align:left;vertical-align:top">
-                                                                        <th style="Margin:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left">
-                                                                            <p style="-webkit-hyphens:none;Margin:0;Margin-bottom:10px;color:#353535;font-family:Segoe UI,Helvetica,sans-serif;font-size:12px;font-weight:400;hyphens:none;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left;word-wrap:normal">
-                                                                                Regards,
-                                                                            </p>
-                                                                            <p style="-webkit-hyphens:none;Margin:0;Margin-bottom:10px;color:#353535;font-family:Segoe UI,Helvetica,sans-serif;font-size:12px;font-weight:400;hyphens:none;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left;word-wrap:normal">
-                                                                                @Model.OrganizationName
-                                                                            </p>
-                                                                        </th>
-                                                                        <th class="expander" style="Margin:0;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>
-                                                                    </tr>
-                                                                </table>
-                                                            </th>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </center>
-            </td>
-        </tr>
-    </table>
-    <!-- prevent Gmail on iOS font size manipulation -->
-    <div style="display:none;white-space:nowrap;font:15px courier;line-height:0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>
+        <table id="" style="background-color: #f7f8f9;width:100%;" class="" bgcolor="#f7f8f9" border="0" cellpadding="0" cellspacing="0" width="570">
+            <tbody>
+                <tr>
+                    <td style="padding-left: 10px;padding-right: 10px;background-color: #f7f8f9" class="" align="center" bgcolor="#f7f8f9" valign="top">
+                        <!--[if (gte mso 9)|(lte ie 8)]>
+                        <table  align="center" border="0" cellspacing="0" cellpadding="0" width="570" >
+                            <tr>
+                                <td align="center" valign="top">
+                            <![endif]-->
+                        <table style="width:100%" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 1px;" height="20">&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table style="border-collapse: separate; width: 100%;max-width: 550px;background-color: #f7f8f9;" class="header" bgcolor="#f7f8f9" border="0" cellpadding="0" cellspacing="0" width="550">
+                            <tbody>
+                                <tr>
+                                    <td class="" style="font-size: 0;" valign="top">
+                                        <!--[if (gte mso 9)|(lte ie 8)]>
+                                        <table style='max-width:550px;width:100%;' align='center' border='0' cellspacing='0' cellpadding='0' width='550'>
+                                            <tr>
+                                                <td align='left' valign='top' width='200'>
+                                            <![endif]-->
+                                        <div class='' width='200' style='display: inline-block; max-width: 200px; vertical-align: top; width: 100%;'>
+                                            <table style='border-collapse: separate;width: 100%; max-width:200px;' class='' align='left' border='0' cellpadding='0' cellspacing='0' width='200'>
+                                                <tbody>
+                                                    <tr>
+                                                        <td width='100%' valign='top' align='left' style='padding-left:0px;' class=''>
+                                                            <span>
+                                                                @{
+                                                                    var logoLink = "<img src='" + @Model.LoginLogo + "'style='border: 0px;display: block;vertical-align: top;max-height:40px;max-width: 200px;' class='' alt='' border='0' hspace='0' vspace='0' height='40' />";
+                                                                }
+                                                                @logoLink
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!--[if (gte mso 9)|(lte ie 8)]>
+                                        </td>
+                                        <td align="left" valign="top">
+                                        <![endif]-->
+                                        <div class="" style="display: inline-block; vertical-align: top; width: 100%; max-width: 50px;  float: right; " width="50">
+                                            <table style="border-collapse: separate;width: 100%;" class="" align="left" border="0" cellpadding="0" cellspacing="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="font-size: 16px;font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align: right; height: 40px;vertical-align:bottom;">
+                                                            <span>
+                                                                @{
+                                                                    var formatedHyperlink = "<a href='" + @Model.BaseUrl + "//" + @Model.Language + "/accounts/login' target='' style='text-decoration: none; color: #3f3f3f; font-weight: normal;'>Login</a>";
+                                                                }
+                                                                @formatedHyperlink
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!--[if (gte mso 9)|(lte ie 8)]>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <![endif]-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table style="width:100%" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 1px;" height="20">&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table style="text-align:left;width:100%;max-width: 550px;background-color: #fff;" width="550" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 1px;" height="20">&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <table style="text-align:left;width:100%;max-width: 550px;background-color: #fff;" width="550" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <table style="text-align:left;width:100%;" cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="padding-left:20px;padding-right:20px; font-size: 18px; color: #3f3f3f; font-weight:bold; font-family:arial, helvetica, sans-serif;">
+                                                        <span>
+                                                            All the @(Model.ItemType + "s") in Category has been shared with you
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table style="text-align:left;width:100%;max-width: 550px;background-color: #fff;" width="550" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 1px;" height="30">&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <table style="text-align:left;width:100%;max-width: 550px;background-color: #fff;" width="550" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <table style="text-align:left;width:100%;" cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td style=" padding-left:20px;padding-right:20px; font-size: 14px; color: #3f3f3f; font-family:arial, helvetica, sans-serif;">
+                                                        <span>
+                                                            Hello @Model.DisplayName,
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <table style="text-align:left;width:100%;max-width: 550px;background-color: #fff;" width="550" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 1px;" height="20">&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <table style="text-align:left;width:100%;max-width: 550px;background-color: #fff;" width="550" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <table style="text-align:left;width:100%;" cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="padding-left:20px;padding-right:20px; font-size: 14px; color: #3f3f3f; font-family:arial, helvetica, sans-serif; line-height: 20px;">
+                                                        @if (Model.SelectedScopeCount == 1)
+                                                        {
+                                                            <span>
+                                                                @Model.Admin has given you @Model.PermissionType access to all the @(Model.ItemType + "s") in Category - @Model.ItemName
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>
+                                                                @Model.Admin has shared the following @Model.ItemType 's with you.
+                                                            </span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <table style="text-align:left;width:100%;max-width: 550px;background-color: #fff;" width="550" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 1px;" height="20">&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table style="text-align:left;width:100%;max-width: 550px;background-color: #fff;" width="550" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <table style="text-align:left;width:100%;" cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="padding-left:20px;padding-right:20px;font-size: 14px; padding-right: 20px;font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align:left;">
+                                                        @if (Model.SelectedScopeCount == 1)
+                                                        {
+                                                            <span style="color: #3f3f3f;">
+                                                                @{
+                                                                    var specificItemTypeLink = "<a href='" + @Model.BaseUrl + "//" + @Model.Language + "//" + @Model.ItemUrl + "' target='' style='text-decoration: none; word-break:break-all; color: #4a90e2; font-weight: normal;'>All " + @Model.ItemType + "s in the Category - " + @Model.ItemName + ".</a>";
+                                                                }
+                                                                @specificItemTypeLink
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            @for (int i = 0; i < Model.SelectedScopeCount; i++)
+                                                            {
+                                                                <ul>
+                                                                    <li>
+                                                                        @{
+                                                                            var specificItemTypeLink = "<a href='" + @Model.BaseUrl + "//" + @Model.Language + "//" + @Model.SelectedItem[i].ScopeUrl + "' target='' style='text-decoration: none; word-break:break-all; color: #4a90e2; font-weight: normal;'>All " + @Model.ItemType + "s in the Category - " + @Model.SelectedItem[i].ScopeName + "</a>";
+                                                                        }
+                                                                        @specificItemTypeLink
+                                                                    </li>
+                                                                </ul>
+                                                            }
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table style="text-align:left;width:100%;max-width: 550px;background-color: #fff;" width="550" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 1px;" height="30">&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <table style="text-align:left;width:100%;max-width: 550px;background-color: #fff;" width="550" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <table style="text-align:left;width:100%;" cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td style=" padding-left:20px;padding-right:20px; font-size: 14px; color: #3f3f3f; font-weight:normal; font-family:Arial, Helvetica, sans-serif;">
+                                                        <span>
+                                                            Regards,
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <table style="text-align:left;width:100%;max-width: 550px;background-color: #fff;" width="550" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 1px;" height="10">&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <table style="text-align:left;width:100%;max-width: 550px;background-color: #fff;" width="550" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <table style="text-align:left;width:100%;" cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="padding-left:20px;padding-right:20px;font-size: 14px;color: #3f3f3f;font-weight: normal;font-family:Arial, Helvetica, sans-serif;">
+                                                        <span>
+                                                            @Model.OrganizationName
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <table style="text-align:left;width:100%;max-width: 550px;background-color: #fff;" width="550" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 1px;" height="30">&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table style='text-align:left;width:100%;max-width:550px;background-color:#ffffff;' width='550' bgcolor='#ffffff' border='0' cellpadding='0' cellspacing='0'>
+                            <tbody>
+                                <tr>
+                                    <td valign='top' bgcolor='#ffffff' align='center' style='background-color:#ffffff; padding-left:20px;padding-right:20px'>
+                                        <!--[if (gte mso 9)|(lte ie 8)]><table align='center' border='0' cellspacing='0' cellpadding='0' width='510'><tr><td align='center' valign='top'><![endif]-->
+                                        <table cellspacing='0' cellpadding='0' border='0' bgcolor='#e3e3e3' width='510' style='border-collapse: separate;width: 100%;max-width:510px;background-color: #e3e3e3;'>
+                                            <tbody>
+                                                <tr>
+                                                    <td valign='top' bgcolor='#e3e3e3' align='center' style='background-color: #e3e3e3;'>
+                                                        <table style='width: 100%; max-width:510px;' width='510' border='0' cellpadding='0' cellspacing='0'>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style='font-size: 1px;line-height: 1px;width: 100%;max-width:510px;background-color: #e3e3e3;' height='1' width='510'>&nbsp;</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--[if (gte mso 9)|(lte ie 8)]></td></tr></table><![endif]-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table style="text-align:left;width:100%;max-width: 550px;background-color: #fff;" width="550" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 1px;" height="18">&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table style="text-align:left;width:100%;max-width: 550px;background-color: #fff;" width="550" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <table style="text-align:left;width:100%;" cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td style=" line-height:20px; padding-left:20px;padding-right:20px; font-size: 12px; color: #7a7a7a; opacity:0.5; font-family:Arial, Helvetica, sans-serif;">
+                                                        <span>
+                                                            This is an automatically generated message, please do not reply to this mail. If you have any question, please contact your administrator.
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table style="text-align:left;width:100%;max-width: 550px;background-color: #fff;" width="550" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 1px;" height="26">&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table style="width:100%" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 1px;" height="26">&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        @if (Model.CanShowCopyright)
+                        {
+                            <table style="text-align:left;width:100%;max-width: 550px;background-color: #f7f8f9;" width="550" bgcolor="#f7f8f9" border="0" cellpadding="0" cellspacing="0">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <table style="text-align:center;width:100%; background-color: #f7f8f9;" bgcolor="#f7f8f9" cellpadding="0" cellspacing="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="padding-left:20px;padding-right:20px;font-size: 12px; color: #3f3f3f;font-family:Arial, Helvetica, sans-serif; background-color:#f7f8f9;">
+                                                            <span>
+                                                                Copyright 2001-@DateTime.UtcNow.Year.ToString() Syncfusion, Inc. All rights reserved.
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table style="width:100%;" border="0" cellpadding="0" cellspacing="0">
+                                <tbody>
+                                    <tr>
+                                        <td style="font-size: 1px;" height="20">&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+
+                        <!--[if (gte mso 9)|(lte ie 8)]>
+                                  </td>
+                              </tr>
+                          </table>
+                        <![endif]-->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </center>
+
 </body>
-
 </html>

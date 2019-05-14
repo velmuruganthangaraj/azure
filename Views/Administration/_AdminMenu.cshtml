@@ -5,9 +5,7 @@
     var adSettingsUrl = Url.Action("user-directory-settings", "administration");
     var emailSettingsUrl = Url.Action("e-mail-settings", "administration");
     var notificationSettingsUrl = Url.Action("NotificationSettings", "administration");
-    var userSettingsUrl = Url.Action("UserSettings", "administration");
     var manageLicenseUrl = Url.Action("LicenseSettings", "Administration");
-    var ssoSettingsUrl = Url.Action("SAMLSettings", "Administration");
     var reportSettingsUrl = Url.Action("ReportSettings", "Administration");
 }
 
@@ -44,15 +42,6 @@
             </a>
         </li>
         <li>
-            <a id="user-settings-link" class="admin-menu-item @(currentUrl.IndexOf(userSettingsUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)" href="@userSettingsUrl" role="tab">
-                <i class="su su-user_settings_icon"></i>
-                <span>[[[User]]]</span>
-            </a>
-        </li>
-        <li>
-            <a id="sso-settings-link" class="admin-menu-item @(currentUrl.IndexOf(ssoSettingsUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)" href="@ssoSettingsUrl" role="tab">
-                <i class="su su-single-sign-on"></i>
-                <span>SSO</span>
             </a>
         </li>
         <li>

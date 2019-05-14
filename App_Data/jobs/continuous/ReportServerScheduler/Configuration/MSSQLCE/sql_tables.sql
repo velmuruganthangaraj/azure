@@ -19,7 +19,8 @@ CREATE TABLE [SyncRS_User](
 	[UserTypeId] [int] NOT NULL DEFAULT 0,
 	[IsActivated] [bit] NOT NULL,
 	[IsActive] [bit] NOT NULL,
-	[IsDeleted] [bit] NOT NULL)
+	[IsDeleted] [bit] NOT NULL,
+	[DomainId] [nvarchar](4000) NULL)
 ;
 
 CREATE TABLE [SyncRS_Group](
@@ -28,7 +29,8 @@ CREATE TABLE [SyncRS_Group](
 	[Description] [nvarchar](1026) NULL,
 	[Color] [nvarchar](255) NOT NULL DEFAULT 'White',
 	[ModifiedDate] [datetime] NOT NULL,
-	[IsActive] [bit] NOT NULL)
+	[IsActive] [bit] NOT NULL,
+	[DomainId] [nvarchar](4000) NULL)
 ;
 
 CREATE TABLE [SyncRS_UserGroup](
@@ -349,6 +351,10 @@ CREATE TABLE [SyncRS_ScheduleDetail](
 	[ExportTypeId] [int] NOT NULL,
 	[IsEnabled] [bit] NOT NULL,
     [IsParameterEnabled] [bit] NOT NULL,
+	[IsSaveAsFile] [bit] NOT NULL,
+    [IsSendAsMail] [bit] NOT NULL DEFAULT 1,
+    [ReportCount] [int] NOT NULL DEFAULT 0,
+    [ExportPath] [nvarchar](4000) NULL,
 	[CreatedById] [int] NOT NULL,
 	[ModifiedById] [int] NOT NULL,
 	[CreatedDate] [datetime] NOT NULL,
@@ -876,9 +882,6 @@ INSERT into [SyncRS_PermissionEntity] (Name,EntityType,ItemTypeId,IsActive) VALU
 INSERT into [SyncRS_PermissionEntity] (Name,EntityType,ItemTypeId,IsActive) VALUES (N'All ItemViews',1,9,1)
 ;
 
-INSERT into [SyncRS_Group] (Name,Description,Color,ModifiedDate,IsActive) VALUES (N'System Administrator','Has administrative rights for the report server','#ff0000',GETDATE(), 1)
-;
-
 INSERT into [SyncRS_ItemCommentLogType] (Name,IsActive) VALUES ( N'Added',1)
 ;
 INSERT into [SyncRS_ItemCommentLogType] (Name,IsActive) VALUES ( N'Edited',1)
@@ -1032,4 +1035,32 @@ INSERT INTO [SyncRS_PermissionAccEntity] (PermissionEntityId, PermissionAccessId
 INSERT INTO [SyncRS_PermissionAccEntity] (PermissionEntityId, PermissionAccessId, IsActive) VALUES(8,7,1)
 ;
 INSERT INTO [SyncRS_PermissionAccEntity] (PermissionEntityId, PermissionAccessId, IsActive) VALUES(9,7,1)
+;
+
+CREATE TABLE [SyncRS_UmsCredential](
+	[Id] [int] IDENTITY(1,1) primary key NOT NULL,
+	[UmsUrl] [nvarchar](255),
+	[ClientId] [nvarchar](255),
+	[ClientSecret] [nvarchar](255),
+	[IsActive] [bit] NOT NULL)
+;
+
+CREATE TABLE [SyncRS_UmsGroup](
+	[Id] [int] IDENTITY(1,1) primary key NOT NULL,
+	[GroupId] [int] NOT NULL,
+	[UmsGroupId] [int] NOT NULL,
+	[IsActive] [bit] NOT NULL)
+;
+
+ALTER TABLE [SyncRS_UmsGroup] ADD FOREIGN KEY([GroupId]) REFERENCES [SyncRS_Group] ([Id])
+;
+
+CREATE TABLE [SyncRS_UmsUser](
+	[Id] [int] IDENTITY(1,1) primary key NOT NULL,
+	[UserId] [int] NOT NULL,
+	[UmsUserId] [int] NOT NULL,
+	[IsActive] [bit] NOT NULL)
+;
+
+ALTER TABLE [SyncRS_UmsUser] ADD FOREIGN KEY([UserId]) REFERENCES [SyncRS_User] ([Id])
 ;

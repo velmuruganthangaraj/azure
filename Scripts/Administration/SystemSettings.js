@@ -259,6 +259,33 @@ $(document).ready(function () {
         }
     });
 
+    $("#update-ums-settings").on("click", function () {
+        var postData = {
+            umsUrl: $("#umpurl").val().trim(),
+            clientId: $("#clientid").val().trim(),
+            clientSecret: $("#clientsecret").val().trim()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: window.updateUmsSettingsUrl,
+            data: postData,
+            beforeSend: showWaitingPopup($("#server-app-container")),
+            success: function (result) {
+                if (result.status) {
+                    SuccessAlert("[[[UMS Settings]]]", "[[[Settings has been updated successfully.]]]", 7000);
+                }
+                else {
+                    WarningAlert("[[[UMS Settings]]]", "[[[Error while updating settings.]]]", 7000);
+                }
+                $(".error-message, .success-message").css("display", "none");
+            },
+            complete: function () {
+                hideWaitingPopup($("#server-app-container"));
+            }
+        });
+    });
+
     $("#update-active-dir-settings").on("click", function () {
         var adSettingsData = {
             UserName: $("#username").val().trim(),
@@ -421,81 +448,62 @@ $(document).ready(function () {
             $("#sender-user-name-error").remove();
     });
 
-    $("a[data-toggle='tab']").on('click', function (e) {
-        if ($(this).attr("id") == "azure-ad") {
-            $("#update-active-dir-settings").hide();
-            $("#UpdateAzureADSettings-bottom").removeClass("hidden");
-            $("#save-db-settings").hide();
-            $("#connect-database").hide();
-            $("#change-connection").hide();
-            $("#azure-ad-tab span.validation-message").addClass("ng-hide").parent().removeClass("has-error");
-        }
-        else if ($(this).attr("id") == "windows-ad") {
-            $("#UpdateAzureADSettings-bottom").addClass("hidden");
-            $("#update-active-dir-settings").show();
-            $("#save-db-settings").hide();
-            $("#connect-database").hide();
-            $("#change-connection").hide();
-            $("#windows-ad-tab .error").hide().parent().parent().removeClass("has-error");
-        }
-        else {
-            if ($("#schema-selection").length == 0) {
-                $("#connect-database").show();
-                $("#connect-database").prop("disabled", false);
-                $("#save-db-settings").hide();
-                $("#update-active-dir-settings").hide();
-                $("#change-connection").hide();
-                $("#UpdateAzureADSettings-bottom").addClass("hidden");
-            } else {
-                $("#change-connection").trigger("click");
-                $("#connect-database").show();
-                $("#save-db-settings").hide();
-                $("#update-active-dir-settings").hide();
-                $("#change-connection").hide();
-                $("#UpdateAzureADSettings-bottom").addClass("hidden");
-            }
-        }
-        $(".success-message, .error-message").hide();
-    });
+    if ($("#schema-selection").length == 0) {
+        $("#connect-database").show();
+        $("#connect-database").prop("disabled", false);
+        $("#save-db-settings").hide();
+        $("#change-connection").hide();
+
+    } else {
+        $("#change-connection").trigger("click");
+        $("#connect-database").show();
+        $("#save-db-settings").hide();
+        $("#change-connection").hide();
+    }
 
     if ($("#active-directory-container").is(":visible")) {
+
         var query = (window.location.search).toString();
         if (query == "?tab=azure-ad") {
-            $("#azure-ad").tab("show");
-            $("#update-active-dir-settings").hide();
-            $("#UpdateAzureADSettings-bottom").removeClass("hidden");
+            $('#azure-ad-tab').addClass("in");
+            $('#azure-active-directory').find(".collapsed").removeClass("collapsed");
+            $('#windows-ad-tab').removeClass("in");
+            $('#database-settings-tab').removeClass("in");
         }
     }
 
     $(document).ready(function () {
         if ($("#active-directory-container").is(":visible")) {
             if (location.href.match(/azure-ad/)) {
-                $("#azure-ad").tab("show");
-                $("#update-active-dir-settings").hide();
-                $("#UpdateAzureADSettings-bottom").removeClass("hidden");
-                $("#save-db-settings").hide();
-                $("#connect-database").hide();
-                $("#change-connection").hide();
+                $('#azure-ad-tab').addClass("in");
+                $('#azure-active-directory').find(".collapsed").removeClass("collapsed");
+                $('#windows-ad-tab').removeClass("in");
+                $('#database-settings-tab').removeClass("in");
+                $('#ump-settings-tab').removeClass("in");
 
             }
             else if (location.href.match(/database-settings/)) {
-                $("#database-settings").tab("show");
-                $("#connect-database").show();
-                $("#save-db-settings").hide();
-                $("#update-active-dir-settings").hide();
-                $("#UpdateAzureADSettings-bottom").addClass("hidden");
-                $("#change-connection").hide();
-
-            } else {
-                $("#windows-ad").tab("show");
-                $("#update-active-dir-settings").show();
-                $("#UpdateAzureADSettings-bottom").addClass("hidden");
-                $("#save-db-settings").hide();
-                $("#connect-database").hide();
-                $("#change-connection").hide();
+                $('#database-settings-tab').addClass("in");
+                $('#database-settings').find(".collapsed").removeClass("collapsed");
+                $('#windows-ad-tab').removeClass("in");
+                $('#azure-ad-tab').removeClass("in");
+                $('#ump-settings-tab').removeClass("in");
 
             }
-
+            else if (location.href.match(/ump-settings-tab/)) {
+                $('#ump-settings-tab').addClass("in");
+                $('#ums-settings').find(".collapsed").removeClass("collapsed");
+                $('#windows-ad-tab').removeClass("in");
+                $('#azure-ad-tab').removeClass("in");
+                $('#database-settings-tab').removeClass("in");
+            }
+            else {
+                $('#windows-ad-tab').addClass("in");
+                $('#windows-active-directory').find(".collapsed").removeClass("collapsed");
+                $('#azure-ad-tab').removeClass("in");
+                $('#database-settings-tab').removeClass("in");
+                $('#ump-settings-tab').removeClass("in");
+            }
         }
     });
 
@@ -623,6 +631,35 @@ function AzureADFormValidate() {
     });
 }
 
+function UmsSettingsFormValidate() {
+    var postData = {
+        umsUrl: $("#umpurl").val().trim(),
+        clientId: $("#clientid").val().trim(),
+        clientSecret: $("#clientsecret").val().trim()
+    };
+
+    $.ajax({
+        type: "POST",
+        url: window.umsTestConnectionUrl,
+        data: postData,
+        beforeSend: showWaitingPopup($("#server-app-container")),
+        success: function (data) {
+            var umsSettings = $("#ump-settings");
+            if (data.status) {
+                umsSettings.find(".success-message").html("<span style='color:green'>" + data.value + "</span>").css("display", "block");
+                umsSettings.find(".error-message").css("display", "none");
+            }
+            else {
+                umsSettings.find(".error-message").html("<span style='color:red'>" + data.value + "</span>").css("display", "block");;
+                umsSettings.find(".success-message").css("display", "none");
+            }
+        },
+        complete: function () {
+            hideWaitingPopup($("#server-app-container"));
+        }
+    });
+}
+
 function RemoveUploadBoxError() {
     $("#upload-login-image-textbox").removeClass("ValidationErrorImage").val("[[[Browse file path]]]");
     $("#upload-login-image-textbox").closest("div").removeClass("has-error");
@@ -735,6 +772,9 @@ function addPlacehoder(object) {
 
 function addFooterSeparator() {
     if ($("#enablepoweredbysyncfusion").is(":checked") == true && $("#enablecopyrightinfo").is(":checked") == true) {
+        $("#footer-separator").removeClass("hide").show();
+    }
+    else if($("#enablecopyrightinfo").is(":checked") == true){
         $("#footer-separator").removeClass("hide").show();
     }
     else {

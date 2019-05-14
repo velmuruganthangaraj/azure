@@ -8,9 +8,9 @@ var WebAPIDataSource = (function () {
         this.userNameRow = null;
         this.passwordRow = null;
         this.headerRow = null;
+        this.controlWidth = 426;
         this.id = 'webapi_Container';
         this.connectClick = $.proxy(this.connectDataSource, this);
-        this.renderErrorToolTip(this.id);
     }
     WebAPIDataSource.prototype.renderConfig = function (targetTag, dataSource, isEdit) {
         this.renderConfiguration(targetTag);
@@ -109,6 +109,7 @@ var WebAPIDataSource = (function () {
             }, { 'id': this.id + '_web_datasource' });
             targetTag.append(this.webContainer);
             this.renderWebDatasourcePanel();
+            this.renderErrorToolTip(targetTag);
         }
         this.showConfiguration(true);
     };
@@ -123,14 +124,14 @@ var WebAPIDataSource = (function () {
         });
         this.webContainer.append(configTable);
         this.renderTextArea(this.getLocale('urltext'), this.id + '_webDs_url', configTable, '0px');
-        this.renderTextBoxItem(this.getLocale('schematext'), this.id + '_webDs_schema', false, configTable, 210, 'schemaOptional');
+        this.renderTextBoxItem(this.getLocale('schematext'), this.id + '_webDs_schema', false, configTable, this.controlWidth, 'schemaOptional');
         var bodyRow = $('<tr id=\'' + this.id + '_webDs_body_type\' />');
         var bodyTable = $('<table />');
         bodyRow.append(bodyTable);
         configTable.append(bodyRow);
         this.renderDropDownItem(this.getLocale('authenticationtype'), this.id + '_webDs_authentication', configTable, this.getDropdownValues(), this.onAuthenticationChange, this);
-        this.renderTextBoxItem(this.getLocale('username'), this.id + '_basic_auth_username', false, configTable, 210);
-        this.renderTextBoxItem(this.getLocale('password'), this.id + '_basic_auth_pwd', true, configTable, 210);
+        this.renderTextBoxItem(this.getLocale('username'), this.id + '_basic_auth_username', false, configTable, this.controlWidth);
+        this.renderTextBoxItem(this.getLocale('password'), this.id + '_basic_auth_pwd', true, configTable, this.controlWidth);
         this.renderHeaderContainer(configTable, this.id + '_webapi_custom_headers', 'headers', this.getLocale('Headers'), '2px');
         this.urlTextArea = this.webContainer.find('#' + this.id + '_webDs_url');
         this.schemaArea = this.webContainer.find('#' + this.id + '_webDs_schema');
@@ -179,7 +180,7 @@ var WebAPIDataSource = (function () {
         bodyTable.append(rowtxt);
         var selectedIndex = (id !== this.id + '_webDs_authentication') ? '0' : '';
         dropdown.ejDropDownList({
-            width: '221px',
+            width: this.controlWidth,
             dataSource: datasource,
             fields: { id: 'id', text: 'text', value: 'value' },
             change: $.proxy(fnction, context),
@@ -246,19 +247,19 @@ var WebAPIDataSource = (function () {
         var bodyDiv = ej.buildTag('div', '', {}, {});
         var bodyTable = ej.buildTag('table', '', {}, {});
         var newRow = ej.buildTag('tr', '', {}, {});
-        var newCol = ej.buildTag('td', '', { 'width': '222px' }, {});
+        var newCol = ej.buildTag('td', '', { 'width': '430px' }, {});
         var lblHdrText = ej.buildTag('Label.e-designer-add-label e-designer-title-label', headerText, {}, {
             'type': 'label',
             'id': id + '_labelText'
         });
         var spanDiv = ej.buildTag('div', '', { 'cursor': 'pointer', 'float': 'right', 'margin-top': '2px' });
         var addSpan = ej.buildTag('span.e-chk-image e-icon e-plus e-rptdesigner-add-icon', '', {}, { 'id': this.id + '_' + itemType + '_add_span' });
-        var addDiv = ej.buildTag('div', '', { 'cursor': 'pointer', 'float': 'right', 'padding-top': '2px' }, {});
+        var addDiv = ej.buildTag('div', '', { 'cursor': 'pointer', 'float': 'right', 'padding-top': '4px' }, {});
         var textSpan = ej.buildTag('span.e-btntxt e-rptdesigner-add-btn', this.getLocale('Add'), {}, {});
         var containerDiv = ej.buildTag('div.e-reportdesigner-scroller e-designer-border-dialog', '', {
             'margin': '0px 0px 4px 0px',
             'height': '150px',
-            'width': '226px',
+            'width': '432px',
             'padding': '5px 0px',
             'margin-left': marginLeft,
             'border': '1px solid #c9cbcc',
@@ -344,7 +345,7 @@ var WebAPIDataSource = (function () {
             'placeholder': this.getLocale('Value')
         });
         var errorCol = ej.buildTag('td', '', { 'padding-top': '1px' }, { 'id': rowId + '_webHeader_error_td' });
-        this.renderErrIndictor(errorCol, this.id);
+        this.renderErrIndictor(errorCol, 'container_configurePane');
         valueContainer.append(textCol);
         textCol.append(txtBox);
         container.append(errorCol);
@@ -376,52 +377,70 @@ var WebAPIDataSource = (function () {
         labelCell.append(label, infoIcon);
         row.append(labelCell);
         var errorCell = ej.buildTag('td', '', {}, { 'id': id + '_error_icon_td' });
-        this.renderErrIndictor(errorCell, this.id);
+        this.renderErrIndictor(errorCell, 'container_configurePane');
         row.append(errorCell);
         return row;
     };
-    WebAPIDataSource.prototype.renderErrIndictor = function (target, ctrlId) {
+    WebAPIDataSource.prototype.renderErrIndictor = function (target, tooltipId, errMsg) {
         var errorIcon = ej.buildTag('span.e-rptdesigner-error-icon e-rptdesigner-errorinfo e-error-tip', '', {
             'float': 'right',
             'display': 'none',
             'padding-right': '2px'
-        }, {});
+        }, {
+            'e-errormsg': errMsg,
+            'e-tooltipId': tooltipId
+        });
         target.append(errorIcon);
-        errorIcon.bind('mouseover mousedown touchstart', $.proxy(this.showErrTip, this, ctrlId));
-        errorIcon.bind('mouseleave touchleave', $.proxy(this.hideErrTip, this, ctrlId));
     };
     WebAPIDataSource.prototype.showErrIndictor = function (target, isEnable, errMsg) {
         var errorIcon = target.find('.e-error-tip');
-        errorIcon.attr('e-errormsg', errMsg).css('display', isEnable ? 'block' : 'none');
-    };
-    WebAPIDataSource.prototype.renderErrorToolTip = function (id) {
-        if ($('#' + id + '_error_tooltip').length === 0) {
-            var toolTip = ej.buildTag('div.e-designer-right-tip e-tooltip-wrap e-widget e-designer-tooltip e-rptdesigner-error-tip', '', {
-                'display': 'none'
-            }, {
-                'id': id + '_error_tooltip'
+        errorIcon.css('display', isEnable ? 'block' : 'none');
+        if (errMsg) {
+            errorIcon.attr('e-errormsg', errMsg);
+        }
+        if (isEnable) {
+            var tooltipId = errorIcon.attr('e-tooltipId');
+            var ejTooltip = $('#' + tooltipId).data('ejTooltip');
+            ejTooltip.setModel({
+                target: '.e-rptdesigner-error-icon',
             });
-            var tipContainer = ej.buildTag('div.e-tipContainer');
-            var tipContent = ej.buildTag('div', '', {}, { 'id': id + '_error_tooltip_content' });
-            $(document.body).append(toolTip);
-            toolTip.append(tipContainer);
-            tipContainer.append(tipContent);
         }
     };
-    WebAPIDataSource.prototype.showErrTip = function (ctrlId, args) {
-        args.preventDefault();
-        var targetEle = $(args.currentTarget);
-        var tooltip = $('#' + ctrlId + '_error_tooltip');
-        $('#' + ctrlId + '_error_tooltip_content').text(targetEle.attr('e-errormsg'));
-        var eleOffset = targetEle.offset();
-        tooltip.css({
-            left: (eleOffset.left + (targetEle.width() / 2)) - tooltip.width(),
-            top: eleOffset.top + targetEle.height() + (targetEle.height() / 2),
-            'display': 'block'
-        });
+    WebAPIDataSource.prototype.renderErrorToolTip = function (target) {
+        if (target && target.length !== 0 && !target.data('ejTooltip')) {
+            target.ejTooltip({
+                target: '.e-designer-tooltip',
+                position: {
+                    target: { horizontal: 'bottom', vertical: 'bottom' },
+                    stem: { horizontal: 'right', vertical: 'top' }
+                },
+                tip: {
+                    adjust: {
+                        xValue: 10,
+                        yValue: 100
+                    }
+                },
+                isBalloon: false,
+                showShadow: true,
+                showRoundedCorner: true,
+                content: 'Exception Message is not configured',
+                beforeOpen: $.proxy(this.beforeOpenTooltip, this)
+            });
+        }
     };
-    WebAPIDataSource.prototype.hideErrTip = function (ctrlId, args) {
-        $('#' + ctrlId + '_error_tooltip').css('display', 'none');
+    WebAPIDataSource.prototype.beforeOpenTooltip = function (args) {
+        if (args.event && args.event.target) {
+            args.cancel = !ej.isNullOrUndefined(args.event.buttons) && args.event.buttons !== 0;
+            var target = args.event.target;
+            if (target) {
+                var tooltipId = $(target).attr('e-tooltipId');
+                var errMsg = $(target).attr('e-errormsg');
+                var ejTooltip = $('#' + tooltipId).data('ejTooltip');
+                ejTooltip.setModel({
+                    content: errMsg ? errMsg : ''
+                });
+            }
+        }
     };
     WebAPIDataSource.prototype.showValidationMsg = function (id, isShow, msg) {
         var target = $('#' + id + '_error_icon_td');

@@ -52,7 +52,7 @@ var EJBarcode = (function () {
         });
         var errorRootDiv = this.errMsgDiv = ej.buildTag('div', '', {
             'display': 'none', 'position': 'relative', 'z-index': '3000',
-            'font-family': 'Segoe UI', 'font-size': '13px', 'height': '100%'
+            'font-family': 'Segoe UI', 'font-size': '13px', 'height': '100%', 'width': '100%'
         });
         var errorDiv = ej.buildTag('div', 'Failed to load barcode', {
             'display': 'table-cell', 'overflow': 'hidden', 'font-family': 'Segoe UI',
@@ -104,6 +104,7 @@ var EJBarcode = (function () {
         var propertyItems = {
             'Header': this.customJSON.Name,
             'Type': 'barcode',
+            'EditHeader': true,
             'Items': [{
                     'CategoryName': 'Basic Settings',
                     'DisplayName': this.getLocale('categoryBasicSettings'),
@@ -116,11 +117,10 @@ var EJBarcode = (function () {
                             'enableExpression': false,
                             'valueList': {
                                 'text': ['Code39', 'Code39Extended', 'Code11', 'Codabar', 'Code93', 'Code128A', 'Code128B', 'Code128C', 'UPCA',
-                                    'EAN-13', 'EAN-8', 'Code39 Mod 43', 'Interleaved 2 of 5', 'Standard 2 of 5',
-                                    'Code11', 'Pharmacode'],
+                                    'EAN-13', 'EAN-8', 'Code39 Mod 43', 'Interleaved 2 of 5', 'Standard 2 of 5', 'Pharmacode'],
                                 'value': ['Code39', 'Code39Extended', 'Code11', 'Codabar', 'Code93', 'Code128A', 'Code128B',
                                     'Code128C', 'UpcBarcode', 'EAN-13', 'EAN-8', 'Code39 Mod 43', 'Interleaved 2 of 5',
-                                    'Standard 2 of 5', 'Code11', 'Pharmacode']
+                                    'Standard 2 of 5', 'Pharmacode']
                             }
                         },
                         {
@@ -260,10 +260,10 @@ EJBarcode.Locale['fr-FR'] = {
     barcodeValue: 'Texte',
     barcodeType: 'Type de symbologie',
     textVisibility: 'Visibilite du texte',
-    categoryBasicSettings: 'Param�tres de base',
+    categoryBasicSettings: 'Paramètres de base',
     toolTip: {
-        requirements: 'Afficher n\'importe quel type de code � barres.',
+        requirements: 'Afficher n\'importe quel type de code à barres.',
         description: 'Affiche les codes barres.',
-        title: 'code � barre'
+        title: 'code à barre'
     }
 };

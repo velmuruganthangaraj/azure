@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var umsUrl = GlobalAppSettings.SystemSettings.UmsUrl;
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,7 +18,7 @@
         var unWatchUrl = "@Url.Action("UnWatch", "items")";
         var userMentionDataSourceUrl = "@Url.Action("GetUserMentionSuggestionList", "comments")";
         var watchUrl = "@Url.Action("Watch", "items")";
-        var avatarUrl = '@Url.Action("Avatar","User")';
+        var avatarUrl = "@umsUrl"+"/user/avatar" ;
         var getdefaultavatarUrl = "@Url.Action("getdefaultavatar", "User")";
         var i_am_ie9 = false;
     </script>

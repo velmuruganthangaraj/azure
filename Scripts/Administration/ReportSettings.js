@@ -6,25 +6,41 @@ $(document).ready(function () {
             $("#update-report-settings").show();
             $("#cancel-report-settings").show();
             $("#update-schedule-settings").hide();
+            $("#update-userbasedfilter-settings").hide();
         }
         else if ($(this).attr("id") == "schedule-setting") {
             $("#update-report-settings").hide();
             $("#update-schedule-settings").show();
+            $("#update-userbasedfilter-settings").hide();
+        }
+        else if ($(this).attr("id") == "userbasedfilter-setting") {
+            $("#update-report-settings").hide();
+            $("#update-schedule-settings").hide();
+            $("#update-userbasedfilter-settings").show();
         }
         $(".success-message, .error-message").hide();
-});
+    });
+
     $(document).ready(function () {
         if ($("#report-settings-container").is(":visible")) {
             if (location.href.match(/schedule-setting-tab/)) {
                 $("#schedule-setting").tab("show");
                 $("#update-report-settings").hide();
+                $("#update-userbasedfilter-settings").hide();
                 $("#update-schedule-settings").show();
+            }
+            else if (location.href.match(/userbasedfilter-setting-tab/)) {
+                $("#userbasedfilter-setting").tab("show");
+                $("#update-report-settings").hide();
+                $("#update-schedule-settings").hide();
+                $("#update-userbasedfilter-settings").show();
             }
             else {
                 $("#make-public-setting").tab("show");
                 $("#update-report-settings").show();
                 $("#cancel-report-settings").show();
                 $("#update-schedule-settings").hide();
+                $("#update-userbasedfilter-settings").hide();
             }
         }
     });
@@ -141,7 +157,7 @@ $(document).on("click", "#update-schedule-settings", function () {
     }
     scheduleExportFileSettings.IsCompressionEnabled = $("#enable-compression").is(":checked");
     scheduleExportFileSettings.IsPasswordProtected = $("#enable-password-protection").is(":checked");
-    if ($("#custom-password").is(":checked")) {
+    if ($("#enable-compression").is(":checked") && $("#enable-password-protection").is(":checked") && $("#custom-password").is(":checked")) {
         scheduleExportFileSettings.PasswordType = "CustomPassword";
         var result = value;
         var hasFirstOrLastName = false;
@@ -314,3 +330,27 @@ function AddNewElementAndIntialize() {
 
     $('[data-toggle="tooltip"]').tooltip();
 }
+
+$(document).on("click", "#update-userbasedfilter-settings", function () {
+    $(".confirmationMessage").html("");
+    var reportSettings = {
+        UserbasedFilter: $("#userbasedfilter-type").val()
+    };
+    
+    showWaitingPopup($("#body"));
+    $.ajax({
+        type: "POST",
+        url: $(this).data("url"),
+        data: { reportSettingsData: reportSettings },
+        success: function (result) {
+            if (result.status) {
+                SuccessAlert("[[[User Based Filter Settings]]]", "[[[User Based Filter settings has been updated successfully.]]]", 7000);
+            } else {
+                WarningAlert("[[[User Based Filter Settings]]]", "[[[Error while updating user based filter settings.]]]", 7000);
+            }
+        },
+        complete: function () {
+            hideWaitingPopup($("#body"));
+        }
+    });
+});

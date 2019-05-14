@@ -16,6 +16,9 @@ ej.QueryDesigner.Locale['zh-CN'] = {
         parameterLable: '参数',
         nullLable: '空值',
         valueLable: '值',
+        dataTypeLable: '数据类型',
+        auto: '汽车',
+        text: '文本',
         closeToolTip: '关'
     },
     filter: {
@@ -243,5 +246,12 @@ ej.QueryDesigner.Locale['zh-CN'] = {
         nameWaterMark: '参数名称',
         valueWaterMark: '值',
         closeToolTip: '关'
+    },
+    alertMessage: {
+        yes: '是',
+        no: '没有',
+        showDetails: '显示详细资料',
+        hideDetails: '隐藏细节',
+        close: '关'
     }
 };

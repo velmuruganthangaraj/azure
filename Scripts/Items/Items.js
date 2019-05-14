@@ -343,30 +343,33 @@ $(function () {
             versionDialogObj._dialogPosition();
         }
         var gridObj = $("#items").data("ejGrid");
-        if (window.innerWidth < 1041) {
-            gridObj.hideColumns("Description");
-            gridObj.hideColumns("Last Modified");
-        } else {
-            gridObj.showColumns("Description");
-            gridObj.showColumns("Last Modified");
-        }
-        if ($("#clear-search").css("display") == "block" || $("#clear-search").css("display") == "inline-block") {
-            $("#search-items").css("display", "block");
-        }
-        $(".item-list-panel").css("height", window.innerHeight - $("#header-area").outerHeight());
-        $("#create-new-category").css("width", $(".item-list-panel").outerWidth());
+        if (gridObj != null) {
+            if (window.innerWidth < 1041) {
+                gridObj.hideColumns("Description");
+                gridObj.hideColumns("Last Modified");
+            } else {
+                gridObj.showColumns("Description");
+                gridObj.showColumns("Last Modified");
+            }
 
-        var gridHeight = $(window).height() - ($(".item-navigation").outerHeight() + $("#header-area").outerHeight() + $("#category-listing").outerHeight());
+            if ($("#clear-search").css("display") == "block" || $("#clear-search").css("display") == "inline-block") {
+                $("#search-items").css("display", "block");
+            }
+            $(".item-list-panel").css("height", window.innerHeight - $("#header-area").outerHeight());
+            $("#create-new-category").css("width", $(".item-list-panel").outerWidth());
 
-        gridObj.option({ scrollSettings: { height: gridHeight } });
+            var gridHeight = $(window).height() - ($(".item-navigation").outerHeight() + $("#header-area").outerHeight() + $("#category-listing").outerHeight());
 
-        if (!$(".su-sidebar-collapse").is(":visible")) {
-            $("#item-viewer").css({ "height": $(window).height() - $("#header-area").outerHeight() - $("#base-footer-div").outerHeight(), "width": $(window).width() - $("#main-nav").width() - $(".su-sidebar-expand.category-collapse").width(), "top": $("#header-area").height() });
-            return false;
-        }
-        else {
-            $("#item-viewer").css({ "height": $(window).height() - $("#header-area").outerHeight() - $("#base-footer-div").outerHeight(), "width": $(window).width() - $("#main-nav").width() - $(".item-list-panel").width() });
-            return false;
+            gridObj.option({ scrollSettings: { height: gridHeight } });
+
+            if (!$(".su-sidebar-collapse").is(":visible")) {
+                $("#item-viewer").css({ "height": $(window).height() - $("#header-area").outerHeight() - $("#base-footer-div").outerHeight(), "width": $(window).width() - $("#main-nav").width() - $(".su-sidebar-expand.category-collapse").width(), "top": $("#header-area").height() });
+                return false;
+            }
+            else {
+                $("#item-viewer").css({ "height": $(window).height() - $("#header-area").outerHeight() - $("#base-footer-div").outerHeight(), "width": $(window).width() - $("#main-nav").width() - $(".item-list-panel").width() });
+                return false;
+            }
         }
     });
     $(window).load(function () {
@@ -807,6 +810,11 @@ function fnActionBegin(args) {
     }
 }
 
+function fnActionFailure(args) {
+    setTimeout(function () {
+        $("#item-grid-container").ejWaitingPopup("show");}, 500);
+}
+
 function fnActionComplete(args) {
     $("[data-toggle='tooltip']").tooltip();
     var gridObj = $("#items").data("ejGrid");
@@ -995,7 +1003,9 @@ $(document).on("touchend click", ".report-sort-options, #order", function (e) {
 function ResetGrid() {
     var gridObj = $("#items").data("ejGrid");
     gridObj.model.sortSettings.sortedColumns = [];
-    gridObj.model.filterSettings.filteredColumns = [];
+    if (!$(".all-items").hasClass("active")) {
+        gridObj.model.filterSettings.filteredColumns = [];
+    }
     $("#search-items").find("input[type=text]").val('');
     gridObj.refreshContent();
     $(".e-filtericon").removeClass('e-filteredicon e-filternone');
@@ -1400,7 +1410,7 @@ $(document).on("click", ".web-designer", function (e) {
     $("#report-name").val($(this).attr("data-name"));
     $("#category-name").val($(this).attr("data-category-name"));
     $("#edit-value").val(true);
-    var url = reportDesignerUrl + "/" + $(this).attr("data-category-name") + "/" + $(this).attr("data-name") + "?reportCompatibility=true";
+    var url = reportDesignerUrl + "/" + $(this).attr("data-category-name") + "/" + $(this).attr("data-name");
     $("#edit-report-tested").val(true);
     $("#edit-report-form").attr("action", url);
     $("#edit-report-form").submit();

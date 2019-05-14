@@ -206,7 +206,7 @@
                         <span class="PopupTitle">[[[View - Remove Access]]]</span>
                     </div>
                     <div class="col-xs-4 no-padding">
-                        <a href="javascript:void(0);" onclick=" onPermissionDeleteDialogClose() " class="PopupClose"><span class="su su-close"></span></a>
+                        <a href="javascript:void(0);" onclick="onPermissionDeleteDialogClose()" class="PopupClose"><span class="su su-close"></span></a>
                         <div id="folder-setting-arrow" class="downArrow" style="left: 37px;"></div>
                     </div>
                 </div>
@@ -223,8 +223,8 @@
                     <div class="col-xs-8 no-padding rightAlign">
                         <input type="hidden" value="" id="delete_permission_id">
                         <input type="hidden" value="" id="delete_item_type">
-                        <input type="button" onclick=" DeletePermission() " class="critical-action-button margin-right" value="[[[Yes]]]" />
-                        <input type="button" onclick=" onPermissionDeleteDialogClose() " class="secondary-button margin-right PopupClose" value="[[[No]]]" />
+                        <input type="button" onclick="DeletePermission()" class="critical-action-button margin-right" value="[[[Yes]]]" />
+                        <input type="button" onclick="onPermissionDeleteDialogClose()" class="secondary-button margin-right PopupClose" value="[[[No]]]" />
                     </div>
                 </div>
             </div>

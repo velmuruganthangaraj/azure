@@ -3,6 +3,7 @@
     var userDetail = (User)ViewBag.UserDetail;
     var groupList = ViewBag.GroupList;
     ViewBag.Title = GlobalAppSettings.SystemSettings.OrganizationName + " - [[[My Profile]]]";
+    var umsUrl = GlobalAppSettings.SystemSettings.UmsUrl;
 }
 
 @section styles{
@@ -15,7 +16,7 @@
         var updateprofilepictureUrl = "@Url.Action("updateprofilepicture", "User")";
         var isAdmin = @Html.Raw(Json.Encode(ViewBag.IsAdminAccount));
         var fileUploadUrl = "@Url.Action("Upload", "fileupload")";
-        var avatarUrl = "@Url.Action("Avatar", "User")";
+        var avatarUrl = "@umsUrl" + "/user/avatar";
         var updateUserProfileUrl = "@Url.Action("UpdateUserProfile", "User")";
         var updatepasswordUrl = "@Url.Action("updatepassword", "User")";
         var rootUrl = "@Url.Content("~/")";
@@ -76,16 +77,12 @@
                     <h1 class="col-xs-3 col-sm-4 col-md-4 col-lg-4 section-heading page-title header">[[[MY PROFILE]]]</h1>
                 </hgroup>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 button-section">
-                    @if (!ViewBag.IsAdUser)
-                    {
-                        <a href="@Url.Action("EditPassword","User")" class="link-button pull-right edit-password" title="">[[[Change Password]]]</a>
-                    }
                     <a href="@Url.Action("UserPermission","User")" class="link-button permission-button pull-right" title="">[[[View My Permissions]]]</a>
                 </div>
             </div>
             <div class="profile-section col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding admin-page-body">
                 <div class="img-view-holder col-lg-12 col-md-12 col-sm-10 col-xs-12">
-                    <img id="user-profile-picture" src="@Url.Content("~/User/Avatar?Username="+ ((HttpContext.Current.User as ServerPrincipal).UserId)+ "&ImageSize=110")" />
+                    <img id="user-profile-picture" src="@umsUrl/User/Avatar?Username=@((HttpContext.Current.User as ServerPrincipal).UserId)&ImageSize=110" />
                     <span class="su su-edit-inverse profile-picture-edit-button" id="avatar-button-click" title="[[[Edit profile picture]]]"></span>
                     <span class="su su-delete profile-picture-edit-button" id="avatar-delete-click" title="[[[Delete profile picture]]]"></span>
                 </div>
@@ -151,15 +148,6 @@
                             </div>
                         </div>
                     </form>
-                </div>
-
-                <div id="edit-button" class="col-sm-3 col-xs-12 no-padding">
-                    @if (!ViewBag.IsAdUser)
-                    {
-                        <input type="button" class="secondary-button pull-right" id="edit" title="" value="[[[Edit Profile]]]">
-                    }
-                    <input type="button" class="secondary-button pull-right popup-close" title="" id="cancel-button" value="[[[Cancel]]]">
-                    <input type="button" class="primary-button pull-right inactive-content" id="save-button" title="" onclick="SaveProfile()" value="[[[Save]]]">
                 </div>
                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 no-padding" id="message">
                     <h5 id="success-message"></h5>

@@ -20,6 +20,7 @@
 	IsActivated tinyint(1) NOT NULL,
 	IsActive tinyint(1) NOT NULL,
 	IsDeleted tinyint(1) NOT NULL,
+	DomainId varchar(4000) NULL,
 	PRIMARY KEY (Id))
 ;
 
@@ -30,6 +31,7 @@ CREATE TABLE {database_name}.SyncRS_Group(
 	Color varchar(255) NOT NULL DEFAULT 'White',
 	ModifiedDate datetime NOT NULL,
 	IsActive tinyint(1) NOT NULL,
+	DomainId varchar(4000) NULL,
 	PRIMARY KEY (Id))
 ;
 
@@ -373,6 +375,10 @@ CREATE TABLE {database_name}.SyncRS_ScheduleDetail(
 	ExportTypeId int NOT NULL,
 	IsEnabled tinyint(1) NOT NULL,
 	IsParameterEnabled tinyint(1) NOT NULL,
+	IsSaveAsFile tinyint(1) NOT NULL,
+    IsSendAsMail tinyint(1) NOT NULL DEFAULT 1,
+    ReportCount int NOT NULL DEFAULT 0,
+    ExportPath varchar(4000) NULL,
 	CreatedById int NOT NULL,
 	ModifiedById int NOT NULL,
 	CreatedDate datetime NOT NULL,
@@ -539,7 +545,7 @@ ALTER TABLE {database_name}.SyncRS_ScheduleLog  ADD FOREIGN KEY(ScheduleId) REFE
 
 CREATE TABLE {database_name}.SyncRS_SystemSettings(
 	Id int NOT NULL AUTO_INCREMENT,
-	SyncRS_SystemSettings.Key varchar(255) NOT NULL,
+	`Key` varchar(255) NOT NULL,
 	Value varchar(4000) NULL,
 	ModifiedDate datetime NOT NULL,
 	IsActive tinyint(1) NOT NULL,
@@ -924,10 +930,6 @@ INSERT into {database_name}.SyncRS_PermissionEntity (Name,EntityType,ItemTypeId,
 ;
 INSERT into {database_name}.SyncRS_PermissionEntity (Name,EntityType,ItemTypeId,IsActive) VALUES (N'All ItemViews',1,9,1)
 ;
-INSERT into {database_name}.SyncRS_Group (Name,Description,Color,ModifiedDate,IsActive) VALUES ('System Administrator','Has administrative rights for the report server','#ff0000',UTC_TIMESTAMP(), 1)
-;
-INSERT into {database_name}.SyncRS_GroupPermission (PermissionAccessId,PermissionEntityId,ItemId,GroupId,IsActive) VALUES (1,17,NULL,1,1)
-;
 INSERT into {database_name}.SyncRS_ItemCommentLogType (Name,IsActive) VALUES ( 'Added',1)
 ;
 INSERT into {database_name}.SyncRS_ItemCommentLogType (Name,IsActive) VALUES ( 'Edited',1)
@@ -990,4 +992,35 @@ INSERT into {database_name}.SyncRS_PermissionAccEntity (PermissionEntityId, Perm
 INSERT into {database_name}.SyncRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (1,6,1), (2,6,1), (3,6,1), (17,6,1), (18,6,1), (6,6,1), (7,6,1), (8,6,1), (9,6,1)
 ;
 INSERT into {database_name}.SyncRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (1,7,1), (2,7,1), (3,7,1), (6,7,1), (7,7,1), (17,7,1), (18,7,1), (8,7,1), (9,7,1)
+;
+
+CREATE TABLE {database_name}.SyncRS_UmsCredential(
+	Id int AUTO_INCREMENT NOT NULL,
+	UmsUrl varchar(255),
+	ClientId varchar(255),
+	ClientSecret varchar(255),
+    IsActive bit NOT NULL,
+	PRIMARY KEY (Id))
+;
+
+CREATE TABLE {database_name}.SyncRS_UmsGroup(
+	Id int AUTO_INCREMENT NOT NULL,
+	GroupId int NOT NULL,
+	UmsGroupId int NOT NULL,
+	IsActive tinyint(1) NOT NULL,
+	PRIMARY KEY (Id))
+;
+
+ALTER TABLE {database_name}.SyncRS_UmsGroup ADD FOREIGN KEY(GroupId) REFERENCES {database_name}.SyncRS_Group (Id)
+;
+
+CREATE TABLE {database_name}.SyncRS_UmsUser(
+	Id int AUTO_INCREMENT NOT NULL,
+	UserId int NOT NULL,
+	UmsUserId int NOT NULL,
+	IsActive tinyint(1) NOT NULL,
+	PRIMARY KEY (Id))
+;
+
+ALTER TABLE {database_name}.SyncRS_UmsUser ADD FOREIGN KEY(UserId) REFERENCES {database_name}.SyncRS_User (Id)
 ;

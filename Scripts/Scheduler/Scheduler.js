@@ -253,6 +253,9 @@ function validateSchedule(current) {
             $("#schedule-name-validator").html("[[[Please avoid special characters]]]");
             return false;
         }
+        if ($(current).hasClass("recurrence-class-body")) {
+            return validateParameters();
+        }
     } else {
         if ($("#selected_category option:selected").val() == "") {
             $("#category-message").css("display", "block");
@@ -363,6 +366,7 @@ $(document).on("click", "#schedule-back", function (event) {
             if (parameterObj.length == 0) {
                 enableScheduleOption();
             } else {
+                url = getSchedulerParameter;
                 enableParameterOption();
             }
         } else {
@@ -434,7 +438,7 @@ $(document).on("change", "#selected_report", function () {
 });
 
 function isReportHasParameter(itemId) {
-    if (reportParameterItemId !== itemId) {
+    if (reportParameterItemId !== "" && reportParameterItemId !== itemId) {
         isReportIdChanged = true;
     }
     reportParameterItemId = itemId;
@@ -573,6 +577,27 @@ function partialPost(url, className) {
                         $("#html-export").prop("checked", item.ExportType.toLowerCase() == "html");
                         $("#ppt-export").prop("checked", item.ExportType.toLowerCase() == "ppt");
                         $("#csv-export").prop("checked", item.ExportType.toLowerCase() == "csv");
+                        $("#save-as-file").prop("checked", item.IsSaveAsFile);
+                        $("#enable-send-mail").prop("checked", item.IsSendAsMail);
+                        if (item.IsSaveAsFile) {
+                            $(".save-as-file-type").css("display", "block");
+                        }
+                        else {
+                            $(".save-as-file-type").css("display", "none");
+                        }
+                        if (item.IsSendAsMail) {
+                            $(".send-mail-block").css("display", "block");
+                        }
+                        else {
+                            $(".send-mail-block").css("display", "none");
+                        }
+                        if (!item.IsSaveAsFile && !item.IsSendAsMail) {
+                            $("#enable-send-mail").prop("checked", true);
+                            $(".send-mail-block").css("display", "block");
+                        }
+
+                        $("#export-path").val(item.ExportPath);
+                        $("#max-report-count").val(item.ReportCount);
                     }
                     selectedItemsCount();
                     validateExternalRecipient();
@@ -1151,7 +1176,7 @@ function GetExportFileSettingInfo() {
     }
     scheduleExportFileSettings.IsCompressionEnabled = $("#enable-compression").is(":checked");
     scheduleExportFileSettings.IsPasswordProtected = $("#enable-password-protection").is(":checked");
-    if ($("#custom-password").is(":checked")) {
+    if ($("#enable-compression").is(":checked") && $("#enable-password-protection").is(":checked") && $("#custom-password").is(":checked")) {
         scheduleExportFileSettings.PasswordType = "CustomPassword";
         var result = value;
         var hasFirstOrLastName = false;
@@ -1172,4 +1197,71 @@ function GetExportFileSettingInfo() {
     scheduleExportFileSettings.PasswordProtocols = { PasswordKeyProtocol: value };
 
     return scheduleExportFileSettings;
+}
+
+//recepient page scripts
+$(document).on("change", "#save-as-file", function () {
+    $("#checkbox-validation").css("visibility", "hidden");
+    if ($(this).is(":checked")) {
+        $(".save-as-file-type").css("display", "block");
+        if ($(".save-as-file-type").find("#export-path").val() == "") {
+            $(".save-as-file-type").find("#export-path").val($("#edit-export-path").val());
+        }
+        if ($(".save-as-file-type").find("#max-report-count").val() == "0") {
+            $(".save-as-file-type").find("#max-report-count").val($("#export-report-count").val());
+        }
+     }
+    else {
+        $(".save-as-file-type").css("display", "none");
+    }
+});
+
+$(document).on("change", "#enable-send-mail", function () {
+    $("#checkbox-validation").css("visibility", "hidden");
+    if ($(this).is(":checked")) {
+        $(".send-mail-block").css("display", "block");
+    }
+    else {
+        $(".send-mail-block").css("display", "none");
+    }
+});
+
+$(document).on("focusout", "#export-path", function (event) {
+    var path = $("#export-path").val();
+    if (path != "") {
+        exportPathExistCheck(path);
+    }
+    else {
+        $(".directory-check").css("display", "block");
+        $(".directory-check").html("[[[Please enter a valid directory path]]]").css({ "color": "#a94442", "font-size": "12px" });
+        return;
+    }
+});
+
+$(document).on("focusout", "#max-report-count", function (event) {
+    if ($.isNumeric(parseInt($("#max-report-count").val()))) {
+        $("#report-count-validation").css("visibility", "hidden");
+    } else {
+        $("#report-count-validation").css("visibility", "visible").css({ "color": "#a94442", "font-size": "12px" });
+    }
+});
+
+function exportPathExistCheck(exportReportPath) {
+    $.ajax({
+        type: "POST",
+        url: exportPathExistUrl,
+        async: false,
+        data: { exportPath: exportReportPath },
+        success: function (data) {
+            if (data.Result) {
+                $(".directory-check").removeClass("directory-exist");
+                $(".directory-check").css("display", "none");
+            } else {
+                $(".directory-check").css("display", "block");
+                $(".directory-check").addClass("directory-exist");
+                $(".directory-check").html("[[[directory path does not exist]]]").css({ "color": "#a94442", "font-size": "12px" });
+                return;
+            }
+        }
+    });
 }

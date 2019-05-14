@@ -106,11 +106,29 @@
                                 {
                                     field: "NextScheduleString",
                                     headerText: "[[[Next Scheduled Run]]]",
-                                    width: 100,
+                                    width: 70,
                                     headerTemplateID: "#next-schedule-header",
                                     allowSorting: false,
                                     allowFiltering: false
                                 },
+                                {
+                                    field: "ExportPath",
+                                    headerText: "[[[Export Path]]]",
+                                    templateID: "#schedule-path-template",
+                                    width: 70,
+                                    headerTemplateID: "#schedule-path",
+                                    allowSorting: false,
+                                    allowFiltering: false
+                                },
+                                  {
+                                      field: "ScheduleParameter",
+                                      headerText: "[[[Schedule Parameter]]]",
+                                      templateID: "#schedule-parameter-template",
+                                      width: 70,
+                                      headerTemplateID: "#schedule-parameter",
+                                      allowSorting: false,
+                                      allowFiltering: false
+                                  },
                                 {
                                     field: "Status",
                                     headerText: "[[[Status]]]",
@@ -167,85 +185,102 @@
                 <span>{{:Name}}</span>
             </div>
         </script>
+        <script type="text/x-jsrender" id="schedule-path-template">
+            <div class="item-name grid-content" title="{{:ExportPath}}" data-toggle="tooltip" data-placement="top">
+                <span>{{:ExportPath}}</span>
+            </div>
+        </script>
+        <script type="text/x-jsrender" id="schedule-parameter-template">
+            <div class="item-name grid-content" title="{{:ScheduleParameter}}" data-toggle="tooltip" data-placement="top">
+                <span>{{:ScheduleParameter}}</span>
+            </div>
+        </script>
+
         <script type="text/x-jsrender" id="item-name-header">
             <div class="item-name">[[[Name]]]</div>
         </script>
         <script type="text/x-jsrender" id="next-schedule-header">
             <div title="[[[Next Scheduled Run]]]">[[[Next Scheduled Run]]]</div>
         </script>
-        <script type="text/x-jsrender" id="options">
-            <div class="dropdown">
-                <span class="dropdown-toggle option-icon" title="[[[Actions]]]" data-toggle="dropdown">
-                    <span class="su su-options"> </span>
-                </span>
-                <ul class="dropdown-menu" role="menu">
-                    <li class="menu-group">
-                        <a href="javascript:void(0);" title="[[[Run now]]]" class="on-demand-schedule" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}" onclick='manageSchedule("{{:Name}}", "{{:Id}}", "{{:ItemName}}", "{{:ItemCategoryName}}", "{{:ItemId}}", this.className)'>
-                            <i class="su su-play" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}"></i>
-                            <span class="menu-text">[[[Run Now]]]</span>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    {{if Status=="Active"}}
-                    <li class="menu-group">
-                        <a href="javascript:void(0);" title="[[[Disable]]]" class="disable-schedule" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}" onclick='manageSchedule("{{:Name}}", "{{:Id}}", "{{:ItemName}}", "{{:ItemCategoryName}}", "{{:ItemId}}", this.className)'>
-                            <i class="su su-disable" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}"></i>
-                            <span class="menu-text">[[[Disable]]]</span>
-                        </a>
-                    </li>
-
-                    {{else Status=="Inactive"}}
-                    <li class="menu-group">
-                        <a href="javascript:void(0);" title="[[[Enable]]]" class="enable-schedule" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}" onclick='manageSchedule("{{:Name}}", "{{:Id}}", "{{:ItemName}}", "{{:ItemCategoryName}}", "{{:ItemId}}", this.className)'>
-                            <i class="su su-enable" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}"></i>
-                            <span class="menu-text">[[[Enable]]]</span>
-                        </a>
-                    </li>
-                    {{/if}}
-
-                    {{if ~checkMobile()}}
-                    {{if CanWrite}}
-                    <li title="[[[Edit]]]">
-                        <a href="javascript:void(0);" title="Edit" class="edit-schedule" data-category-name="{{:ItemCategoryName}}" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}" onclick='manageSchedule("{{:Name}}", "{{:Id}}", "{{:ItemName}}", "{{:ItemCategoryName}}", "{{:ItemId}}", this.className)'>
-                            <i class="su su-edit" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}"></i>
-                            <span class="menu-text">[[[Edit]]]</span>
-                        </a>
-                    </li>
-                    {{/if}}
-                    {{/if}}
-
-                    {{if ~checkMobile()}}
-                    {{if CanDelete}}
-                    <li title="[[[Delete]]]">
-                        <a href="javascript:void(0);" title="[[[Delete]]]" class="remove-schedule" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}" onclick='manageSchedule("{{:Name}}", "{{:Id}}", "{{:ItemName}}", "{{:ItemCategoryName}}", "{{:ItemId}}", this.className)'>
-                            <i class="su su-delete" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}"></i>
-                            <span class="menu-text">[[[Delete]]]</span>
-                        </a>
-                    </li>
-                    {{/if}}
-                    {{/if}}
-                </ul>
-            </div>
+        <script type="text/x-jsrender" id="schedule-path">
+            <div title="[[[Export Path]]]">[[[Export Path]]]</div>
         </script>
-        <div id="item-grid-container" data-grid-name="schedules" class="admin-page-container schedule-listing">
-            <div class="admin-page-header">
-                <h1 class="page-title no-margin">
-                    [[[SCHEDULES]]]
-                </h1>
-            </div>
+        <script type="text/x-jsrender" id="schedule-parameter">
+            <div title="[[[Schedule Parameter]]]">[[[Schedule Parameter]]]</div>
+        </script>
+            <script type="text/x-jsrender" id="options">
+                <div class="dropdown">
+                    <span class="dropdown-toggle option-icon" title="[[[Actions]]]" data-toggle="dropdown">
+                        <span class="su su-options"> </span>
+                    </span>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="menu-group">
+                            <a href="javascript:void(0);" title="[[[Run now]]]" class="on-demand-schedule" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}" onclick='manageSchedule("{{:Name}}", "{{:Id}}", "{{:ItemName}}", "{{:ItemCategoryName}}", "{{:ItemId}}", this.className)'>
+                                <i class="su su-play" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}"></i>
+                                <span class="menu-text">[[[Run Now]]]</span>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        {{if Status=="Active"}}
+                        <li class="menu-group">
+                            <a href="javascript:void(0);" title="[[[Disable]]]" class="disable-schedule" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}" onclick='manageSchedule("{{:Name}}", "{{:Id}}", "{{:ItemName}}", "{{:ItemCategoryName}}", "{{:ItemId}}", this.className)'>
+                                <i class="su su-disable" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}"></i>
+                                <span class="menu-text">[[[Disable]]]</span>
+                            </a>
+                        </li>
 
-            <div id="schedules-grid-container" class="col-lg-12 admin-page-body  @isMobile">
-                <div id="search-area" class="pull-right">
-                    <input type="text" id="search-schedules" class="pull-left no-margin" placeholder="[[[Search schedules]]]" />
-                    <span class="su close-icon su-inner-close pull-left no-margin" id="clear-search" title="[[[Clear search]]]"></span>
-                    <span class="su su-search search-schedule pull-left no-margin" title="[[[Search schedules]]]"></span>
-                </div>
-                <div id="scheduleGrid" class="schedule-grid">
-                </div>
-            </div>
+                        {{else Status=="Inactive"}}
+                        <li class="menu-group">
+                            <a href="javascript:void(0);" title="[[[Enable]]]" class="enable-schedule" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}" onclick='manageSchedule("{{:Name}}", "{{:Id}}", "{{:ItemName}}", "{{:ItemCategoryName}}", "{{:ItemId}}", this.className)'>
+                                <i class="su su-enable" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}"></i>
+                                <span class="menu-text">[[[Enable]]]</span>
+                            </a>
+                        </li>
+                        {{/if}}
 
-        </div>
-        @Html.Partial("../Items/_AddItems")
+                        {{if ~checkMobile()}}
+                        {{if CanWrite}}
+                        <li title="[[[Edit]]]">
+                            <a href="javascript:void(0);" title="Edit" class="edit-schedule" data-category-name="{{:ItemCategoryName}}" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}" onclick='manageSchedule("{{:Name}}", "{{:Id}}", "{{:ItemName}}", "{{:ItemCategoryName}}", "{{:ItemId}}", this.className)'>
+                                <i class="su su-edit" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}"></i>
+                                <span class="menu-text">[[[Edit]]]</span>
+                            </a>
+                        </li>
+                        {{/if}}
+                        {{/if}}
+
+                        {{if ~checkMobile()}}
+                        {{if CanDelete}}
+                        <li title="[[[Delete]]]">
+                            <a href="javascript:void(0);" title="[[[Delete]]]" class="remove-schedule" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}" onclick='manageSchedule("{{:Name}}", "{{:Id}}", "{{:ItemName}}", "{{:ItemCategoryName}}", "{{:ItemId}}", this.className)'>
+                                <i class="su su-delete" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}"></i>
+                                <span class="menu-text">[[[Delete]]]</span>
+                            </a>
+                        </li>
+                        {{/if}}
+                        {{/if}}
+                    </ul>
+                </div>
+            </script>
+            <div id="item-grid-container" data-grid-name="schedules" class="admin-page-container schedule-listing">
+                <div class="admin-page-header">
+                    <h1 class="page-title no-margin">
+                        [[[SCHEDULES]]]
+                    </h1>
+                </div>
+
+                <div id="schedules-grid-container" class="col-lg-12 admin-page-body  @isMobile">
+                    <div id="search-area" class="pull-right">
+                        <input type="text" id="search-schedules" class="pull-left no-margin" placeholder="[[[Search schedules]]]" />
+                        <span class="su close-icon su-inner-close pull-left no-margin" id="clear-search" title="[[[Clear search]]]"></span>
+                        <span class="su su-search search-schedule pull-left no-margin" title="[[[Search schedules]]]"></span>
+                    </div>
+                    <div id="scheduleGrid" class="schedule-grid">
+                    </div>
+                </div>
+
+            </div>
+            @Html.Partial("../Items/_AddItems")
     }
     else
     {

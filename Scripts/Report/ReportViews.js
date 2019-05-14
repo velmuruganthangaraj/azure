@@ -728,11 +728,11 @@ function ViewReportClick(args) {
             if (i >= 1) {
                 filtered_li += "<hr/>";
             }
-            var paramName = args[i].Name.trim();
+            var paramName = args[i].name;
 
             filtered_li += "<li class='unsaved-filter'><div class='param-name'>[[[" +
                 paramName +
-                "]]]</div><div class='param-value'rel='tooltip' data-placement='left' data-original-title='[[[" + args[i].Labels[0] + "]]]'>[[[" +
+                "]]]</div><div class='param-value'rel='tooltip' data-placement='left' data-original-title='[[[" + args[i].labels + "]]]'>[[[" +
                 appliedParametersForUI(args[i]) +
                 "]]]</div></li>";
         }
@@ -788,16 +788,20 @@ function ViewReportClick(args) {
 
 function appliedParametersForUI(args) {
     var values = "";
-	if(args.DataType == "DateTime"){
-	values = args.Value;
-	}
-    else if (((args.Labels === null || args.Labels === "undefined" || args.Labels === ""))) {
-        values = args.Label;
-    }
-    else {
-        values = args.Labels.toString();
-    }
 
+    if (viewReportClick) {
+        values = args.labels;
+    } else {
+        if (args.DataType == "DateTime") {
+            values = args.value == undefined ? args.Value : args.value;
+        }
+        else if (((args.Labels === null || args.Labels === "undefined" || args.Labels === ""))) {
+            values = args.Label;
+        }
+        else {
+            values = args.Labels;
+        }
+    }
     return values;
 }
 
@@ -812,7 +816,7 @@ function unsavedFilters(args) {
                 if (index >= 1) {
                     filtered_li += "<hr/>";
                 }
-                var paramName = args[index].Prompt.trim();
+                var paramName = args[index].name == undefined ? args[index].Name : args[index].name;
                 filtered_li += "<li class='unsaved-filter'><div class='param-name'>[[[" +
                     paramName +
                     "]]]</div><div class='param-value'rel='tooltip' data-placement='left' data-original-title='[[[" + args[index].Value + "]]]'>[[[" +
@@ -869,7 +873,13 @@ function QueryStringFormation(args, isFilterUpdate) {
     jQuery.each(args,
         function (index, item) {
             if ($.isNumeric(index)) {
-                var value = args[index].IsMultiValue ? args[index].Values : (args[index].Value != undefined ? args[index].Value : args[index].Values);
+                
+                if (args[index].IsMultiValue == undefined) {
+                    var value = args[index].values;
+                } else {
+                    var value = args[index].IsMultiValue ? args[index].Values : (args[index].Value != undefined ? args[index].Value : args[index].Values);
+                }
+
                 var parameterValue = "";
                 if ($.isArray(value)) {
                     if (value.length > 1) {
@@ -885,10 +895,11 @@ function QueryStringFormation(args, isFilterUpdate) {
                 if (parameterValue == "") {
                     parameterValue ="\"" + value + "\"";
                 }
-                var nullable = args[index].IsNullable != undefined ? args[index].IsNullable.toString().toLowerCase() : args[index].Nullable.toString().toLowerCase();
-                queryString += "{\"name\":\"" + args[index].Name + "\",\"values\":[" + parameterValue + "],\"nullable\":" + nullable + "},";
+                var nullable = args[index].IsNullable == undefined ? args[index].nullable : args[index].IsNullable;
+                var name = args[index].name == undefined ? args[index].Name : args[index].name;
+                queryString += "{\"name\":\"" + name + "\",\"values\":[" + parameterValue + "],\"nullable\":" + nullable + "},";
                 if (isFilterUpdate) {
-                    parameterArray.push(args[index].Name.trim());
+                    parameterArray.push(name);
                     valueArray.push(value);
                 }
             }

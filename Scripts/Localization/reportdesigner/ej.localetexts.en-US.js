@@ -276,6 +276,22 @@ ej.ReportDesigner.Locale['en-US'] = {
                             title: 'PivotGrid'
                         }
                     },
+                    'tablix': {
+                        displayText: 'Table',
+                        tooltip: {
+                            requirements: '1 or more rows/columns.',
+                            description: 'Displays paginated report data in cells.',
+                            title: 'Table'
+                        }
+                    },
+                    'list': {
+                        displayText: 'List',
+                        tooltip: {
+                            requirements: '1 or more rows/columns.',
+                            description: 'A List displays data in a free-form format. Place fields anywhere within the list.',
+                            title: 'List'
+                        }
+                    }
                 }
             },
             subReports: {
@@ -320,11 +336,16 @@ ej.ReportDesigner.Locale['en-US'] = {
         gridLine: 'Grid Lines',
         header: 'Header',
         footer: 'Footer',
+        sendBackward: 'Send Backward',
+        bringForward: 'Bring Forward',
+        sendToBack: 'Send To Back',
+        bringToFront: 'Bring To Front',
         preview: 'Preview',
         reportUpload: {
             alertLabel: 'Upload',
             alertMessage: 'Error in uploading file. Please upload again'
-        }
+        },
+        grouping: 'Grouping'
     },
     newReport: {
         title: 'New Report',
@@ -535,6 +556,12 @@ ej.ReportDesigner.Locale['en-US'] = {
             seriesColor: 'Series Color'
         },
         categoryName: 'Appearance',
+        customAttribute: {
+            categoryName: 'CustomAttributes',
+            userDefined: 'UserDefined',
+            alertHeader: 'Chart ReportItem',
+            alertMessage: 'Invalid custom attributes format. Correct example: \'AttrName1= Value1, AttrName2 = Value2\'.'
+        },
         chartArea: {
             categoryName: 'Chart Area',
             colorPalette: 'Color Palette',
@@ -571,6 +598,7 @@ ej.ReportDesigner.Locale['en-US'] = {
                 hide: 'Hide',
             },
             labelFont: 'Label Font',
+            labelFormat: 'Label Format',
             enableMajorTicks: 'Enable Major Ticks',
             enableMinorTicks: 'Enable Minor Ticks',
             tickProperties: {
@@ -837,6 +865,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         setSorts: 'Set Sorts',
         setFilters: 'Set Filters',
         advancedOptions: 'Advanced Options',
+        codemodules: 'Code',
         expressionList: {
             top: 'Top',
             right: 'Right',
@@ -845,7 +874,7 @@ ej.ReportDesigner.Locale['en-US'] = {
             style: 'Style',
             color: 'Color',
             size: 'Size',
-            fontFamily: 'FontFamily',
+            fontFamily: 'Font Family',
             width: 'Width',
             height: 'Height',
             weight: 'Weight',
@@ -863,7 +892,10 @@ ej.ReportDesigner.Locale['en-US'] = {
             pointText: 'pt',
             millimeterText: 'mm',
             picaText: 'pc'
-        }
+        },
+        setGroups: 'Set Groups',
+        addDatasource: 'Add Datasource',
+        dataAlertMsg: 'No data source added !'
     },
     dataSource: {
         newDatasource: 'NEW DATASOURCE',
@@ -873,7 +905,8 @@ ej.ReportDesigner.Locale['en-US'] = {
             contextMenu: {
                 editItem: 'Edit',
                 deleteItem: 'Delete',
-                createDataSet: 'Create DataSet'
+                createDataSet: 'Create DataSet',
+                cloneDatasource: 'Clone'
             }
         },
         datasourceType: {
@@ -998,6 +1031,10 @@ ej.ReportDesigner.Locale['en-US'] = {
             alertLabel: 'DataSource',
             alertConnectionFailed: 'ReportDesigner failed to connect the datasource',
             dataExtensionFailed: 'The selected data provider is not available. Please check the data extension.',
+            connectStringValidation: 'As the connection string contains expressions in the data source ',
+            validationMessage: ' Please update with a valid connection string.',
+            executionMessage: ', we cannot execute the data set for this connection.',
+            confirmMessage: ' Are you sure want to save the data source?',
             deleteValue: 'Delete data source \'',
             nameWarning: 'Specify the DataSource name',
             nameAlert: 'The specified name already exists in the DataSource list',
@@ -1085,10 +1122,6 @@ ej.ReportDesigner.Locale['en-US'] = {
     dataSet: {
         headerText: 'DATA',
         newData: 'ADD DATASET',
-        splitButtonMenu: {
-            sharedDataset: 'Shared',
-            createNewDataset: 'Create New'
-        },
         shareDataset: {
             headerText: 'NEW DATASET',
             save: 'Save',
@@ -1104,11 +1137,14 @@ ej.ReportDesigner.Locale['en-US'] = {
         },
         contextMenu: {
             edit: 'Edit',
-            remove: 'Delete'
+            remove: 'Delete',
+            cloneDataset: 'Clone'
         },
         datasourceSwitcher: 'Datasources',
         deleteDataset: 'Delete dataset',
-        deleteField: 'Delete field'
+        deleteField: 'Delete field',
+        newDataText: 'New Data',
+        sharedDataText: 'Shared Data'
     },
     reportViewer: {
         toolbar: {
@@ -1224,9 +1260,9 @@ ej.ReportDesigner.Locale['en-US'] = {
         cancel: 'Cancel',
         close: 'Close',
         errorMessage: {
-            nameErrorMessage: 'Please enter the name',
+            nameErrorMessage: 'Please enter the valid name',
             expressionErrorMessage: 'Choose value for an expression field',
-        },
+        }
     },
     alertMessage: {
         yes: 'Yes',
@@ -1326,6 +1362,7 @@ ej.ReportDesigner.Locale['en-US'] = {
                 syntaxLabelField: 'The entered value in the label field is not a valid token syntax.',
                 syntaxValueField: 'The entered value in the value field is not a valid token syntax.',
                 blankValueCheck: 'The value field is blank. The parameter does not allow blank values.',
+                nullValueCheck: 'In value field, a null value was specified. The parameter does not allow null values. '
             },
             closeToolTip: 'Close'
         }
@@ -1403,7 +1440,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         dataLabel: 'Data',
         descritionLabel: 'Description',
         exampleLabelText: 'Example',
-        ok: 'Ok',
+        ok: 'OK',
         cancel: 'Cancel',
         closeToolTip: 'Close',
         textAreaWaterMark: 'Expression',
@@ -1598,17 +1635,6 @@ ej.ReportDesigner.Locale['en-US'] = {
         errorMessagePrefix: 'You have not configured a data source yet.',
         errorMessageSuffix: 'Add a data source to bind data to report items in your designer.',
         search: 'Search',
-        xValue: 'X Value(s)',
-        yValue: 'Y Value(s)',
-        value: 'Value(s)',
-        column: 'Column',
-        row: 'Row(s)',
-        size: 'Size(s)',
-        aggregate: 'Aggregate',
-        filters: 'Filters',
-        sorts: 'Sorts',
-        groups: 'Groups',
-        expression: 'Expression',
         dragOnDrop: 'Drag & Drop'
     },
     reportProperty: {
@@ -1653,6 +1679,9 @@ ej.ReportDesigner.Locale['en-US'] = {
             sizeLabel: 'Size',
             width: 'Width',
             height: 'Height'
+        },
+        codeModule: {
+            code: 'Code',
         },
         margin: {
             categoryName: 'Margin',
@@ -2000,6 +2029,10 @@ ej.ReportDesigner.Locale['en-US'] = {
         }
     },
     textBoxProperty: {
+        contents: {
+            categoryName: 'Content',
+            content: 'Content'
+        },
         basicSettings: {
             categoryName: 'Basic Settings',
             font: {
@@ -2136,12 +2169,15 @@ ej.ReportDesigner.Locale['en-US'] = {
             cut: 'Cut',
             copy: 'Copy',
             paste: 'Paste',
-            expression: 'Expression'
+            expression: 'Expression',
+            pasteAlert: 'Your browser doesn\'t support direct access to the clipboard. Please use the Ctrl+V keyboard shortcut instead of paste operation.'
         }
     },
     designPanel: {
         headerText: 'Header',
-        footerText: 'Footer'
+        footerText: 'Footer',
+        pasteAlert: 'Only basic item are supported in header and footer area',
+        pasteTitle: 'Paste'
     },
     customProperty: {
         position: {
@@ -2176,6 +2212,304 @@ ej.ReportDesigner.Locale['en-US'] = {
             visible: 'Visible'
         }
     },
+    tablixProperty: {
+        data: {
+            categoryName: 'Data',
+            datasetName: 'Dataset',
+            datasetNone: 'None'
+        },
+        appearance: {
+            categoryName: 'Appearance',
+            borderTypes: {
+                border: 'Border',
+                borderLeft: 'Left',
+                borderTop: 'Top',
+                borderRight: 'Right',
+                borderBottom: 'Bottom'
+            },
+            borderStyles: {
+                solid: 'Solid',
+                none: 'None',
+                double: 'Double',
+                dashed: 'Dashed',
+                dotted: 'Dotted'
+            },
+            backGround: 'BackgroundColor'
+        },
+        miscellaneous: {
+            categoryName: 'Miscellaneous',
+            noRowsMessage: 'No Rows Message',
+            pageName: 'Page Name',
+            keepTogether: 'Keep Together',
+            repeatColumnHeaders: 'Repeat Column Headers',
+            repeatRowHeaders: 'Repeat Row Headers',
+            fixedColumnHeaders: 'Fixed Column Headers',
+            fixedRowHeaders: 'Fixed Row Headers'
+        },
+        font: {
+            categoryName: 'Font',
+            defaultStyle: 'Default',
+            normal: 'Normal',
+            italic: 'Italic'
+        },
+        fontStyle: {
+            categoryName: 'Font Style',
+            defaultStyle: 'Default',
+            normal: 'Normal',
+            thin: 'Thin',
+            extraLight: 'ExtraLight',
+            light: 'Light',
+            medium: 'Medium',
+            semiBold: 'SemiBold',
+            bold: 'Bold',
+            extraBold: 'ExtraBold',
+            heavy: 'Heavy'
+        },
+        textDecoration: {
+            categoryName: 'Text Decoration',
+            defaultStyle: 'Default',
+            none: 'None',
+            underline: 'Underline',
+            lineThrough: 'LineThrough',
+            overline: 'Overline'
+        },
+        alignment: {
+            categoryName: 'Alignment',
+            textAlignment: {
+                categoryName: 'Text Alignment',
+                defaultStyle: 'Default',
+                left: 'Left',
+                center: 'Center',
+                right: 'Right'
+            },
+            verticalAlignment: {
+                categoryName: 'Vertical Alignment',
+                defaultStyle: 'Default',
+                top: 'Top',
+                middle: 'Middle',
+                bottom: 'Bottom'
+            }
+        },
+        padding: {
+            padding: 'Padding',
+            paddingLeft: 'Left',
+            paddingTop: 'Top',
+            paddingRight: 'Right',
+            paddingBottom: 'Bottom'
+        },
+        position: {
+            categoryPosition: 'Position',
+            positionLabel: 'Position',
+            left: 'Left',
+            top: 'Top',
+            sizeLabel: 'Size',
+            width: 'Width',
+            height: 'Height'
+        },
+        visibility: {
+            categoryName: 'Visibility',
+            visible: 'Visible',
+            toggleItem: 'Toggle'
+        },
+        staticGroupProp: {
+            categoryName: 'Basic Settings',
+            filters: 'Filters',
+            sorts: 'Sorts',
+            fixedData: 'Fixed Data',
+            groupExp: 'Groups',
+            hideIfNoRows: 'Hide If No Rows',
+            keepWithGroup: 'Keep With Group',
+            repeatOnNewPage: 'Repeat On New Page',
+            afterGroup: 'After',
+            beforeGroup: 'Before',
+            pageBreak: {
+                categoryName: 'Page Break',
+                enablePageBreak: 'Enable Page Break',
+                breakLocation: {
+                    categoryName: 'Break Location',
+                    none: 'None',
+                    start: 'Start',
+                    end: 'End',
+                    startAndEnd: 'StartAndEnd',
+                    between: 'Between'
+                },
+                pageNumberReset: 'Page Number Reset',
+            }
+        }
+    },
+    rowColumnGroup: {
+        rowGroupLable: 'Row Groups',
+        columnGroupLable: 'Column Groups',
+        tablixAlertHeader: 'Tablix',
+        alertMessage: 'Enable the expand option to select the tablix report item',
+        contextMenu: {
+            addgroup: 'Add Group',
+            advanced: 'Advanced',
+            deletegroup: 'Delete Group',
+            addtotal: 'Add Total',
+            groupproperties: 'Group Properties',
+            addColumnGroup: 'Add Column Group',
+            addRowGroup: 'Add Row Group'
+        },
+        contextSubMenu: {
+            adjacentafter: 'Adjacent After',
+            adjacentbefore: 'Adjacent Before',
+            childgroup: 'Child Group',
+            parentgroup: 'Parent Group',
+            totalafter: 'After',
+            totalbefore: 'Before',
+            childGroupAlert: 'Cannot insert group inside detail.'
+        }
+    },
+    tablixContextMenu: {
+        rowMenu: {
+            insertRow: 'Insert Row',
+            above: 'Above',
+            below: 'Below'
+        },
+        columnMenu: {
+            insertColumn: 'Insert Column',
+            left: 'Left',
+            right: 'Right'
+        },
+        rowGroupMenu: {
+            insideGroupAbove: 'Inside Group - Above',
+            insideGroupBelow: 'Inside Group - Below',
+            outsideGroupAbove: 'Outside Group - Above',
+            outsideGroupBelow: 'Outside Group - Below'
+        },
+        columnGroupMenu: {
+            insideGroupLeft: 'Inside Group - Left',
+            insideGroupRight: 'Inside Group - Right',
+            outsideGroupLeft: 'Outside Group - Left',
+            outsideGroupRight: 'Outside Group - Right',
+        },
+        deleteRows: 'Delete Rows',
+        deleteColumns: 'Delete Columns',
+        rowVisibility: 'Row Visibility',
+        columnVisibility: 'Column Visibility',
+        tablixProperties: 'Tablix Properties',
+        splitcells: 'Split Cells',
+        mergecells: 'Merge Cells',
+        groupMenu: {
+            adjacentAbove: 'Adjacent Above',
+            adjacentleft: 'Adjacent Left',
+            adjacentright: 'Adjacent Right',
+            adjacentBelow: 'Adjacent Below',
+            childGroup: 'Child Group',
+            parentGroup: 'Parent Group',
+            deleteRowGroup: 'Delete Row Group',
+            deleteColGroup: 'Delete Column Group',
+            addRowGroup: 'Row Group',
+            addColGroup: 'Column Group'
+        },
+        reportItemMenu: {
+            insertItem: 'Insert',
+            chart: 'Chart'
+        },
+        totalMenu: {
+            total: 'Add Total',
+            row: 'Row',
+            column: 'Column',
+            before: 'Before',
+            after: 'After'
+        },
+        cellMenu: {
+            addExpression: 'Add Expression',
+            editExpression: 'Edit Expression',
+            datasource: 'Add Data Source',
+            noFields: 'No Fields',
+            addText: 'Add Text',
+            editText: 'Edit Text'
+        },
+        basicItems: {
+            deleteItem: 'Delete',
+            cut: 'Cut',
+            copy: 'Copy',
+            paste: 'Paste'
+        }
+    },
+    tablixAlertDialog: {
+        ok: 'OK',
+        cancel: 'Cancel',
+        closeToolTip: 'Close',
+        deleteRowTitle: 'Delete Rows',
+        deleteRow: 'Delete rows only',
+        deleteRowGroup: 'Delete rows and associated groups',
+        deleteRowContent: 'Delete row options',
+        deleteBodyRow: 'Tablix body must contain at least one row.',
+        deleteColumnTitle: 'Delete Columns',
+        deleteColumn: 'Delete columns only',
+        deleteColumnGroup: 'Delete columns and associated groups',
+        deleteColumnContent: 'Delete column options',
+        deleteBodyColumn: 'Tablix body must contain at least one column.',
+        deleteGroup: 'Delete group only',
+        deleteGroupRowColumn: 'Delete group and related rows and columns',
+        deleteGroupTitle: 'Delete Group',
+        deleteGroupContent: 'Delete group options',
+        deleteStructure: 'Group structure not available.',
+        removeRowAlert: 'Failed to remove row in tablix report item',
+        removeRow: 'Remove Rows',
+        removeColumn: 'Remove Columns',
+        addRow: 'Add Row',
+        addColumn: 'Add Column',
+        removeColumnAlert: 'Failed to remove column in tablix report item',
+        addRowAlert: 'Failed to add row in tablix report item',
+        addColumnAlert: 'Failed to add column in tablix report item'
+    },
+    cellMergingAlertInfo: {
+        merge: 'Merge Cells',
+        mergeAlert: 'Failed to merge cells in tablix report item',
+        split: 'Split Cells',
+        splitAlert: 'Failed to split cells in tablix report item'
+    },
+    tablixAlertInfo: {
+        addGroup: 'Add Group',
+        removeGroup: 'Remove Group',
+        adjacentAfterAlert: 'Failed to add adjacent group in hierarchy structure',
+        adjacentBeforeAlert: 'Failed to add adjacent group in hierarchy structure',
+        childGroupALert: 'Failed to add child group in hierarchy structure',
+        title: 'Tablix ReportItem',
+        parentGroupAlert: 'Failed to add parent group in hierarchy structure',
+        removeGroupAlert: 'Failed to remove group in hierarchy structure',
+        selectedMemberAlert: 'Selected member is not a group member',
+        pasteActionAlert: 'The information cannot be posted because the copy area and the paste area are not the same size and shape.',
+        pasteTitle: 'Paste'
+    },
+    tablixGroup: {
+        title: 'Tablix Group',
+        groupBy: 'Group by:',
+        chooseField: 'Choose Field',
+        showDetailData: 'Show detail data',
+        addGroupHeader: 'Add header',
+        addGroupFooter: 'Add footer',
+        ok: 'OK',
+        cancel: 'Cancel',
+        closeToolTip: 'Close'
+    },
+    tablixDataAssignMenu: {
+        datasource: 'Add Data Source',
+        addExpression: 'Add Expression',
+        editExpression: 'Edit Expression',
+        addText: 'Add Text',
+        editText: 'Edit Text',
+        search: 'Search',
+        noFieldsFound: 'No Fields Found'
+    },
+    tablixTotalAlert: {
+        totalHeader: 'Add Total Header',
+        totalStatic: 'Add Total',
+        headerMessage: 'Failed to add total row or column to the group header in tablix report item',
+        staticMessage: 'Failed to add total row or column to the tablix body in tablix report item'
+    },
+    tablixAddTextDialog: {
+        save: 'Save',
+        add: 'Add',
+        cancel: 'Cancel',
+        closeToolTip: 'Close',
+        addText: 'Add Text',
+        editText: 'Edit Text'
+    },
     queryDesigner: {
         storeParameter: {
             title: 'Parameters',
@@ -2194,6 +2528,9 @@ ej.ReportDesigner.Locale['en-US'] = {
             parameterLable: 'Parameter',
             nullLable: 'Null',
             valueLable: 'Value',
+            dataTypeLable: 'DataType',
+            auto: 'Auto',
+            text: 'Text',
             closeToolTip: 'Close'
         },
         filter: {
@@ -2422,5 +2759,63 @@ ej.ReportDesigner.Locale['en-US'] = {
             valueWaterMark: 'Value',
             closeToolTip: 'Close'
         }
+    },
+    chartItem: {
+        categoryItems: {
+            yvalue: 'Y Value(s)',
+            size: 'Size(s)',
+            xvalue: 'X Value(s)',
+            column: 'Column',
+            row: 'Row(s)'
+        },
+        categoryItemsMenu: {
+            filter: 'Filters',
+            sort: 'Sorts',
+            group: 'Groups',
+            expression: 'Expression',
+            aggregate: 'Aggregate'
+        }
+    },
+    codeDialog: {
+        title: 'Code Module',
+        ok: 'OK',
+        cancel: 'Cancel',
+        add: 'ADD',
+        closeToolTip: 'Close',
+        reference: {
+            title: 'References',
+            waterMark: 'Reference',
+            errorMessage: 'The field is empty',
+            headerText: 'List of assembly references',
+            infoTipText: 'Add an assembly reference to utilize your assembly functions in report.'
+        },
+        classes: {
+            title: 'Classes',
+            classWaterMark: 'Class Name',
+            instanceWaterMark: 'Instance Name',
+            classErrorMessage: 'The fields are empty',
+            instanceErrorMessage: 'The field is empty',
+            headerText: 'List of class instances',
+            infoTipText: 'Add class instances to access your object functions in report.'
+        },
+        code: {
+            title: 'Code',
+            headerText: 'VB code function for report',
+            infoTipText: 'Syncfusion reporting engine supports VB code functions to integrate with report element and data.'
+        }
+    },
+    sampleDataSource: {
+        sampleDSHeader: 'IMPORT SAMPLE DATA',
+        addText: 'Add',
+        searchText: 'Search',
+        noDataFound: 'No Data found.',
+        welcomeContentPrefix: 'Start by creating a data source',
+        welcomeContentSuffix: 'You can connect to your own custom data or can import one from the predefined shared data that we offer.',
+        sampleDSText: 'import sample data',
+        exploreSampleText: 'Explore Sample Data',
+        accordionText: 'Kickstart your first report and explore the customization options using the sample data.',
+        errorMessage: 'Network Error',
+        alertHeaderText: 'Import Data',
+        alertMessage: 'ReportDesigner failed to import the data from the ReportServer'
     }
 };

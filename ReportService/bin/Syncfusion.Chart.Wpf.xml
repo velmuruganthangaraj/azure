@@ -9172,6 +9172,16 @@
             <param name="forPositive"></param>
             <returns></returns>
         </member>
+        <member name="M:Syncfusion.Windows.Chart.ChartArea.GetStackInfo(Syncfusion.Windows.Chart.ChartSeries,System.Double,System.Nullable{System.Boolean},System.Int32)">
+            <summary>
+            Return double value Based on given series collection
+            </summary>
+            <param name="series"></param>
+            <param name="position"></param>
+            <param name="forPositive"></param>
+            <param name="stackInfoCurrentIndex"></param>
+            <returns></returns>
+        </member>
         <member name="M:Syncfusion.Windows.Chart.ChartArea.GetPercentageStackInfo(Syncfusion.Windows.Chart.ChartSeries,Syncfusion.Windows.Chart.ChartIndexedDataPoint)">
             <summary>
             Gets the percentage stack info.
@@ -9237,20 +9247,20 @@
         </member>
         <member name="M:Syncfusion.Windows.Chart.ChartArea.OnMouseMove(System.Windows.Input.MouseEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseMove"></see> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseMove"></see>�attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.MouseEventArgs"></see> that contains the event data.</param>
         </member>
         <member name="M:Syncfusion.Windows.Chart.ChartArea.OnMouseLeave(System.Windows.Input.MouseEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseDown"/> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseDown"/>�attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.MouseButtonEventArgs"/> that contains the event data. This event data reports details about the mouse was left and the handled state.</param>
             
         </member>
         <member name="M:Syncfusion.Windows.Chart.ChartArea.OnMouseDown(System.Windows.Input.MouseButtonEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseDown"/> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseDown"/>�attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.MouseButtonEventArgs"/> that contains the event data. This event data reports details about the mouse button that was pressed and the handled state.</param>
         </member>
@@ -9262,37 +9272,37 @@
         </member>
         <member name="M:Syncfusion.Windows.Chart.ChartArea.OnMouseUp(System.Windows.Input.MouseButtonEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseUp"/> routed event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseUp"/>�routed event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.MouseButtonEventArgs"/> that contains the event data. The event data reports that the mouse button was released.</param>
         </member>
         <member name="M:Syncfusion.Windows.Chart.ChartArea.OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.UIElement.MouseLeftButtonUp"/> routed event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.UIElement.MouseLeftButtonUp"/>�routed event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.MouseButtonEventArgs"/> that contains the event data. The event data reports that the left mouse button was released.</param>
         </member>
         <member name="M:Syncfusion.Windows.Chart.ChartArea.OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.UIElement.MouseLeftButtonDown"/> routed event is raised on this element. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.UIElement.MouseLeftButtonDown"/>�routed event is raised on this element. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.MouseButtonEventArgs"/> that contains the event data. The event data reports that the left mouse button was pressed.</param>
         </member>
         <member name="M:Syncfusion.Windows.Chart.ChartArea.OnMouseWheel(System.Windows.Input.MouseWheelEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseWheel"/> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseWheel"/>�attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.MouseWheelEventArgs"/> that contains the event data.</param>
         </member>
         <member name="M:Syncfusion.Windows.Chart.ChartArea.OnMouseRightButtonUp(System.Windows.Input.MouseButtonEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.UIElement.MouseRightButtonUp"/> routed event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.UIElement.MouseRightButtonUp"/>�routed event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.MouseButtonEventArgs"/> that contains the event data. The event data reports that the right mouse button was released.</param>
         </member>
         <member name="M:Syncfusion.Windows.Chart.ChartArea.OnMouseRightButtonDown(System.Windows.Input.MouseButtonEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.UIElement.MouseRightButtonDown"/> routed event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.UIElement.MouseRightButtonDown"/>�routed event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.MouseButtonEventArgs"/> that contains the event data. The event data reports that the right mouse button was pressed.</param>
         </member>
@@ -10599,7 +10609,7 @@
         </member>
         <member name="M:Syncfusion.Windows.Chart.SyncChartAreas.OnMouseLeave(System.Windows.Input.MouseEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseDown"/> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseDown"/>�attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.MouseButtonEventArgs"/> that contains the event data. This event data reports details about the mouse was left and the handled state.</param>
             
@@ -14187,7 +14197,7 @@
             </summary>
             <remarks>
             Presentation of data on a logarithmic scale can be helpful when the data covers
-            a large range of values – the logarithm reduces this to a more manageable range.
+            a large range of values � the logarithm reduces this to a more manageable range.
             </remarks>
             <value>
             <c>true</c> if this instance is logarithmic; otherwise, <c>false</c>.
@@ -26791,13 +26801,13 @@
         </member>
         <member name="M:Syncfusion.Windows.Chart.Chart.OnKeyDown(System.Windows.Input.KeyEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.KeyDown"/> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.KeyDown"/>�attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.KeyEventArgs"/> that contains the event data.</param>
         </member>
         <member name="M:Syncfusion.Windows.Chart.Chart.OnMouseDown(System.Windows.Input.MouseButtonEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseDown"/> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseDown"/>�attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.MouseButtonEventArgs"/> that contains the event data. This event data reports details about the mouse button that was pressed and the handled state.</param>
         </member>
@@ -32791,7 +32801,7 @@
         </member>
         <member name="M:Syncfusion.Windows.Chart.ChartLegend.OnMouseMove(System.Windows.Input.MouseEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseMove"/> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseMove"/>�attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.MouseEventArgs"/> that contains the event data.</param>
         </member>
@@ -37065,13 +37075,13 @@
         </member>
         <member name="M:Syncfusion.Windows.Chart.ToolBarItem.OnMouseLeave(System.Windows.Input.MouseEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseLeave"/> attached event is raised on this element. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseLeave"/>�attached event is raised on this element. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.MouseEventArgs"/> that contains the event data.</param>
         </member>
         <member name="M:Syncfusion.Windows.Chart.ToolBarItem.OnMouseDown(System.Windows.Input.MouseButtonEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseDown"/> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseDown"/>�attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.MouseButtonEventArgs"/> that contains the event data. This event data reports details about the mouse button that was pressed and the handled state.</param>
         </member>
@@ -37083,7 +37093,7 @@
         </member>
         <member name="M:Syncfusion.Windows.Chart.ToolBarItem.OnGotKeyboardFocus(System.Windows.Input.KeyboardFocusChangedEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.GotKeyboardFocus"/> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.GotKeyboardFocus"/>�attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.KeyboardFocusChangedEventArgs"/> that contains the event data.</param>
         </member>
@@ -37095,7 +37105,7 @@
         </member>
         <member name="M:Syncfusion.Windows.Chart.ToolBarItem.OnLostKeyboardFocus(System.Windows.Input.KeyboardFocusChangedEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.LostKeyboardFocus"/> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.LostKeyboardFocus"/>�attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.KeyboardFocusChangedEventArgs"/> that contains event data.</param>
         </member>
@@ -39588,7 +39598,7 @@
         <member name="F:Syncfusion.Windows.Chart.ChartTypes.RangeArea">
             <summary>
             Range Area Chart is a variation of Area Chart type that lets you plot bands of data in a chart, like Bollinger bands, weather patterns, etc. 
-            Each point in the chart is specified by 2 Y values – the lower and higher end of the band. 
+            Each point in the chart is specified by 2 Y values � the lower and higher end of the band. 
             </summary>
         </member>
         <member name="F:Syncfusion.Windows.Chart.ChartTypes.RangeColumn">

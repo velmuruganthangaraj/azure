@@ -83,7 +83,7 @@
                                     <input type="checkbox" name="Enabled" id="enable-parameter" />
                                     <label class="label-primary" for="enable-parameter"></label>
                                 </span>
-                            <div class="reportparameter-tag label-align-center" style="display: none;">
+                            <div class="reportparameter-tag label-align-center no-margin" style="display: none;">
                                 <span class="dropdown-toggle cursor-type" id="report-parameter-info" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
                                 <div class="col-xs-2 dropdown-menu" id="reportparameter-help-message" role="menu">
                                     [[[The selected report does not have any parameters.]]]
@@ -144,12 +144,15 @@
         var itemName = "@HttpContext.Current.Request.QueryString["itemName"].ToString()";
         var scheduleId = "@HttpContext.Current.Request.QueryString["scheduleId"].ToString()";
         var actionType = "@HttpContext.Current.Request.QueryString["actionType"].ToString()";
-		var getExportFileSettingInfoUrl = "@Url.Action("GetExportFileSettingInfo", "Administration")";
-        var getScheduleFileSettingTypeUrl = "@Url.Action("GetScheduleFileSettingType", "Administration")";
+		var getExportFileSettingInfoUrl = "@Url.Action("GetExportFileSettingInfo", "Scheduler")";
+        var getScheduleFileSettingTypeUrl = "@Url.Action("GetScheduleFileSettingType", "Scheduler")";
         var getSchedulerParameter = "@Url.Action("SchedulerParameter", "scheduler")";
         var editSchedulerParameter = "@Url.Action("EditSchedulerParameter", "scheduler")";
         var reportHasParameterUrl = "@Url.Action("CheckReportHasParameter", "scheduler")";
+        var getdependentparameter = "@Url.Action("getdependentparameter", "scheduler")";
+        var exportPathExistUrl = "@Url.Action("CheckExportPathExist", "scheduler")";
         var parameterObj;
+        var reportparameterObj;
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
             if (($(parent.window).width()) > 1400) {

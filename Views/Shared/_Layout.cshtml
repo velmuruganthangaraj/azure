@@ -35,21 +35,7 @@
         @Scripts.Render("~/scripts/layout-mobile")
     }
 
-    <script src="~/signalr/hubs"></script>
-	@Scripts.Render("~/scripts/signalr-bundle")
     <script>
-        $(function () {
-            // Reference the auto-generated proxy for the hub.
-            var userActivity = $.connection.signalrHub;
-
-            userActivity.client.connection = function () {
-            };
-
-            SJ.iwc.SignalR.start();
-
-            var browser = ej.browserInfo();
-        });
-
         function IframeLoad() {
             if (browser.name.toLowerCase() == "webkit") {
                 $("#datasource-edit-popup, #datasource-popup").find("iframe").contents().find(".e-spanicon").addClass("padding-top-adjust");
@@ -145,7 +131,7 @@
     @RenderSection("scripts", false)
     @if (GlobalAppSettings.SystemSettings.StorageType == (int)StorageType.AzureBlob)
     {
-        <link rel="icon" href="@(GlobalAppSettings.AzureBlob != null ? GlobalAppSettings.AzureBlob.AzureBlobStorageUri : string.Empty)/@GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName/@GlobalAppSettings.GetStorageMode()/Content/Images/Application/@GlobalAppSettings.SystemSettings.FavIcon" onerror="if (this.href !== null && this.href.toLowerCase() !== '~/content/images/application/favicon.png') this.href = '~/Content/Images/Application/Favicon.png';" />
+        <link rel="icon" href="@(GlobalAppSettings.AzureBlob != null ? GlobalAppSettings.AzureBlob.AzureBlobStorageUri.TrimEnd('/') : string.Empty)/@GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName/@GlobalAppSettings.GetStorageMode()/Content/Images/Application/@GlobalAppSettings.SystemSettings.FavIcon" onerror="if (this.href !== null && this.href.toLowerCase() !== '~/content/images/application/favicon.png') this.href = '~/Content/Images/Application/Favicon.png';" />
     }
     else
     {
@@ -251,6 +237,17 @@
         </div>
 
     </div>
+    <script type="text/javascript">
+    if (self != top) {
+        $("#header-area, #menu-area, #messageBox, #base-footer-div").css("display", "none");
+    } else {
+        $("#messageBox").css("display", "none");
+    }
+
+    if (window.parent.$("#item-viewer").data("ejWaitingPopup") != undefined) {
+        window.parent.$("#item-viewer").ejWaitingPopup("hide");
+    }
+    </script>
 
 </body>
 </html>

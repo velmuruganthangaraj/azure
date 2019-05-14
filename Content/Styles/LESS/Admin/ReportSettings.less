@@ -127,6 +127,7 @@
     }
 
     #password-condition-section {
+        padding-left: 0px;
         .bootstrap-select {
             width: 100px !important;
         }
@@ -142,4 +143,41 @@
      .dropdown-menu {
              font-size: @app-text-size !important;
          }
+}
+
+//userbased filter settings
+
+#userbasedfilter-settings-body {
+    padding-bottom: 5px;
+       #info-dropdown-toggle {
+        cursor: pointer;
+    }
+
+    #info-dropdown{
+        font-size: @app-large-text-size;
+        width: 300px;
+        padding: 5px;
+        margin-left:18px;
+    }
+
+    .userbased-tool-tip{
+            float: right;
+    display: inline;
+    position: absolute;
+    top: 6px;
+    }
+}
+
+.bootstrap-select {
+    .btn {
+        font-size: @app-text-size;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .bootstrap-select {
+        .btn {
+            font-size: @app-large-text-size;
+        }
+    }
 }

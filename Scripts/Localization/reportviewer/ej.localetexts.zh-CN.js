@@ -1,8 +1,13 @@
 /**
  * Default [zh-CN] localization for report viewer.
  */
+//ejDatePicker
+ej.DatePicker.Locale["zh-CN"] = {
+    watermarkText: "选择日期",
+    buttonText: "今天",
+};
 
-ej.ReportViewer.Locale = ej.ReportViewer.Locale || {};
+//ejReportViewer
 ej.ReportViewer.Locale["zh-CN"] = {
     toolbar: {
         print: {
@@ -111,7 +116,16 @@ ej.ReportViewer.Locale["zh-CN"] = {
         startMessage: '报告查看器遇到一些加载此报告的问题。请',
         middleMessage: ' 点击这里',
         endMessage: '查看错误的详细信息',
-        closeMessage: '关闭此消息'
+        closeMessage: '关闭此消息',
+        exportAjaxFailureMsg: '由于连接报告服务失败，无法导出文档。',
+        printAjaxFailureMsg: '由于连接报告服务失败，无法打印文档。',
+        reportLoadAjaxFailureMsg: '由于连接报告服务失败，无法推进报告操作。',
+    },
+    progressMessage: {
+        exportLoadingMessage: '准备出口文件......请稍候......',
+        printLoadingMessage: '准备打印数据......请稍候......',
+        printPreparationMessage: '准备打印数据... {0}已完成...请稍候...',
+        exportPreparationMessage: '准备导出文档... {0}％已完成...请稍候...',
     },
     alertMessage: {
         close: '关',
@@ -135,5 +149,5 @@ ej.ReportViewer.Locale["zh-CN"] = {
     },
     selectAll: '全选',
     viewButton: "查看报告",
+    parameterProcessingMessage: '加载相关参数......',
 };
-               

@@ -1,6 +1,7 @@
 ﻿@model LogResponse
 @{
     Layout = null;
+    var umsUrl = GlobalAppSettings.SystemSettings.UmsUrl;
 }
 
 <!DOCTYPE html>
@@ -73,7 +74,7 @@
                 var appendComment = notificationContent.Url.indexOf("?")>0 ? "&comment=" : "?comment=";
                 var viewUrl = "@Url.Action("Index", "FileRender")";
                 var embedUrl = notificationContent.Url.indexOf("/embed/")> 0 ? notificationContent.Url.replace("/embed/","/") : notificationContent.Url.replace("/reports",viewUrl);
-                var displayText = "<span class='notification-picture-menu'><img class = 'img-circle' src='@Url.Content("~/Content/Images/ProfilePictures/default-32.png")' width='32' height='32' data-actual-image='@Url.Action("Avatar", "User")?Username=" + notificationContent.DoneById + "&ImageSize=32' /></span><span class='notification-text-content'>";
+                var displayText = "<span class='notification-picture-menu'><img class = 'img-circle' src='@umsUrl/user/avatar?Username=" + notificationContent.DoneByUserName + "&ImageSize=32' width='32' height='32' data-actual-image='@umsUrl/user/avatar?Username=" + notificationContent.DoneByUserName + "&ImageSize=32' /></span><span class='notification-text-content'>";
                 switch (notificationContent.LogCategory) {
                     case @((int) LogCategory.Comment):
                         switch (notificationContent.LogTypeId)

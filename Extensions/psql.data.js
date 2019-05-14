@@ -1,9 +1,9 @@
 var PSQLDataSource = (function () {
     function PSQLDataSource() {
         this.locale = 'en-US';
+        this.controlWidth = 428;
         this.id = 'container';
         this.connectClick = $.proxy(this.connectDataSource, this);
-        this.renderErrorToolTip(this.id);
     }
     PSQLDataSource.prototype.renderConfig = function (targetTag, dataSource, isEdit) {
         this.renderConfiguration(targetTag);
@@ -19,6 +19,7 @@ var PSQLDataSource = (function () {
             }, { 'id': this.id + '_psql_datasource' });
             targetTag.append(this.psqlConfig);
             this.renderPsqlPanel();
+            this.renderErrorToolTip(targetTag);
             this.changedAuthentication({ 'value': 'authentication' });
         }
         this.showConfiguration(true);
@@ -37,9 +38,9 @@ var PSQLDataSource = (function () {
         this.psqlPanel.append(psqlConfigTable);
         this.renderTextArea(this.getLocale('connectionString'), this.id + '_psql_conStr', psqlConfigTable);
         this.renderDropDownItem(this.getLocale('authenticationType'), this.id + '_psql_authtype', psqlConfigTable, this.getDropdownValues(), field, '0');
-        this.renderTextBoxItem(this.getLocale('promptLabel'), this.id + '_psql_prompt', false, psqlConfigTable, 218);
-        this.renderTextBoxItem(this.getLocale('userName'), this.id + '_psql_usr', false, psqlConfigTable, 218);
-        this.renderTextBoxItem(this.getLocale('password'), this.id + '_psql_pswd', true, psqlConfigTable, 218);
+        this.renderTextBoxItem(this.getLocale('promptLabel'), this.id + '_psql_prompt', false, psqlConfigTable, this.controlWidth);
+        this.renderTextBoxItem(this.getLocale('userName'), this.id + '_psql_usr', false, psqlConfigTable, this.controlWidth);
+        this.renderTextBoxItem(this.getLocale('password'), this.id + '_psql_pswd', true, psqlConfigTable, this.controlWidth);
         if ($('#' + this.id + '_psql_authtype')) {
             this.authType = $('#' + this.id + '_psql_authtype');
             this.ejAuthDrpdwn = this.authType.data('ejDropDownList');
@@ -289,7 +290,7 @@ var PSQLDataSource = (function () {
         bodyTable.append(rowtxt);
         rowtxt.append(coltxt);
         var txtbox = ej.buildTag('textarea.e-textarea e-ejinputtext e-designer-content-label e-designer-constr-textarea', value, {
-            'height': '65px', 'width': '215px', 'resize': 'none', 'text-indent': '0px', 'overflow': 'hidden'
+            'height': '65px', 'width': this.controlWidth, 'resize': 'none', 'text-indent': '0px', 'overflow': 'hidden'
         }, {
             'id': id, 'type': 'textarea', 'spellcheck': 'false'
         });
@@ -330,7 +331,7 @@ var PSQLDataSource = (function () {
         var dropdown = ej.buildTag('input', '', {}, { 'id': id, 'value': '', 'spellcheck': 'false' });
         coltxt.append(dropdown);
         dropdown.ejDropDownList({
-            width: '231px', dataSource: datasource, fields: fields, change: $.proxy(fnction, context),
+            width: this.controlWidth, dataSource: datasource, fields: fields, change: $.proxy(fnction, context),
             cssClass: 'e-designer-ejwidgets e-designer-content-label', showRoundedCorner: true
         });
         if (selectedIndex) {
@@ -344,7 +345,7 @@ var PSQLDataSource = (function () {
         labelCell.append(label);
         row.append(labelCell);
         var errorCell = ej.buildTag('td', '', {}, { 'id': id + '_error_icon_td' });
-        this.renderErrIndictor(errorCell, this.id);
+        this.renderErrIndictor(errorCell, this.id + '_configurePane');
         row.append(errorCell);
         return row;
     };
@@ -365,61 +366,79 @@ var PSQLDataSource = (function () {
                     var ejObj = ejEle.data(ejName[0]);
                     switch (ejName[0]) {
                         case 'ejDropDownList':
-                            ejObj.option('width', (isOverflow ? (ejEle.hasClass('e-dropdownUpload') ? '184' : '224') :
-                                (ejEle.hasClass('e-dropdownUpload') ? '191' : '231')) + 'px');
+                            ejObj.option('width', (isOverflow ? (ejEle.hasClass('e-dropdownUpload') ? this.controlWidth + 4 : this.controlWidth + 8) :
+                                (ejEle.hasClass('e-dropdownUpload') ? this.controlWidth + 10 : this.controlWidth + 12)) + 'px');
                             break;
                         case 'ejAutocomplete':
-                            ejObj.option('width', isOverflow ? '224' : '231' + 'px');
+                            ejObj.option('width', isOverflow ? this.controlWidth + 7 : this.controlWidth + 12 + 'px');
                             break;
                     }
                 }
             }
         }
-        textArea.width(isOverflow ? '207' : '215' + 'px');
-        textBox.width(isOverflow ? '210' : '218' + 'px');
+        textArea.width((isOverflow ? this.controlWidth - 8 : this.controlWidth - 4) + 'px');
+        textBox.width((isOverflow ? this.controlWidth - 5 : this.controlWidth) + 'px');
     };
-    PSQLDataSource.prototype.renderErrIndictor = function (target, ctrlId) {
+    PSQLDataSource.prototype.renderErrIndictor = function (target, tooltipId, errMsg) {
         var errorIcon = ej.buildTag('span.e-rptdesigner-error-icon e-rptdesigner-errorinfo e-error-tip', '', {
             'float': 'right',
             'display': 'none',
             'padding-right': '2px'
-        }, {});
+        }, {
+            'e-errormsg': errMsg,
+            'e-tooltipId': tooltipId
+        });
         target.append(errorIcon);
-        errorIcon.bind('mouseover mousedown touchstart', $.proxy(this.showErrTip, this, ctrlId));
-        errorIcon.bind('mouseleave touchleave', $.proxy(this.hideErrTip, this, ctrlId));
     };
     PSQLDataSource.prototype.showErrIndictor = function (target, isEnable, errMsg) {
         var errorIcon = target.find('.e-error-tip');
-        errorIcon.attr('e-errormsg', errMsg).css('display', isEnable ? 'block' : 'none');
-    };
-    PSQLDataSource.prototype.renderErrorToolTip = function (id) {
-        if ($('#' + id + '_error_tooltip').length === 0) {
-            var toolTip = ej.buildTag('div.e-designer-right-tip e-tooltip-wrap e-widget e-designer-tooltip e-rptdesigner-error-tip', '', {
-                'display': 'none'
-            }, {
-                'id': id + '_error_tooltip'
+        errorIcon.css('display', isEnable ? 'block' : 'none');
+        if (errMsg) {
+            errorIcon.attr('e-errormsg', errMsg);
+        }
+        if (isEnable) {
+            var tooltipId = errorIcon.attr('e-tooltipId');
+            var ejTooltip = $('#' + tooltipId).data('ejTooltip');
+            ejTooltip.setModel({
+                target: '.e-rptdesigner-error-icon',
             });
-            var tipContainer = ej.buildTag('div.e-tipContainer');
-            var tipContent = ej.buildTag('div', '', {}, { 'id': id + '_error_tooltip_content' });
-            $(document.body).append(toolTip);
-            toolTip.append(tipContainer);
-            tipContainer.append(tipContent);
         }
     };
-    PSQLDataSource.prototype.showErrTip = function (ctrlId, args) {
-        args.preventDefault();
-        var targetEle = $(args.currentTarget);
-        var tooltip = $('#' + ctrlId + '_error_tooltip');
-        $('#' + ctrlId + '_error_tooltip_content').text(targetEle.attr('e-errormsg'));
-        var eleOffset = targetEle.offset();
-        tooltip.css({
-            left: (eleOffset.left + (targetEle.width() / 2)) - tooltip.width(),
-            top: eleOffset.top + targetEle.height() + (targetEle.height() / 2),
-            'display': 'block'
-        });
+    PSQLDataSource.prototype.renderErrorToolTip = function (target) {
+        if (target && target.length !== 0 && !target.data('ejTooltip')) {
+            target.ejTooltip({
+                target: '.e-designer-tooltip',
+                position: {
+                    target: { horizontal: 'bottom', vertical: 'bottom' },
+                    stem: { horizontal: 'right', vertical: 'top' }
+                },
+                tip: {
+                    adjust: {
+                        xValue: 10,
+                        yValue: 100
+                    }
+                },
+                isBalloon: false,
+                showShadow: true,
+                showRoundedCorner: true,
+                content: 'Exception Message is not configured',
+                beforeOpen: $.proxy(this.beforeOpenTooltip, this)
+            });
+        }
     };
-    PSQLDataSource.prototype.hideErrTip = function (ctrlId, args) {
-        $('#' + ctrlId + '_error_tooltip').css('display', 'none');
+    PSQLDataSource.prototype.beforeOpenTooltip = function (args) {
+        if (args.event && args.event.target) {
+            args.cancel = !ej.isNullOrUndefined(args.event.buttons) && args.event.buttons !== 0;
+            var target = args.event.target;
+            if (target) {
+                var tooltipId = $(target).attr('e-tooltipId');
+                var errMsg = $(target).attr('e-errormsg');
+                var ejTooltip = $('#' + tooltipId).data('ejTooltip');
+                ejTooltip.setModel({
+                    content: errMsg ? errMsg : ''
+                });
+            }
+        }
     };
     PSQLDataSource.prototype.showValidationMsg = function (id, isShow, msg) {
         var target = $('#' + id + '_error_icon_td');
@@ -495,7 +514,7 @@ PSQLDataSource.Locale['en-US'] = {
         alertPassword: 'Specify the Password'
     }
 };
-PSQLDataSource.Locale['en-FR'] = {
+PSQLDataSource.Locale['fr-FR'] = {
     connectionString: 'Chaîne de connexion',
     authenticationType: 'type d\'identification',
     authentication: 'Authentification',

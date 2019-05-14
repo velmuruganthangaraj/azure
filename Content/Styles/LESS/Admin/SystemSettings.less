@@ -141,30 +141,70 @@
 }
 
 #active-directory-container {
-    #synchronization-options{
+    .panel-group {
+        .panel-title > a:before {
+            float: left !important;
+            font-family: 'server' !important;
+            content: @su-vertical-collapse;
+            padding-right: 10px;
+        }
+
+        .panel-title > a.collapsed:before {
+            float: left !important;
+            font-family: 'server' !important;
+            content: @su-vertical-expand;
+        }
+
+        .panel-title > a[aria-expanded="true"] {
+            color: @menu-active-text-color;
+        }
+
+        .panel-title > a.collapsed[aria-expanded="true"] {
+            color: @primary-text-color;
+        }
+
+        .panel {
+            margin-top: 78px;
+
+            .panel-heading {
+                .panel-title {
+                    font-size: 14px;
+                    font-weight: 700;
+                    padding-left: 0px;
+                }
+            }
+
+            .panel-body {
+                border-top: none;
+            }
+
+            .admin-page-actions {
+                .secondary-button {
+                    margin-right: 34px;
+                }
+            }
+        }
+
+        .panel-windows {
+            border-color: #ddd;
+            padding-top: 2px;
+        }
+
+        .panel-azure, .panel-database, .panel-ums {
+            border-color: #ddd;
+            margin-top: -1px !important;
+        }
+    }
+
+    #synchronization-options {
         margin-right: 175px;
     }
 
     .admin-page-body {
         border-top: none;
+        border-bottom: none;
     }
-
-    #ad-tab-nav {
-        border-color: @admin-body-border-color;
-
-        li:first-child {
-            margin-left: 20px;
-        }
-        li a{
-            color:@primary-text-color;
-        }
-        li.active{
-            a{
-            color:@primary-color;
-            }
-        }
-    }
-
+ 
     .port-number-info {
         font-size: 12px;
     }
@@ -176,15 +216,16 @@
     .test-connection {
         margin-right: 15px;
     }
-    
+
     input::-ms-clear, input::-ms-reveal {
-         display: none;
+        display: none;
     }
+
     .waiting-icon {
         right: -25px;
         top: 7px;
         position: absolute;
-}
+    }
 }
 
 #mail-settings-container{

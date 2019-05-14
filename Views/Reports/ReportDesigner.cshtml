@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+@using Newtonsoft.Json
 @{
     Layout = null;
     var reportPath = string.Empty;
@@ -28,6 +29,15 @@
             Url.Content("~/Content/Images/Application/" + GlobalAppSettings.SystemSettings.MainScreenLogo);
     var defaultAppLogo = Url.Content("~/Content/Images/Application/Main_Logo.png");
     var language = Context.GetPrincipalAppLanguageForRequest().GetCultureInfo();
+    var tourCookie = Request.Cookies["syncfusion.dashboards.designer.tour"];
+    var tourObj = new TourCookie();
+    if (tourCookie != null)
+    {
+        tourObj = JsonConvert.DeserializeObject<TourCookie>(JsonConvert.DeserializeObject(tourCookie.Value).ToString());
+    }
+    var showDatasourceTour = (ViewData["reportName"] != null && ViewData["categoryName"] != null) ? false : true;
+    var showTour = !DeviceDetection.IsMobile && ((tourCookie == null || (tourObj.TourCompleted == "false" && tourObj.TourSkipped == "false")) || showDatasourceTour);
+    var umsUrl = GlobalAppSettings.SystemSettings.UmsUrl;
 }
 
 <html lang="en" style="height:100%;width:100%">
@@ -51,12 +61,20 @@
 
     @if (GlobalAppSettings.SystemSettings.StorageType == (int)StorageType.AzureBlob)
     {
-        <link rel="icon" href="@GlobalAppSettings.AzureBlob.AzureBlobStorageUri/@GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName/@GlobalAppSettings.GetStorageMode()/Content/Images/Application/@GlobalAppSettings.SystemSettings.FavIcon" onerror="if (this.href != '~/Content/Images/Application/Favicon.png') this.href = '~/Content/Images/Application/Favicon.png';" />
+        <link rel="icon" href="@GlobalAppSettings.AzureBlob.AzureBlobStorageUri.TrimEnd('/')/@GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName/@GlobalAppSettings.GetStorageMode()/Content/Images/Application/@GlobalAppSettings.SystemSettings.FavIcon" onerror="if (this.href != '~/Content/Images/Application/Favicon.png') this.href = '~/Content/Images/Application/Favicon.png';" />
     }
     else
     {
         <link rel="icon" href="~/Content/Images/Application/@GlobalAppSettings.SystemSettings.FavIcon" onerror="if (this.href != '~/Content/Images/Application/Favicon.png') this.href = '~/Content/Images/Application/Favicon.png';" />
     }
+
+    @if (showTour)
+    {
+        @Styles.Render("~/styles/report-designer-tour")
+        Html.RenderPartial("~/Views/Shared/_DesignerTour.cshtml");
+        @Scripts.Render("~/scripts/report-designer-tour")
+    }
+
 
     <style>
         body {
@@ -88,11 +106,13 @@
         }
     </style>
 
-<script>
+    <script>
     var getUserNotificationsPartialViewResultUrl = "@Url.Action("GetUserNotificationsPartialViewResult", "notification")";
     var controlId = 'container';
     var isEditReport = false;
     var webApiQueryDialog = null;
+    var showDatasourceTour = "@showDatasourceTour";
+    var showTour = "@showTour";
 
     var categoryName = "@categoryName";
     var reportName = "@reportName";
@@ -145,6 +165,9 @@
                     if (data) {
                         $("body").ejWaitingPopup("hide");
                         renderDesigner();
+                        if (showTour.toLowerCase() == "true") {
+                            startTour();
+                        }
                     }
                     else {
                         $("body").ejWaitingPopup("hide");
@@ -153,6 +176,9 @@
                         parent.messageBox("su-report", "[[[Edit Report]]]", "[[[This report is not supported in our Web Report Designer. If you continue to edit the report with Web Report Designer then it will ignore the unsupported report items in report loading. Do you want to continue with Web Report Designer ?]]]", "error", function () {
                             parent.onCloseMessageBox();
                             renderDesigner();
+                            if (showTour.toLowerCase() == "true") {
+                                startTour();
+                            }
                             $("#messageBox .message-content").css("margin-top", "");
                         }, function () {
                             parent.onCloseMessageBox();
@@ -168,6 +194,9 @@
         }
         else if ((isEdit === "true" && isCompatible === "true") || isEdit === "false") {
             renderDesigner();
+            if (showTour.toLowerCase() == "true") {
+                startTour();
+            }
         }
 
         $("#notification-icon").click(function (e) {
@@ -257,12 +286,13 @@
 
 
     function controlInitialized(args) {
-        if(isEditReport){
+        if (isEditReport) {
+            $('#' + controlId).data('ejReportDesigner').showImportData = true;
             this.openServerReport(reportName,categoryName);
         }
         else{
             var designer = $('#' + controlId).data('ejReportDesigner');
-
+            designer.showImportData = true;
             var hasDataSet = datasetName && datasetName.length > 0 ? true : false;
 
             var hasCatagory = categoryName && categoryName.length > 0 ? true : false;
@@ -488,6 +518,7 @@
     }
 
     function renderToolbar(args) {
+        if ($(args.target).hasClass('e-rptdesigner-toolbarcontainer')) {
         var designer = $('#' + controlId).data('ejReportDesigner');
 
         var $statustoolBar = ej.buildTag('ul.e-reportdesigner-toolbarul', '', { 'float': 'right' }, {});
@@ -505,8 +536,9 @@
         $(args.target).append($statustoolBar);
 
     }
+    }
 
-</script>
+    </script>
 </head>
 <body style="overflow: hidden; position: static; margin: 0; padding: 0; height: 100%; width: 100%">
     <div id="designer-header">
@@ -514,7 +546,7 @@
             <div id="account-profile" class="dropdown no-padding">
                 <span class="dropdown-toggle" data-toggle="dropdown">
                     <span class="profile-picture">
-                        <img alt="Profile Picture" src="@Url.Content("~/User/Avatar?Username=" + ((HttpContext.Current.User as ServerPrincipal).UserId) + "&ImageSize=64")" />
+                        <img alt="Profile Picture" src="@umsUrl/User/Avatar?Username=@((HttpContext.Current.User as ServerPrincipal).UserName)&ImageSize=64" />
                     </span>
                 </span>
                 <div class="dropdown-menu" id="profile-info-section" role="menu">
@@ -523,7 +555,7 @@
                             <tbody>
                             <tr>
                                 <td class="profile-picture-area">
-                                    <img alt="Profile Picture" src="@Url.Content("~/User/Avatar?Username=" + ((HttpContext.Current.User as ServerPrincipal).UserId) + "&ImageSize=64")" />
+                                    <img alt="Profile Picture" src="@umsUrl/User/Avatar?Username=@((HttpContext.Current.User as ServerPrincipal).UserName)&ImageSize=64" />
                                 </td>
                                 <td class="profile-info-area">
                                     <ul class="no-margin no-padding">

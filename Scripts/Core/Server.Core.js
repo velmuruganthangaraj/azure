@@ -99,7 +99,7 @@ $(document).ready(function () {
     });
 
     searchId = $("#search-area").children("input").attr("id");
-    if (searchId == "ad-user-import" || searchId == "AD-group-import" || searchId == "search-ad-users" || searchId == "search-ad-groups") {
+    if (searchId == "ad-user-import" || searchId == "AD-group-import" || searchId == "search-ad-users" || searchId == "search-ad-groups" || searchId == "search-ump-users") {
         $.xhrPool = [];
 
         $.xhrPool.abortAll = function () {
@@ -411,7 +411,7 @@ function getMaxZIndex() {
 }
 
 function IsEmail(email) {
-    var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,63}|[0-9]{1,3})(\]?)$/;
     if (filter.test(email)) {
         return true;
     }
@@ -638,7 +638,7 @@ $(document).on("click", "#clear-search,.clear-search", function () {
                 var e = jQuery.Event("keypress", { keyCode: 13 });
                 $("#search-database-users").trigger(e);
             }
-        } else {
+        } else if (clearSearch) {
             PerformSearch(currentId);
         }
     }
@@ -647,7 +647,7 @@ $(document).on("click", "#clear-search,.clear-search", function () {
     }
 });
 
-$(document).on("keydown", "#search-groups, #search-group-users, #searchItems, #search-schedules,#userSearchKey,#groupSearchKey, #search-users, #search-user-permission, #search-group-permission, #search-home-page, #search-items", function (e) {
+$(document).on("keydown", "#search-groups, #search-group-users, #searchItems, #search-schedules,#userSearchKey,#groupSearchKey, #search-users, #search-user-permission, #search-group-permission, #search-home-page, #search-items, #search-ump-users", function (e) {
     $.xhrPool.abortAll();
     var currentKeyCode = parseInt(e.which);
     var element = "#" + this.id;
@@ -735,6 +735,10 @@ function PerformSearch(currentId) {
     else if (currentId == "#groupSearchKey") {
         gridObj = $("#GroupGrid").data("ejGrid");
         gridObj.refreshContent();
+    }
+    else if (currentId == "#search-ump-users") {
+        gridObj = $("#add_admins_grid").data("ejGrid");
+        gridObj.search($("#search-ump-users").val());
     }
 }
 

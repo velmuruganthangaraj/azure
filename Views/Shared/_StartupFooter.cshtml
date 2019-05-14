@@ -62,7 +62,7 @@
                         [[[Powered by]]]
                         @if (GlobalAppSettings.SystemSettings.StorageType == (int)StorageType.AzureBlob)
                         {
-                            <img src="@GlobalAppSettings.AzureBlob.AzureBlobStorageUri/@GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName/@GlobalAppSettings.GetStorageMode()/Content/Images/Application/Footer_Logo.png" alt="syncfusion" width="102px" height="22px">
+                            <img src="@GlobalAppSettings.AzureBlob.AzureBlobStorageUri.TrimEnd('/')/@GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName/@GlobalAppSettings.GetStorageMode()/Content/Images/Application/Footer_Logo.png" alt="syncfusion" width="102px" height="22px">
                         }
                         else
                         {

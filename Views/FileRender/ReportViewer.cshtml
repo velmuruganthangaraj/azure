@@ -3,6 +3,7 @@
     Layout = null;
     var isUserAuthenticated = "false";
     var language = Context.GetPrincipalAppLanguageForRequest().GetCultureInfo();
+    var canWrite = ViewBag.CanWrite != null ? ViewBag.CanWrite : false;
 }
 <html style="height: 100%">
 <head>
@@ -15,6 +16,7 @@
     @Scripts.Render(DeviceDetection.IsMobile ? "~/scripts/report-render-mobile" : "~/scripts/report-render")
 
     <script src="~/Scripts/Localization/ReportViewer/ej.localetexts.@string.Concat(language,".js")"></script>
+    <script src="~/Scripts/EssentialJS/i18n/ej.culture.@string.Concat(language,".min.js")"></script> 
 
     <script>
         var filterParameters = JSON.parse('@Html.Raw(ViewBag.FilterParameters)');
@@ -25,6 +27,7 @@
         var updateViewUrl = "@Url.Action("UpdateView", "ReportViews")";
         var getSavedViewUrl = "@Url.Action("GetViews", "ReportViews")";
         var filterQueryUrl = "@Url.Action("GetFilterQuery", "FileRender")";
+        var reportDesignerUrl = "@Url.Action("ReportDesigner", "Reports")";
 
         var itemViewShareIframeUrl = "@Url.Action("shareItemView", "items")";
         var publicReportAuthentication = "@HttpContext.Current.Request.IsAuthenticated";
@@ -48,7 +51,7 @@
     <title>@ViewBag.ItemName - [[[View Report]]] - @GlobalAppSettings.SystemSettings.OrganizationName</title>
     @if (GlobalAppSettings.SystemSettings.StorageType == (int)StorageType.AzureBlob)
     {
-        <link rel="icon" href="@GlobalAppSettings.AzureBlob.AzureBlobStorageUri/@GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName/@GlobalAppSettings.GetStorageMode()/Content/Images/Application/@GlobalAppSettings.SystemSettings.FavIcon" onerror="if (this.href != '~/Content/Images/Application/Favicon.png') this.href = '~/Content/Images/Application/Favicon.png';" />
+        <link rel="icon" href="@GlobalAppSettings.AzureBlob.AzureBlobStorageUri.TrimEnd('/')/@GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName/@GlobalAppSettings.GetStorageMode()/Content/Images/Application/@GlobalAppSettings.SystemSettings.FavIcon" onerror="if (this.href != '~/Content/Images/Application/Favicon.png') this.href = '~/Content/Images/Application/Favicon.png';" />
     }
     else
     {
@@ -72,24 +75,6 @@
         }
     }
 
-    @{
-        if (enableComment == "true")
-        {
-            <script src="~/signalr/hubs"></script>
-            @Scripts.Render("~/scripts/signalr-bundle")
-            <script>
-                $(function () {
-                    // Reference the auto-generated proxy for the hub.
-                    var userActivity = $.connection.signalrHub;
-
-                    userActivity.client.connection = function () {
-                    };
-
-                    SJ.iwc.SignalR.start();
-                });
-            </script>
-        }
-    }
 </head>
 <body style="overflow: hidden; position: static; margin: 0; padding: 0; width: 100%; height: 100%">
     <div id="sync_report_viewer" style="height: 100%; width: 100%; padding-right: 26px" class="sync_report"></div>
@@ -136,7 +121,7 @@
                             <a href="javascript:void(0)" class="su su-filter server-item-view"></a>
                         </li>
                     }
-                    
+
                 </ul>
             </div>
         </nav>
@@ -171,8 +156,18 @@
                 <img id="commentImage_popup_image" src="" style="width: 100%;">
             </div>
         </div>
-    </div>  
+    </div>
     @Html.Partial("../Items/_GetLink")
+
+    @if (canWrite)
+    {
+        <form action="@Url.Action("ReportDesigner", "Reports")" id="edit-report-form" method="POST" target="_blank">
+            <input id="report-name" name="reportName" type="hidden" value="">
+            <input id="category-name" name="categoryName" type="hidden" value="">
+            <input id="edit-value" name="isEdit" type="hidden" value="">
+            <input id="edit-report-tested" name="isReportTested" type="hidden" value="">
+        </form>
+    }
 </body>
 </html>
 <script type="text/javascript">
@@ -214,6 +209,7 @@
     var item_Id = "@ViewBag.ItemId.Split('/')[0]";
     var enableComment = '@enableComment';
     var isReportCommented = '@ViewBag.IsReportCommented';
+    var canEdit = '@canWrite';
 
     var pageurl = "@HttpContext.Current.Request.Url.LocalPath";
     var baseUrl = "@GlobalAppSettings.SystemSettings.BaseUrl";
@@ -249,6 +245,31 @@
                 "",
                 {},
                 { 'id': 'sync_report_viewer_toolbar_link' });
+
+        var $liedit = ej.buildTag("li.e-reportviewer-toolbarli e-tooltxt",
+            "",
+            { 'display': 'inline-block', },
+            { 'id': 'sync_report_viewer_toolbar_edit', 'title': '[[[Edit]]]' });
+
+        var $spanedit = ej.buildTag("span.su-edit e-reportviewer-icon",
+            "",
+            {},
+            { 'id': 'sync_report_viewer_toolbar_edit' });
+
+        if (canEdit.toString().toLowerCase() == "true") {
+            $divouter.append($liedit);
+            $liedit.append($spanedit);
+            $liedit.hover(function () {
+                $liedit.addClass("e-hover");
+            },
+                function () {
+                    $liedit.removeClass("e-hover");
+                });
+
+            $liedit.click(function (e) {
+                editReport();
+            });
+        }
 
 
         if ("@enableComment" == "true") {
@@ -564,4 +585,15 @@
             }
         }
     }
+
+    function editReport() {
+        $("#report-name").val('@ViewBag.ItemName');
+        $("#category-name").val('@ViewBag.CategoryName');
+        $("#edit-value").val(true);
+        var url = reportDesignerUrl + "/" + '@ViewBag.CategoryName' + "/" + '@ViewBag.ItemName';
+        $("#edit-report-tested").val(true);
+        $("#edit-report-form").attr("action", url);
+        $("#edit-report-form").submit();
+    }
+
 </script>

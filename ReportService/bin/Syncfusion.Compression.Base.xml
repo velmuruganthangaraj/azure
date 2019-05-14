@@ -2000,7 +2000,7 @@
             Password verifier value position of ZipCrypto 0 based index
             </summary>
         </member>
-        <member name="F:Syncfusion.Compression.Zip.SecurityConstants.PKZipEncryptionLen">
+        <member name="F:Syncfusion.Compression.Zip.SecurityConstants.PKZipEncryptionHeader">
             <summary>
             PKZip strong encryption header length
             </summary>

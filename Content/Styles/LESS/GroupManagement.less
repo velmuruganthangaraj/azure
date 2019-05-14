@@ -126,14 +126,6 @@ body{
     font-size: @app-text-size - 2;
 }
 
-#delete-group-area,#delete-group-iframe {
-    iframe {
-        height: 150px;
-        border: 0;
-        width: 100%;
-    }
-}
-
 .e-grid .e-gridheader .e-headercell.e-headertemplate {
     padding-left: 12px !important;
 }
@@ -424,39 +416,6 @@ body{
     }
 }
 
-// style for deletegroup
-#delete-group-area_wrapper {
-    height:150px !important;
-    .e-dialog {
-        height: 150px !important;
-        width: 497px !important;
-    }
-}
-
-
-#group-delete-confirmation {
-    padding: 0;
-    .modal();
-
-    .modal-content {
-        height: 150px;
-
-        .modal-body {
-            .delete-msg{
-                margin:0;
-            }
-              .highlight-name{
-                font-style:italic;
-                color:@success-text-color;
-            }
-        }
-        .modal-footer{
-            bottom:0;
-            position:fixed;
-        }
-            }
-}
-
 
 @media screen and (min-width: 1400px) {
     #base-container {
@@ -597,7 +556,7 @@ body{
 
 
 
-.e-dialog, #groups-delete-confirmation {
+.e-dialog {
     padding: 0;
 
     .modal-dialog {
@@ -616,14 +575,6 @@ body{
     }
 
     .dialogbox();
-}
-
-#groups-delete-confirmation-wrapper {
-    #popup-container {
-        .dialog-footer {
-            margin-top: 33px;
-        }
-    }
 }
 
 .lg-flexible-deletegroup {
@@ -654,71 +605,6 @@ body{
 
             #dropdown-options {
                 left: -108px;
-            }
-        }
-    }
-}
-
-// style for delete user from group
-#delete-group-area_wrapper {
-    height: 150px !important;
-
-    .e-dialog {
-        height: 150px !important;
-        width: 497px !important;
-    }
-}
-
-#user-delete-confirmation {
-    padding: 0;
-
-    .modal-content {
-        border-radius: 0;
-        border: 0;
-        height: 150px;
-        padding: 0px;
-
-        .modal-header {
-            border: 0;
-            height: 50px;
-            padding: 10px !important;
-
-            .modal-title {
-                font-size: @app-large-text-size;
-                font-weight: 500;
-            }
-
-            .popup-close {
-                color: @primary-text-color;
-
-                &:hover {
-                    color: @primary-btn-bg;
-                    text-decoration: none;
-                }
-            }
-        }
-
-        .modal-body {
-            display: table !important;
-            font-size:@app-text-size;
-            height: 50px;
-
-            .delete-msg {
-                margin-top: 4px;
-            }
-        }
-
-        .modal-footer {
-            background-color: @admin-pages-border-color;
-            height: 50px;
-            padding: 10px;
-
-            .margin-right {
-                margin-right: 10px;
-            }
-
-            .margin-top {
-                margin-top: 2px;
             }
         }
     }

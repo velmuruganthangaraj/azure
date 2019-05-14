@@ -79,6 +79,8 @@
         var selectContents = $("#new-datasource-tab-content").contents().find("select");
         var changedDataSources = [];
         var changedInfo;
+        var reportScope = parent.angular.element(parent.document.getElementById("server-items-container")).scope();
+        var categoryId = $("#selected_category option:selected").val();
         $(selectContents).each(function (index, value) {
             if ($(this).attr("data-original-value") != $(this).val()) {
                 changedInfo = { DataSourceId: this.value, Name: $(this).attr("name") };
@@ -98,6 +100,10 @@
                     });
                     $(".error-message").css("display", "none");
                     window.parent.ShowWaitingProgress("#update-data-source-popup_wrapper", "hide");
+                    var gridName = window.parent.$('#item-grid-container').attr("data-grid-name");
+                    if (gridName == "reports") {
+                        reportScope.refreshCategorySection(categoryId);
+                    }
                 }
                 else {
                     $(".error-message").html("[[[Internal server error. Please try again.]]]").css("display", "block");

@@ -62,19 +62,6 @@
                     }
                 ]
             });
-
-            $("#delete-group-area").ejDialog({
-                width: "499px",
-                showOnInit: false,
-                allowDraggable: true,
-                enableResize: false,
-                showHeader: false,
-                title: "[[[Add New Group]]]",
-                enableModal: true,
-                closeOnEscape: true,
-                close: ''
-            });
-            $("#delete-group-area_wrapper").ejWaitingPopup();
         });
         $("#userList").selectpicker("refresh");
     </script>
@@ -93,7 +80,6 @@
     <script>
         var checkGroupnameUrl = "@Url.Action("CheckGroupname", "group")";
         var addGroupUrl = "@Url.Action("AddGroup", "group")";
-        var deleteGroupViewUrl = "@Url.Action("DeleteGroupView", "group")";
         var addGroupViewUrl = "@Url.Action("AddGroupView","group")";
         var deleteGroupUrl = "@Url.Action("DeleteGroup", "group")";
         var groupPageUrl = "@Url.Action("group", "group")";
@@ -113,14 +99,6 @@
             </hgroup>
             <div class="col-md-6 col-xs-12 group-buttons pull-right no-padding">
                 <a type="button" class="link-button manage-permissions" title="" href="@Url.Action("grouppermission", "permission")?groupId=@ViewBag.groupId">[[[Manage Permissions]]]</a>
-                @if (!ViewBag.IsActiveDirectory && !ViewBag.IsAzureADGroup)
-                {
-                    <a type="button" class="link-button" href="@Url.Action("editgroup","group")?groupId=@ViewBag.groupId">[[[Edit Group]]]</a>
-                }
-                @if (ViewBag.groupId != 1)
-                {
-                    <input type="button" class="critical-action-button delete-group delete" title="" data-groupid="@ViewBag.groupId" value="[[[Delete Group]]]" data-groupname="{{allGroupDetails.GroupName}}" />
-                }
             </div>
         </div>
 
@@ -153,10 +131,6 @@
                 <div id="Grid" class="col-lg-12 no-padding pull-left" data-gridname="EditGroup">
                 </div>
             </div>
-        </div>
-
-        <div id="delete-group-area" class="no-padding">
-            <iframe src="" style="border: 0;" id="delete-group-iframe" border="0" width="100%" height="100%"></iframe>
         </div>
     </div>
 }

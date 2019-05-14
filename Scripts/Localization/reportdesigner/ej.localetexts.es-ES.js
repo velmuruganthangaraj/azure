@@ -276,6 +276,22 @@ ej.ReportDesigner.Locale['es-ES'] = {
                             title: 'PivotGrid'
                         }
                     },
+                    'tablix': {
+                        displayText: 'Mesa',
+                        tooltip: {
+                            requirements: '1 o más filas / columnas.',
+                            description: 'Muestra datos de informes paginados en celdas.',
+                            title: 'Mesa'
+                        }
+                    },
+                    'list': {
+                        displayText: 'Lista',
+                        tooltip: {
+                            requirements: '1 o más filas / columnas.',
+                            description: 'Una lista muestra los datos en formato libre. Coloque los campos en cualquier lugar dentro de la lista.',
+                            title: 'Lista'
+                        }
+                    }
                 }
             },
             subReports: {
@@ -320,11 +336,16 @@ ej.ReportDesigner.Locale['es-ES'] = {
         gridLine: 'Líneas de cuadrícula',
         header: 'Encabezamiento',
         footer: 'Pie de página',
+        sendBackward: 'Enviar atrás',
+        bringForward: 'Adelantar',
+        sendToBack: 'Mandado hacia atras',
+        bringToFront: 'Traer al frente',
         preview: 'Avance',
         reportUpload: {
             alertLabel: 'Subir',
             alertMessage: 'Error al cargar el archivo. Por favor carga de nuevo'
-        }
+        },
+        grouping: 'Agrupamiento'
     },
     newReport: {
         title: 'Nuevo reporte',
@@ -535,6 +556,12 @@ ej.ReportDesigner.Locale['es-ES'] = {
             seriesColor: 'Color de la serie'
         },
         categoryName: 'Apariencia',
+        customAttribute: {
+            categoryName: 'Atributos personalizados',
+            userDefined: 'Usuario definido',
+            alertHeader: 'Informe de tabla',
+            alertMessage: 'Formato de atributos personalizados no válido. Ejemplo correcto: \'AttrName1 = Value1, AttrName2 = Value2 \'.'
+        },
         chartArea: {
             categoryName: 'Área del gráfico',
             colorPalette: 'Paleta de color',
@@ -571,6 +598,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
                 hide: 'Esconder',
             },
             labelFont: 'Etiqueta de fuente',
+            labelFormat: 'Formato de etiqueta',
             enableMajorTicks: 'Habilitar Ticks Mayores',
             enableMinorTicks: 'Habilitar marcaciones menores',
             tickProperties: {
@@ -837,6 +865,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
         setSorts: 'Establecer clases',
         setFilters: 'Establecer filtros',
         advancedOptions: 'Opciones avanzadas',
+        codemodules: 'Código',
         expressionList: {
             top: 'Parte superior',
             right: 'Derecha',
@@ -845,7 +874,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
             style: 'Estilo',
             color: 'Color',
             size: 'Tamaño',
-            fontFamily: 'FontFamily',
+            fontFamily: 'Familia tipográfica',
             width: 'Anchura',
             height: 'Altura',
             weight: 'Peso',
@@ -863,7 +892,10 @@ ej.ReportDesigner.Locale['es-ES'] = {
             pointText: 'pt',
             millimeterText: 'mm',
             picaText: 'pc'
-        }
+        },
+        setGroups: 'Grupos establecidos',
+        addDatasource: 'Añadir fuente de datos',
+        dataAlertMsg: 'No se ha añadido ninguna fuente de datos !'
     },
     dataSource: {
         newDatasource: 'NUEVO DATOSOURCE',
@@ -873,7 +905,8 @@ ej.ReportDesigner.Locale['es-ES'] = {
             contextMenu: {
                 editItem: 'Editar',
                 deleteItem: 'Borrar',
-                createDataSet: 'Crear conjunto de datos'
+                createDataSet: 'Crear conjunto de datos',
+                cloneDatasource: 'Clon'
             }
         },
         datasourceType: {
@@ -998,6 +1031,10 @@ ej.ReportDesigner.Locale['es-ES'] = {
             alertLabel: 'Fuente de datos',
             alertConnectionFailed: 'ReportDesigner failed to connect the datasource',
             dataExtensionFailed: 'El proveedor de datos seleccionado no está disponible. Por favor, compruebe la extensión de datos.',
+            connectStringValidation: 'Como la cadena de conexión contiene expresiones en la fuente de datos ',
+            validationMessage: ' Por favor, actualice con una cadena de conexión válida.',
+            executionMessage: ', No podemos ejecutar el conjunto de datos para esta conexión.',
+            confirmMessage: ' ¿Seguro que quieres guardar la fuente de datos?',
             deleteValue: 'Eliminar origen de datos \'',
             nameWarning: 'Especificar el nombre de DataSource',
             nameAlert: 'El nombre especificado ya existe en la lista de DataSource',
@@ -1085,10 +1122,6 @@ ej.ReportDesigner.Locale['es-ES'] = {
     dataSet: {
         headerText: 'DATOS',
         newData: 'AGREGAR DATOSET',
-        splitButtonMenu: {
-            sharedDataset: 'Compartido',
-            createNewDataset: 'Crear nuevo'
-        },
         shareDataset: {
             headerText: 'NUEVO DATASET',
             save: 'Salvar',
@@ -1104,11 +1137,14 @@ ej.ReportDesigner.Locale['es-ES'] = {
         },
         contextMenu: {
             edit: 'Editar',
-            remove: 'Borrar'
+            remove: 'Borrar',
+            cloneDataset: 'Clon'
         },
         datasourceSwitcher: 'Fuentes de datos',
         deleteDataset: 'Eliminar conjunto de datos',
-        deleteField: 'Eliminar campo'
+        deleteField: 'Eliminar campo',
+        newDataText: 'Nuevos datos',
+        sharedDataText: 'Datos compartidos'
     },
     reportViewer: {
         toolbar: {
@@ -1224,9 +1260,9 @@ ej.ReportDesigner.Locale['es-ES'] = {
         cancel: 'Cancelar',
         close: 'Cerca',
         errorMessage: {
-            nameErrorMessage: 'Por favor ingrese el nombre',
+            nameErrorMessage: 'Por favor ingrese el nombre válido',
             expressionErrorMessage: 'Elegir valor para un campo de expresión',
-        },
+        }
     },
     alertMessage: {
         yes: 'Sí',
@@ -1597,17 +1633,6 @@ ej.ReportDesigner.Locale['es-ES'] = {
         errorMessagePrefix: 'Aún no ha configurado una fuente de datos.',
         errorMessageSuffix: 'Agregue una fuente de datos para vincular datos para informar elementos en su diseñador.',
         search: 'Buscar',
-        xValue: 'X Valor(s)',
-        yValue: 'Y Valor(s)',
-        value: 'Valor(s)',
-        column: 'Columna',
-        row: 'Fila(s)',
-        size: 'tamaño(s)',
-        aggregate: 'Agregar',
-        filters: 'Filtros',
-        sorts: 'Ordena',
-        groups: 'Grupos',
-        expression: 'Expresión',
         dragOnDrop: 'Arrastrar y soltar'
     },
     reportProperty: {
@@ -1652,6 +1677,9 @@ ej.ReportDesigner.Locale['es-ES'] = {
             sizeLabel: 'Tamaño',
             width: 'Anchura',
             height: 'Altura'
+        },
+        codeModule: {
+            code: 'Código',
         },
         margin: {
             categoryName: 'Margen',
@@ -1999,6 +2027,10 @@ ej.ReportDesigner.Locale['es-ES'] = {
         }
     },
     textBoxProperty: {
+        contents: {
+            categoryName: 'Contenido',
+            content: 'Contenido'
+        },
         basicSettings: {
             categoryName: 'Ajustes básicos',
             font: {
@@ -2135,12 +2167,15 @@ ej.ReportDesigner.Locale['es-ES'] = {
             cut: 'Cortar',
             copy: 'Dupdo',
             paste: 'Pegar',
-            expression: 'Expresión'
+            expression: 'Expresión',
+            pasteAlert: 'Su navegador no admite el acceso directo al portapapeles. Utilice el método abreviado de teclado Ctrl + V en lugar de la operación de pegado.'
         }
     },
     designPanel: {
         headerText: 'Encabezamiento',
-        footerText: 'Pie de página'
+        footerText: 'Pie de página',
+        pasteAlert: 'Solo se admiten elementos básicos en el área de encabezado y pie de página',
+        pasteTitle: 'Pegar'
     },
     customProperty: {
         position: {
@@ -2175,6 +2210,304 @@ ej.ReportDesigner.Locale['es-ES'] = {
             visible: 'Visible'
         }
     },
+    tablixProperty: {
+        data: {
+            categoryName: 'Datos',
+            datasetName: 'Conjunto de datos',
+            datasetNone: 'Ninguna'
+        },
+        appearance: {
+            categoryName: 'Apariencia',
+            borderTypes: {
+                border: 'Frontera',
+                borderLeft: 'Izquierda',
+                borderTop: 'Parte superior',
+                borderRight: 'Derecha',
+                borderBottom: 'Fondo'
+            },
+            borderStyles: {
+                solid: 'Sólido',
+                none: 'Ninguna',
+                double: 'Doble',
+                dashed: 'Disparo',
+                dotted: 'Punteado'
+            },
+            backGround: 'Color de fondo'
+        },
+        miscellaneous: {
+            categoryName: 'Diverso',
+            noRowsMessage: 'Mensaje sin filas',
+            pageName: 'Nombre de la página',
+            keepTogether: 'Mantenerse juntos',
+            repeatColumnHeaders: 'Repetir encabezados de columna',
+            repeatRowHeaders: 'Repetir encabezados de fila',
+            fixedColumnHeaders: 'Cabeceras de columna fija',
+            fixedRowHeaders: 'Cabeceras de fila fija'
+        },
+        font: {
+            categoryName: 'Fuente',
+            defaultStyle: 'Defecto',
+            normal: 'Normal',
+            italic: 'Itálico'
+        },
+        fontStyle: {
+            categoryName: 'Estilo de fuente',
+            defaultStyle: 'Defecto',
+            normal: 'Normal',
+            thin: 'Delgado',
+            extraLight: 'Extra ligero',
+            light: 'Ligero',
+            medium: 'Medio',
+            semiBold: 'SemiBold',
+            bold: 'Negrita',
+            extraBold: 'ExtraBold',
+            heavy: 'Pesado'
+        },
+        textDecoration: {
+            categoryName: 'Decoración de texto',
+            defaultStyle: 'Defecto',
+            none: 'Ninguna',
+            underline: 'Subrayar',
+            lineThrough: 'LineThrough',
+            overline: 'Overline'
+        },
+        alignment: {
+            categoryName: 'Alineación',
+            textAlignment: {
+                categoryName: 'Alineación del texto',
+                defaultStyle: 'Defecto',
+                left: 'Izquierda',
+                center: 'Centrar',
+                right: 'Derecha'
+            },
+            verticalAlignment: {
+                categoryName: 'Alineamiento vertical',
+                defaultStyle: 'Defecto',
+                top: 'Parte superior',
+                middle: 'Medio',
+                bottom: 'Fondo'
+            }
+        },
+        padding: {
+            padding: 'Relleno',
+            paddingLeft: 'Izquierda',
+            paddingTop: 'Parte superior',
+            paddingRight: 'Derecha',
+            paddingBottom: 'Fondo'
+        },
+        position: {
+            categoryPosition: 'Posición',
+            positionLabel: 'Posición',
+            left: 'Izquierda',
+            top: 'Parte superior',
+            sizeLabel: 'Tamaño',
+            width: 'Anchura',
+            height: 'Altura'
+        },
+        visibility: {
+            categoryName: 'Visibilidad',
+            visible: 'Visible',
+            toggleItem: 'Palanca'
+        },
+        staticGroupProp: {
+            categoryName: 'Ajustes básicos',
+            filters: 'Filtros',
+            sorts: 'Clases',
+            fixedData: 'Datos fijos',
+            groupExp: 'Los grupos',
+            hideIfNoRows: 'Ocultar si no hay filas',
+            keepWithGroup: 'Mantener con el grupo',
+            repeatOnNewPage: 'Repetir en nueva pagina',
+            afterGroup: 'Después',
+            beforeGroup: 'antes de',
+            pageBreak: {
+                categoryName: 'Salto de página',
+                enablePageBreak: 'Habilitar salto de página',
+                breakLocation: {
+                    categoryName: 'Lugar de descanso',
+                    none: 'Ninguna',
+                    start: 'Comienzo',
+                    end: 'Fin',
+                    startAndEnd: 'StartAndEnd',
+                    between: 'Entre'
+                },
+                pageNumberReset: 'Restablecer número de página',
+            }
+        }
+    },
+    rowColumnGroup: {
+        rowGroupLable: 'Grupos de fila',
+        columnGroupLable: 'Grupos de columnas',
+        tablixAlertHeader: 'Tablix',
+        alertMessage: 'Habilitar la opción expandir para seleccionar el elemento de informe tablix',
+        contextMenu: {
+            addgroup: 'Añadir grupo',
+            advanced: 'Avanzado',
+            deletegroup: 'Eliminar grupo',
+            addtotal: 'Agregar total',
+            groupproperties: 'Propiedades del grupo',
+            addColumnGroup: 'Agregar grupo de columnas',
+            addRowGroup: 'Agregar grupo de filas'
+        },
+        contextSubMenu: {
+            adjacentafter: 'Adyacente después',
+            adjacentbefore: 'Adyacente antes',
+            childgroup: 'Grupo de niños',
+            parentgroup: 'Grupo de padres',
+            totalafter: 'Después',
+            totalbefore: 'antes de',
+            childGroupAlert: 'No se puede insertar el grupo dentro de los detalles.'
+        }
+    },
+    tablixContextMenu: {
+        rowMenu: {
+            insertRow: 'Insertar fila',
+            above: 'Encima',
+            below: 'Abajo'
+        },
+        columnMenu: {
+            insertColumn: 'Insertar columna',
+            left: 'Izquierda',
+            right: 'Derecha'
+        },
+        rowGroupMenu: {
+            insideGroupAbove: 'Grupo interno - arriba',
+            insideGroupBelow: 'Dentro del Grupo - Abajo',
+            outsideGroupAbove: 'Grupo exterior - arriba',
+            outsideGroupBelow: 'Grupo Exterior - Abajo'
+        },
+        columnGroupMenu: {
+            insideGroupLeft: 'Grupo interno - izquierda',
+            insideGroupRight: 'Dentro del grupo - derecha',
+            outsideGroupLeft: 'Grupo exterior - izquierda',
+            outsideGroupRight: 'Grupo exterior - derecha',
+        },
+        deleteRows: 'Eliminar filas',
+        deleteColumns: 'Eliminar columnas',
+        rowVisibility: 'Visibilidad de la fila',
+        columnVisibility: 'Visibilidad de la columna',
+        tablixProperties: 'Propiedades de Tablix',
+        splitcells: 'Células partidas',
+        mergecells: 'Combinar células',
+        groupMenu: {
+            adjacentAbove: 'Adyacente arriba',
+            adjacentBelow: 'Adyacente a continuación',
+            adjacentleft: 'Adyacente a la izquierda',
+            adjacentright: 'Derecho adyacente',
+            childGroup: 'Grupo infantil',
+            parentGroup: 'Grupo de padres',
+            deleteRowGroup: 'Eliminar grupo de filas',
+            deleteColGroup: 'Eliminar grupo de columnas',
+            addRowGroup: 'Grupo de filas',
+            addColGroup: 'Grupo de columnas'
+        },
+        reportItemMenu: {
+            insertItem: 'Insertar',
+            chart: 'Gráfico'
+        },
+        totalMenu: {
+            total: 'Add Total',
+            row: 'Row',
+            column: 'Column',
+            before: 'Before',
+            after: 'After'
+        },
+        cellMenu: {
+            addExpression: 'Añadir expresión',
+            editExpression: 'Editar Expresión',
+            datasource: 'Añadir fuente de datos',
+            noFields: 'No hay campos',
+            addText: 'Añadir texto',
+            editText: 'Editar texto'
+        },
+        basicItems: {
+            deleteItem: 'Borrar',
+            cut: 'Cortar',
+            copy: 'Dupdo',
+            paste: 'Pegar'
+        }
+    },
+    tablixAlertDialog: {
+        ok: 'DE ACUERDO',
+        cancel: 'Cancelar',
+        closeToolTip: 'Cerrar',
+        deleteRowTitle: 'Eliminar filas',
+        deleteRow: 'Eliminar solo las filas',
+        deleteRowGroup: 'Eliminar filas y grupos asociados',
+        deleteRowContent: 'Eliminar opciones de fila',
+        deleteBodyRow: 'El cuerpo de Tablix debe contener al menos una fila.',
+        deleteColumnTitle: 'Eliminar columnas',
+        deleteColumn: 'Eliminar columnas solamente',
+        deleteColumnGroup: 'Eliminar columnas y grupos asociados.',
+        deleteColumnContent: 'Eliminar opciones de columna',
+        deleteBodyColumn: 'El cuerpo de Tablix debe contener al menos una columna.',
+        deleteGroup: 'Eliminar solo el grupo',
+        deleteGroupRowColumn: 'Eliminar grupo y filas y columnas relacionadas',
+        deleteGroupTitle: 'Eliminar grupo',
+        deleteGroupContent: 'Eliminar opciones de grupo',
+        deleteStructure: 'Estructura de grupo no disponible.',
+        removeRowAlert: 'Error al eliminar la fila en el elemento del informe Tablix ',
+        removeRow: 'Eliminar filas',
+        removeColumn: 'Eliminar columnas',
+        addRow: 'Añadir fila',
+        addColumn: 'Añadir columna',
+        removeColumnAlert: 'Error al eliminar la columna en el elemento del informe Tablix',
+        addRowAlert: 'Error al agregar la fila en el elemento del informe Tablix',
+        addColumnAlert: 'Error al agregar la columna en el elemento de informe de Tablix'
+    },
+    cellMergingAlertInfo: {
+        merge: 'Combinar células',
+        mergeAlert: 'Error al combinar las celdas en el elemento de informe Tablix',
+        split: 'Células partidas',
+        splitAlert: 'Error al dividir las celdas en el ítem del reporte Tablix'
+    },
+    tablixAlertInfo: {
+        addGroup: 'Añadir grupo',
+        removeGroup: 'Eliminar grupo',
+        adjacentAfterAlert: 'Error al agregar el grupo adyacente en la estructura de jerarquía',
+        adjacentBeforeAlert: 'Error al agregar el grupo adyacente en la estructura de jerarquía',
+        childGroupALert: 'Error al agregar grupo secundario en la estructura de jerarquía',
+        title: 'Elemento de informe de Tablix',
+        parentGroupAlert: 'Error al agregar el grupo padre en la estructura de jerarquía',
+        removeGroupAlert: 'Error al eliminar el grupo en la estructura de jerarquía',
+        selectedMemberAlert: 'El miembro seleccionado no es un miembro del grupo',
+        pasteActionAlert: 'La información no se puede publicar porque el área de copia y el área de pegado no tienen el mismo tamaño y forma.',
+        pasteTitle: 'Pegar'
+    },
+    tablixGroup: {
+        title: 'Grupo Tablix',
+        groupBy: 'Agrupar por:',
+        chooseField: 'Elegir campo',
+        showDetailData: 'Mostrar datos detallados',
+        addGroupHeader: 'Añadir encabezado',
+        addGroupFooter: 'Añadir pie de página',
+        ok: 'DE ACUERDO',
+        cancel: 'Cancelar',
+        closeToolTip: 'Cerca'
+    },
+    tablixDataAssignMenu: {
+        datasource: 'Añadir fuente de datos',
+        addExpression: 'Añadir expresión',
+        editExpression: 'Editar Expresión',
+        addText: 'Añadir texto',
+        editText: 'Editar texto',
+        search: 'Buscar',
+        noFieldsFound: 'No se encontraron campos'
+    },
+    tablixTotalAlert: {
+        totalHeader: 'Añadir encabezado total',
+        totalStatic: 'Añadir total',
+        headerMessage: 'Error al agregar la fila o columna total al encabezado del grupo en el elemento de informe Tablix',
+        staticMessage: 'Error al agregar la fila o columna total al cuerpo de Tablix en el elemento de informe de Tablix'
+    },
+    tablixAddTextDialog: {
+        save: 'Salvar',
+        add: 'Añadir',
+        cancel: 'Cancelar',
+        closeToolTip: 'Cerrar',
+        addText: 'Añadir texto',
+        editText: 'Editar texto'
+    },
     queryDesigner: {
         storeParameter: {
             title: 'Parámetros',
@@ -2193,6 +2526,9 @@ ej.ReportDesigner.Locale['es-ES'] = {
             parameterLable: 'Parámetro',
             nullLable: 'Nulo',
             valueLable: 'Valor',
+            dataTypeLable: 'Tipo de datos',
+            auto: 'Auto',
+            text: 'texto',
             closeToolTip: 'Cerca'
         },
         filter: {
@@ -2421,5 +2757,63 @@ ej.ReportDesigner.Locale['es-ES'] = {
             valueWaterMark: 'Valor',
             closeToolTip: 'Cerca'
         }
+    },
+    chartItem: {
+        categoryItems: {
+            yvalue: 'Y Valor(s)',
+            size: 'Tamaño(s)',
+            xvalue: 'X Valor(s)',
+            column: 'Columna',
+            row: 'Fila(s)'
+        },
+        categoryItemsMenu: {
+            filter: 'Filtros',
+            sort: 'Ordena',
+            group: 'Grupos',
+            expression: 'Expresión',
+            aggregate: 'Agregar'
+        }
+    },
+    codeDialog: {
+        title: 'Módulo de código',
+        ok: 'DE ACUERDO',
+        cancel: 'Cancelar',
+        add: 'AÑADIR',
+        closeToolTip: 'Cerrar',
+        reference: {
+            title: 'Referencias',
+            waterMark: 'Referencia',
+            errorMessage: 'El campo esta vacio',
+            headerText: 'Lista de referencias de montaje',
+            infoTipText: 'Agregue una referencia de ensamblaje para utilizar sus funciones de ensamblaje en el informe.'
+        },
+        classes: {
+            title: 'Las clases',
+            classWaterMark: 'Nombre de la clase',
+            instanceWaterMark: 'Nombre de instancia',
+            classErrorMessage: 'Los campos estan vacios',
+            instanceErrorMessage: 'El campo esta vacio',
+            headerText: 'Lista de instancias de clase',
+            infoTipText: 'Agregue instancias de clase para acceder a sus funciones de objeto en el informe.'
+        },
+        code: {
+            title: 'Código',
+            headerText: 'Función de código VB para informe',
+            infoTipText: 'El motor de informes Syncfusion admite funciones de código VB para integrarse con elementos y datos del informe.'
+        }
+    },
+    sampleDataSource: {
+        sampleDSHeader: 'DATOS DE MUESTRA DE IMPORTACIÓN',
+        addText: 'Añadir',
+        searchText: 'Buscar',
+        noDataFound: 'Datos no encontrados.',
+        welcomeContentPrefix: 'Comience creando una fuente de datos',
+        welcomeContentSuffix: 'Puede conectarse a sus propios datos personalizados o puede importar uno de los datos compartidos predefinidos que ofrecemos.',
+        sampleDSText: 'importar datos de muestra',
+        exploreSampleText: 'Explorar datos de muestra',
+        accordionText: 'Comience su primer informe y explore las opciones de personalización utilizando los datos de muestra.',
+        errorMessage: 'Error de red',
+        alertHeaderText: 'Datos de importacion',
+        alertMessage: 'Report Designer no pudo importar los datos del servidor de informes'
     }
 };

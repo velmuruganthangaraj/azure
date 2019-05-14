@@ -80,28 +80,14 @@
 
                         {{if ~checkMobile()}} 
                         {{if CanWrite}}                       
-                        <li class="dropdown-submenu no-padding option-click">                       
-                            <span class="edit-report-option">                                
+                        {{if IsWebDesignerCompatible}}
+                        <li>
+                            <span class="web-designer option-click" title="" data-name="{{:Name}}" data-category-name="{{:CategoryName}}">
                                 <i class="su su-report"> </i>
                                 <span>[[[Edit]]]</span>
-                                <span class="caret"></span>
                             </span>
-                            <ul class="dropdown-menu designer-page-views">                                
-                                <li>                                    
-                                    <span class="designer option-click" title="" id="launcher" data-itemid="{{:Id}}">
-                                        <span id="designerArgument" style="display:none">{{:DesignerArgument}}</span>
-                                        <span>[[[Client Designer]]]</span>
-                                    </span>                                   
-                                </li>
-                                {{if IsWebDesignerCompatible}}
-                                <li>                        
-                                    <span class="web-designer option-click" title="" data-name="{{:Name}}" data-category-name="{{:CategoryName}}">
-                                        <span>[[[Web Designer]]]</span>
-                                    </span> 
-                                </li>
-                                {{/if}}
-                            </ul>
                         </li>
+                        {{/if}}
                         {{/if}}
                         {{/if}}
 
@@ -138,7 +124,7 @@
                         {{if (ItemType=="@((int)ItemType.Report)")}}
                         <li>                           
                             <span title="" ispublic="{{:IsPublic}}" class="embed-code option-click" data-itemtype="{{:ItemType}}" data-item-id="{{:Id}}" data-item-type="@(gridName)" data-name="{{:Name}}" data-url="{{:~urlWithoutSection(CategoryName, Name)}}">
-                                <i class="su su-embed2"></i>
+                                <i class="su su-embed"></i>
                                 <span>[[[Get Embed code]]]</span>
                             </span>                   
                         </li>
@@ -356,6 +342,7 @@
             filterSettings: filters,
             actionBegin: "fnActionBegin",
             actionComplete: "fnActionComplete",
+            actionFailure: "fnActionFailure",
             rowSelecting: function (args) {
                 if (args.target.hasClass("favoriteItem")) {
                     args.cancel = true;

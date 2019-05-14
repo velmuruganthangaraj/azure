@@ -20,6 +20,7 @@
             Url.Content("~/Content/Images/Application/" + GlobalAppSettings.SystemSettings.MainScreenLogo);
     var defaultAppLogo = Url.Content("~/Content/Images/Application/Main_Logo.png");
     var language = Context.GetPrincipalAppLanguageForRequest().GetCultureInfo();
+    var umsUrl = GlobalAppSettings.SystemSettings.UmsUrl;
 }
 
 <html lang="en" style="height:100%;width:100%">
@@ -43,7 +44,7 @@
 
     @if (GlobalAppSettings.SystemSettings.StorageType == (int)StorageType.AzureBlob)
     {
-        <link rel="icon" href="@GlobalAppSettings.AzureBlob.AzureBlobStorageUri/@GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName/@GlobalAppSettings.GetStorageMode()/Content/Images/Application/@GlobalAppSettings.SystemSettings.FavIcon" onerror="if (this.href != '~/Content/Images/Application/Favicon.png') this.href = '~/Content/Images/Application/Favicon.png';" />
+        <link rel="icon" href="@GlobalAppSettings.AzureBlob.AzureBlobStorageUri.Trim('/')/@GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName/@GlobalAppSettings.GetStorageMode()/Content/Images/Application/@GlobalAppSettings.SystemSettings.FavIcon" onerror="if (this.href != '~/Content/Images/Application/Favicon.png') this.href = '~/Content/Images/Application/Favicon.png';" />
     }
     else
     {
@@ -295,7 +296,7 @@ function doAjaxPost(url, jsonObj, callBack) {
             <div id="account-profile" class="dropdown no-padding">
                 <span class="dropdown-toggle" data-toggle="dropdown">
                     <span class="profile-picture">
-                        <img alt="Profile Picture" src="@Url.Content("~/User/Avatar?Username=" + ((HttpContext.Current.User as ServerPrincipal).UserId) + "&ImageSize=64")" />
+                        <img alt="Profile Picture" src="@umsUrl/User/Avatar?Username=@((HttpContext.Current.User as ServerPrincipal).UserName)&ImageSize=64" />
                     </span>
                 </span>
                 <div class="dropdown-menu" id="profile-info-section" role="menu">
@@ -304,7 +305,7 @@ function doAjaxPost(url, jsonObj, callBack) {
                             <tbody>
                                 <tr>
                                     <td class="profile-picture-area">
-                                        <img alt="Profile Picture" src="@Url.Content("~/User/Avatar?Username=" + ((HttpContext.Current.User as ServerPrincipal).UserId) + "&ImageSize=64")" />
+                                        <img alt="Profile Picture" src="@umsUrl/User/Avatar?Username=@((HttpContext.Current.User as ServerPrincipal).UserName)&ImageSize=64" />
                                     </td>
                                     <td class="profile-info-area">
                                         <ul class="no-margin no-padding">

@@ -18,34 +18,6 @@ $(document).ready(function () {
         open: "onUserAddDialogOpen"
     });
 
-    $("#singleuser-delete-confirmation").ejDialog({
-        width: "378px",
-        showOnInit: false,
-        allowDraggable: false,
-        enableResize: false,
-        height: "auto",
-        title: "Delete User",
-        showHeader: false,
-        enableModal: true,
-        close: "onSingleDeleteDialogClose",
-        closeOnEscape: true,
-        open: "onSingleDeleteDialogOpen"
-    });
-
-    $("#user-delete-confirmation").ejDialog({
-        width: "378px",
-        showOnInit: false,
-        allowDraggable: false,
-        enableResize: false,
-        height: "auto",
-        showHeader: false,
-        title: "Delete User",
-        enableModal: true,
-        close: "onDeleteDialogClose",
-        closeOnEscape: true,
-        open: "onDeleteDialogOpen"
-    });
-
     $.validator.addMethod("isRequired", function (value, element) {
         return !isEmptyOrWhitespace(value);
     }, "[[[Please enter the name]]]");
@@ -160,10 +132,6 @@ $(document).ready(function () {
         $(".useradd-validation-messages").css("display", "none");
     });
 
-    $(".user-delete-button").on("click", function () {
-        $("#user-delete-confirmation").ejDialog("open");
-    });
-
     $("input#add-user").on('click', function () {
         var userName = $("#username").val().trim();
         var firstName = $("#firstname").val().trim();
@@ -179,81 +147,51 @@ $(document).ready(function () {
             var values = "&username=" + userName + "&emailid=" + emailid + "&firstname=" + firstName + "&lastname=" + lastName;
 
             $.ajax({
-                type: "POST", url: isPresentusernameUrl, data: { userName: userName.toLowerCase() },
-                success: function (data) {
-                    if (data.toLowerCase() == "true") {
-                        $('#username').closest('div').addClass("has-error");
-                        $("#invalid-username").html("[[[Username already exists]]]").css("display", "block");
-                        $(".useradd-validation-messages").css("display", "block");
-                        hideWaitingPopup("user-add-dialog_wrapper");
-                        return;
-                    }
-                    else {
-                        $.ajax({
-                            type: "POST", url: isPresentEmailId, data: { emailId: emailid.toLowerCase() },
-                            success: function (data) {
-                                if (data.toLowerCase() == "true") {
-                                    $('#mailid').closest('div').addClass("has-error");
-                                    $("#invalid-email").html("[[[Email address already exists]]]").css("display", "block");
-                                    $(".useradd-validation-messages").css("display", "block");
-                                    hideWaitingPopup("user-add-dialog_wrapper");
-                                    return;
-                                }
-                                else {
-                                    $.ajax({
-                                        type: "POST", url: postactionUrl, data: values,
-                                        success: function (data, result) {
-                                            if ($.type(data) == "object") {
-                                                if (data.Data.result == "success") {
-                                                    hideWaitingPopup("user-add-dialog_wrapper");
-                                                    $("#add-user").attr("disabled", "disabled");
-                                                    $("#create-user").removeClass("hide").addClass("show");
-                                                    $(".form input[type='text']").val('');
-                                                    var count = parent.$("#user-count-text").val();
-                                                    var currentVal = parseInt(count) + 1;
-                                                    parent.$("#user-count").html(currentVal);
-                                                    parent.$("#user-count-text").val(currentVal);
-                                                    onUserAddDialogClose();
-                                                    $.ajax({
-                                                        type: "POST",
-                                                        url: checkMailSettingUrl,
-                                                        success: function (result) {
-                                                            var messageText = "";
-                                                            if (result.activation == 0) {
-                                                                messageText = "[[[User has been added and activated successfully.]]]";
-                                                            }
-                                                            else if (result.result == "success" && result.activation == 1) {
-                                                                messageText = "[[[User has been added successfully.]]]";
-                                                            }
-                                                            else if (result.result == "failure" && result.isAdmin == true && result.activation == 1) {
-                                                                messageText = "[[[User has been created successfully. Activation emails cannot be sent until the user’s email settings are configured.]]]";
-                                                            }
-                                                            messageBox("su-user-add", "[[[Add User]]]", messageText, "success", function () {
-                                                                g.refreshContent();
-                                                                onCloseMessageBox();
-                                                            });
-                                                        }
-                                                    });
-                                                }
-                                                else if (data.IsUserLimitExceed) {
-                                                    hideWaitingPopup("user-add-dialog_wrapper");
-                                                    $("#limit-user").ejDialog("open");
-                                                    $("#zero-user-acc").show();
-                                                }
-                                                else {
-                                                    messageBox("su-user-add", "[[[Add User]]]", "Internal Server Error. please try again.", "error", function () {
-                                                        g.refreshContent();
-                                                        onCloseMessageBox();
-                                                    });
-                                                }
-                                            }
-                                            else {
-                                            }
-                                        }
-                                    });
-                                }
-                            }
-                        });
+                type: "POST", url: postactionUrl, data: values,
+                success: function (data, result) {
+                    if ($.type(data) === "object") {
+                        if (data.Data.error_message !== null && data.Data.error_message !== undefined && data.Data.error_message.toLowerCase() === "username exists") {
+                            $('#username').closest('div').addClass("has-error");
+                            $("#invalid-username").html("[[[Username already exists]]]").css("display", "block");
+                            $(".useradd-validation-messages").css("display", "block");
+                            hideWaitingPopup("user-add-dialog_wrapper");
+                            return;
+                        }
+                        if (data.Data.error_message !== null && data.Data.error_message !== undefined && data.Data.error_message.toLowerCase() === "email exists") {
+                            $('#mailid').closest('div').addClass("has-error");
+                            $("#invalid-email").html("[[[Email address already exists]]]").css("display", "block");
+                            $(".useradd-validation-messages").css("display", "block");
+                            hideWaitingPopup("user-add-dialog_wrapper");
+                            return;
+                        }
+                        if (data.Data.result === "success") {
+                            hideWaitingPopup("user-add-dialog_wrapper");
+                            $("#add-user").attr("disabled", "disabled");
+                            $("#create-user").removeClass("hide").addClass("show");
+                            $(".form input[type='text']").val('');
+                            var count = parent.$("#user-count-text").val();
+                            var currentVal = parseInt(count) + 1;
+                            parent.$("#user-count").html(currentVal);
+                            parent.$("#user-count-text").val(currentVal);
+                            onUserAddDialogClose();
+                            messageBox("su-user-add", "[[[Add User]]]", data.Data.message, "success", function () {
+                                g.refreshContent();
+                                onCloseMessageBox();
+                            });
+                        }
+                        else if (data.IsUserLimitExceed) {
+                            hideWaitingPopup("user-add-dialog_wrapper");
+                            $("#limit-user").ejDialog("open");
+                            $("#zero-user-acc").show();
+                        }
+                        else {
+                            hideWaitingPopup("user-add-dialog_wrapper");
+                            onUserAddDialogClose();
+                            messageBox("su-user-add", "[[[Add User]]]", "Internal Server Error. please try again.", "error", function () {
+                                g.refreshContent();
+                                onCloseMessageBox();
+                            });
+                        }
                     }
                 }
             });
@@ -301,12 +239,6 @@ $(document).ready(function () {
         } else if (e.keyCode == 13 && $("#existing-group").css("display") == "none") {
             AddUserGroup();
             return false;
-        }
-    });
-
-    $("#user-delete-confirmation-wrapper,#user-delete-confirmation-overLay").keyup(function (e) {
-        if (e.keyCode == 13) {
-            MakeFlyDeleteUsers();
         }
     });
 
@@ -388,10 +320,6 @@ $(document).ready(function () {
             }
         }
     }
-    $(document).on("click", ".delete-class", function () {
-        $(this).parent("li").addClass("Isdelete");
-        $("#singleuser-delete-confirmation").ejDialog("open");
-    });
 });
 
 function EmptyFile() {
@@ -591,60 +519,6 @@ $(document).on("click", ".user-add-group", function () {
     }, 1500);
 });
 
-function MakeFlyDeleteUsers() {
-    showWaitingPopup("user-delete-confirmation");
-    var userList = "";
-    var usergrid = $('#user_grid').data("ejGrid");
-    var selectedRecords = usergrid.getSelectedRecords();
-    var SingleOrMultiple = "";
-    if (selectedRecords.length > 1)
-        SingleOrMultiple = "s";
-    var deleteUserCount = 0;
-    jQuery.each(selectedRecords, function (index, record) {
-        if (record.UserName.toLowerCase() != $(".user-delete-button").attr("data-log-user").toLowerCase()) {
-            deleteUserCount = deleteUserCount + 1;
-            if (userList == "")
-                userList = record.UserName;
-            else
-                userList = userList + "," + record.UserName;
-        }
-    });
-    var values = "Users=" + userList;
-    doAjaxPost("POST", deleteFromUserListUrl, values, function (data) {
-        if (data.status) {
-            hideWaitingPopup("user-delete-confirmation");
-            parent.messageBox("su-open", "[[[Delete User(s)]]]", "<div class='delete-success'>[[[User(s) has been deleted successfully.]]]</div>", "success", function () {
-                var count = parent.$("#user-count-text").val();
-                var currentVal = parseInt(count) - deleteUserCount;
-                parent.$("#user-count").html(currentVal);
-                parent.$("#user-count-text").val(currentVal);
-                if (data.AdUserCount == 0) {
-                    $("#ad-indication").html("");
-                }
-                if (data.AzureADUserCount == 0) {
-                    $("#azure-ad-indication").html("");
-                }
-                parent.onCloseMessageBox();
-            });
-            $("#user-delete-confirmation").ejDialog("close");
-            onConfirmDeleteUser(selectedRecords.length);
-        }
-        else {
-            hideWaitingPopup("user-delete-confirmation");
-            parent.messageBox("su-open", "[[[Delete User(s)]]]", "<div class='delete-success'>[[[Failed to delete user(s), please try again later.]]]</div>", "success", function () {
-                $("#user-delete-confirmation").ejDialog("close");
-                parent.onCloseMessageBox();
-            });
-        }
-    }, function () {
-        hideWaitingPopup("user-delete-confirmation");
-        parent.messageBox("su-open", "[[[Delete User(s)]]]", "<div class='delete-success'>[[[Failed to delete user(s), please try again later.]]]</div>", "error", function () {
-            $("#user-delete-confirmation").ejDialog("close");
-            parent.onCloseMessageBox();
-        });
-    });
-}
-
 function onConfirmDeleteUser(count) {
     var usergrid = $('#user_grid').data("ejGrid");
     var currentPage = usergrid.model.pageSettings.currentPage;
@@ -674,29 +548,15 @@ function onUserAddDialogOpen() {
     $(".dropdown").removeClass("open");
     $("#user-add-dialog").ejDialog("open");
     $(".e-dialog-icon").attr("title", "Close");
-    CheckMailSettingsAndNotify("[[[To send account activation email to the user, please configure email settings or change the account activation mode as Automatic Activation.]]]", $(".validation-message"), "");
-}
-
-function onDeleteDialogClose() {
-    $("#user-delete-confirmation").ejDialog("close");
-}
-
-function onDeleteDialogOpen() {
-    $("#user-delete-confirmation").ejDialog("open");
-    $("#user-delete-confirmation").focus();
-}
-
-function onSingleDeleteDialogClose() {
-    $("#singleuser-delete-confirmation").ejDialog("close");
 }
 
 function checkUserImported(t) {
     var ejGrid = $("#user_import_grid").data("ejGrid");
     var gridRows = ejGrid.getRows();
-    if (gridRows.length > 0) {    
+    if (gridRows.length > 0) {
         $("#messageBox_wrapper, .e-dialog-scroller, #messageBox").removeClass("failed-msg-box-height").addClass("msg-box-height"); //Message box height adjustment 
         $(".message-content").removeClass("text-center");
-        messageBox("su-user-1", "[[[Import users from CSV]]]", "[[[User import incomplete. Do you want to continue?]]]", "error", function () {            
+        messageBox("su-user-1", "[[[Import users from CSV]]]", "[[[User import incomplete. Do you want to continue?]]]", "error", function () {
             parent.onCloseMessageBox();
             window.location.href = $(t).attr("href");
         }, function () {
@@ -718,11 +578,11 @@ function SaveUserListFromCSV() {
     for (var i = 0; i < $("td.user-name").length; i++) {
         if (userNames == "") {
             userNames = $("td.user-name")[i].textContent;
-            emailIds = $("td.email-id")[i].textContent;
+            emailIds = $("td.email-id")[i].textContent.toLowerCase();
         }
         else {
             userNames = userNames + "," + $("td.user-name")[i].textContent;
-            emailIds = emailIds + "," + $("td.email-id")[i].textContent;
+            emailIds = emailIds + "," + $("td.email-id")[i].textContent.toLowerCase();
         }
     }
     $.ajax({
@@ -738,7 +598,7 @@ function SaveUserListFromCSV() {
                     for (var i = 0; i < result.Data.length; i++) {
                         if (!result.Data[i].IsExist && result.Data[i].DisplayMessage != "") {
                             var obj = $(nameObj[i]).siblings(":last");
-                            obj.html("<ol>" + result.Data[i].DisplayMessage + "</ol>");
+                            obj.html(result.Data[i].DisplayMessage);
                         }
                     }
                     $('[data-toggle="tooltip"]').tooltip();
@@ -749,13 +609,12 @@ function SaveUserListFromCSV() {
                         parent.onCloseMessageBox();
                     });
                     $("#import-button").attr("disabled", "disabled");
-                } else {                   
+                } else {
                     $(".import-file #user-import-validation-msg").css("display", "none");
                     $("#user_import_grid").ejGrid("option", { dataSource: [] });
-                    var messageText = result.activation == 0 ? " [[[user(s) has been added and activated successfully.]]]" : " [[[user(s) has been added successfully.]]]";
                     $("#messageBox_wrapper, .e-dialog-scroller, #messageBox").removeClass("failed-msg-box-height").addClass("msg-box-height");//Message box height adjustment
                     $(".message-content").addClass("text-center");
-                    messageBox("su-user-1", "[[[Import users from CSV]]]", result.Count + messageText, "success", function () {
+                    messageBox("su-user-1", "[[[Import users from CSV]]]", result.Count + result.Message, "success", function () {
                         parent.onCloseMessageBox();
                         window.location.href = userPageUrl;
                     });
@@ -784,34 +643,6 @@ $(document).on("click", ".option-icon", function () {
         $(".delete-class").parent().css("display", "block");
     }
 });
-
-function deleteSingleUser() {
-    var userId = $(".Isdelete").attr("data-content");
-    var usergrid = $('#user_grid').data("ejGrid");
-    doAjaxPost("POST", deleteSingleFromUserListUrl, "UserId=" + userId, function (data) {
-        if (data.status) {
-            var count = parent.$("#user-count-text").val();
-            var currentVal = parseInt(count) - 1;
-            parent.$("#user-count").html(currentVal);
-            parent.$("#user-count-text").val(currentVal);
-            if (data.AdUserCount == 0) {
-                $("#ad-indication").html("");
-            }
-            if (data.AzureADUserCount == 0) {
-                $("#azure-ad-indication").html("");
-            }
-            parent.messageBox("su-open", "[[[Delete User]]]", "<div class='delete-success'>[[[User has been deleted successfully.]]]</div>", "success", function () {
-                parent.onCloseMessageBox();
-            });
-            onConfirmDeleteUser("1");
-            $("#singleuser-delete-confirmation").ejDialog("close");
-        } else {
-            parent.messageBox("su-open", "[[[Delete User]]]", "<div class='delete-success'>[[[Failed to delete user, please try again later.]]]</div>", "error", function () {
-                parent.onCloseMessageBox();
-            });
-        }
-    });
-}
 
 function HasWhiteSpace(value) {
     if (/\s/g.test(value)) {
@@ -848,5 +679,27 @@ $(document).on("click", ".search-user", function () {
     gridObj.refreshContent();
 });
 
+$(document).on("click", ".ums-user-synchronization", function () {
+    $("body").ejWaitingPopup();
+    $("body").ejWaitingPopup("show");
+    $.ajax({
+        type: "POST",
+        url: getAllUsersUrl,
+        data: { reqList: "users" },
+        success: function (result) {
+            if (result.isSuccess) {
+                SuccessAlert("[[[User Synchronization]]]", "[[[Users has been synchronized successfully.]]]", 7000);
+                var gridObj = $("#user_grid").data("ejGrid");
+                gridObj.refreshContent();
+                $("#user-count").val(result.count);
+                $("#user-count").html(result.count);
+            }
+            else {
+                WarningAlert("[[[User Synchronization]]]", "[[[Error while synchronizing users.]]]", 7000);
+            }
+            $("body").ejWaitingPopup("hide");
+        }
+    });
+});
 
 

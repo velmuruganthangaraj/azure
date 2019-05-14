@@ -92,100 +92,11 @@
         e.stopPropagation();
     });
 
-    $(document).on('click', "#group-title-container-save-button", function (e) {
-        $("#group-edit-confirmation").html("");
-        var groupName = $("#group-info-name").val().trim();
-        $("#group-info-name").closest("div").removeClass("has-error");
-        var isValid = $(".group-form").valid();
-
-        if (isValid) {
-            $("#invalid-groupname").css("display", "none");
-            showWaitingPopup($("#base-container"));
-            doAjaxPost("POST", saveGroupSettingsUrl, { groupInfo: JSON.stringify({ "GroupName": $("#group-info-name").val(), "GroupColor": "", "GroupDescription": $("#group-info-description").val(), "GroupId": $("#hidden-group-id").val() }) },
-                function (data) {
-                    hideWaitingPopup($("#base-container"));
-                    if (data.status) {
-                        messageBox("su-edit", "[[[Edit Group]]]", "[[[Group has been updated successfully.]]]", "success", function () {
-                            var scope = angular.element($("#base-container")).scope();
-                            scope.$apply(function () {
-                                scope.allGroupDetails.GroupName = $("#group-info-name").val();
-                            });
-                            onCloseMessageBox();
-                        });
-                    } else {
-                        if (data.key == "name") {
-                            $("#invalid-groupname").html("[[[Group already exists with this name]]]").css("display", "block");
-                            $("#group-info-name").closest("div").addClass("has-error");
-                        }
-                        else
-                            $("#group-edit-confirmation").html(data.value);
-                    }
-                }
-            );
-        }
-    });
-
-    $(document).on('click', ".delete", function (e) {
-        var groupId = $(this).attr("data-groupid");
-        var groupName = $(this).attr("data-groupname");
-        eDialog = $("#delete-group-area").data("ejDialog");
-        eDialog.open();
-        $("#delete-group-iframe").attr("src", deleteGroupViewUrl + "?group=" + groupId + "&name=" + groupName);
-        $("#delete-group-area_wrapper").ejWaitingPopup("show");
-    });
-
-    $(document).on('click', ".delete-user", function (e) {
-        var userId = $(this).attr("data-userid");
-        var userName = $(this).attr("data-username");
-        eDialog = $("#delete-group-area").data("ejDialog");
-        eDialog.open();
-        $("#delete-group-iframe").attr("src", deleteGroupUserViewUrl + "?userId=" + userId + "&groupId=" + $("#hidden-group-id").val() + "&userName=" + userName);
-        $("#delete-group-area_wrapper").ejWaitingPopup("show");
-    });
-
-    $(document).on('click', "#user-save-button", function (e) {
-        showWaitingPopup($("#user-save-button"));
-        doAjaxPost("POST", addUserInGroupUrl, { groupId: $("#hidden-group-id").val(), userId: JSON.stringify($("#user-list").val()) },
-                   function (data) {
-                       hideWaitingPopup($("#user-save-button"));
-                       if (data == "True") {
-                           $("#user-list").find("option:selected").remove();
-                           $("#user-list").selectpicker("refresh");
-                           if ($("#user-list option").length > 0) {
-                               $("#user-list-container div.bs-deselect-all-custom").removeClass("bs-deselect-all-custom").addClass("bs-select-all-custom");
-                               $("#user-list-container div.bs-select-all-custom").children("span:eq(0)").text("[[[Select All]]]");
-                           }
-                           else {
-                               $("#user-list-container div.bs-deselect-all-custom").hide();
-                               $("#user-list-container .bs-deselect-all").after("<span class='noResult'>[[[No Results Found]]]</span>");
-                               $(".bootstrap-select").trigger("click");
-                           }
-                           var gridObj = $("#Grid").ejGrid("instance");
-                           RefreshGroupUsers($("#hidden-group-id").val(), gridObj);
-                       } else {
-                       }
-                   }
-              );
-    });
     $(".back-button").tooltip();
 });
 
 function RefreshGroupUsers(groupId, gridObj) {
     gridObj.refreshContent();
-}
-
-function fnOnEditGroupActionBegin(args) {
-    var searchValue = $("#search-group-users").val();
-    this.model.query._params.push({ key: "searchKey", value: searchValue });
-    var filerSettings = [], i;
-    if (args.model.filterSettings.filteredColumns.length > 0) {
-        for (i = 0; i < args.model.filterSettings.filteredColumns.length; i++) {
-            var column = args.model.filterSettings.filteredColumns[i];
-            filerSettings.push({ 'PropertyName': column.field, 'FilterType': column.operator, 'FilterKey': column.value });
-        }
-
-        this.model.query._params.push({ key: "filterCollection", value: filerSettings });
-    }
 }
 
 function fnOnUserGridActionComplete(args) {

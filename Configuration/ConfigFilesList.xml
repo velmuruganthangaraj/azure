@@ -13,8 +13,8 @@
 	<ConfigFile>
 		<FileName>web.config</FileName>
 		<location>\ReportService\</location>
-	</ConfigFile>		
-	
+	</ConfigFile>
+  
 	<ConfigFile>
 		<FileName>Syncfusion.Server.Base.Reports.Scheduler.AzureWebJob.exe.config</FileName>
 		<location>\App_Data\jobs\continuous\ReportServerScheduler\</location>

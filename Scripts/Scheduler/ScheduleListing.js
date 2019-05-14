@@ -32,7 +32,7 @@ $(document).ready(function () {
         showOnInit: false,
         close: "onSchedulerEditDialogClose",
         open: "onSchedulerEditDialogOpen",
-        width: "875px"
+        width: "876px"
     });
 
     $("#permission-popup").ejDialog({
@@ -91,16 +91,16 @@ $(document).on("click", "#clear-search", function () {
 $(window).on("resize", function () {
     var gridObj = $("#scheduleGrid").data("ejGrid");
     if (window.innerWidth < 1200) {
-        if (typeof gridObj.model.columns[5] != "undefined") {
-            gridObj.model.columns[5].width = 25;
-            gridObj.columnsWidthCollection[5] = 25;
+        if (typeof gridObj.model.columns[6] != "undefined") {
+            gridObj.model.columns[6].width = 50;
+            gridObj.columnsWidthCollection[6] = 50;
             gridObj.hideColumns("Last Run");
         }
     }
     else {
-        if (typeof gridObj.model.columns[5] != "undefined") {
-            gridObj.model.columns[5].width = 15;
-            gridObj.columnsWidthCollection[5] = 15;
+        if (typeof gridObj.model.columns[6] != "undefined") {
+            gridObj.model.columns[6].width = 50;
+            gridObj.columnsWidthCollection[6] = 50;
             gridObj.showColumns("Last Run");
         }
     }
@@ -108,11 +108,15 @@ $(window).on("resize", function () {
         gridObj.hideColumns("ItemName");
         gridObj.hideColumns("NextScheduleString");
         gridObj.hideColumns("Status");
+        gridObj.hideColumns("ExportPath");
+        gridObj.hideColumns("ScheduleParameter");
     }
     else {
         gridObj.showColumns("ItemName");
         gridObj.showColumns("NextScheduleString");
         gridObj.showColumns("Status");
+        gridObj.showColumns("ExportPath");
+        gridObj.showColumns("ScheduleParameter");
     }
     if ($("#clear-search").css("display") === "block") {
         $("#search-schedules").css("display", "block");
@@ -237,13 +241,13 @@ function removeSchedule(id) {
         success: function (data) {
             $("#schedule-delete-confirmation").html(data);
             $("#delete-popup-container .dialog-body").addClass("text-left").removeClass("text-center");
-            $("#delete-item").attr("data-schedule-id", id);
+            $("#delete-schedule").attr("data-schedule-id", id);
             $("#schedule-delete-confirmation_wrapper").ejWaitingPopup("hide");
         }
     });
 }
 
-$(document).on("click", "#delete-item", function () {
+$(document).on("click", "#delete-schedule", function () {
     $("#schedule-delete-confirmation_wrapper").ejWaitingPopup("show");
     var id = $(this).attr("data-schedule-id");
     $.ajax({

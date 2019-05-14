@@ -12,7 +12,6 @@ var QueryInputDialog = (function () {
         this.designId = designerCont.attr('id');
         this.id = 'webapi_query_Container';
         this.renderQueryInputDialog();
-        this.renderErrorToolTip(this.id);
     }
     QueryInputDialog.prototype.renderQueryInputDialog = function () {
         this.divDialog = ej.buildTag('div.e-reportdesigner-designer-configuration e-userselect', '', {
@@ -37,6 +36,7 @@ var QueryInputDialog = (function () {
         this.divDialog.append(containerDiv);
         $(document.body).append(this.divDialog);
         this.renderWebDatasourcePanel(this.contentContainer);
+        this.renderErrorToolTip(this.divDialog);
         this.divDialog.ejDialog({
             width: 'auto',
             height: 'auto',
@@ -296,7 +296,7 @@ var QueryInputDialog = (function () {
             'spellcheck': false
         });
         var errorCol = ej.buildTag('td', '', { 'padding-top': '1px', width: '25px' }, { 'id': rowId + '_webParam_error_td' });
-        this.renderErrIndicator(errorCol, this.id);
+        this.renderErrIndicator(errorCol, this.id + '_query_input_dialog');
         container.append(textCol);
         textCol.append(txtBox);
         container.append(errorCol);
@@ -492,7 +492,7 @@ var QueryInputDialog = (function () {
         for (var index = 0; index < parameters.length; index++) {
             parameterValues.push({
                 Key: parameters[index].Key,
-                Value: parameters[index].Value
+                Value: parameters[index].Value.trim()
             });
         }
         return parameterValues;
@@ -572,15 +572,16 @@ var QueryInputDialog = (function () {
             val.toString().toLowerCase() :
             (val === 0 || val === false) ? val.toString() : '';
     };
-    QueryInputDialog.prototype.renderErrIndicator = function (target, ctrlId) {
+    QueryInputDialog.prototype.renderErrIndicator = function (target, tooltipId, errMsg) {
         var errorIcon = ej.buildTag('span.e-rptdesigner-error-icon e-rptdesigner-errorinfo e-error-tip', '', {
             'float': 'right',
             'display': 'none',
             'padding-right': '2px'
-        }, {});
+        }, {
+            'e-errormsg': errMsg,
+            'e-tooltipId': tooltipId
+        });
         target.append(errorIcon);
-        errorIcon.bind('mouseover mousedown touchstart', $.proxy(this.showErrTip, this, ctrlId));
-        errorIcon.bind('mouseleave touchleave', $.proxy(this.hideErrTip, this, ctrlId));
     };
     QueryInputDialog.prototype.renderInfoIndicator = function (target, ctrlId, errMsg) {
         var infoIcon = ej.buildTag('span.e-toolbarfonticonbasic e-qrydesigner-webapi-rawdata', '', {
@@ -622,37 +623,53 @@ var QueryInputDialog = (function () {
     };
     QueryInputDialog.prototype.showErrIndictor = function (target, isEnable, errMsg) {
         var errorIcon = target.find('.e-error-tip');
-        errorIcon.attr('e-errormsg', errMsg).css('display', isEnable ? 'block' : 'none');
-    };
-    QueryInputDialog.prototype.renderErrorToolTip = function (id) {
-        if ($('#' + id + '_error_tooltip').length === 0) {
-            var toolTip = ej.buildTag('div.e-designer-right-tip e-tooltip-wrap e-widget e-designer-tooltip e-rptdesigner-error-tip', '', {
-                'display': 'none'
-            }, {
-                'id': id + '_error_tooltip'
+        errorIcon.css('display', isEnable ? 'block' : 'none');
+        if (errMsg) {
+            errorIcon.attr('e-errormsg', errMsg);
+        }
+        if (isEnable) {
+            var tooltipId = errorIcon.attr('e-tooltipId');
+            var ejTooltip = $('#' + tooltipId).data('ejTooltip');
+            ejTooltip.setModel({
+                target: '.e-rptdesigner-error-icon',
             });
-            var tipContainer = ej.buildTag('div.e-tipContainer');
-            var tipContent = ej.buildTag('div', '', {}, { 'id': id + '_error_tooltip_content' });
-            $(document.body).append(toolTip);
-            toolTip.append(tipContainer);
-            tipContainer.append(tipContent);
         }
     };
-    QueryInputDialog.prototype.showErrTip = function (ctrlId, args) {
-        args.preventDefault();
-        var targetEle = $(args.currentTarget);
-        var tooltip = $('#' + ctrlId + '_error_tooltip');
-        $('#' + ctrlId + '_error_tooltip_content').text(targetEle.attr('e-errormsg'));
-        var eleOffset = targetEle.offset();
-        tooltip.css({
-            'left': (eleOffset.left + (targetEle.width() / 2)) - tooltip.width(),
-            'top': eleOffset.top + targetEle.height() + (targetEle.height() / 2),
-            'display': 'block',
-            'z-index': ej.getMaxZindex() + 1
-        });
+    QueryInputDialog.prototype.renderErrorToolTip = function (target) {
+        if (target && target.length !== 0 && !target.data('ejTooltip')) {
+            target.ejTooltip({
+                target: '.e-designer-tooltip',
+                position: {
+                    target: { horizontal: 'bottom', vertical: 'bottom' },
+                    stem: { horizontal: 'right', vertical: 'top' }
+                },
+                tip: {
+                    adjust: {
+                        xValue: 10,
+                        yValue: 100
+                    }
+                },
+                isBalloon: false,
+                showShadow: true,
+                showRoundedCorner: true,
+                content: 'Exception Message is not configured',
+                beforeOpen: $.proxy(this.beforeOpenTooltip, this)
+            });
+        }
     };
-    QueryInputDialog.prototype.hideErrTip = function (ctrlId, args) {
-        $('#' + ctrlId + '_error_tooltip').css('display', 'none');
+    QueryInputDialog.prototype.beforeOpenTooltip = function (args) {
+        if (args.event && args.event.target) {
+            args.cancel = !ej.isNullOrUndefined(args.event.buttons) && args.event.buttons !== 0;
+            var target = args.event.target;
+            if (target) {
+                var tooltipId = $(target).attr('e-tooltipId');
+                var errMsg = $(target).attr('e-errormsg');
+                var ejTooltip = $('#' + tooltipId).data('ejTooltip');
+                ejTooltip.setModel({
+                    content: errMsg ? errMsg : ''
+                });
+            }
+        }
     };
     QueryInputDialog.prototype.appendRawData = function (ctrlId, args) {
         this.rawTextArea.val('{ "Items": { "Quantity": "10 Units", "Price": "20 Rs" }, "Characteristics": { "color": "blue", "weight": "2 lb" }}');

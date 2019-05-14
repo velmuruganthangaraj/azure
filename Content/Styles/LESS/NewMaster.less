@@ -811,100 +811,120 @@ input::-ms-clear, input::-ms-reveal {
         }
     }
 
-    #server-app-container{
-       
-        #header-area{
+    #server-app-container {
+
+        #header-area {
             height: @header-lg-height;
 
-            .header-bar{
+            .header-bar {
 
-                .main-screen-logo{
+                .main-screen-logo {
                     padding: 5px 7.5px;
 
-                    #application-logo{
+                    #application-logo {
                         height: @header-lg-height - 10;
                     }
                 }
 
-                .org-name-wrapper .header-org-name{
+                .org-name-wrapper .header-org-name {
                     font-size: @app-large-text-size + 2;
                     height: @header-lg-height;
                 }
 
-                #upload-item-section{
-                    #btn-item-upload{
-                        height: 35px !important;
-                        margin-top: 7px;
+                #upload-item-section {
+                    #btn-item-upload {
+                        height: @header-lg-height;
                     }
-                    #btn-item-create{
-                        height: 35px !important;
-                        margin-top: 7px;
+
+                    .add-button {
+                        padding: 7px 10px 7px 10px;
+                        margin: 6px 10px 0 0;
+                        font-size: 18px;
+
+                        .su-add {
+                            font-size: 14px;
+                        }
+
+                        .su-vertical-expand {
+                            font-size: 12px;
+                        }
+                    }
+
+                    #add-menus {
+                        top: 57px;
+                        padding: 0px;
+                    }
+
+                    #create-items, #upload-items {
+                        padding: 0px;
                     }
                 }
 
-                .user-account{
-                    .profile-picture{
-                        img{
+                .user-account {
+                    .profile-picture {
+                        img {
                             height: @header-lg-height;
                             width: @header-lg-height;
                         }
                     }
 
-                    #profile-info-section{
-                        .profile-info{
-                        .profile-info-area{
-                            ul{
-                                #profile-name{
-                                    font-size: @app-large-text-size + 1;
-                                }
+                    #profile-info-section {
+                        .profile-info {
+                            .profile-info-area {
+                                ul {
+                                    #profile-name {
+                                        font-size: @app-large-text-size + 1;
+                                    }
 
-                                #profile-email{
-                                    font-size: @app-large-text-size;
+                                    #profile-email {
+                                        font-size: @app-large-text-size;
+                                    }
                                 }
                             }
                         }
-                        }
                     }
-                }  
+                }
 
-                #notification-section{
+                #notification-section {
                     height: @header-lg-height;
                     width: @header-lg-height;
 
-                    #notification-link{
-                        #notification-icon{
+                    #notification-link {
+                        #notification-icon {
                             height: @header-lg-height;
-                            width:@header-lg-height;
+                            width: @header-lg-height;
                             line-height: @header-lg-height;
                         }
-                        #notification-indicator{
+
+                        #notification-indicator {
                             left: 26px;
                             top: 15px;
                         }
                     }
                 }
-            }  
+            }
         }
-        
-         #menu-area{
-             .app-menu(@menu-lg-height, @menu-lg-width, @icon-large-size);
-             display: block;
-             height: 100% !important;
-             margin-top: @header-lg-height;
 
-             #items-menu, #administration-menu {
-                 width: @header-lg-height + 5;
-             }
-        } 
+        #menu-area {
+            .app-menu(@menu-lg-height, @menu-lg-width, @icon-large-size);
+            display: block;
+            height: 100% !important;
+            margin-top: @header-lg-height;
+
+            #items-menu, #administration-menu {
+                width: @header-lg-height + 5;
+            }
+        }
 
         #content-area {
             padding: 80px 30px 0px 85px;
 
-            #server-items-container{
-                .su-sidebar-expand.category-collapse{
+            #server-items-container {
+                .su-sidebar-expand.category-collapse {
                     height: @menu-lg-height;
                     line-height: @menu-lg-height;
                 }
+
                 .item-list-panel {
                     .item-navigation {
                         li {
@@ -952,8 +972,8 @@ input::-ms-clear, input::-ms-reveal {
                 }
             }
         }
-        
-        #base-footer-div{
+
+        #base-footer-div {
             padding-left: 85px;
         }
     }
@@ -993,4 +1013,46 @@ input::-ms-clear, input::-ms-reveal {
 
 #notification-content-area_WaitingPopup{
     background: transparent;
+}
+
+//ReportNotFound and ItemRenamedorMoved Error Message style
+.response-header{
+    color: #ff0000;
+    font-size: 30px;
+    margin-top: 60px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.response{
+    color: #ff0000;
+    font-size: 25px;
+    margin-left: 16px;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu > .dropdown-menu {
+    width: auto !important;
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+    top: 5px;
+}
+
+.dropdown-submenu.pull-left {
+    float: none !important;
+}
+
+.dropdown-submenu.pull-left > .dropdown-menu {
+    right: 100%;
+    left: auto;
+    margin-left: 10px;
 }

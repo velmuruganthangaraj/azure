@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = GlobalAppSettings.SystemSettings.OrganizationName + " - [[[Notifications]]]";
     ViewBag.MessageBox = false;
+    var umsUrl = GlobalAppSettings.SystemSettings.UmsUrl;
 }
 @section styles{
     @Styles.Render("~/styles/notification-listing")
@@ -59,8 +60,8 @@
                 var appendComment = notificationContent.Url.indexOf("?")>0 ? "&comment=" : "?comment=";
                 var viewUrl = "@Url.Action("Index", "FileRender")";
                 var embedUrl = notificationContent.Url.indexOf("/embed/")> 0 ? notificationContent.Url.replace("/embed/","/") : notificationContent.Url.replace("/reports",viewUrl);
-                var displayImage = "<span class='notification-picture-menu'><img class = 'img-circle' src='@Url.Action("Avatar", "User")?Username=" +
-                    notificationContent.DoneById + "&ImageSize=64' width='40' height='40' /></span>";
+                var displayImage = "<span class='notification-picture-menu'><img class = 'img-circle' src='@umsUrl/user/avatar?Username=" +
+                        notificationContent.DoneByUserName + "&ImageSize=64' width='40' height='40' /></span>";
                 var displayText = "<span class='notification-text-content'>";
                 switch (notificationContent.LogCategory) {
                     case @((int) LogCategory.Comment):

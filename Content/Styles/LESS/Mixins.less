@@ -196,64 +196,100 @@
         }
 
         #upload-item-section {
-            .upload-items {
-                display: inline-block;
-
-                .dropdown-menu {
-                    margin-left: -39px;
-
-                    li {
-                        > a {
-                            width: 160px;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                        }
-                    }
-                }
-            }
-
-            .create-items {
-                display: inline-block;
-
-                .dropdown-menu {
-                    margin-left: 94px;
-
-                    li {
-                        > a {
-                            width: 160px;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                        }
-                    }
-                }
-            }
-
             #btn-item-upload {
                 background: @primary-btn-bg;
                 border: none;
-                border-radius: 2px;
+                border-radius: 0;
                 color: @primary-btn-text-color;
-                height: 25px !important;
+                height: @height;
                 width: 120px;
-                margin-top: 7px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
             }
-              #btn-item-create {
-                background: @primary-btn-bg;
-                border: none;
-                border-radius: 2px;
-                color: @primary-btn-text-color;
-                height: 25px !important;
-                width: 120px;
-                margin-top: 7px;
-                margin-right: 10px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+
+            .add-button {
+                padding: 6px 6px 2px 6px;
+                margin: 6px 10px 0 0;
+                border-radius: 7px;
+                display: block;
+                color: #fff;
+                cursor: pointer;
+                text-align: center;
+                background-color: transparent;
+
+                .su-add {
+                    background-color: @primary-btn-text-color;
+                    color: @primary-color;
+                    margin-right: 5px;
+                    font-size: 12px;
+                    padding: 4px;
+                    border-radius: 3px;
+                }
+
+                .su-vertical-expand {
+                    color: @primary-btn-text-color;
+                    font-size: 10px;
+                }
+            }
+
+            #add-menus {
+                right: 10px;
+                top: 47px;
+                margin-top: -5px;
+                min-width: 130px;               
+
+                li:hover {
+                    cursor: pointer;
+
+                    ul {
+                        display: block;
+                    }
+                }
+
+                li {
+                    a {
+                        span {
+                            font-size: 14px;
+                        }
+                    }
+                }
+
+                li.divider {
+                    display: none;
+                }
+
+                li {
+                    a.dropdown-toggle {
+                        display: table;
+                        padding: 5px 10px 5px 25px;
+
+                        i {
+                            padding: 0 10px;
+                        }
+
+                        .su-angle-right {
+                            display: table-cell;
+                            vertical-align: middle;
+                            text-align: right;
+                            font-size: 16px;
+                        }
+                    }
+                }
+
+                .dropdown-submenu {
+                    ul {
+                        li {
+                            a {
+                                padding: 5px 10px;
+                                padding-right: 30px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        #upload-item-section.open {
+            .add-button {
+                background-color: @primary-color;
             }
         }
 

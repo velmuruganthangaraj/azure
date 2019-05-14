@@ -16,6 +16,9 @@ ej.QueryDesigner.Locale['fr-FR'] = {
         parameterLable: 'Paramètre',
         nullLable: 'Nul',
         valueLable: 'Valeur',
+        dataTypeLable: 'Type de données',
+        auto: 'Auto',
+        text: 'texte',
         closeToolTip: 'Fermer'
     },
     filter: {
@@ -243,5 +246,13 @@ ej.QueryDesigner.Locale['fr-FR'] = {
         nameWaterMark: 'Le nom du paramètre',
         valueWaterMark: 'Valeur',
         closeToolTip: 'Fermer'
+    },
+    alertMessage: {
+        yes: 'Oui',
+        no: 'Non',
+        ok: 'D\'accord',
+        showDetails: 'Afficher les détails',
+        hideDetails: 'Cacher les détails',
+        close: 'Fermer'
     }
 };

@@ -357,6 +357,140 @@
             Bottom of the Progress Bar
             </summary>
         </member>
+        <member name="T:Syncfusion.Windows.Controls.Tools.AutomationPeer.ButtonAdvAutomationPeer">
+            <property name="flag" value="Finished" />
+            <summary>
+            Class that provides UI Automation support.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Controls.Tools.AutomationPeer.ButtonAdvAutomationPeer.#ctor(Syncfusion.Windows.Tools.Controls.ButtonAdv)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syncfusion.Windows.Controls.Tools.AutomationPeer.ButtonAdvAutomationPeer"/> class.
+            </summary>
+            <param name="control">The control.</param>
+        </member>
+        <member name="M:Syncfusion.Windows.Controls.Tools.AutomationPeer.ButtonAdvAutomationPeer.GetAutomationIdCore">
+            <summary>
+            Provides the peer's behavior when a UI Automation client calls 
+            GetAutomationId or an equivalent UI Automation client API.
+            </summary>
+            <returns>The automation identifier.</returns>
+        </member>
+        <member name="M:Syncfusion.Windows.Controls.Tools.AutomationPeer.ButtonAdvAutomationPeer.GetClassNameCore">
+            <summary>
+            Gets the name of the <see cref="T:System.Windows.UIElement"/> that is associated with this <see cref="T:System.Windows.Automation.Peers.UIElementAutomationPeer"/>. This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetClassName"/>.
+            </summary>
+            <returns>
+            An <see cref="F:System.String.Empty"/> string.
+            </returns>
+        </member>
+        <member name="M:Syncfusion.Windows.Controls.Tools.AutomationPeer.ButtonAdvAutomationPeer.GetAutomationControlTypeCore">
+            <summary>
+            Gets the control type for the <see cref="T:System.Windows.UIElement"/> that is associated with this <see cref="T:System.Windows.Automation.Peers.UIElementAutomationPeer"/>. This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetAutomationControlType"/>.
+            </summary>
+            <returns>
+            The <see cref="F:System.Windows.Automation.Peers.AutomationControlType.Custom"/> enumeration value.
+            </returns>
+        </member>
+        <member name="M:Syncfusion.Windows.Controls.Tools.AutomationPeer.ButtonAdvAutomationPeer.GetNameCore">
+            <summary>
+            Provides the peer's behavior when a UI Automation client calls
+            GetName or an equivalent UI Automation client API.
+            </summary>
+            <returns>The name as used by assistive technoloGetClassNameCoreies and other UI Automation clients.</returns>
+        </member>
+        <member name="M:Syncfusion.Windows.Controls.Tools.AutomationPeer.ButtonAdvAutomationPeer.GetHelpTextCore">
+            <summary>
+            Provides the peer's behavior when a UI Automation client calls 
+            GetHelpText or an equivalent UI Automation client API.
+            </summary>
+            <returns>The help text.</returns>
+        </member>
+        <member name="P:Syncfusion.Windows.Controls.Tools.AutomationPeer.ButtonAdvAutomationPeer.MyOwner">
+            <summary>
+            Gets owner object.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Controls.Tools.AutomationPeer.DropDownButtonAdvAutomationPeer.GetClassNameCore">
+            <summary>
+            Gets the name of the <see cref="T:System.Windows.UIElement"/> that is associated with this <see cref="T:System.Windows.Automation.Peers.UIElementAutomationPeer"/>. This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetClassName"/>.
+            </summary>
+            <returns>
+            An <see cref="F:System.String.Empty"/> string.
+            </returns>
+        </member>
+        <member name="P:Syncfusion.Windows.Controls.Tools.AutomationPeer.DropDownButtonAdvAutomationPeer.MyOwner">
+            <summary>
+            Gets owner object.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Controls.Tools.AutomationPeer.DropDownMenuGroupAutomationPeer.GetClassNameCore">
+            <summary>
+            Gets the name of the <see cref="T:System.Windows.UIElement"/> that is associated with this <see cref="T:System.Windows.Automation.Peers.UIElementAutomationPeer"/>. This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetClassName"/>.
+            </summary>
+            <returns>
+            An <see cref="F:System.String.Empty"/> string.
+            </returns>
+        </member>
+        <member name="M:Syncfusion.Windows.Controls.Tools.AutomationPeer.DropDownMenuGroupAutomationPeer.GetAutomationIdCore">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Syncfusion.Windows.Controls.Tools.AutomationPeer.DropDownMenuGroupAutomationPeer.GetAutomationControlTypeCore">
+            <summary>
+            Gets the control type for the <see cref="T:System.Windows.UIElement"/> that is associated with this <see cref="T:System.Windows.Automation.Peers.UIElementAutomationPeer"/>. This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetAutomationControlType"/>.
+            </summary>
+            <returns>
+            The <see cref="F:System.Windows.Automation.Peers.AutomationControlType.Custom"/> enumeration value.
+            </returns>
+        </member>
+        <member name="P:Syncfusion.Windows.Controls.Tools.AutomationPeer.DropDownMenuGroupAutomationPeer.MyOwner">
+            <summary>
+            Gets owner object.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Controls.Tools.AutomationPeer.DropDownMenuItemAutomationPeer.GetClassNameCore">
+            <summary>
+            Gets the name of the <see cref="T:System.Windows.UIElement"/> that is associated with this <see cref="T:System.Windows.Automation.Peers.UIElementAutomationPeer"/>. This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetClassName"/>.
+            </summary>
+            <returns>
+            An <see cref="F:System.String.Empty"/> string.
+            </returns>
+        </member>
+        <member name="M:Syncfusion.Windows.Controls.Tools.AutomationPeer.DropDownMenuItemAutomationPeer.GetAutomationIdCore">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Syncfusion.Windows.Controls.Tools.AutomationPeer.DropDownMenuItemAutomationPeer.GetAutomationControlTypeCore">
+            <summary>
+            Gets the control type for the <see cref="T:System.Windows.UIElement"/> that is associated with this <see cref="T:System.Windows.Automation.Peers.UIElementAutomationPeer"/>. This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetAutomationControlType"/>.
+            </summary>
+            <returns>
+            The <see cref="F:System.Windows.Automation.Peers.AutomationControlType.Custom"/> enumeration value.
+            </returns>
+        </member>
+        <member name="P:Syncfusion.Windows.Controls.Tools.AutomationPeer.DropDownMenuItemAutomationPeer.MyOwner">
+            <summary>
+            Gets owner object.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Controls.Tools.AutomationPeer.SplitButtonAutomationPeer.GetClassNameCore">
+            <summary>
+            Gets the name of the <see cref="T:System.Windows.UIElement"/> that is associated with this <see cref="T:System.Windows.Automation.Peers.UIElementAutomationPeer"/>. This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetClassName"/>.
+            </summary>
+            <returns>
+            An <see cref="F:System.String.Empty"/> string.
+            </returns>
+        </member>
+        <member name="P:Syncfusion.Windows.Controls.Tools.AutomationPeer.SplitButtonAutomationPeer.MyOwner">
+            <summary>
+            Gets owner object.
+            </summary>
+        </member>
         <member name="T:Syncfusion.Windows.Shared.SpecialDate">
             <summary>
             Special Day class
@@ -517,6 +651,11 @@
             Called before the <see cref="E:System.Windows.UIElement.MouseLeave"/> event occurs.
             </summary>
             <param name="e">The data for the event.</param>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.MenuAdv.Dispose">
+            <summary>
+            Releases all the resources used by this component.
+            </summary>
         </member>
         <member name="P:Syncfusion.Windows.Shared.MenuAdv.Orientation">
             <summary>
@@ -819,6 +958,11 @@
             Called before the <see cref="E:System.Windows.UIElement.KeyDown"/> event occurs.
             </summary>
             <param name="e">The data for the event.</param>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.MenuItemAdv.Dispose">
+            <summary>
+            Releases all the resources used by this component.
+            </summary>
         </member>
         <member name="M:Syncfusion.Windows.Shared.MenuItemAdv.OnPanelWidthChanged(System.Windows.DependencyPropertyChangedEventArgs)">
             <summary>
@@ -3261,6 +3405,66 @@
             stores all the item's minimized order
             </summary>
         </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewControl.MinimizedVirtualItemSize">
+            <summary>
+            Stores the minimized item size
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewControl.TileVirtualizingPanel">
+            <summary>
+            Stores the TileViewVirtualizingPanel instance.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewControl.Timer">
+            <summary>
+            Timer is used to update the items positions while drag and drop the items. 
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewControl.VirtualizingTileItemsCollection">
+            <summary>
+            Stores the virtual items collection.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewControl.IsScroll">
+            <summary>
+            Value indicating whether the items has been scrolled or not. 
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewControl.MinimizedScrollStep">
+            <summary>
+            Stores the Minimized state items scroll offset
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewControl.MaximizedScrollStep">
+            <summary>
+            Stores the Normal state items scroll offset
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewControl.RemoveAtVirtualPostion">
+            <summary>
+            Stores the removed position in Items collection
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewControl.IsSizechanged">
+            <summary>
+            Value indicating whether the size has been changd or not.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewControl.IsInsertOrRemoveItem">
+            <summary>
+            value indicating whether the items has been inserted or removed in Items collection. 
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewControl.firstVisibleIndex">
+            <summary>
+            Stores first index of the virtual Items collection. 
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewControl.PreviousMaximizedElement">
+            <summary>
+            Stores the previous maximized element 
+            </summary>
+        </member>
         <member name="F:Syncfusion.Windows.Shared.TileViewControl.count">
             <summary>
             Stores the count values for some actions done
@@ -3377,6 +3581,13 @@
             <summary>
             Initializes a new instance of the {TileViewControl} class
             </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewControl.timer_Tick(System.Object,System.EventArgs)">
+            <summary>
+            update the positions when drag and drop the items.
+            </summary>
+            <param name="sender">sender as timer</param>
+            <param name="e">e as event args</param>
         </member>
         <member name="M:Syncfusion.Windows.Shared.TileViewControl.OnGotFocus(System.Windows.RoutedEventArgs)">
             <summary>
@@ -3985,6 +4196,16 @@
             Method for updating layout with animation where the TileViewItems are arranged
             </summary>
         </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewControl.Dispose">
+            <summary>
+            Helps to dispose the internal instances used by TileViewControl.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Windows.Shared.TileViewControl.ScrollHost">
+            <summary>
+            Gets the value indicating the scroller viewer of TileView
+            </summary>
+        </member>
         <member name="E:Syncfusion.Windows.Shared.TileViewControl.IsClickHeaderToMaximizePropertyChanged">
             <summary>
             Occurs when [Click Header to Maximize Property changed changed].
@@ -4136,6 +4357,12 @@
             Gets or sets the percentage of Minimized TileViewItems.
             </summary>
             <value>The minimized items percentage.</value>
+        </member>
+        <member name="P:Syncfusion.Windows.Shared.TileViewControl.IsVirtualizing">
+            <summary>
+            Gets or sets a value indicating whether the TileViewControl virtualizing its tile items 
+            </summary>
+            <remarks>It will only work if the ItemsPanel of the TileViewControl is a TileViewVirtualizingPanel</remarks>
         </member>
         <member name="P:Syncfusion.Windows.Shared.TileViewControl.minimizedRowHeight">
             <summary>
@@ -4538,6 +4765,11 @@
             This method is called once the TileView Item is initialized
             Initialize the TileViewItem components, MinMaxButton, CloseButton, Header Object.
             Initializes the TileViewControl Property changed call Back events.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewItem.Dispose">
+            <summary>
+            Helps to dispose the internal instance used by TileView items.
             </summary>
         </member>
         <member name="M:Syncfusion.Windows.Shared.TileViewItem.closeButton_Click(System.Object,System.Windows.RoutedEventArgs)">
@@ -5117,6 +5349,305 @@
         <member name="F:Syncfusion.Windows.Shared.CloseMode.Delete">
             <summary>
             Delete Mode of the TileViewItem
+            </summary>
+        </member>
+        <member name="T:Syncfusion.Windows.Shared.TileViewVirtualizingPanel">
+            <summary>
+            Provides a framework for ItemsPanel of TileView that virtualize their tile items.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.FirstVisibleIndex">
+            <summary>
+            Stores the first item index in the viewport area
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.LastVisibleIndex">
+            <summary>
+            Stores the last item index in the viewport area
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.m_extentSize">
+            <summary>
+            Size of the extent.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.extent" -->
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.IsMaximizedButtonClick">
+            <summary>
+            Value indicates whether the min max button clicked or not
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.isTilesRestore">
+            <summary>
+            Value indicates whether the tile has been restored or not.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.VirtualColumn">
+            <summary>
+            Stores the default column count
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.VirtualRow">
+            <summary>
+            Stores the default row count 
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.parentItemsControl">
+            <summary>
+            Stores Parent Items control
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.scrollStep">
+            <summary>
+            Stores the offset values increment or decrement the scroll
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.m_viewportSize">
+            <summary>
+            Size of the viewport for this content.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.m_scrollInfo">
+            <summary>
+            Reference to IScrollInfo interface.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.m_scrollOwner">
+            <summary>
+            ScrollViewer element that controls scrolling behavior.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.parentTileView">
+            <summary>
+            Root TileView.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.m_bCanVerticallyScroll">
+            <summary>
+            Value that indicates whether scrolling on the vertical axis is possible.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.m_bCanHorizontallyScroll">
+            <summary>
+            Value that indicates whether scrolling on the horizontal axis is possible.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.isScrollActive">
+            <summary>
+            Value indicates whether the scroll is active or not.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.m_offsetPoint">
+            <summary>
+            Offset of the scrolled content.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.vScrollThumb">
+            <summary>
+            Stores the value of Verical scrollbar thumb
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.hScrollThumb">
+            <summary>
+            Stores the value of Horizontal scrollbar thumb
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.isThumUp">
+            <summary>
+            Value indicates whether mouse has been up on not on thump
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.isMouseDown">
+            <summary>
+            Value indicates whether mouse is down or not in thump
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.OnInitialized(System.EventArgs)">
+            <summary>
+            Raises the Initialized event. This method is invoked whenever IsInitialized
+            is set to true internally.
+            </summary>
+            <param name="e">The RoutedEventArgs that contains the event data.</param>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.MeasureOverride(System.Windows.Size)">
+            <summary>
+            When overridden in a derived class, measures the size in layout required
+            for child elements and determines a size for the FrameworkElement-derived class.
+            </summary>
+            <param name="availableSize">The available size that this element can give
+            to child elements. Infinity can be specified as a value to indicate
+            that the element will size to whatever content is available.</param>
+            <returns>The size that this element determines it needs during layout,
+            based on its calculations of child element sizes.</returns>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.ArrangeOverride(System.Windows.Size)">
+            <summary>
+            When overridden in a derived class, positions child elements
+            and determines a size for a FrameworkElement derived class.
+            </summary>
+            <param name="finalSize">The final area within the parent that
+            this element should use to arrange itself and its children.</param>
+            <returns>The actual size used.</returns>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.UpdateScrollerOffset(System.Int32,System.Windows.Size)">
+            <summary>
+            Update the scrollviewer offset to scroll the scroll area
+            </summary>
+            <param name="firstVisibleIndex">first intex of the visual item</param>
+            <param name="availableSize">available size of the panel</param>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.CleanUpItems(System.Int32,System.Int32)">
+            <summary>
+            Cleans the Container of the Items that not in  Viewport.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.RemoveDraggedItems(System.Int32,System.Int32)">
+            <summary>
+            Cleans the Container of the Items that not in  Viewport.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.UpdateScrollInfo(System.Windows.Size)">
+            <summary>
+            Update the scrollInfo values
+            </summary>
+            <param name="availableSize">available size of the panel</param>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#LineDown">
+            <summary>
+            Scrolls down within content by one logical unit.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#LineLeft">
+            <summary>
+            Scrolls left within content by one logical unit.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#LineRight">
+            <summary>
+            Scrolls right within content by one logical unit.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#LineUp">
+            <summary>
+            Scrolls up within content by one logical unit.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#MakeVisible(System.Windows.Media.Visual,System.Windows.Rect)">
+            <summary>
+            Forces content to scroll until the coordinate space of a Visual object is visible.
+            </summary>
+            <param name="visual">A Visual that becomes visible.</param>
+            <param name="rectangle">A bounding rectangle that identifies the coordinate space
+            to make visible.</param>
+            <returns>A Rect that is visible.</returns>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#MouseWheelDown">
+            <summary>
+            Scrolls down within content after a user clicks the wheel button on a mouse.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#MouseWheelLeft">
+            <summary>
+            Scrolls left within content after a user clicks the wheel button on a mouse.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#MouseWheelRight">
+            <summary>
+            Scrolls right within content after a user clicks the wheel button on a mouse.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#MouseWheelUp">
+            <summary>
+            Scrolls up within content after a user clicks the wheel button on a mouse.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#PageDown">
+            <summary>
+            Scrolls down within content by one page.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#PageLeft">
+            <summary>
+            Scrolls left within content by one page.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#PageRight">
+            <summary>
+            Scrolls right within content by one page.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#PageUp">
+            <summary>
+            Scrolls up within content by one page.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#SetHorizontalOffset(System.Double)">
+            <summary>
+            Sets the amount of horizontal offset.
+            </summary>
+            <param name="offset">The degree to which content is horizontally offset
+            from the containing viewport.</param>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#SetVerticalOffset(System.Double)">
+            <summary>
+            Sets the amount of vertical offset.
+            </summary>
+            <param name="offset">The degree to which content is vertically offset
+            from the containing viewport.</param>
+        </member>
+        <member name="P:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.ParentTileViewControl">
+            <summary>
+            Gets the Root TileView
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.ScrollInfo">
+            <summary>
+            Gets reference to IScrollInfo interface.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#CanHorizontallyScroll">
+            <summary>
+            Gets or sets a value that indicates whether elements that support the System.Windows.Controls.Primitives.IScrollInfo interface are allowed or not to scroll content horizontally.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#CanVerticallyScroll">
+            <summary>
+            Gets or sets a value that indicates whether elements that support the System.Windows.Controls.Primitives.IScrollInfo interface are allowed or not to scroll content vertically.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#ExtentHeight">
+            <summary>
+             Gets a value that indicates vertical size of the extent.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#ExtentWidth">
+            <summary>
+            Gets a value that indicates the horizontal size of the extent.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#HorizontalOffset">
+            <summary>
+            Gets the Horizontal offset value of the item
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#ScrollOwner">
+            <summary>
+            Gets or sets a value that indicates whether scrollviewer
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#VerticalOffset">
+            <summary>
+            Gets the Vertical offset value of the item
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#ViewportHeight">
+            <summary>
+            Gets a height of the content viewport
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Windows.Shared.TileViewVirtualizingPanel.System#Windows#Controls#Primitives#IScrollInfo#ViewportWidth">
+            <summary>
+            Gets a width of the content viewport
             </summary>
         </member>
         <member name="T:Syncfusion.Windows.Shared.TileViewControlAutomationPeer">
@@ -7127,39 +7658,6 @@
             Represents the class <see cref="T:Syncfusion.Windows.Shared.Printing.PrintPageMargin"/> that contains the PageMarin informations.
             </summary>
         </member>
-        <member name="T:Syncfusion.Windows.Shared.NotificationObject">
-            <summary>
-            Base class for items that support property notification.
-            </summary>
-            <remarks>
-            This class provides basic support for implementing the <see cref="T:System.ComponentModel.INotifyPropertyChanged"/> interface and for
-            marshalling execution to the UI thread.
-            </remarks>
-        </member>
-        <member name="M:Syncfusion.Windows.Shared.NotificationObject.RaisePropertyChanged(System.String)">
-            <summary>
-            Raises this object's PropertyChanged event.
-            </summary>
-            <param name="propertyName">The property that has a new value.</param>
-        </member>
-        <member name="M:Syncfusion.Windows.Shared.NotificationObject.RaisePropertyChanged(System.String[])">
-            <summary>
-            Raises this object's PropertyChanged event for each of the properties.
-            </summary>
-            <param name="propertyNames">The properties that have a new value.</param>
-        </member>
-        <member name="M:Syncfusion.Windows.Shared.NotificationObject.RaisePropertyChanged``1(System.Linq.Expressions.Expression{System.Func{``0}})">
-            <summary>
-            Raises this object's PropertyChanged event.
-            </summary>
-            <typeparam name="T">The type of the property that has a new value</typeparam>
-            <param name="propertyExpression">A Lambda expression representing the property that has a new value.</param>
-        </member>
-        <member name="E:Syncfusion.Windows.Shared.NotificationObject.PropertyChanged">
-            <summary>
-            Raised when a property on this object has a new value.
-            </summary>        
-        </member>
         <member name="P:Syncfusion.Windows.Shared.Printing.PrintPageMargin.MarginName">
             <summary>
             Gets or set the value to the margin type.
@@ -7228,7 +7726,7 @@
         </member>
         <member name="T:Syncfusion.Windows.Shared.ChromelessWindow">
             <summary>
-            ChromelessWindow class provides us a new window
+            Represents a customizable window component that allows to modify title bar, resize border, and change the style of the entire window.
             </summary>
         </member>
         <member name="F:Syncfusion.Windows.Shared.ChromelessWindow.dragIsIn">
@@ -8203,6 +8701,39 @@
             
             </summary>
         </member>
+        <member name="T:Syncfusion.Windows.Shared.NotificationObject">
+            <summary>
+            Base class for items that support property notification.
+            </summary>
+            <remarks>
+            This class provides basic support for implementing the <see cref="T:System.ComponentModel.INotifyPropertyChanged"/> interface and for
+            marshalling execution to the UI thread.
+            </remarks>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.NotificationObject.RaisePropertyChanged(System.String)">
+            <summary>
+            Raises this object's PropertyChanged event.
+            </summary>
+            <param name="propertyName">The property that has a new value.</param>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.NotificationObject.RaisePropertyChanged(System.String[])">
+            <summary>
+            Raises this object's PropertyChanged event for each of the properties.
+            </summary>
+            <param name="propertyNames">The properties that have a new value.</param>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.NotificationObject.RaisePropertyChanged``1(System.Linq.Expressions.Expression{System.Func{``0}})">
+            <summary>
+            Raises this object's PropertyChanged event.
+            </summary>
+            <typeparam name="T">The type of the property that has a new value</typeparam>
+            <param name="propertyExpression">A Lambda expression representing the property that has a new value.</param>
+        </member>
+        <member name="E:Syncfusion.Windows.Shared.NotificationObject.PropertyChanged">
+            <summary>
+            Raised when a property on this object has a new value.
+            </summary>        
+        </member>
         <member name="T:Syncfusion.Windows.Shared.PropertySupport">
             <summary>
              Provides support for extracting property information based on a property expression.
@@ -8638,13 +9169,6 @@
             <summary>
             When overridden in a derived class, is invoked whenever application code or internal processes (such as a rebuilding layout pass) call <see cref="M:System.Windows.Controls.Control.ApplyTemplate"/>. In simplest terms, this means the method is called just before a UI element displays in an application. For more information, see Remarks.
             </summary>
-        </member>
-        <member name="M:Syncfusion.Windows.Tools.Controls.DropDownButtonAdv.DropDownButtonAdv_Loaded(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Invoked when DropDownButtonAdv loaded.
-            </summary>
-            <param name="sender">DropDownButton</param>
-            <param name="e">Routed Event argument</param>
         </member>
         <member name="P:Syncfusion.Windows.Tools.Controls.DropDownButtonAdv.Label">
             <summary>
@@ -9248,6 +9772,16 @@
             </summary>
             <param name="e">Property change details, such as old value and new value</param>
         </member>
+        <member name="M:Syncfusion.Windows.Tools.Controls.ColorGroup.Dispose(System.Boolean)">
+            <summary>
+            Disposes all the resources. 
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Tools.Controls.ColorGroup.Dispose">
+            <summary>
+            Disposes all the resources. 
+            </summary>
+        </member>
         <member name="P:Syncfusion.Windows.Tools.Controls.ColorGroup.PanelVisibility">
             <summary>
             Gets or sets the value of the PanelVisibility dependency property.
@@ -9390,19 +9924,6 @@
             <param name="color">The name of the color</param>
             <returns>Returns Brush</returns>
         </member>
-        <member name="M:Syncfusion.Windows.Tools.Controls.ColorGroupItem.GoToState(System.Boolean,System.String[])">
-            <summary>
-            Called when changes in visual state of border takes place
-            </summary>
-            <param name="useTransitions">Indicate whether to apply transition or not</param>
-            <param name="stateNames">Contain the state name</param>
-        </member>
-        <member name="M:Syncfusion.Windows.Tools.Controls.ColorGroupItem.UpdateVisualState(System.Boolean)">
-            <summary>
-            Method is used to update the state of border
-            </summary>
-            <param name="useTransitions">Update the state</param>
-        </member>
         <member name="M:Syncfusion.Windows.Tools.Controls.ColorGroupItem.IsVariantsChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
             <summary>
             Event raised when Variants generation of colors is changed
@@ -9457,6 +9978,16 @@
             </summary>
             <param name="sender">Object of the sender</param>
             <param name="e">Handles Mouse event</param>
+        </member>
+        <member name="M:Syncfusion.Windows.Tools.Controls.ColorGroupItem.Dispose(System.Boolean)">
+            <summary>
+            Disposes all the resources. 
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Tools.Controls.ColorGroupItem.Dispose">
+            <summary>
+            Disposes all the resources. 
+            </summary>
         </member>
         <member name="P:Syncfusion.Windows.Tools.Controls.ColorGroupItem.ColorName">
             <summary>
@@ -9852,13 +10383,6 @@
             <param name="sender">Object of the Sender</param>
             <param name="e">Handles MouseEvent</param>
         </member>
-        <member name="M:Syncfusion.Windows.Tools.Controls.ColorPickerPalette.m_expAutomaticBorder_MouseMove(System.Object,System.Windows.Input.MouseEventArgs)">
-            <summary>
-            Handles the MouseMove event of the m_expAutomaticBorder control.
-            </summary>
-            <param name="sender">The source of the event.</param>
-            <param name="e">The <see cref="T:System.Windows.Input.MouseEventArgs"/> instance containing the event data.</param>
-        </member>
         <member name="M:Syncfusion.Windows.Tools.Controls.ColorPickerPalette.m_expAutomaticBorder_MouseLeave(System.Object,System.Windows.Input.MouseEventArgs)">
             <summary>
             Handles the MouseLeave event of the m_expAutomaticBorder control.
@@ -9933,9 +10457,19 @@
             <param name="sender">Object of teh sender</param>
             <param name="e">Handles Mouse button Event args</param>
         </member>
-        <member name="M:Syncfusion.Windows.Tools.Controls.ColorPickerPalette.dispose">
+        <member name="M:Syncfusion.Windows.Tools.Controls.ColorPickerPalette.UnwiredEvents">
             <summary>
             Called to dispatch the click event of the element's parents
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Tools.Controls.ColorPickerPalette.Dispose(System.Boolean)">
+            <summary>
+            Disposes all the resources. 
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Tools.Controls.ColorPickerPalette.Dispose">
+            <summary>
+            Disposes all the resources. 
             </summary>
         </member>
         <member name="M:Syncfusion.Windows.Tools.Controls.ColorPickerPalette.RootVisual_MouseLeftButtonDown(System.Object,System.Windows.Input.MouseButtonEventArgs)">
@@ -10182,19 +10716,6 @@
             Called when recentlyusedvisibilitychanged event is raised
             </summary>
             <param name="e">Property change details, such as old value and new value</param>
-        </member>
-        <member name="M:Syncfusion.Windows.Tools.Controls.ColorPickerPalette.GoToState(System.Boolean,System.String[])">
-            <summary>
-            Called when changes in visual state of automatic button takes place
-            </summary>
-            <param name="useTransitions">Indicate whether to apply transition or not</param>
-            <param name="stateNames">Contain the state name</param>
-        </member>
-        <member name="M:Syncfusion.Windows.Tools.Controls.ColorPickerPalette.UpdateVisualState(System.Boolean)">
-            <summary>
-            Method is used to update the state of automatic button
-            </summary>
-            <param name="useTransitions">Update the state</param>
         </member>
         <member name="P:Syncfusion.Windows.Tools.Controls.ColorPickerPalette.Icon">
              <summary>
@@ -10762,6 +11283,11 @@
             </summary>
             <param name="e"></param>
         </member>
+        <member name="M:Syncfusion.Windows.Tools.Controls.MoreColorsWindow.Dispose">
+            <summary>
+            Disposes all the resources. 
+            </summary>
+        </member>
         <member name="M:Syncfusion.Windows.Tools.Controls.MoreColorsWindow.InitializeComponent">
             <summary>
             InitializeComponent
@@ -10839,6 +11365,16 @@
             </summary>
             <param name="o">PolygonItem object where the change occures on</param>
             <param name="e">Property change details, such as old value and new value</param>
+        </member>
+        <member name="M:Syncfusion.Windows.Tools.Controls.PolygonItem.Dispose(System.Boolean)">
+            <summary>
+            Disposes all the resources. 
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Tools.Controls.PolygonItem.Dispose">
+            <summary>
+            Disposes all the resources. 
+            </summary>
         </member>
         <member name="P:Syncfusion.Windows.Tools.Controls.PolygonItem.ColumnIndex">
             <summary>
@@ -11156,6 +11692,7 @@
              <summary>
             
              </summary>
+             
         </member>
         <member name="M:Syncfusion.Windows.Tools.Controls.ComboBoxItemAdv.#ctor">
             <summary>
@@ -18830,6 +19367,26 @@
             Contains true if click on week number cell has been done.
             </summary>
         </member>
+        <member name="F:Syncfusion.Windows.Shared.CalendarEdit.viewmode">
+            <summary>
+            Defines the viewmode property of <see cref="T:Syncfusion.Windows.Shared.CalendarEdit"/> control.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.CalendarEdit.isNextModeSet">
+            <summary>
+            Contains true if next mode is set in ViewMode property of <see cref="T:Syncfusion.Windows.Shared.CalendarEdit"/> control.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.CalendarEdit.calendarVisualMode">
+            <summary>
+            Contains calendarvisualmode enum vales of <see cref="T:Syncfusion.Windows.Shared.CalendarEdit"/> control.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.CalendarEdit.nextMode">
+            <summary>
+            Contains next mode if flag value is set in ViewMode property of <see cref="T:Syncfusion.Windows.Shared.CalendarEdit"/> control.
+            </summary>
+        </member>
         <member name="F:Syncfusion.Windows.Shared.CalendarEdit.isTemplateApplied">
             <summary>
             Indicates template applied or not
@@ -19021,6 +19578,12 @@
             <summary>
             Changes the visual mode depending on the <see cref="P:Syncfusion.Windows.Shared.CalendarEdit.VisualModeInfo"/> property.
             </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.CalendarEdit.ChangeMode(Syncfusion.Windows.Shared.CalendarEdit.ChangeVisualModeDirection)">
+            <summary>
+            Changes the visual mode based on the direection.
+            </summary>
+            <param name="direction">Direction mode</param>
         </member>
         <member name="M:Syncfusion.Windows.Shared.CalendarEdit.ChangeVisualMode(Syncfusion.Windows.Shared.CalendarEdit.ChangeVisualModeDirection)">
             <summary>
@@ -19605,6 +20168,35 @@
             <param name="sender">The source of the event.</param>
             <param name="e">The <see cref="T:System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         </member>
+        <member name="M:Syncfusion.Windows.Shared.CalendarEdit.GetNextValue(Syncfusion.Windows.Shared.CalendarVisualMode)">
+            <summary>
+            Gets the next mode if flag type value is set in ViewMode property of <see cref="T:Syncfusion.Windows.Shared.CalendarEdit"/> control.
+            </summary>
+            <param name="mode">Visual mode</param>
+            <returns>Next mode</returns>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.CalendarEdit.GetPreviousValue(Syncfusion.Windows.Shared.CalendarVisualMode)">
+            <summary>
+            Gets the previous mode if flag type value is set in ViewMode property of <see cref="T:Syncfusion.Windows.Shared.CalendarEdit"/> control.
+            </summary>
+            <param name="mode">Visual Mode</param>
+            <returns>Previous mode</returns>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.CalendarEdit.IsFlagValueSet(Syncfusion.Windows.Shared.CalendarVisualMode)">
+            <summary>
+            Checks whether flag value is set in ViewMode property of <see cref="T:Syncfusion.Windows.Shared.CalendarEdit"/> control.
+            </summary>
+            <param name="mode">Enum type</param>
+            <returns>True,if flag value is set</returns>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.CalendarEdit.HasFlag(System.Enum,System.Enum)">
+            <summary>
+            Checks whether one or more bit fields is set in ViewMode property of <see cref="T:Syncfusion.Windows.Shared.CalendarEdit"/> control.
+            </summary>
+            <param name="variable">Enum type</param>
+            <param name="value">value to be checked</param>
+            <returns>True,if flag type value is set</returns>
+        </member>
         <member name="M:Syncfusion.Windows.Shared.CalendarEdit.VisualModeStoryboard_OnCompleted(System.Object,System.EventArgs)">
             <summary>
             Invoked whenever visual mode storyboard animation is
@@ -19656,6 +20248,12 @@
             </summary>
             <param name="sender">The source of the event.</param>
             <param name="e">The <see cref="T:System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.CalendarEdit.CanScrollToView">
+            <summary>
+            Handles the navigation between one mode to other.
+            </summary>
+            <returns>True,if navigation is enabled in ViewMode</returns>
         </member>
         <member name="M:Syncfusion.Windows.Shared.CalendarEdit.YearRangeCell_OnMouseLeftButtonDown(System.Object,System.Windows.Input.MouseButtonEventArgs)">
             <summary>
@@ -19713,6 +20311,14 @@
             <param name="sender">The source of the event.</param>
             <param name="e">The <see cref="T:System.Windows.Input.MouseButtonEventArgs"/> containing the event
             data.</param>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.CalendarEdit.GetMonth(System.Int32,System.Int32)">
+            <summary>
+            Gets the specified month based on selected weeknumber.
+            </summary>
+            <param name="Year">Visible Year</param>
+            <param name="Week">Selected Week</param>
+            <returns>Month</returns>
         </member>
         <member name="M:Syncfusion.Windows.Shared.CalendarEdit.OnWeekNumberCellPanelClick(Syncfusion.Windows.Shared.WeekNumberCellPanel)">
             <summary>
@@ -21659,6 +22265,11 @@
             Gets or sets the calendar visual mode.
             </summary>
         </member>
+        <member name="P:Syncfusion.Windows.Shared.CalendarEdit.ViewMode">
+            <summary>
+            Gets or sets the view mode of <see cref="T:Syncfusion.Windows.Shared.CalendarEdit"/> control.
+            </summary>
+        </member>
         <member name="P:Syncfusion.Windows.Shared.CalendarEdit.VisualModeInfo">
             <summary>
             Gets or sets current and previous visual mode.
@@ -21681,6 +22292,16 @@
         <member name="P:Syncfusion.Windows.Shared.CalendarEdit.TooltipDates">
             <summary>
             Gets tooltip from the date.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Windows.Shared.CalendarEdit.IsNextModeSet">
+            <summary>
+            Defines whether next mode is set in ViewMode property of <see cref="T:Syncfusion.Windows.Shared.CalendarEdit"/> control.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Windows.Shared.CalendarEdit.NextMode">
+            <summary>
+            Contains the next mode if flag type value is set in ViewMode property of <see cref="T:Syncfusion.Windows.Shared.CalendarEdit"/> control.
             </summary>
         </member>
         <member name="P:Syncfusion.Windows.Shared.CalendarEdit.Calendar">
@@ -24949,9 +25570,14 @@
             Occurs when the popup hides.
             </summary>
         </member>
-        <member name="T:Syncfusion.Windows.Shared.CalendarVisualMode">
+        <member name="F:Syncfusion.Windows.Shared.CalendarVisualMode.All">
             <summary>
-            Specifies visual mode of <see cref="T:Syncfusion.Windows.Shared.CalendarEdit"/> control.
+            All modes are displayed in <see cref="T:Syncfusion.Windows.Shared.CalendarEdit"/> control.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.Windows.Shared.CalendarVisualMode.WeekNumbers">
+            <summary>
+            All the WeekNumbers in a year are displayed in <see cref="T:Syncfusion.Windows.Shared.CalendarEdit"/> control.
             </summary>
         </member>
         <member name="F:Syncfusion.Windows.Shared.CalendarVisualMode.Days">
@@ -24972,11 +25598,6 @@
         <member name="F:Syncfusion.Windows.Shared.CalendarVisualMode.YearsRange">
             <summary>
             Ten year ranges are displayed in <see cref="T:Syncfusion.Windows.Shared.CalendarEdit"/> control.
-            </summary>
-        </member>
-        <member name="F:Syncfusion.Windows.Shared.CalendarVisualMode.WeekNumbers">
-            <summary>
-            All the WeekNumbers in a year are displayed in <see cref="T:Syncfusion.Windows.Shared.CalendarEdit"/> control.
             </summary>
         </member>
         <member name="T:Syncfusion.Windows.Shared.AnimationDirection">
@@ -32765,6 +33386,7 @@
             <param name="sender">The source of the event.</param>
             <param name="e">The <see cref="T:System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         </member>
+        <!-- Badly formed XML comment ignored for member "M:Syncfusion.Windows.Shared.ColorEdit.OnKeyDown(System.Windows.Input.KeyEventArgs)" -->
         <member name="M:Syncfusion.Windows.Shared.ColorEdit.RemoveSelection">
             <summary>
             Removes the selection.
@@ -32989,6 +33611,16 @@
              <summary>
             
              </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.ColorEdit.Dispose(System.Boolean)">
+            <summary>
+            Disposes all the resources. 
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.ColorEdit.Dispose">
+            <summary>
+            Disposes all the resources. 
+            </summary>
         </member>
         <member name="P:Syncfusion.Windows.Shared.ColorEdit.rectBar">
             <summary>
@@ -33435,6 +34067,11 @@
             member which has the y value
             </summary>
         </member>
+        <member name="M:Syncfusion.Windows.Shared.GradientStartPoint.Dispose">
+            <summary>
+            Disposes all the resources. 
+            </summary>
+        </member>
         <member name="P:Syncfusion.Windows.Shared.GradientStartPoint.X">
             <summary>
             Gets or sets the X.
@@ -33473,6 +34110,16 @@
             </summary>
             <param name="name">Name of the ColorItem.</param>
             <param name="brush">Brush of the ColorItem.</param>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.ColorItem.Dispose(System.Boolean)">
+            <summary>
+            Disposes all the resources. 
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.ColorItem.Dispose">
+            <summary>
+            Disposes all the resources. 
+            </summary>
         </member>
         <member name="P:Syncfusion.Windows.Shared.ColorItem.Name">
             <summary>
@@ -33912,6 +34559,16 @@
             <param name="sender">The source of the event.</param>
             <param name="e">The <see cref="T:System.Windows.Input.MouseButtonEventArgs"/>
             instance containing the event data.</param>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.ColorPicker.Dispose">
+            <summary>
+            Disposes all the resources. 
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.ColorPicker.Dispose(System.Boolean)">
+            <summary>
+            Disposes all the resources. 
+            </summary>
         </member>
         <member name="P:Syncfusion.Windows.Shared.ColorPicker.Color">
             <summary>
@@ -34504,6 +35161,11 @@
             </summary>
             <param name="sender">The source of the event.</param>
             <param name="e">The <see cref="T:System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.GradientStopItem.Dispose">
+            <summary>
+            Disposes all the resources. 
+            </summary>
         </member>
         <member name="P:Syncfusion.Windows.Shared.GradientStopItem.color">
             <summary>
@@ -39502,13 +40164,13 @@
         </member>
         <member name="M:Syncfusion.Windows.Shared.DomainUpDown.OnKeyDown(System.Windows.Input.KeyEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.KeyDown"/> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.KeyDown"/>�attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.KeyEventArgs"/> that contains the event data.</param>
         </member>
         <member name="M:Syncfusion.Windows.Shared.DomainUpDown.OnMouseWheel(System.Windows.Input.MouseWheelEventArgs)">
             <summary>
-            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseWheel"/> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
+            Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseWheel"/>�attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
             </summary>
             <param name="e">The <see cref="T:System.Windows.Input.MouseWheelEventArgs"/> that contains the event data.</param>
         </member>
@@ -40009,7 +40671,7 @@
             </summary>
             <param name="sender">Contains the object of UpDown </param>
             <param name="e">
-            Provides data for the System.Windows.Input.CommandManager.Executed and System.Windows.Input.CommandManager.PreviewExecuted routed
+            Provides data for the System.Windows.Input.CommandManager.Executed and System.Windows.Input.CommandManager.PreviewExecuted�routed
             </param>
         </member>
         <member name="M:Syncfusion.Windows.Shared.UpDown.ChangeDownValue(System.Object,System.Windows.Input.ExecutedRoutedEventArgs)">
@@ -40018,7 +40680,7 @@
             </summary>
             <param name="sender">Contains the object of UpDown </param>
             <param name="e">
-            Provides data for the System.Windows.Input.CommandManager.Executed and System.Windows.Input.CommandManager.PreviewExecuted routed
+            Provides data for the System.Windows.Input.CommandManager.Executed and System.Windows.Input.CommandManager.PreviewExecuted�routed
             </param>
         </member>
         <member name="M:Syncfusion.Windows.Shared.UpDown.ChangeValue(System.Boolean)">
@@ -40037,7 +40699,7 @@
             Invoked when a System.Windows.Input.Keyboard.PreviewKeyDown attached routed event occurs.
             </summary>
             <param name="e">
-            Provides data for the System.Windows.UIElement.KeyDown routed
+            Provides data for the System.Windows.UIElement.KeyDown�routed
             events, as well as related attached and Preview events.
             </param>
         </member>
@@ -40065,15 +40727,32 @@
             Animates value changes when the up or down buttons are clicked.
             </summary>
         </member>
+        <member name="M:Syncfusion.Windows.Shared.UpDown.Dispose(System.Boolean)">
+            <summary>
+            Disposes all the resources. 
+            </summary>
+        </member>
         <member name="M:Syncfusion.Windows.Shared.UpDown.SelectAll">
             <summary>
             Selects all the contents of the text editing control.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.UpDown.Dispose">
+            <summary>
+            Disposes all the resources. 
             </summary>
         </member>
         <member name="M:Syncfusion.Windows.Shared.UpDown.OnApplyTemplate">
             <summary>
             When overridden in a derived class, is invoked whenever application code or internal processes (such as a rebuilding layout pass) call <see cref="M:System.Windows.Controls.Control.ApplyTemplate"/>. In simplest terms, this means the method is called just before a UI element displays in an application. For more information, see Remarks.
             </summary>
+        </member>
+        <member name="M:Syncfusion.Windows.Shared.UpDown.Nulltextbox_MouseWheel(System.Object,System.Windows.Input.MouseWheelEventArgs)">
+            <summary>
+            Handles the mouse wheel event of the NullTextBox
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
         </member>
         <member name="M:Syncfusion.Windows.Shared.UpDown.Nulltextbox_PreviewTextInput(System.Object,System.Windows.Input.TextCompositionEventArgs)">
             <summary>
@@ -42353,7 +43032,7 @@
             Prints the content of page control.
             </summary>
         </member>
-        <member name="M:Syncfusion.Windows.Shared.Printing.PrintManager.Print(System.Windows.Controls.PrintDialog)">
+        <member name="M:Syncfusion.Windows.Shared.Printing.PrintManager.Print(System.Windows.Controls.PrintDialog,System.Boolean)">
             <summary>
             Prints the content of page control according to the print ticket and print queue configurations in the print dialog.
             </summary>
@@ -44157,6 +44836,11 @@
             Gets or sets the close button text in SpellChecker Window.
             </summary>
         </member>
+        <member name="F:Syncfusion.Windows.Shared.Resources.SR.resourcefoundInVB">
+            <summary>
+            Indicates the resource found in VB.net
+            </summary>
+        </member>
         <member name="M:Syncfusion.Windows.Shared.Resources.SR.SetDefaultNamespace(System.String)">
             <summary>
             Provide DefaultNamespace to ResourceManager if DefaultNameSpace and AssemblyName are different. 
@@ -44390,6 +45074,11 @@
             </summary>
         </member>
         <member name="P:Syncfusion.Windows.Shared.Resources.Syncfusion_Shared_Wpf.SpellCheckerHeaderText">
+            <summary>
+              Looks up a localized string similar to header text of spell checker window.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Windows.Shared.Resources.Syncfusion_Shared_Wpf.WeekNumbers">
             <summary>
               Looks up a localized string similar to header text of spell checker window.
             </summary>
@@ -51401,7 +52090,7 @@
         </member>
         <member name="M:Syncfusion.Windows.Shared.NativeMethods.ShowWindow(System.Runtime.InteropServices.HandleRef,System.Int32)">
             <summary>
-            Sets the specified window’s show state.
+            Sets the specified window�s show state.
             </summary>
             <param name="hWnd">The handle of the window to change the show status of.</param>
             <param name="nCmdShow">0 = Hide the window.
@@ -52203,7 +52892,7 @@
         </member>
         <member name="T:Syncfusion.Windows.Shared.SkinTypeAttribute">
             <summary>
-            Custom Attribute for mentioning theming dictionary,
+            Represents a custom Attribute for mentioning all kind of theming dictionaries in <see cref="T:Syncfusion.Windows.Shared.SkinManager"/>.
             </summary>
         </member>
         <member name="M:Syncfusion.Windows.Shared.SkinTypeAttribute.#ctor">

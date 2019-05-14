@@ -10,11 +10,11 @@
     <script>
         var checkGroupnameUrl = "@Url.Action("CheckGroupname", "group")";
         var addGroupUrl = "@Url.Action("AddGroup", "group")";
-        var deleteGroupViewUrl = "@Url.Action("DeleteGroupView", "group")";
         var addGroupViewUrl = "@Url.Action("AddGroupView","group")";
         var deleteGroupUrl = "@Url.Action("DeleteGroup", "group")";
         var groupPageUrl = "@Url.Action("group", "group")";
         var deleteFromGroupListUrl = "@Url.Action("DeleteFromGroupList", "group")";
+        var getAllGroupsUrl = "@Url.Action("GetAllActiveGroups", "group")";
     </script>
     @Scripts.Render("~/scripts/groups")
 
@@ -52,13 +52,6 @@
                 <li class="divider"></li>
                 {{if !IsActiveDirectoryGroup}}
                 <li>
-                    <a href="@Url.Action("editgroup", "group")?groupId={{:GroupId}}" data-groupid="{{:GroupId}}">
-                        <i class="su su-user-add"></i>
-                        <span> [[[Add Users]]] </span>
-                    </a>
-                </li>
-
-                <li>
                     <a href="@Url.Action("viewgroup","group")/{{:GroupId}}" data-groupid="{{:GroupId}}">
                         <i class="su su-eye"></i>
                         <span>[[[View]]]</span>
@@ -72,14 +65,6 @@
                     </a>
                 </li>
 
-                {{/if}}
-                {{if CanDelete}}
-                <li>
-                    <a href="javascript:void(0);" class="delete" data-groupid="{{:GroupId}}" data-groupname="{{:GroupName}}">
-                        <i class="su su-delete"></i>
-                        <span> [[[Delete]]]</span>
-                    </a>
-                </li>
                 {{/if}}
             </ul>
         </div>
@@ -183,34 +168,8 @@
                 closeOnEscape: true,
                 close: ''
             });
-            $("#delete-group-area").ejDialog({
-                width: "499px",
-                showOnInit: false,
-                allowDraggable: true,
-                enableResize: false,
-                showHeader: false,
-                title: "[[[Delete Group]]]",
-                enableModal: true,
-                closeOnEscape: true,
-                close: ''
-            });
 
-            $("#delete-group-area_wrapper").ejWaitingPopup();
             $("#new-group-area_wrapper").ejWaitingPopup();
-            $("#groups-delete-confirmation").ejDialog({
-                width: "378px",
-                showOnInit: false,
-                allowDraggable: false,
-                enableResize: false,
-                height: "auto",
-                showHeader: false,
-                title: "[[[Delete Groups]]]",
-                enableModal: true,
-                close: "onDeleteDialogClose",
-                closeOnEscape: true,
-                open: "onDeleteDialogOpen"
-            });
-            $("#groups-delete-confirmation_wrapper").ejWaitingPopup();
             $("#body").ejWaitingPopup();
 
         });
@@ -241,7 +200,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("ActiveDirectoryGroupImport", "group")"  id="import-group-ad" data-toggle="tooltip" data-placement="top" title="[[[Import groups from Active Directory]]]">
+                                <a href="@Url.Action("ActiveDirectoryGroupImport", "group")" id="import-group-ad" data-toggle="tooltip" data-placement="top" title="[[[Import groups from Active Directory]]]">
                                     <i class="su su-windows-ad"></i>
                                     <span>[[[Import from Active Directory]]]</span>
                                 </a>
@@ -255,7 +214,7 @@
                         </ul>
                     </li>
 
-                    @if (ViewBag.ActiveDirectory != null && ViewBag.AzureAD != null)
+                    @if (ViewBag.ActiveDirectory != null || ViewBag.AzureAD != null)
                     {
                         <li class="dropdown">
                             <button class="dropdown-toggle primary-button pull-right" data-toggle="dropdown" id="synchronize-dropdown" title="[[[Synchronize Groups]]]">
@@ -281,32 +240,21 @@
                                         </a>
                                     </li>
                                 }
+                                <li class="ums-group-synchronization">
+                                    <a class="dropdown-toggle" href="javascript:void(0)" data-toggle="tooltip" data-placement="left" title="[[[Synchronize groups from UMS]]]">
+                                        <i class="su su-ums-sync"> </i>
+                                        <span>[[[UMS Synchronization]]]</span>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     }
                     else
                     {
-                        if (ViewBag.ActiveDirectory != null)
-                        {
-                            <li>
-                                <a href="@Url.Action("ActiveDirectoryGroup","group")" class="link-button pull-right synchronize-groups" title="[[[Synchronize groups with Active Directory]]]">
-                                    [[[Active Directory Synchronization]]]
-                                </a>
-                            </li>
-
-                        }
-                        if (ViewBag.AzureAD != null)
-                        {
-                            <li>
-                                <a href="@Url.Action("AzureADGroup", "group")" class="link-button pull-right synchronize-groups" title="[[[Synchronize groups with Azure AD]]]">
-                                    [[[Azure AD Synchronization]]]
-                                </a>
-                            </li>
-                        }
+                        <li>
+                            <a href="javascript:void(0)" class="link-button ums-group-synchronization" title="[[[Synchronize groups from UMS]]]" data-toggle="tooltip" data-placement="left">[[[UMS Synchronization]]]</a>
+                        </li>
                     }
-                    <li class="flying-add hide" id="add-user-in-groups">
-                        <button class="critical-action-button group-delete-button" title="[[[Delete selected Groups]]]" data-groupid="1">[[[Delete Groups]]]</button>
-                    </li>
                 </ul>
                 <input type="hidden" name="GroupCount" id="group-count-text" value="@ViewBag.groupCount" />
                 <input type="hidden" id="adgroup-count-text" value="@ViewBag.AdGroupCount">
@@ -333,9 +281,5 @@
         <div id="new-group-area" class="no-padding">
             <iframe id="new-group-iframe" class="pull-left"></iframe>
         </div>
-        <div id="delete-group-area" class="no-padding">
-            <iframe id="delete-group-iframe" class="pull-left"></iframe>
-        </div>
     </div>
-    @Html.Partial("../Group/_MultipleGroupDeleteDialog")
 }

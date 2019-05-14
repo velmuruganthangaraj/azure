@@ -3,7 +3,6 @@ var ODATADataSource = (function () {
         this.locale = 'en-US';
         this.id = 'container';
         this.connectClick = $.proxy(this.connectDataSource, this);
-        this.renderErrorToolTip(this.id);
     }
     ODATADataSource.prototype.renderConfig = function (targetTag, dataSource, isEdit) {
         this.renderConfiguration(targetTag);
@@ -19,6 +18,7 @@ var ODATADataSource = (function () {
             }, { 'id': this.id + '_odata_datasource' });
             targetTag.append(this.odataConfig);
             this.renderOdataPanel();
+            this.renderErrorToolTip(targetTag);
         }
         this.showConfiguration(true);
     };
@@ -149,55 +149,73 @@ var ODATADataSource = (function () {
         labelCell.append(label);
         row.append(labelCell);
         var errorCell = ej.buildTag('td', '', {}, { 'id': id + '_error_icon_td' });
-        this.renderErrIndictor(errorCell, this.id);
+        this.renderErrIndictor(errorCell, this.id + '_configurePane');
         row.append(errorCell);
         return row;
     };
     ODATADataSource.prototype.updateRow = function (target, id, text) {
         target.find('#' + id + '_tr .e-designer-title-label').html(text);
     };
-    ODATADataSource.prototype.renderErrIndictor = function (target, ctrlId) {
+    ODATADataSource.prototype.renderErrIndictor = function (target, tooltipId, errMsg) {
         var errorIcon = ej.buildTag('span.e-rptdesigner-error-icon e-rptdesigner-errorinfo e-error-tip', '', {
             'float': 'right',
             'display': 'none',
             'padding-right': '2px'
-        }, {});
+        }, {
+            'e-errormsg': errMsg,
+            'e-tooltipId': tooltipId
+        });
         target.append(errorIcon);
-        errorIcon.bind('mouseover mousedown touchstart', $.proxy(this.showErrTip, this, ctrlId));
-        errorIcon.bind('mouseleave touchleave', $.proxy(this.hideErrTip, this, ctrlId));
     };
     ODATADataSource.prototype.showErrIndictor = function (target, isEnable, errMsg) {
         var errorIcon = target.find('.e-error-tip');
-        errorIcon.attr('e-errormsg', errMsg).css('display', isEnable ? 'block' : 'none');
-    };
-    ODATADataSource.prototype.renderErrorToolTip = function (id) {
-        if ($('#' + id + '_error_tooltip').length === 0) {
-            var toolTip = ej.buildTag('div.e-designer-right-tip e-tooltip-wrap e-widget e-designer-tooltip e-rptdesigner-error-tip', '', {
-                'display': 'none'
-            }, {
-                'id': id + '_error_tooltip'
+        errorIcon.css('display', isEnable ? 'block' : 'none');
+        if (errMsg) {
+            errorIcon.attr('e-errormsg', errMsg);
+        }
+        if (isEnable) {
+            var tooltipId = errorIcon.attr('e-tooltipId');
+            var ejTooltip = $('#' + tooltipId).data('ejTooltip');
+            ejTooltip.setModel({
+                target: '.e-rptdesigner-error-icon',
             });
-            var tipContainer = ej.buildTag('div.e-tipContainer');
-            var tipContent = ej.buildTag('div', '', {}, { 'id': id + '_error_tooltip_content' });
-            $(document.body).append(toolTip);
-            toolTip.append(tipContainer);
-            tipContainer.append(tipContent);
         }
     };
-    ODATADataSource.prototype.showErrTip = function (ctrlId, args) {
-        args.preventDefault();
-        var targetEle = $(args.currentTarget);
-        var tooltip = $('#' + ctrlId + '_error_tooltip');
-        $('#' + ctrlId + '_error_tooltip_content').text(targetEle.attr('e-errormsg'));
-        var eleOffset = targetEle.offset();
-        tooltip.css({
-            left: (eleOffset.left + (targetEle.width() / 2)) - tooltip.width(),
-            top: eleOffset.top + targetEle.height() + (targetEle.height() / 2),
-            'display': 'block'
-        });
+    ODATADataSource.prototype.renderErrorToolTip = function (target) {
+        if (target && target.length !== 0 && !target.data('ejTooltip')) {
+            target.ejTooltip({
+                target: '.e-designer-tooltip',
+                position: {
+                    target: { horizontal: 'bottom', vertical: 'bottom' },
+                    stem: { horizontal: 'right', vertical: 'top' }
+                },
+                tip: {
+                    adjust: {
+                        xValue: 10,
+                        yValue: 100
+                    }
+                },
+                isBalloon: false,
+                showShadow: true,
+                showRoundedCorner: true,
+                content: 'Exception Message is not configured',
+                beforeOpen: $.proxy(this.beforeOpenTooltip, this)
+            });
+        }
     };
-    ODATADataSource.prototype.hideErrTip = function (ctrlId, args) {
-        $('#' + ctrlId + '_error_tooltip').css('display', 'none');
+    ODATADataSource.prototype.beforeOpenTooltip = function (args) {
+        if (args.event && args.event.target) {
+            args.cancel = !ej.isNullOrUndefined(args.event.buttons) && args.event.buttons !== 0;
+            var target = args.event.target;
+            if (target) {
+                var tooltipId = $(target).attr('e-tooltipId');
+                var errMsg = $(target).attr('e-errormsg');
+                var ejTooltip = $('#' + tooltipId).data('ejTooltip');
+                ejTooltip.setModel({
+                    content: errMsg ? errMsg : ''
+                });
+            }
+        }
     };
     ODATADataSource.prototype.showValidationMsg = function (id, isShow, msg) {
         var target = $('#' + id + '_error_icon_td');
@@ -246,7 +264,7 @@ ODATADataSource.Locale['en-US'] = {
     connectionString: 'Connection String',
     alertMessage: 'Specify the Connection string'
 };
-ODATADataSource.Locale['en-FR'] = {
+ODATADataSource.Locale['fr-FR'] = {
     connectionString: 'Chaîne de connexion',
     alertMessage: 'Spécifiez la chaîne de connexion'
 };

@@ -329,8 +329,8 @@ $(document).on("click", "#schedule-submit", function () {
     scheduleItem.IsParameterEnabled = $("#enable-parameter").prop("checked");
 
     scheduleItem.StartDate = $("#start-date").val();
-
-    switch ($("input[name=end-type]:checked", "#schedule-end-type").val().toString()) {
+    var scheduleEndType = $("input[name=end-type]:checked", "#schedule-end-type").val() != undefined ? $("input[name=end-type]:checked", "#schedule-end-type").val().toString() : "";
+    switch (scheduleEndType) {
         case "never":
             scheduleItem.ScheduleEndType = "NoEnd";
             break;
@@ -371,24 +371,97 @@ $(document).on("click", "#schedule-submit", function () {
         }
     }
 
+    var reportParamType = window.reportParameterType;
     var parameterList = [];
     if ($("#enable-parameter").prop("checked")) {
-        parameterList = parameterObj
-        for (var par = 0; par < parameterObj.length; par++) {
+        parameterList = reportparameterObj;
+        for (var par = 0; par < reportparameterObj.length; par++) {
             var parameterHasValue = !isEmptyOrWhitespace($("#" + parameterObj[par].Name).val());
             parameterList[par].Hidden = $("#" + parameterObj[par].Name + "-use-default").is(":checked");
             if (parameterHasValue && $("#" + parameterObj[par].Name + "-use-default").is(":checked") === false) {
                 if (parameterList[par].DefaultValue === null) {
-                    var obj = { Values: [] }
+                    var obj = { Values: [] };
                     parameterList[par].DefaultValue = obj;
                 }
 
-                parameterList[par].DefaultValue.Values = $("#" + parameterObj[par].Name).val().split(',');
+                if (typeof ($("#" + parameterObj[par].Name).val()) != "object") {
+                    parameterList[par].DefaultValue.Values = $("#" + parameterObj[par].Name).val().split(',');
+                } else {
+                    parameterList[par].DefaultValue.Values = $("#" + parameterObj[par].Name).val();
+                }
+            } else if (parameterList[par].DataType == reportParamType.Boolean && parameterList[par].DefaultValue != null) {
+                $("#true-" + window.parameterObj[par].Name).ejRadioButton({
+                    size: "medium", checked: true, change: function (args) {
+                        $("#true-" + window.parameterObj[par].Name).val(args.model.enabled.toString());
+                    }
+                });
+                parameterList[par].DefaultValue.Values[0] = $("#true-" + window.parameterObj[par].Name).val();
+                $("#false-" + window.parameterObj[par].Name).ejRadioButton({
+                    size: "medium", checked: true, change: function (args) {
+                        $("#false-" + window.parameterObj[par].Name).val(args.model.enabled.toString());
+                    }
+                });
+                parameterList[par].DefaultValue.Values[0] = $("#false-" + window.parameterObj[par].Name).val();
             }
         }
     }
 
-    if (selectedItems.length) {
+    //checkbox checked condition before submit
+    if (($("#save-as-file").is(":checked") || $("#enable-send-mail").is(":checked")) === false) {
+        $("#checkbox-validation").css("visibility", "visible").css({ "color": "#a94442", "font-size": "12px" });
+        return;
+    } else if (($("#save-as-file").is(":checked") && $("#enable-send-mail").is(":checked"))) {
+        $("#checkbox-validation").css("visibility", "hidden");
+    }
+    else if (($("#save-as-file").is(":checked") || $("#enable-send-mail").is(":checked"))) {
+        $("#checkbox-validation").css("visibility", "hidden");
+    } else {
+        $("#checkbox-validation").css("visibility", "hidden");
+    }
+
+    scheduleItem.IsSaveAsFile = false;
+    scheduleItem.IsSendAsMail = false;
+
+    //export path and max report count values
+    var saveasfile = false;
+    if ($("#save-as-file").is(":checked")) {
+        if ($("#export-path").val() === "") {
+            $(".directory-check").css("display", "block");
+            $(".directory-check").html("[[[Please enter a valid directory path]]]").css({ "color": "#a94442", "font-size": "12px" });
+            return;
+        }
+        var path = $("#export-path").val();
+        exportPathExistCheck(path);
+        if ($(".directory-check").hasClass("directory-exist")) {
+            $(".directory-check").css("display", "block");
+            $(".directory-check").html("[[[Directory path does not exist]]]").css({ "color": "#a94442", "font-size": "12px" });
+            return;
+        }
+        scheduleItem.ExportPath = $("#export-path").val();
+        if ($.isNumeric(parseInt($("#max-report-count").val()))) {
+            scheduleItem.ReportCount = parseInt($("#max-report-count").val());
+            $("#report-count-validation").css("visibility", "hidden");
+        } else {
+            $("#report-count-validation").css("visibility", "visible").css({ "color": "#a94442", "font-size": "12px" });
+            return;
+        }
+
+        scheduleItem.IsSaveAsFile = true;
+        saveasfile = true;
+    }
+
+    var isSendMail = false;
+    if ($("#enable-send-mail").is(":checked")) {
+        if (selectedItems.length) {
+            scheduleItem.IsSendAsMail = true;
+            isSendMail = true;
+        } else {
+            $("#selected-users-validation").css("visibility", "visible");
+            return;
+        }
+    }
+
+    if (($("#save-as-file").is(":checked") || $("#enable-send-mail").is(":checked"))) {
         $.ajax({
             type: "POST",
             url: scheduleUrl,
@@ -399,7 +472,8 @@ $(document).on("click", "#schedule-submit", function () {
                 parent.$("#popup-container_wrapper").ejWaitingPopup("show");
             },
             success: function (data) {
-                switch ($("input[name=end-type]:checked", "#schedule-end-type").val().toString()) {
+                var scheduleEndType = $("input[name=end-type]:checked", "#schedule-end-type").val() != undefined ? $("input[name=end-type]:checked", "#schedule-end-type").val().toString() : "";
+                switch (scheduleEndType) {
                     case "never":
                         ScheduleDetail = ScheduleDetail + "</br>" + "[[[effective from]]] " + data.NextSchedule;
                         break;
@@ -419,7 +493,7 @@ $(document).on("click", "#schedule-submit", function () {
                 parent.messageBox("su-calendar-1", scheduleName, successMessage + "</br>" + ScheduleDetail, "success", function () {
                     sizeobj.option("height", previousHeight);
                     parent.onCloseMessageBox();
-                    if (actionType.toLowerCase() == "create" || actionType.toLowerCase() == "edit") {
+                    if (typeof parent.refreshScheduleGrid === "function") {
                         parent.refreshScheduleGrid();
                     }
                 });
@@ -442,39 +516,15 @@ function validateSubscriber() {
     }
 }
 
-function GetExportFileSettingInfo() {
-    var scheduleExportFileSettings = {};
-    var value = [];
-    var passwordConditionLength = $("#password-condition-section").find(".password-condition-section").length;
-    for (var t = 1; t <= passwordConditionLength; t++) {
-        var ele = $(".password-condition-section:nth-child(" + t + ")");
-        var passwordKeyProtocol = {};
-        passwordKeyProtocol.FieldKeyPosition = ele.find(".field-key-position").val();
-        passwordKeyProtocol.NumberOfFieldKeys = ele.find(".field-key-count").val();
-        passwordKeyProtocol.FieldKey = ele.find(".field-key").val();
-        value.push(passwordKeyProtocol);
-    }
-    scheduleExportFileSettings.IsCompressionEnabled = $("#enable-compression").is(":checked");
-    scheduleExportFileSettings.IsPasswordProtected = $("#enable-password-protection").is(":checked");
-    if ($("#custom-password").is(":checked")) {
-        scheduleExportFileSettings.PasswordType = "CustomPassword";
-        var result = value;
-        var hasFirstOrLastName = false;
-        for (i = 0; i < result.length; i++) {
-            if (result[i].FieldKey.toLowerCase() == "first name" || result[i].FieldKey.toLowerCase() == "username") {
-                hasFirstOrLastName = true;
-            }
-        }
-        if (!hasFirstOrLastName) {
-            var ele = CreateFieldKeyErrorElement();
-            $(ele).appendTo($("#password-condition-section"));
-            hideWaitingPopup($("#body"));
-            return null;
-        }
+$(document).ready(function () {
+    if ($("#enable-send-mail").is(":checked")) {
+        $(".send-mail-block").css("display", "block");
     } else {
-        scheduleExportFileSettings.PasswordType = "DefaultPassword";
+        $(".send-mail-block").css("display", "none");
     }
-    scheduleExportFileSettings.PasswordProtocols = { PasswordKeyProtocol: value };
-
-    return scheduleExportFileSettings;
-}
+    if ($("#save-as-file").is(":checked")) {
+        $(".save-as-file-type").css("display", "block");
+    } else {
+        $(".save-as-file-type").css("display", "none");
+    }
+});

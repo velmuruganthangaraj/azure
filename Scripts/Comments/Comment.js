@@ -117,7 +117,7 @@ $(document).ready(function () {
                                 + data.Comments[0].Id + "'data-comment-id='"
                                 + data.Comments[0].Id + "' class='post'><div class='post-content'><div class='avatar-container'> <div class='user' data-userid='"
                                 + data.Comments[0].UserId + "'><img src='" + avatarUrl + "?Username="
-                                + data.Comments[0].UserId + "&ImageSize=32' class='avatar'> </div></div><div class='post-body'> <header><span class='post-byline col-xs-5 no-padding'><span title='"
+                                + data.Comments[0].UserName + "&ImageSize=32' class='avatar'> </div></div><div class='post-body'> <header><span class='post-byline col-xs-5 no-padding'><span title='"
                                 + data.Comments[0].UserDisplayName + "'class='author publisher-anchor-color'>"
                                 + data.Comments[0].UserDisplayName + "</span><span class='su su-status-active'></span></span><menu><li class='reply' title='Reply'> <a class='reply-comment'><span class='su su-reply'></span> </a></li><span class='dropdown-toggle option-icon' title='Actions' data-toggle='dropdown'><span class='su su-options-horizontal'></span></span><ul class='dropdown-menu' role='menu'><li class='edit' title='Edit'> <a class='edit-comment'><span>Edit</span> </a></li><li class='delete' title='Delete'> <a class='delete-comment'><span>Delete</span> </a></li></menu><span class='post-meta col-xs-9 no-padding'><a href='#comment-"
                                 + data.Comments[0].Id + "'class='permalink'><span class='time-ago' title='"
@@ -383,7 +383,7 @@ $(document).ready(function () {
                                 + data.Comments[0].Id + "'data-comment-id='"
                                 + data.Comments[0].Id + "' class='post collapse in'><div class='post-content'><div class='avatar-container'> <div class='user' data-userid='"
                                 + data.Comments[0].UserId + "'><img src='" + avatarUrl + "?Username="
-                                + data.Comments[0].UserId + "&ImageSize=32' class='avatar'> </div></div><div class='post-body'> <header><span class='post-byline col-xs-5 no-padding'><span title='"
+                                + data.Comments[0].UserName + "&ImageSize=32' class='avatar'> </div></div><div class='post-body'> <header><span class='post-byline col-xs-5 no-padding'><span title='"
                                 + data.Comments[0].UserDisplayName + "'class='author publisher-anchor-color'>"
                                 + data.Comments[0].UserDisplayName + "</span><span class='su su-status-active'></span></span><menu>";
                             addComment += "<li class='reply' title='Reply'> <a class='reply-comment'><span class='su su-reply'></span> </a></li><span class='dropdown-toggle option-icon' title='Actions' data-toggle='dropdown'><span class='su su-options-horizontal'></span></span><ul class='dropdown-menu' role='menu'><li class='edit' title='Edit'> <a class='edit-comment'><span>Edit</span> </a></li><li class='delete' title='Delete'> <a class='delete-comment'><span>Delete</span> </a></li><li class='parent' data-parent-id='"
@@ -779,7 +779,10 @@ function GetAllComments(itemId, itemType, dashboardItemId, orderBy) {
                             $(postNum).find('.post-content:first').css({
                                 "background-color": "#F4E4AE"
                             });
-                            
+
+                        if (parent.document.URL.indexOf("isreply=true") > -1) {
+                            $(postNum).find('.reply-comment').first().click();
+                        }
                             if (i_am_ie9) {
                                 $(postNum).find('.post-content:first').css('backgroundColor', 'hsl(46,76%,82%');
                                 var d = 3000;
@@ -904,7 +907,7 @@ function ConstructTree(item, parentItem) {
                     + item[i].Id + "'data-comment-id='"
                     + item[i].Id + "' class='post collapse in'><div class='post-content'><div class='avatar-container'> <div class='user' data-userid='"
                     + item[i].UserId + "'><img src='" + avatarUrl + "?Username="
-                    + item[i].UserId + "&ImageSize=32' class='avatar'> </div></div><div class='post-body'> <header><span class='post-byline col-xs-5 no-padding'><span title='"
+                    + item[i].UserName + "&ImageSize=32' class='avatar'> </div></div><div class='post-body'> <header><span class='post-byline col-xs-5 no-padding'><span title='"
                     + item[i].UserDisplayName + "'class='author publisher-anchor-color'>"
                     + item[i].UserDisplayName + "</span></span><menu>";
                     commentHtml += "<li class='reply' title='Reply'> <a class='reply-comment'><span class='su su-reply'></span> </a></li>";

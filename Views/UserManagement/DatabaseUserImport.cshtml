@@ -21,9 +21,6 @@
     @Html.Partial("_UserMenu")
     @if (ViewBag.DbSettings != null)
     {
-        if (GlobalAppSettings.SystemSettings.ActivationType == ActivationType.EmailActivation && ViewBag.IsEmailSettingsConfigured)
-        {
-
             <script type="text/x-jsrender" id="user-detail-validation">
                 {{if IsDuplicated}}
                 <span class="su su-login-error user-import-validation" title="{{:DisplayMessage}}" data-html="true" data-toggle="tooltip" data-placement="left"></span>
@@ -256,34 +253,6 @@
 
                 @Html.Partial("../UserManagement/_LimitUserCreation")
             </div>
-        }
-
-        else
-        {
-            <div id="import-database-container" class="container-fluid admin-page-container">
-                <div class="col-lg-12 admin-page-header">
-                    <div class="col-md-12 no-padding import-area">
-                        <a href="@Url.Action("Index", "UserManagement")" title="[[[Users]]]" class="back-button pull-left">
-                            <i class="su su-arrow-back"> </i>
-                        </a>
-                        <h1 class="page-title">
-                            <span>[[[IMPORT USERS]]] — [[[From Database ]]]</span>
-                        </h1>
-                    </div>
-                </div>
-                <div class="col-md-12 admin-page-body">
-                    @if (GlobalAppSettings.SystemSettings.ActivationType != ActivationType.EmailActivation)
-                    {
-                        <h5>[[[Importing users from existing database is not available in automatic account activation type.]]]</h5>
-                        <a href="@Url.Action("user-settings", "administration")" class="admin-page-link">[[[Click here to change the account activation type]]]</a>
-                    }
-                    else if (!ViewBag.IsEmailSettingsConfigured)
-                    {
-                        <a href="@Url.Action("e-mail-settings", "administration")" class="admin-page-link">[[[Click here to configure the Email settings]]]</a>
-                    }
-                </div>
-            </div>
-        }
     }
     else
     {
@@ -304,4 +273,4 @@
             </div>
         </div>
     }
-}}
+}

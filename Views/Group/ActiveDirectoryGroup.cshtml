@@ -159,19 +159,6 @@
                 closeOnEscape: true,
                 close: ''
             });
-            $("#delete-group-area").ejDialog({
-                width: "499px",
-                showOnInit: false,
-                allowDraggable: true,
-                enableResize: false,
-                showHeader: false,
-                height: "201px",
-                title: "[[[Add New Group]]]",
-                enableModal: true,
-                closeOnEscape: true,
-                close: ''
-            });
-            $("#delete-group-area_wrapper").ejWaitingPopup();
             $("#new-group-area_wrapper").ejWaitingPopup();
         });
     </script>
@@ -231,9 +218,6 @@
         </div>
         <div id="new-group-area" class="no-padding">
             <iframe id="new-group-iframe" class="pull-left"></iframe>
-        </div>
-        <div id="delete-group-area" class="no-padding">
-            <iframe id="delete-group-iframe" class="pull-left"></iframe>
         </div>
     </div>
     @if (ViewBag.AdSync > 0)

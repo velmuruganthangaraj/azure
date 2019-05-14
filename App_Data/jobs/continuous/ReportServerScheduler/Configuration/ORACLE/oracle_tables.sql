@@ -19,7 +19,8 @@ CREATE TABLE "SyncRS_User"(
 	"UserTypeId" int DEFAULT 0 NOT NULL,
 	"IsActivated" NUMBER(1) NOT NULL,
 	"IsActive" NUMBER(1) NOT NULL,
-	"IsDeleted" NUMBER(1) NOT NULL)
+	"IsDeleted" NUMBER(1) NOT NULL,
+	"DomainId" VARCHAR2(4000) NULL)
 ;
 
 CREATE SEQUENCE "SyncRS_User_seq"
@@ -34,7 +35,8 @@ CREATE TABLE "SyncRS_Group"(
 	"Description" NVARCHAR2(1026) NULL,
 	"Color" NVARCHAR2(255) DEFAULT 'White' NOT NULL,
 	"ModifiedDate" DATE NOT NULL,
-	"IsActive" NUMBER(1) NOT NULL)
+	"IsActive" NUMBER(1) NOT NULL,
+	"DomainId" VARCHAR2(4000) NULL)
 ;
 
 CREATE SEQUENCE "SyncRS_Group_seq"
@@ -496,6 +498,10 @@ CREATE TABLE "SyncRS_ScheduleDetail"(
 	"ExportTypeId" int NOT NULL,
 	"IsEnabled" NUMBER(1) NOT NULL,
 	"IsParameterEnabled" NUMBER(1) NOT NULL,
+	"IsSaveAsFile" NUMBER(1) NOT NULL,
+    "IsSendAsMail" NUMBER(1) DEFAULT 1 NOT NULL,
+    "ReportCount" int DEFAULT 0 NOT NULL,
+    "ExportPath" VARCHAR2(4000) NULL,
 	"CreatedById" int NOT NULL,
 	"ModifiedById" int NOT NULL,
 	"CreatedDate" DATE NOT NULL,
@@ -1132,9 +1138,6 @@ INSERT into "SyncRS_PermissionEntity" ("Id","Name","EntityType","ItemTypeId","Is
 ;
 INSERT into "SyncRS_PermissionEntity" ("Id","Name","EntityType","ItemTypeId","IsActive") VALUES ("SyncRS_PermissionEntity_seq".nextval,'All ItemViews',1,9, 1)
 ;
-
-INSERT into "SyncRS_Group" ("Id","Name","Description","Color","ModifiedDate","IsActive") VALUES ("SyncRS_Group_seq".nextval,'System Administrator','Has administrative rights for the report server','#ff0000',SYSDATE, 1)
-;
 INSERT into "SyncRS_ItemCommentLogType" ("Id","Name","IsActive") VALUES ("SyncRS_ItemCommentLogType_seq".nextval,'Added',1)
 ;
 INSERT into "SyncRS_ItemCommentLogType" ("Id","Name","IsActive") VALUES ("SyncRS_ItemCommentLogType_seq".nextval,'Edited',1)
@@ -1370,4 +1373,50 @@ INSERT INTO "SyncRS_PermissionAccEntity" ("Id","PermissionEntityId", "Permission
 INSERT INTO "SyncRS_PermissionAccEntity" ("Id","PermissionEntityId", "PermissionAccessId", "IsActive") VALUES ("SyncRS_PermissionAccEntity_seq".nextval,8,7,1)
 ;
 INSERT INTO "SyncRS_PermissionAccEntity" ("Id","PermissionEntityId", "PermissionAccessId", "IsActive") VALUES ("SyncRS_PermissionAccEntity_seq".nextval,9,7,1)
+;
+
+CREATE TABLE "SyncRS_UmsCredential"(
+	"Id" int PRIMARY KEY NOT NULL,
+	"UmsUrl" NVARCHAR2(255),
+	"ClientId" NVARCHAR2(255),
+	"ClientSecret" NVARCHAR2(255),
+    "IsActive" NUMBER(1) NOT NULL)
+;
+
+CREATE SEQUENCE "SyncRS_UmsCredential_seq"
+START WITH     1
+INCREMENT BY   1
+NOCACHE
+NOCYCLE;
+
+CREATE TABLE "SyncRS_UmsUser"(
+	"Id" int PRIMARY KEY NOT NULL,
+	"UserId" int NOT NULL,
+	"UmsUserId" int NOT NULL,
+	"IsActive" NUMBER(1) NOT NULL)
+	;
+
+CREATE SEQUENCE "SyncRS_UmsUser_seq"
+START WITH     1
+INCREMENT BY   1
+NOCACHE
+NOCYCLE;
+
+ALTER TABLE "SyncRS_UmsUser" ADD FOREIGN KEY("UserId") REFERENCES "SyncRS_User" ("Id")
+;
+
+CREATE TABLE "SyncRS_UmsGroup"(
+	"Id" int PRIMARY KEY NOT NULL,
+	"GroupId" int NOT NULL,
+	"UmsGroupId" int NOT NULL,
+	"IsActive" NUMBER(1) NOT NULL)
+	;
+
+CREATE SEQUENCE "SyncRS_UmsGroup_seq"
+START WITH     1
+INCREMENT BY   1
+NOCACHE
+NOCYCLE;
+
+ALTER TABLE "SyncRS_UmsGroup" ADD FOREIGN KEY("GroupId") REFERENCES "SyncRS_Group" ("Id")
 ;

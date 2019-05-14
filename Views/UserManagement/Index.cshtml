@@ -25,7 +25,7 @@
         var userPageUrl = "@Url.Action("Index", "UserManagement")";
         var saveSelectedCSVUserUrl = "@Url.Action("SaveSelectedCSVUser", "UserManagement")";
         var deleteSingleFromUserListUrl = "@Url.Action("DeleteSingleFromUserList", "UserManagement")";
-
+        var getAllUsersUrl = "@Url.Action("GetAllActiveInactiveUsers", "UserManagement")";
         var getResultDataUrl = "@Url.Action("GetUserDataForImportFromDatabase", "UserManagement")";
 
     </script>
@@ -88,12 +88,6 @@
                     <a href="@Url.Action("ViewProfile", "UserManagement")?username={{:UserName}}" title="">
                         <i class="su su-eye"></i>
                         <span>[[[View]]]</span>
-                    </a>
-                </li>
-                <li data-content="{{:UserId}}">
-                    <a class="delete-class" href="javascript:void(0);" title="">
-                        <i class="su su-delete"></i>
-                        <span>[[[Delete]]]</span>
                     </a>
                 </li>
             </ul>
@@ -241,7 +235,7 @@
                         }
                     </li>
 
-                    @if ((ViewBag.ActiveDirectory != null && ViewBag.AzureAD != null) || (ViewBag.ActiveDirectory != null && ViewBag.CustomDatabaseUserCount != null) || (ViewBag.AzureAD != null && ViewBag.CustomDatabaseUserCount != null))
+                    @if (ViewBag.ActiveDirectory != null  ||  ViewBag.CustomDatabaseUserCount != null || ViewBag.AzureAD != null)
                     {
                         <li class="dropdown no-padding">
                             <button class="dropdown-toggle primary-button" data-toggle="dropdown" id="synchronize-dropdown" title="[[[Synchronize Users]]]">
@@ -271,40 +265,28 @@
                                 {
                                     <li>
                                         <a class="dropdown-toggle" href="@Url.Action("SynchronizeCustomDatabaseUsers", "UserManagement")" data-toggle="tooltip" data-placement="left" title="[[[Synchronize users with Custom Database]]]">
-                                            <i class="su su-datasource"> </i>
+                                            <i class="su su-data-base-sync"> </i>
                                             <span>[[[Database Synchronization]]]</span>
                                         </a>
                                     </li>
                                 }
+                                <li class="ums-user-synchronization">
+                                    <a class="dropdown-toggle" href="javascript:void(0)" data-toggle="tooltip" data-placement="left" title="[[[Synchronize users from UMS]]]">
+                                        <i class="su su-ums-sync"> </i>
+                                        <span>[[[UMS Synchronization]]]</span>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 
                     }
                     else
-                    {
-                        if (ViewBag.ActiveDirectory != null)
-                        {
+                    {                      
                             <li>
-                                <a href="@Url.Action("SynchronizeUsers", "UserManagement")" class="link-button synchronize-users" title="[[[Synchronize users with Active Directory]]]" data-toggle="tooltip" data-placement="left">[[[Active Directory Synchronization]]]</a>
+                                <a href="javascript:void(0)" class="link-button ums-user-synchronization"  title="[[[Synchronize users from UMS]]]" data-toggle="tooltip" data-placement="left">[[[UMS Synchronization]]]</a>
                             </li>
-                        }
-                        if (ViewBag.AzureAD != null)
-                        {
-                            <li>
-                                <a href="@Url.Action("SynchronizeAzureUsers", "UserManagement")" class="link-button synchronize-azure-users" title="[[[Synchronize users with Azure AD]]]" data-toggle="tooltip" data-placement="left">[[[Azure AD Synchronization]]]</a>
-                            </li>
-                        }
-                        if (ViewBag.CustomDatabaseUserCount != null)
-                        {
-                            <li>
-                                <a href="@Url.Action("SynchronizeCustomDatabaseUsers", "UserManagement")" class="link-button synchronize-database-users" title="[[[Synchronize users with Custom Database]]]" data-toggle="tooltip" data-placement="left">[[[Database Synchronization]]]</a>
-                            </li>
-                        }
                     }
-                    <li class="flying-add hide" id="add-user-in-group">
-                        <button class="critical-action-button user-delete-button" title="[[[Delete selected users]]]" data-log-user="@ViewBag.LoggedUser" id="delete-user">[[[Delete User]]]</button>
-                        <button class="secondary-button user-add-group" title="[[[Assign a group to selected users]]]">[[[Assign Group]]]</button>
-                    </li>
+                   
                 </ul>
             </div>
         </div>
@@ -336,7 +318,5 @@
     </div>
 
     @Html.Partial("../UserManagement/_UserAddDialog")
-    @Html.Partial("../UserManagement/_MultipleUserDeleteDialog")
-    @Html.Partial("../UserManagement/_SingleUserDeleteDialog")
     @Html.Partial("../UserManagement/_LimitUserCreation")
 }

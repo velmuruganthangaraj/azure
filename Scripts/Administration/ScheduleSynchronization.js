@@ -437,7 +437,28 @@ $(document).on("click", "#update-schedule-synchronization-bottom", function () {
 function validateSchedule() {
     var startDateTimeObj = $("#start-date").data("ejTimePicker");
 
-    switch ($("#recurrence-type").val().toString().toLowerCase()) {
+    switch ($("#recurrence-type").val().toString().toLowerCase()) { 
+        case "hourly":
+            if ($(".time-format").val() == "") {
+                $(".frequency-error").css("display", "inline");
+                $(".time-format").parent("span").addClass("validation-error");
+                return false;
+            }
+            else {
+                var time = $(".time-format").val();
+                var timesplit = time.split(':');
+                var minutes = (timesplit[0] * 60) + timesplit[1];
+                if (minutes > 3) {
+                    $(".frequency-error").css("display", "none");
+                    $(".time-format").parent("span").removeClass("validation-error");
+                }
+                else {
+                    $(".frequency-error").css("display", "inline");
+                    $(".time-format").parent("span").addClass("validation-error");
+                    return false;
+                }
+            }
+            break;
         case "daily":
             break;
         case "weekly":
