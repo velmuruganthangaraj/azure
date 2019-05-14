@@ -1,0 +1,58 @@
+﻿@model Application
+
+<div role="tabpanel" class="tab-pane active" id="application-tab">
+    <div class="admin-page-body col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+        <div class="img-view-holder col-lg-2 col-md-2 col-sm-12 col-xs-12">
+            <img id="application-logo" src="@Url.Content("~/apps/icon?id="+ @Model.ClientId + "&ImageSize=110")" />
+        </div>
+        <div id="edit-application-form-div" class="col-lg-10 col-md-10 col-sm-12 col-xs-12 no-padding margin-top10">
+            <form class="row admin-page-form" autocomplete="off">
+                @Html.HiddenFor(app => app.Id, new {id = "application-id"})
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                    @Html.Label("application-name", "[[[Application name]]]", new {@class = "app-textbox-label col-lg-2 col-md-2 col-sm-3 col-xs-4"})
+                    <div class="form-input-field col-lg-4 col-md-5 col-sm-6 col-xs-8 application-name">
+                        @Html.DisplayFor(application => application.Name)
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                    @Html.Label("application-type", "[[[Application type]]]", new {@class = "app-textbox-label col-lg-2 col-md-2 col-sm-3 col-xs-4"})
+                    <div class="form-input-field col-lg-4 col-md-5 col-sm-6 col-xs-8 application-type">
+                        @Html.DisplayFor(application => application.ApplicationType)
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group ">
+                    @Html.Label("application-url", "[[[Application URL]]]", new {@class = "app-textbox-label col-lg-2 col-md-2 col-sm-3 col-xs-4"})
+                    <div class="form-input-field col-lg-4 col-md-5 col-sm-6 col-xs-8 application-url active ">
+                        @Html.Raw(Model.Url)
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                    @Html.Label("has-access", "[[[Access to all users]]]", new {@class = "app-textbox-label col-lg-2 col-md-2 col-sm-3 col-xs-4"})
+                    <div class="form-input-field col-lg-4 col-md-5 col-sm-6 col-xs-8 hasaccess">
+                        @(Model.HasAccessToAllUsers ? "[[[Enabled]]]" : "[[[Disabled]]]")
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                    @Html.Label("client-id", "[[[Client id]]]", new {@class = "app-textbox-label col-lg-2 col-md-2 col-sm-3 col-xs-4 client-id"})
+                    <div class="form-input-field col-lg-4 col-md-5 col-sm-6 col-xs-8  no-border ">
+                        @Html.TextBoxFor(application => application.ClientId, new {id = "application-clientid", @class = "form-control content-size focus", @readonly = "readonly"})
+                    </div>
+                    <div class="form-input-field col-lg-4 col-md-5 col-sm-6 col-xs-8 copy">
+                        <i class="su su-copy" id="copy-client-id" title="[[[Copy to clipboard]]]" data-toggle="tooltip"></i>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                    @Html.Label("client-secret", "[[[Client secret]]]", new {@class = "app-textbox-label col-lg-2 col-md-2 col-sm-3 col-xs-4 client-secret"})
+                    <div class="form-input-field col-lg-4 col-md-5 col-sm-6 col-xs-8  no-border">
+                        @Html.TextBoxFor(application => application.ClientSecret, new {id = "application-accesstoken", @class = "form-control content-size focus", @readonly = "readonly"})
+                    </div>
+                    <div class="form-input-field col-lg-4 col-md-5 col-sm-6 col-xs-8 copy">
+                        <i class="su su-copy" id="copy-client-secret" title="[[[Copy to clipboard]]]" data-toggle="tooltip"></i>
+                        <i class="su su-sync" id="client-secret" title="[[[Regenerate client secret]]]" data-toggle="tooltip" onclick="onRegenerateClientSecretDialogOpen()"></i>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@Html.Partial("../Application/_RegenerateAccessToken")

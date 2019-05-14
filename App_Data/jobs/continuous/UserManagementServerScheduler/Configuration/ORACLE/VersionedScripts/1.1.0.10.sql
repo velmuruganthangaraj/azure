@@ -1,0 +1,2 @@
+ALTER TABLE "SfUMS_Applications" MODIFY "Url" NVARCHAR2(2000)
+;

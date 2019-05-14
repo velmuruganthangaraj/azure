@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    @RenderSection("meta", false)
+    <title>
+        @ViewBag.Title
+    </title>
+
+    @if (GlobalAppSettings.SystemSettings.StorageType == (int)StorageType.AzureBlob)
+    {
+        <link rel="icon" href="@(GlobalAppSettings.AzureBlob != null ? GlobalAppSettings.AzureBlob.AzureBlobStorageUri : string.Empty)/@GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName/@GlobalAppSettings.GetStorageMode()/Content/Images/Application/@GlobalAppSettings.SystemSettings.FavIcon" onerror="if (this.href !== null && this.href.toLowerCase() !== '~/content/images/application/favicon.png') this.href = '~/Content/Images/Application/Favicon.png';" />
+    }
+    else
+    {
+        <link rel="icon" href="~/Content/Images/Application/@GlobalAppSettings.SystemSettings.FavIcon" onerror="if (this.href !== null && this.href.toLowerCase() !== '~/content/images/application/favicon.png') this.href = '~/Content/Images/Application/Favicon.png';" />
+    }
+
+    <script type="text/javascript">
+        var rootUrl = "";
+        var baseurl = "";
+    </script>
+
+    @Styles.Render("~/styles/layout-accounts")
+
+    @RenderSection("styles", false)
+
+    @Scripts.Render("~/bundles/scripts/accounts")
+</head>
+<body ng-app="loginApp" class="clearfix" id="body" style="background-image: url('@Url.Content("~/Content/Images/waitingpopup.gif")');background-color: #fff; background-repeat: no-repeat; background-position: center center;">
+    <div id="server-app-container" style="opacity: 0">
+        <div id="content-area" class="clearfix">
+            @RenderSection("MainSection", true)
+        </div>
+        @Html.Partial("../Shared/_Footer")
+    </div>
+
+    @RenderSection("scripts", false)
+</body>
+</html>

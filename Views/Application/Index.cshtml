@@ -1,0 +1,253 @@
+﻿﻿@{
+    ViewBag.Title = GlobalAppSettings.SystemSettings.OrganizationName + " - [[[Applications List]]]";
+    var isSuperAdmin = ViewBag.AdminType == AdminType.SuperAdmin.ToString();
+}
+
+@section styles{
+    @Styles.Render("~/bundles/styles/applications")
+}
+
+@section scripts{
+
+    @Scripts.Render("~/bundles/scripts/applications")
+    <script>
+        var getapplicationdetailsUrl = "@Url.Action("AddApplicationDetails", "Application")";
+        var isapplicationnameexistUrl = "@Url.Action("isApplicationNameExist","Application")";
+        var validateUrlDuplicates = "@Url.Action("ValidateUrlDuplication", "Application")";
+        var getupdateapplicationdetailsUrl = "@Url.Action("UpdateApplicationDetails", "Application")";
+        var disableapplicationUrl = "@Url.Action("DisableApplication","Application")";
+        var enableapplicationUrl = "@Url.Action("EnableApplication","Application")";
+        var fileUploadUrl = "@Url.Action("Upload", "fileupload")";
+        var baseRootUrl = "@Url.Content("~/")";
+        if (baseRootUrl.toLowerCase() === "/")
+            baseRootUrl = "";
+    </script>
+
+    <script type="text/x-jsrender" id="application-name-template">
+        <a class="item-name grid-content" title="{{:Name}}" data-toggle="tooltip" href="@Url.Action("ViewApplication","Application")/{{:ClientId}}">{{:Name}}</a>
+    </script>
+    <script type="text/x-jsrender" id="application-url-template">
+        {{:Url}}
+        @*<a class="grid-content" title="{{:Url}}" data-toggle="tooltip" href="{{:Url}}">{{:Url}}</a>*@  
+    
+    </script>
+    <script type="text/x-jsrender" id="application-type-template">
+        <span class="grid-content" title="{{:ApplicationType}}" data-toggle="tooltip" href="{{:ApplicationType}}">{{:ApplicationType}}</span>
+    </script>
+    <script type="text/x-jsrender" id="userAccessTemplate">
+        <span title="{{:HasAccessToAllUser}}">
+            {{if HasAccessToAllUsers}}
+                [[[Enabled]]]
+            {{else}}
+                [[[Disabled]]]
+            {{/if}}
+        </span>
+    </script>
+    <script type="text/x-jsrender" id="statusTemplate">
+    <span title="{{:IsActive}}">
+        {{if IsActive}}
+        [[[Active]]]
+        {{else}}
+        [[[Inactive]]]
+        {{/if}}
+    </span>
+</script>
+
+    <script type="text/x-jsrender" id="applicationname-header">
+        <div class="item-name">[[[Application Name]]]</div>
+</script>
+    <script type="text/x-jsrender" id="application-url-header">
+        <div class="item-header">[[[Application URL]]]</div>
+    </script>
+    <script type="text/x-jsrender" id="application-type-header">
+        <div class="item-header">[[[Application Type]]]</div>
+    </script>
+    <script type="text/x-jsrender" id="application-hasaccess-header">
+        <div class="item-header">[[[Access To All Users]]]</div>
+   </script>
+   <script type="text/x-jsrender" id="application-status-header">
+       <div class="item-header">[[[Status]]]</div>
+   </script>
+
+    <script type="text/x-jsrender" id="options">
+        <div class="dropdown">
+            <span class="dropdown-toggle option-icon" data-toggle="dropdown">
+                <span class="su su-options"> </span>
+            </span>
+            <ul class="dropdown-menu" role="menu">
+               <li>
+                   <a href="javascript:void(0);" title="[[[Edit application]]]" onclick="onEditApplicationDialogOpen()">
+                       <i class="su su-settings-2"></i>
+                       <span>[[[Edit]]]</span>
+                   </a>
+                </li>
+                @*{{if IsActive}}
+                <li>
+                    <a href="javascript:void(0);" title="[[[Disable application]]]"onclick="onDisableApplicationDialogOpen()" >
+                        <i class="su su-delete"></i>
+                        <span>[[[Disable]]]</span>
+                    </a>
+                </li>
+                {{else}}
+                <li>
+                    <a href="javascript:void(0);" title="[[[Enable application]]]" onclick="onEnableApplicationDialogOpen()">
+                        <i class="su su-delete"></i>
+                        <span>[[[Enable]]]</span>
+                    </a>
+                </li>
+                {{/if}}*@
+                <li>
+                    <a href="javascript:void(0);" title="[[[Delete application]]]" onclick="onDisableApplicationDialogOpen()">
+                        <i class="su su-delete"></i>
+                        <span>[[[Delete]]]</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#search-applications").val("");
+            var data = ej.DataManager({
+                url: "@Url.Action("GetAllApplications", "Application")",
+                adaptor: new ej.UrlAdaptor()
+            });
+
+            $("#application_grid").ejGrid({
+                dataSource: data,
+                gridLines: ej.Grid.GridLines.None,
+                allowPaging: true,
+                allowSorting: true,
+                allowSearching: true,
+                allowSelection: true,
+                allowFiltering: true,
+                pageSettings: { pageSize: 20 },
+                filterSettings: { filterType: "menu" },
+                selectionType: ej.Grid.SelectionType.Multiple,
+                selectionSettings: { selectionMode: ["row"] },
+                enableRowHover: true,
+                enableAltRow: false,
+                rowDataBound: function () {
+                    var height = $(".e-gridcontent").height();
+                    if (height != null) {
+                        rowBound();
+                    }
+                },
+                dataBound: function (args) {
+                    $("[data-toggle='tooltip']").tooltip();
+                },
+                rowSelecting: function (e) {
+                    this.multiSelectCtrlRequest = true;
+                },
+                rowSelected: "fnApplicationRowSelected",
+                recordClick: "fnApplicationRecordClick",
+                load: "fnOnApplicationGridLoad",
+                actionBegin: "fnOnApplicationGridActionBegin",
+                actionComplete: "fnOnApplicationGridActionComplete",
+                columns: [
+                    {
+                        field: "ApplicationTypeId",
+                        type: "int",
+                        visible: false
+                    },
+                    {
+                        template: true,
+                        allowSorting: true,
+                        templateID: "#application-name-template",
+                        headerText: "[[[Application Name]]]",
+                        width: 155,
+                        headerTemplateID: "#applicationname-header",
+                        field: "Name",
+                        type: "string"
+                    },
+                    {
+                        template: true,
+                        templateID: "#application-url-template",
+                        headerText: "[[[Application URL]]]",
+                        width: 150,
+                        headerTemplateID: "#application-url-header",
+                        field: "Url",
+                        type: "string"
+                    },
+                    {
+                        template: true,
+                        templateID: "#application-type-template",
+                        headerText: "[[[Application Type]]]",
+                        width: 130,
+                        headerTemplateID: "#application-type-header",
+                        allowSorting: false,
+                        allowFiltering: false,
+                        field: "ApplicationType",
+                        type: "string"
+                    },
+                    {
+                        template: true,
+                        templateID: "#userAccessTemplate",
+                        headerText: "[[[Access To All Users]]]",
+                        width: 120,
+                        allowFiltering: false,
+                        field:"HasAccessToAllUser"
+                    },
+                    {
+                        template: true,
+                        templateID: "#statusTemplate",
+                        headerText: "[[[Status]]]",
+                        width: 110,
+                        allowFiltering: false,
+                        field: "IsActive"
+                    },
+                    @if (isSuperAdmin)
+                     {
+                         <text>
+                             {
+                                 template: true,
+                                 allowSorting: false,
+                                 templateID: "#options",
+                                 headerText: "[[[Actions]]]",
+                                 width: 50,
+                                 allowFiltering: false
+                             }
+                         </text>
+                     }
+                ]
+
+            });
+        });
+    </script>
+}
+
+@section MainSection{
+    <div id="base-container" class="col-xs-12 admin-page-container no-padding ">
+        <div class="col-lg-12 admin-page-header">
+            <div class="col-xs-12 no-padding" id="application-title">
+                <h1 class="pull-left col-lg-6 no-padding page-title">
+                    [[[APPLICATIONS]]] (<span id="application-count"></span>)  
+                </h1>
+                @if (isSuperAdmin)
+                {
+                    <span class="pull-right col-lg-6 no-margin no-padding" id="application-management">
+                        <button class="primary-button pull-right" id="add-applications" title="[[[Add new application]]]" onclick="onAddApplicationDialogOpen()">
+                            <span>[[[Add application]]] </span>
+                        </button>
+                    </span>
+                }
+            </div>
+        </div>
+       
+        <div id="application-list-container" class="list col-xs-12 admin-page-body">
+           
+            <div id="search-area" class="pull-right">
+                <input type="text" class="pull-left" id="search-applications" placeholder="[[[Search applications]]]" />
+                <span class="su su-inner-close close-icon pull-left" id="clear-search" title="[[[Clear search]]]"></span>
+                <span class="su su-search search-application pull-left" title="[[[Search]]]"></span>
+            </div>
+            <div class="col-xs-12 no-padding">
+                <div id="application_grid">
+                </div>
+            </div>
+            </div>
+        </div>
+@Html.Partial("../Application/_AddApplicationDialog")
+@Html.Partial("../Application/_EnableOrDisableApplicationDialog")
+}

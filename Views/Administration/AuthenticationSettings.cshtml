@@ -1,0 +1,395 @@
+﻿@model SAMLSettings
+
+@{
+    ViewBag.Title = GlobalAppSettings.SystemSettings.OrganizationName + " - [[[Administration]]]";
+    var showwindows = ViewBag.SystemSettings;
+    @*var gsuiteSamlSettings = ViewBag.gsuiteSamlSettings;*@
+}
+
+@section styles{
+    @Styles.Render("~/styles/saml-settings-page")
+}
+
+@section scripts{
+    @Scripts.Render("~/scripts/saml-settings-page")
+    <script type="text/javascript">
+        var windowsSettingsUrl="@Url.Action("WindowsAuthenticationSettings","Administration")";
+        var fileUploadUrl = "@Url.Action("Upload", "fileupload")";
+        var ssoSettingSave = "@Url.Action("UpdateSAMLSettings", "Administration")";
+        var baseUrl = "@GlobalAppSettings.SystemSettings.BaseUrl";
+        @*var gsuiteSettings = @Html.Raw(Json.Encode(gsuiteSamlSettings));*@
+        var x509CertificateFile = null;
+
+        serverApp.controller("ssoController",
+        [
+            "$scope", "ajaxService", function($scope, ajaxService) {
+                //$scope.metaDataUriRegex = '^(http(s)?:\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-]+(\.[a-z]{2,6})?(:\d{1,5})?(\/([a-zA-Z0-9]+[a-zA-Z0-9-]+\.)*[a-zA-Z0-9][a-zA-Z0-9-]*(\.[a-z]{2,8}-)?)*?$';
+                $scope.tenantRegex = '^(?!(ftp|https?):\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-]+(\.[a-z]{2,6})?(:\d{1,5})?(\/[a-zA-Z0-9]+[a-zA-Z0-9]*(\.[a-z]{2,8})?)*?$';
+                $scope.init = function() {
+                    $scope.ssoSettings = @Html.Raw(Json.Encode(Model));
+                    @*$scope.gsuiteSsoSettings = @Html.Raw(Json.Encode(gsuiteSamlSettings));*@
+                };
+
+                $scope.removeCertificate = function() {
+                    $("#metadata-name-container").hide();
+                    $("#upload-idp-metadata-textbox").addClass("enable-textbox").val("").trigger("change");
+                    $("#upload-box-container").show();
+                };
+
+
+                $scope.saveSsoSettings = function() {
+                    ajaxService.postJsonData(ssoSettingSave, { "samlSettingsData": $scope.ssoSettings }).then(function(data) {
+                        $scope.categories = data;
+                        if(data){
+                            var messageText = "[[[SSO settings has been updated. The application will be restarted automatically inorder to apply this changes.]]]";
+                            messageBox("su-single-sign-on", "[[[SSO Settings]]]", messageText, "success", function () {
+                                onCloseMessageBox();
+                                location.href = baseUrl;
+                            });
+                        }
+                        else{
+                            WarningAlert("[[[SSO Settings]]]", "[[[Error while updating settings.]]]", 7000);
+                        }
+                    });
+                };
+
+                @*$scope.saveGSuiteSsoSettings = function() {
+                    $scope.gsuiteSsoSettings.X509CertificateName = x509CertificateFile != null ? x509CertificateFile : $scope.gsuiteSsoSettings.X509CertificateName;
+                    ajaxService.postJsonData("/Administration/UpdateGSuiteSamlSettings", { "gsuiteSamlSettingsData": $scope.gsuiteSsoSettings }).then(function(data) {
+                        if(data.status){
+                            SuccessAlert("[[[G Suite SSO Settings]]]", "[[[G Suite SSO has been " + ($scope.gsuiteSsoSettings.IsEnabled ? "enabled" : "disabled") + " successfully.]]]", 7000);
+                        }
+                        else{
+                            WarningAlert("[[[G Suite SSO Settings]]]", "[[[Error while updating settings.]]]", 7000);
+                        }
+                    });
+                };*@
+
+                $scope.hideValidationMessage = function(data) {
+                    if(!data){
+                        $("span.validation-message").addClass("ng-hide");
+                        $("#update-saml-settings").prop("disabled",false);
+                    }
+                    else if ($scope.ssoSettingsForm.$invalid) {
+                        $("#update-saml-settings").prop("disabled",true);
+                    }
+                };
+
+                @*$scope.hideGsuiteValidationMessage = function(data) {
+                    var uploadBox = $("#upload-idp-metadata").data("ejUploadbox");
+                    if(data){
+                        uploadBox.enable();
+                        $("#upload-idp-metadata-textbox").addClass("enable-textbox");
+                        if($("#metadata-name-container").is(":visible")){
+                            $("#remove-metadata").show();
+                        }
+                        if ($scope.gsuiteSsoSettingsForm.$invalid) {
+                            $("#update-gsuite-settings").prop("disabled",true);
+                        }
+                    }
+                    else{
+                        uploadBox.disable();
+                        $("span.validation-message").addClass("ng-hide");
+                        if ($scope.gsuiteSsoSettings.EntityId == null && $scope.gsuiteSsoSettings.SSOUrl == null) {
+                            $("#update-gsuite-settings").prop("disabled",true);
+                        }
+                        else{
+                            $("#update-gsuite-settings").prop("disabled",false);
+                        }
+                        $("#upload-idp-metadata-textbox").removeClass("enable-textbox");
+                        if($("#metadata-name-container").is(":visible")){
+                            $("#remove-metadata").hide();
+                        }
+                    }
+                };*@
+
+            }]);
+
+        $(document).ready(function () {
+            addPlacehoder("body");
+            $("[data-toggle='popover']").popover({
+                container: 'body'
+            });
+            function addPlacehoder(object) {
+                if (regexIe8.test(userAgent)) {
+                    $(object).find("input[type=text][class!='hidden-input'],input[type=password][class!='hidden-input'],textarea[id='txt_welcome_note']").each(function () {
+                        if ($(this).val() === "") {
+                            $($("<div>", { "class": "placeholder", text: $(this).attr("placeholder") })).insertAfter(this).show();
+                        }
+                        else {
+                            $($("<div>", { "class": "placeholder", text: $(this).attr("placeholder"), "style":"display:block" })).insertAfter(this).hide();
+                        }
+                    });
+                }
+            }
+
+            @*if(!gsuiteSettings.IsEnabled && gsuiteSettings.X509CertificateName == null){
+                $("#upload-box-container").show();
+                var uploadBox = $("#upload-idp-metadata").data("ejUploadbox");
+                uploadBox.disable();
+            }
+            else if(!gsuiteSettings.IsEnabled && gsuiteSettings.X509CertificateName != null){
+                $("#remove-metadata").hide();
+            }
+
+            if(gsuiteSettings.ClientSecret == null)
+            {
+                $("#client-secret").attr("placeholder","[[[Client Secret]]]");
+            }*@
+        });
+
+        $(document).on('click', function (e) {
+            if ($(".popover").children().hasClass("popover-content")) {
+                $(".popover-content").attr("id", "popover-content");
+                $(".arrow").attr("id", "arrow");
+            }
+
+            if (e.target.id !== "popover-content" && e.target.id !== "arrow" && e.target.id !== "relyingParty-info" && e.target.id !== "clientId-info" && e.target.id !== "authority-info" && e.target.id !== "uri-info" && e.target.id !== "tenantName-info")
+            {
+                $(".popover").css("display", "none");
+            }
+            $('.popover').each(function () {
+                if (!($(this).is(e.target) || $(this).has(e.target).length > 0)
+                     && $(this).siblings('.popover').length !== 0
+                     && $(this).siblings('.popover').has(e.target).length === 0)
+                {
+                    $(this).popover().remove();
+                }
+            });
+        });
+    </script>
+}
+
+@section MainSection{
+    @Html.Partial("_AdminMenu")
+
+    <div id="saml-container" class="col-lg-12 col-md-12 col-sm-12 admin-page-container" role="tabpanel" ng-controller="ssoController" ng-init="init()">
+        <div class="col-lg-12 col-md-12 col-sm-12 admin-page-header">
+            <hgroup>
+                <h1 class="page-title">[[[AUTHENTICATION SETTINGS]]]</h1>
+                <h5 class="page-description">[[[Configuration for setting Authentication]]]</h5>
+            </hgroup>
+        </div>
+        <div class="panel-group app-textbox-label" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-windows">
+                <div class="panel-heading" role="tab" id="windows-panel">
+                    <h1 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#windows-authentication" aria-expanded="true" aria-controls="collapseOne">
+                            [[[Windows Authentication]]]
+                        </a>
+                    </h1>
+                </div>
+                <div id="windows-authentication" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="windows-panel">
+                    <div class="panel-body">
+                        <div class="panel-text">
+                            <label for="enable-window">[[[Enable Windows Authentication]]]</label>
+                            <span class="material-switch text-left">
+                                <input type="checkbox" name="enable-switch" id="enable-window" @(showwindows ? "checked" : string.Empty)>
+                                <label for="enable-window" class="label-primary"></label>
+                            </span>
+                        </div>
+                        <div class="admin-page-action col-xs-12 col-md-12">
+                            <a href="/" class="secondary-button pull-right" id="cancel-dashboard-settings" title="">[[[Cancel]]]</a>
+                            <button type="button" title="" id="update-window-enable" class="primary-button pull-right" />
+                            <span>[[[Save]]]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-azure">
+                <div class="panel-heading" role="tab" id="azure-panel">
+                    <h1 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#azure-authentication" aria-expanded="true" aria-controls="collapseTwo">
+                            [[[Azure AD SSO]]]
+                        </a>
+                    </h1>
+                </div>
+                <div id="azure-authentication" class="panel-collapse collapse" role="tabpanel" aria-labelledby="azure-panel">
+                    <div class="panel-body">
+                        <div class="col-lg-12 col-md-12 col-sm-12 admin-page-body">
+                            <div class="panel-text1">
+                                <label for="enable-sso">[[[Enable SSO]]]</label>
+                                <span class="material-switch">
+                                    <input type="checkbox" name="enable-switch1" id="enable-sso" data-ng-model="ssoSettings.IsEnabled" , ng-click="hideValidationMessage(ssoSettings.IsEnabled)" />
+                                    <label for="enable-sso" class="label-primary"></label>
+                                </span>
+                            </div>
+                            <form id="saml-setting" name="ssoSettingsForm" class="saml-form col-lg-12 col-md-12 col-sm-12" method="post" enctype="multipart/form-data" autocomplete="off">
+                                <div class="col-lg-12 col-md-12 col-sm-12 admin-page-body">
+                                    <div class="col-lg-12 col-md-12 no-padding">
+                                        <label class="app-textbox-label col-lg-2 col-md-2 no-margin">[[[Metadata URI]]]</label>
+                                        <div class="col-lg-8 col-md-8 no-margin form-input-field">
+                                            <div class="col-lg-10 col-md-10 no-margin">
+                                                <input type="text" class="form-control no-margin" ng-model="ssoSettings.MetadataUri" ng-init="metaDataUri=ssoSettings.MetadataUri" name="metaData" placeholder="[[[Metadata URI]]]" id="metadata-uri" data-ng-disabled="!ssoSettings.IsEnabled" @*ng-pattern="metaDataUriRegex"*@ required />
+                                                <span class="validation-message top-padding" ng-show="ssoSettingsForm.metaData.$error.required && ssoSettingsForm.metaData.$dirty ">[[[Please enter Metadata URI]]]</span>
+                                                @*<span class="validation-message top-padding" ng-show="ssoSettingsForm.metaData.$error.pattern ">[[[Invalid Metadata URI]]]</span>*@ @*Due to backtracking issue in regex this validation is commented*@
+                                            </div>
+                                            <span id="uri-info" class="su su-info info-popup" data-toggle="popover" data-placement="bottom" data-html="true" data-content="[[[A URI that will be used to obtain the wsFederation metadata]]] <br>[[[Example]]]: http://myFederationServer/federationmetadata/2007-06/federationmetadata.xml"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 no-padding">
+                                        <label class="app-textbox-label col-lg-2 col-md-2 no-margin">[[[Authority]]]</label>
+                                        <div class="col-lg-8 col-md-8 no-margin form-input-field">
+                                            <div class="col-lg-10 col-md-10 no-margin">
+                                                <input type="text" class="form-control no-margin" ng-model="ssoSettings.Authority" ng-init="ssoAuthority=ssoSettings.Authority" name="ssoAuthority" placeholder="[[[Authority]]]" id="authority" data-ng-disabled="!ssoSettings.IsEnabled" required />
+                                                <span class="validation-message top-padding" ng-show="ssoSettingsForm.ssoAuthority.$dirty && ssoSettingsForm.ssoAuthority.$invalid">[[[Please enter Authority URL]]]</span>
+                                            </div>
+                                            <span id="authority-info" class="su su-info info-popup" data-toggle="popover" data-placement="bottom" data-html="true" data-content="[[[The URL to the authority that issues the authorization token]]] <br>[[[Example]]]: http://myFederationServer/adfs"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 no-padding">
+                                        <label class="app-textbox-label col-lg-2 col-md-2 no-margin">[[[Designer Client Id]]]</label>
+                                        <div class="col-lg-8 col-md-8 no-margin form-input-field">
+                                            <div class="col-lg-10 col-md-10 no-margin">
+                                                <input type="text" class="form-control no-margin" ng-model="ssoSettings.DesignerClientId" ng-init="designerClientId=ssoSettings.DesignerClientId" name="designerClientId" placeholder="[[[Designer Client Id]]]" id="designer-clientId" data-ng-disabled="!ssoSettings.IsEnabled" required />
+                                                <span class="validation-message top-padding" ng-show="ssoSettingsForm.designerClientId.$dirty && ssoSettingsForm.designerClientId.$invalid">[[[Please enter Designer Client Id]]]</span>
+                                            </div>
+                                            <span id="clientId-info" class="su su-info info-popup" data-toggle="popover" data-placement="bottom" data-html="true" data-content="[[[A unique identifier, used to register the Standalone Report Designer into AD FS]]]"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 no-padding">
+                                        <label class="app-textbox-label col-lg-2 col-md-2 no-margin">[[[Tenant Name]]]</label>
+                                        <div class="col-lg-8 col-md-8 no-margin form-input-field">
+                                            <div class="col-lg-10 col-md-10 no-margin">
+                                                <input type="text" class="form-control no-margin" ng-model="ssoSettings.TenantName" ng-init="tenantName=ssoSettings.TenantName" name="tenantName" placeholder="[[[Tenant Name]]]" id="tenant-name" data-ng-disabled="!ssoSettings.IsEnabled" ng-pattern="tenantRegex" required />
+                                                <span class="validation-message top-padding" ng-show="ssoSettingsForm.tenantName.$error.required && ssoSettingsForm.tenantName.$dirty">[[[Please enter Tenant Name]]]</span>
+                                                <span class="validation-message top-padding" ng-show="ssoSettingsForm.tenantName.$error.pattern ">[[[Please enter valid URL]]]</span>
+                                            </div>
+                                            <span id="tenantName-info" class="su su-info info-popup" data-toggle="popover" data-placement="bottom" data-html="true" data-content="[[[A dedicated instance of the Azure AD service]]]"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 no-padding">
+                                        <label class="app-textbox-label col-lg-2 col-md-2 no-margin">[[[Mobile App Client Id]]]</label>
+                                        <div class="col-lg-8 col-md-8 no-margin form-input-field">
+                                            <div class="col-lg-10 col-md-10 no-margin">
+                                                <input type="text" class="form-control no-margin" ng-model="ssoSettings.MobileAppId" ng-init="MobileAppId=ssoSettings.MobileAppId" name="MobileAppId" placeholder="[[[Mobile App Client Id]]]" id="mobile-app-id" data-ng-disabled="!ssoSettings.IsEnabled" />
+                                            </div>
+                                            <span id="mobile-clientId-info" class="su su-info info-popup" data-toggle="popover" data-placement="bottom" data-html="true" data-content="[[[A unique identifier, used to register the Syncfusion Dashboards Mobile app into AD FS]]]"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 no-padding">
+                                        <label class="app-textbox-label col-lg-2 col-md-2 no-margin">[[[Relying Party ID]]]</label>
+                                        <div class="col-lg-8 col-md-8 no-margin form-input-field">
+                                            <div class="col-lg-10 col-md-10 no-margin">
+                                                <input type="text" class="form-control no-margin" placeholder="[[[Relying Party ID]]]" id="relying-party-id" data-ng-model="ssoSettings.RelyingPartyId" readonly />
+                                            </div>
+                                            <span id="relyingParty-info" class="su su-info info-popup" data-toggle="popover" data-placement="bottom" data-html="true" data-content="[[[A URI that identifies the relying party to the security token service]]]"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="admin-page-actions1 col-lg-12 col-md-12 col-sm-12">
+                                <a href="/" class="secondary-button pull-right" id="UpdateSAMLSettingsCancel-bottom" title="">[[[Cancel]]]</a>
+                                <button type="submit" id="update-saml-settings" class="primary-button pull-right" ng-click="saveSsoSettings()" ng-disabled="ssoSettingsForm.$invalid">[[[Save]]]</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="panel panel-gsuite">
+                    <div class="panel-heading" role="tab" id="gsuite-panel">
+                        <h1 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#gsuite-authentication" aria-expanded="false" aria-controls="collapseTwo">
+                                [[[G Suite SSO]]]
+                            </a>
+                        </h1>
+                    </div>
+                    <div id="gsuite-authentication" class="panel-collapse collapse" role="tabpanel" aria-labelledby="gsuite-panel">
+                        <div class="panel-body">
+                            <div class="col-lg-12 col-md-12 col-sm-12 admin-page-body">
+                                <div class="col-lg-12 col-md-12 col-sm-12 admin-page-body">
+                                    <div class="col-lg-12 col-md-12 no-padding">
+                                        <label for="enable-gsuite-sso" id="gsuite-sso-label" class="col-lg-2 col-md-2">[[[Enable G Suite SSO]]]</label>
+                                        <div class="no-margin form-input-field" id="gsuite-sso-checkbox">
+                                            <div class="no-margin input-group">
+                                                <span class="material-switch">
+                                                    <input type="checkbox" name="enable-switch1" id="enable-gsuite-sso" data-ng-model="gsuiteSsoSettings.IsEnabled" , ng-click="hideGsuiteValidationMessage(gsuiteSsoSettings.IsEnabled)" />
+                                                    <label for="enable-gsuite-sso" class="label-primary"></label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form id="gsuite-saml-setting" name="gsuiteSsoSettingsForm" class="saml-form col-lg-12 col-md-12 col-sm-12" method="post" enctype="multipart/form-data" autocomplete="off">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 admin-page-body">
+                                        <div class="col-lg-12 col-md-12 no-padding bottom-margin">
+                                            <label class="app-textbox-label col-lg-2 col-md-2 no-margin">[[[SSO URL]]]</label>
+                                            <div class="col-lg-8 col-md-8 no-margin">
+                                                <div class="col-lg-10 col-md-10 no-margin">
+                                                    <input type="text" class="form-control no-margin" ng-model="gsuiteSsoSettings.SSOUrl" ng-init="ssoUrl=gsuiteSsoSettings.SSOUrl" name="ssoUrl" placeholder="[[[SSO URL]]]" id="sso-url" data-ng-disabled="!gsuiteSsoSettings.IsEnabled" required />
+                                                    <span class="validation-message top-padding" ng-show="gsuiteSsoSettingsForm.ssoUrl.$error.required && gsuiteSsoSettingsForm.ssoUrl.$dirty ">[[[Please enter SSO URL]]]</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 no-padding bottom-margin">
+                                            <label class="app-textbox-label col-lg-2 col-md-2 no-margin">[[[Entity Id]]]</label>
+                                            <div class="col-lg-8 col-md-8 no-margin">
+                                                <div class="col-lg-10 col-md-10 no-margin">
+                                                    <input type="text" class="form-control no-margin" ng-model="gsuiteSsoSettings.EntityId" ng-init="entityId=gsuiteSsoSettings.EntityId" name="entityId" placeholder="[[[Entity Id]]]" id="entity-id" data-ng-disabled="!gsuiteSsoSettings.IsEnabled" required />
+                                                    <span class="validation-message top-padding" ng-show="gsuiteSsoSettingsForm.entityId.$error.required && gsuiteSsoSettingsForm.entityId.$dirty ">[[[Please enter Entity Id]]]</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 no-padding bottom-margin">
+                                            <label class="app-textbox-label col-lg-2 col-md-2 no-margin">[[[X.509 Certificate]]]</label>
+                                            @if (gsuiteSamlSettings.X509CertificateName != null)
+                                            {
+                                                <div class="col-lg-6 col-md-6 no-margin form-input-field" id="metadata-name-container">
+                                                    <div class="col-lg-7 col-md-7 no-margin input-group">
+                                                        <span id="idp-metadata-filename" class="form-control filename-text">@(gsuiteSamlSettings.X509CertificateName).pem</span>
+                                                        <div id="remove-metadata" class="input-group-addon">
+                                                            <span id="remove-icon"><span class="su su-close" data-toggle="tooltip" ng-click="removeCertificate()" data-placement="top" data-container="body" title="[[[Remove certificate]]]"></span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <div class="col-lg-8 col-md-8 no-margin form-input-field" id="upload-box-container" style="display: none">
+                                                <div class="col-lg-10 col-md-10 no-margin input-group">
+                                                    <input type="text" name="x509certificate" id="upload-idp-metadata-textbox" class="form-control filename-text" placeholder="[[[Browse File Path]]]" ng-model="gsuiteSsoSettings.X509CertificateName" ng-init="x509certificate=gsuiteSsoSettings.X509CertificateName" disabled required />
+                                                    <div id="upload-idp-metadata-addon" title="[[[Upload]]]" class="input-group-addon">
+                                                        <div id="upload-idp-metadata" class="settings-upload-button">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 no-padding bottom-margin">
+                                            <label class="app-textbox-label col-lg-2 col-md-2 no-margin">[[[Google Apps Domain]]]</label>
+                                            <div class="col-lg-8 col-md-8 no-margin">
+                                                <div class="col-lg-10 col-md-10 no-margin">
+                                                    <input type="text" class="form-control no-margin" ng-model="gsuiteSsoSettings.Domain" ng-init="domain=gsuiteSsoSettings.Domain" name="domain" placeholder="[[[Google Apps Domain]]]" data-ng-disabled="!gsuiteSsoSettings.IsEnabled" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 no-padding bottom-margin">
+                                            <label class="app-textbox-label col-lg-2 col-md-2 no-margin">[[[Client Id]]]</label>
+                                            <div class="col-lg-8 col-md-8 no-margin">
+                                                <div class="col-lg-10 col-md-10 no-margin">
+                                                    <input type="text" class="form-control no-margin" ng-model="gsuiteSsoSettings.ClientId" ng-init="clientId=gsuiteSsoSettings.ClientId" name="clientId" placeholder="[[[Client Id]]]" data-ng-disabled="!gsuiteSsoSettings.IsEnabled" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 no-padding bottom-margin">
+                                            <label class="app-textbox-label col-lg-2 col-md-2 no-margin">[[[Client Secret]]]</label>
+                                            <div class="col-lg-8 col-md-8 no-margin">
+                                                <div class="col-lg-10 col-md-10 no-margin">
+                                                    <input type="text" style="display:none;">
+                                                    <input style="visibility: hidden; position: absolute; left:-99999px" type="password" name="fake_passwordfield_to_turnoff_autocomplete">
+                                                    <input type="password" class="form-control no-margin" ng-model="gsuiteSsoSettings.ClientSecret" id="client-secret" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" data-ng-disabled="!gsuiteSsoSettings.IsEnabled" />
+                                                    <div class="show-hide-password su su-eye"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="admin-page-actions1 col-lg-12 col-md-12 col-sm-12">
+                                    <a href="/" class="secondary-button pull-right" id="UpdateGSuiteSettingsCancel-bottom" title="">[[[Cancel]]]</a>
+                                    <button type="submit" id="update-gsuite-settings" class="primary-button pull-right" ng-click="saveGSuiteSsoSettings()" ng-disabled="gsuiteSsoSettingsForm.$invalid">[[[Save]]]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+}

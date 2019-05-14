@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "[[[Access Denied]]]";
+    ViewBag.MessageBox = false;
+    if (HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_OAuth.Layout.cshtml";
+    }
+}
+
+@section styles{
+    @Styles.Render("~/styles/oauth-authorization-error")
+}
+
+@section scripts{
+        @Scripts.Render("~/scripts/bootstrapjs")
+    }
+
+@section MainSection{
+    <div>
+        <div class="col-md-12">
+            <div class="col-xs-12 text-center su-warning-alt" style="color: #7f8A8D; margin-top: 60px ; font-size: 110px"></div>
+            <div class="col-xs-12 text-center" style="color: #525759; margin-top: 20px ; font-size: 30px">@ViewBag.Response</div>
+            <div class="col-xs-12 text-center" style="color: #525759;margin-top: 20px;font-size: 20px;">@ViewBag.ErrorMessage</div>
+        </div>
+    </div>
+}

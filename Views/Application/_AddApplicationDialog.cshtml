@@ -1,0 +1,98 @@
+﻿@{
+    var protocolTypes = new List<SelectListItem>
+    {
+        new SelectListItem { Text = "http", Value = "http"},
+        new SelectListItem { Text = "https", Value = "https"}
+    };
+}
+
+<div id="application-dialog-wrapper">
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <form id="application-dialog" class="col-lg-12 no-padding" enctype="multipart/form-data" autocomplete="off">
+                <div class="col-md-12 modal-header">
+                    <div class="col-xs-8 no-padding">
+                        <i class="su  head-icon"></i>
+                        <span class="modal-title" id="dialog-title"></span>
+                    </div>
+                    <div class="col-xs-4 no-padding">
+                        <a class="close" title="[[[Close]]]" href="javascript:void(0);" onclick="onAddApplicationDialogClose()">
+                            <i class="su su-close"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-body col-xs-12 no-padding">
+                    <div class="col-xs-12 form-padding ">
+                        <label class="col-xs-4 app-textbox-label text-right">[[[Application name]]]<span class="required">*</span></label>
+                        <div class="col-xs-8 no-left-padding has-error" id="app-name-validate">
+                            <input type="text" id="application-name" class="form-control validation" placeholder="[[[Application name]]]" name="applicationname" tabindex="1001">
+                            <span id="validate-name" class="validation-message"></span>
+                            <div id="plugin_validation" class="validation-message"></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 form-padding">
+                        <label class="col-xs-4 app-textbox-label text-right">[[[Application Type]]]<span class="required">*</span></label>
+                        <div id="selectpicker-application-type" class="col-xs-8 no-left-padding">
+                            <div class="col-xs-12 no-padding">
+                                @Html.DropDownList("Application Type", ViewBag.ApplicationTypeList as IEnumerable<SelectListItem>, new { id = "application-type", @class = "selectpicker", data_live_search = "false", tabindex = "1002" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 form-padding">
+                        <label class="col-xs-4 app-textbox-label text-right">[[[Application URL]]]<span class="required">*</span></label>
+                        <div class="col-xs-8 no-padding">
+                            <div id="selectpicker-1" class="selectpicker-class input-group no-left-padding">
+                                <div class="input-group-addon">
+                                    <select id="app-url-1" class="app-url selectpicker">
+                                        <option value="http">[[[http]]]</option>
+                                        <option value="https">[[[https]]]</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 no-padding" id="app-url-validate-1">
+                                    <input type="text" id="applicationurl-1" name="applicationurl-1" class="form-control applicationurl site-url-fields" placeholder="[[[Application URL]]]" tabindex="1004" />
+                                    <span id ="validate-url-1" class="validate-url validation-message"></span>
+                                    <div class="validation-message app-url-validation-message"></div>
+                                    @*<span class="su su-close close-url"></span>*@
+                                </div>
+                            </div>
+                            <div class="url-add-div col-xs-12 no-padding">
+                                <a class="url-add">[[[Add Url]]]</u></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 form-padding">
+                        <label class="col-xs-4 app-textbox-label text-right">[[[Allow access to all users]]]</label>
+                        <div class="form-input-field col-lg-4 col-md-5 col-sm-6 col-xs-8 switch-align">
+                            <span class="material-switch text-left">
+                                <input type="checkbox" id="accesstousers" tabindex="1005" />
+                                <label for="accesstousers" class="label-primary"></label>
+                            </span>
+                            <span id="user-access-popover" class="su su-info info-popup useraccesspopover" data-toggle="popover" data-placement="right" data-html="true" data-content="[[[This option provides application access to all existing users and future users added to the portal.]]]"></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 form-padding">
+                        <label class="col-xs-4 app-textbox-label text-right icon-label">[[[Icon]]]</label>
+                        <div class="img-view-holder col-xs-8">
+                            <img id="icon-img" src="@Url.Action("GetDefaultApplicationLogo", "Application")?applicationtype=1" />
+                            <span class="su su-edit-inverse icon-edit-button" id="icon-button-click" title="[[[Edit profile picture]]]"></span>
+                            <span class="su su-delete icon-edit-button" id="icon-delete-click" title="[[[Delete profile picture]]]"></span>
+                            <span id="icon-upload-box"></span>
+                        </div>
+                        <label for="accesstousers" class="label-primary img-info-label"></label>
+                        <span id="user-access-popover" class="su su-info info-popup useraccesspopover img-info-label" data-toggle="popover" data-placement="right" data-html="true" data-content="[[[*Allowed file types are .png, .jpg, and .jpeg. Maximum file size is 20MB. Recommended resolution is 200x200 pixels.]]]"></span>
+                        <span class="img-validation-msg">Please select a valid icon.</span>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 modal-footer">
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-8 no-padding">
+                        <input type="button" id="add-application" class="primary-button" value="[[[Save]]]" tabindex="1006"/>
+                        <input type="button" id="edit-application" class="primary-button" value="[[[Update]]]" tabindex=""/>
+                        <input type="button" id="cancel-application" class="secondary-button popup-close" tabindex="1007" value="[[[Cancel]]]" onclick="onAddApplicationDialogClose()" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

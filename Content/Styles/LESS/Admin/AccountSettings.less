@@ -1,0 +1,125 @@
+﻿@import (reference) "../Mixins.less";
+
+.admin-page-container {
+    .email-settings-validation {
+        padding: 5px;
+        margin-top: 20px;
+    }
+
+    #email {
+        margin-left: -80px;
+    }
+
+    .activation {
+        cursor: default !important;
+    }
+
+    .app-textbox-label {
+        line-height: 20px;
+    }
+
+    .notransition:before, .notransition:after {
+        /*CSS animations*/
+        animation: none !important;
+        -moz-animation: none !important;
+        -o-animation: none !important;
+        -webkit-animation: none !important;
+    }
+}
+
+#account-activation, #password-policy {
+    .primary-button {
+        margin-right: 15px;
+    }
+}
+
+@media screen and (min-width: 1040px) {
+    .panel .panel-heading .panel-title {
+        font-size: 14px;
+        font-weight: 700;
+        padding-left: 0px;
+        border-color: #ddd;
+    }
+
+    .admin-page-container .panel-group .panel-account {
+        margin-top: 80px !important;
+        border-color: #ddd;
+        padding-top: 2px;
+    }
+}
+
+@media screen and (min-width:1040px) and (max-width:1199px) {
+    .admin-page-container #email {
+        margin-left: 0px;
+    }
+}
+
+.panel-password {
+    border-color: #ddd;
+    margin-top: -1px !important;
+}
+
+label {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.panel-heading {
+    border-color: #ddd;
+}
+
+#password-setting-body {
+    .field-container {
+        height: 350px;
+        margin-bottom: 8px;
+        margin-top: 20px;
+        padding-left: 10px;
+
+        .password-info {
+            font-weight: normal;
+            margin-bottom: 20px;
+            margin-top: 0px;
+            padding-left: 0px;
+
+            label.text {
+                font-weight: 400;
+                line-height: 30px;
+                margin-right: 30px;
+                text-align: right;
+            }
+
+            .cls-day {
+                .e-select {
+                    border-left: 1px solid @admin-pages-border-color !important;
+                }
+            }
+        }
+    }
+}
+
+#user-settings-container {
+    .panel-account, .panel-password {
+        .panel-title > a:before {
+            float: left !important;
+            font-family: 'server' !important;
+            content: @su-vertical-collapse;
+            padding-right: 10px;
+        }
+
+        .panel-title > a.collapsed:before {
+            float: left !important;
+            font-family: 'server' !important;
+            content: @su-vertical-expand;
+        }
+
+        .panel-title > a[aria-expanded="true"] {
+            color: @menu-active-text-color;
+        }
+
+        .panel-title > a.collapsed[aria-expanded="true"] {
+            color: @primary-text-color;
+        }
+        }
+    }

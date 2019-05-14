@@ -1,0 +1,239 @@
+﻿@using Syncfusion.Server.Upgrade
+
+@{
+    Layout = null;
+    var application = ViewBag.Application;
+    var isReportServerApplication = application != null && application.ApplicationTypeId == ApplicationTypes.ReportServer;
+    var clientData = new UpgradeData();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <title>[[[Welcome to]]] @GlobalAppSettings.SystemSettings.OrganizationName</title>
+    <link rel="icon" href="@Url.Content("~/Content/Images/Application/Startup/Favicon.png")" />
+    @Styles.Render("~/styles/data-migration")
+    @Scripts.Render("~/scripts/data-migration")
+    <script src="~/signalr/hubs"></script>
+
+    <script>
+        var getClientDataUrl = "@Url.Action("GetClientData", "ServerConfiguration")";
+        var copyClientDataUrl = "@Url.Action("CopyClientData", "ServerConfiguration")";
+        var replaceOverwritingDataUrl = "@Url.Action("ReplaceOverwritingData", "ServerConfiguration")";
+        var updateResolvedUsersUrl = "@Url.Action("UpdateResolvedUsers", "ServerConfiguration")";
+        var redirectionUrl = "@Url.Action("redirecttoclient", "ServerConfiguration")";
+        var isReportServerApplication = ("@isReportServerApplication").toLowerCase() == 'true';
+        $(function () {
+            // Declare a proxy to reference the hub.
+            var statusTracker = $.connection.signalrHub;
+            // Create a function that the hub can call to broadcast messages.
+            statusTracker.client.statusMessage = function (message) {
+                // Html encode display name and message.
+                $(".configuration-status").html(message);
+            };
+            $.connection.hub.start().done();
+        });
+    </script>
+
+</head>
+<body>
+    <div class="system-startUp-settings-bg">
+        <div class="startup-page-conatiner" id="startup-page-conatiner">
+            <div id="system-settings-general">
+                <div class="system-settings-startup-logo">
+                    <img src="@Url.Content("~/Content/Images/Application/Login_Logo.png")" />
+                </div>
+                <div class="title">@GlobalAppSettings.SystemSettings.OrganizationName</div>
+                <input type="hidden" id="app-details" value="@application" />
+                <input type="hidden" id="is-new-ums" value="@ViewBag.IsNewUms.ToString()" />
+                <input type="hidden" id="client-data" value="@ViewBag.IsNewUms" />
+                <div class="overwrite-settings-page-container" id="overwrite-settings-container">
+                    <div class="settings-info">
+                        We have detected following settings were already configured in the User Management Server. Do you want to overwrite existing settings from <b>@(application != null ? application.Name : string.Empty)</b> ?
+                    </div>
+                    <div class="col-xs-12 settings-div">
+                        <span class="col-xs-9"><b>[[[Settings]]]</b></span>
+                        <span class="col-xs-3"><b>[[[Overwrite]]]</b></span>
+                    </div>
+
+                    <div class="col-xs-12 settings-div" id="mailsettings-div">
+                        @Html.Label("mailsettings", "[[[Email]]]", new { @class = "app-textbox-label col-xs-9" })
+                        <div class="col-xs-3 mailsettings switch-align">
+                            <span class="material-switch text-left">
+                                <input type="checkbox" id="mailsettings" />
+                                <label for="mailsettings" class="label-primary"></label>
+                            </span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="copy-mail-settings" value="false" />
+
+                    <div class="col-xs-12 settings-div" id="ssosettings-div">
+                        @Html.Label("ssosettings", "[[[SSO]]]", new { @class = "app-textbox-label col-xs-9" })
+                        <div class="col-xs-3 ssosettings switch-align">
+                            <span class="material-switch text-left">
+                                <input type="checkbox" id="ssosettings" />
+                                <label for="ssosettings" class="label-primary"></label>
+                            </span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="copy-sso-settings" value="false" />
+
+                    <div class="col-xs-12 settings-div" id="timesettings-div">
+                        @Html.Label("timesettings", "[[[Time zone]]]", new { @class = "app-textbox-label col-xs-9" })
+                        <div class="col-xs-3 timesettings switch-align">
+                            <span class="material-switch text-left">
+                                <input type="checkbox" id="timesettings" />
+                                <label for="timesettings" class="label-primary"></label>
+                            </span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="copy-time-settings" value="false" />
+
+                    @if (!isReportServerApplication)
+                    {
+                        <div class="col-xs-12 settings-div" id="adsettings-div">
+                            @Html.Label("adsettings", "[[[Active Directory]]]", new { @class = "app-textbox-label col-xs-9" })
+                            <div class="col-xs-3 adsettings switch-align">
+                                <span class="material-switch text-left">
+                                    <input type="checkbox" id="adsettings" />
+                                    <label for="adsettings" class="label-primary"></label>
+                                </span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="copy-ad-settings" value="false" />
+
+                        <div class="col-xs-12 settings-div" id="azuresettings-div">
+                            @Html.Label("azuresettings", "[[[Azure Active Directory]]]", new { @class = "app-textbox-label col-xs-9" })
+                            <div class="col-xs-3 azuresettings switch-align">
+                                <span class="material-switch text-left">
+                                    <input type="checkbox" id="azuresettings" />
+                                    <label for="azuresettings" class="label-primary"></label>
+                                </span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="copy-azure-settings" value="false" />
+
+                        <div class="col-xs-12 settings-div" id="dbsettings-div">
+                            @Html.Label("dbsettings", "[[[Import users from Database]]]", new { @class = "app-textbox-label col-xs-9" })
+                            <div class="col-xs-3 dbsettings switch-align">
+                                <span class="material-switch text-left">
+                                    <input type="checkbox" id="dbsettings" />
+                                    <label for="dbsettings" class="label-primary"></label>
+                                </span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="copy-db-settings" value="false" />
+                    }
+                    else
+                    {
+                        <div class="col-xs-12 settings-div" id="adsettings-div">
+                            @Html.Label("adsettings", "[[[Active Directory]]]", new { @class = "app-textbox-label col-xs-7" })
+                            <div class="col-xs-5 adsettings switch-align">
+                                <select class="selectpicker" id="ad-settings-options" data-width="115px">
+                                    <option class="no-margin-dropdown-ul" value="Ignore">[[[Use UMS]]]</option>
+                                    <option class="no-margin-dropdown-ul" value="Overwrite">[[[Use client]]]</option>
+                                    <option class="no-margin-dropdown-ul" value="KeepBoth">[[[Keep both]]]</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" id="copy-ad-settings" value="false" />
+
+                        <div class="col-xs-12 settings-div" id="azuresettings-div">
+                            @Html.Label("azuresettings", "[[[Azure Active Directory]]]", new { @class = "app-textbox-label col-xs-7" })
+                            <div class="col-xs-5 azuresettings switch-align">
+                                <select class="selectpicker" id="azure-settings-options" data-width="115px">
+                                    <option class="no-margin-dropdown-ul" value="Ignore">[[[Use UMS]]]</option>
+                                    <option class="no-margin-dropdown-ul" value="Overwrite">[[[Use client]]]</option>
+                                    <option class="no-margin-dropdown-ul" value="KeepBoth">[[[Keep both]]]</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" id="copy-azure-settings" value="false" />
+
+                        <div class="col-xs-12 settings-div" id="dbsettings-div">
+                            @Html.Label("dbsettings", "[[[Import users from Database]]]", new { @class = "app-textbox-label col-xs-7" })
+                            <div class="col-xs-5 dbsettings switch-align">
+                                <select class="selectpicker" id="db-settings-options" data-width="115px">
+                                    <option class="no-margin-dropdown-ul" value="Ignore">[[[Use UMS]]]</option>
+                                    <option class="no-margin-dropdown-ul" value="Overwrite">[[[Use client]]]</option>
+                                    <option class="no-margin-dropdown-ul" value="KeepBoth">[[[Keep both]]]</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" id="copy-db-settings" value="false" />
+                    }
+                </div>
+                <div class="resolve-duplicates-page-container" id="resolve-duplicates-container">
+                    <div id="duplicate-user-count-container">[[[Detected (<span id="duplicate-user-count"></span>) User duplicate(s) during data migration.]]]</div>
+                    <div class="dup-page-header">[[[For more information on how to resolve user duplicate conflict(s) click ]]]<a href="http://help.syncfusion.com/dashboard-platform/dashboard-server/setup/upgrade-from-any-version-to-3-2#resolve-users-conflict" target="_blank">[[[here]]]</a>.</div>
+                    <form id="users-duplication-form" class="col-xs-12 no-padding" autocomplete="off">
+                        <div class="panel-group" id="duplicate-accordion" role="tablist">
+                            <div class="panel-default" id="duplicate-email-accordion">
+                                <div class="panel-heading uparrow" id="accordion-duplicate-email" role="button" data-toggle="collapse" data-parent="#duplicate-accordion" href="#emailDuplicates" aria-controls="emailDuplicates">
+                                    <b>Email Duplicates</b>
+                                </div>
+                                <div id="emailDuplicates" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="accordion-duplicate-email">
+                                    <div class="panel-body">
+                                        <div class="email-resolve-table col-xs-12">
+                                            <div class="email-header-row col-xs-12">
+                                                <div class="email-ums-header col-xs-4">
+                                                    <b>[[[UMS]]]</b>
+                                                </div>
+                                                <div class="email-client-header col-xs-4">
+                                                    <b>[[[Client]]]</b>
+                                                </div>
+                                                <div class="global-action-email-duplicates col-xs-4 pull-right">
+                                                    <select class="selectpicker email-action" id="email-action-all">
+                                                        <option data-hidden="true" value="">[[[Apply to all Email Duplicate(s)]]]</option>
+                                                        <option class="no-margin-dropdown-ul" value="Ignore">[[[Use UMS]]]</option>
+                                                        <option class="no-margin-dropdown-ul" value="Merge">[[[Use client]]]</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <div class="email-data-div col-xs-12"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-default" id="duplicate-username-accordion" role="tablist">
+                                <div class="panel-heading uparrow" id="accordion-duplicate-username" role="button" data-toggle="collapse" data-parent="#duplicate-accordion" href="#usernameDuplicates" aria-controls="usernameDuplicates">
+                                    <b>Username Duplicates</b>
+                                </div>
+                                <div id="usernameDuplicates" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="accordion-duplicate-username">
+                                    <div class="panel-body">
+                                        <div class="username-resolve-table col-xs-12">
+                                            <div class="username-header-row col-xs-12">
+                                                <div class="username-ums-header col-xs-4">
+                                                    <b>[[[UMS]]]</b>
+                                                </div>
+                                                <div class="username-client-header col-xs-4">
+                                                    <b>[[[Client]]]</b>
+                                                </div>
+                                                <div class="global-action-username-duplicates col-xs-4 pull-right">
+                                                    <select class="selectpicker username-action" id="username-action-all">
+                                                        <option data-hidden="true" value="">[[[Apply to all Username Duplicate(s)]]]</option>
+                                                        <option class="no-margin-dropdown-ul" value="Ignore">[[[Ignore client]]]</option>
+                                                        <option class="no-margin-dropdown-ul" value="KeepBoth">[[[Keep both]]]</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="username-data-div col-xs-12"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="txt-holder btn-holder center-align button-alignment">
+                    <button type="button" id="submit-button" class="proceed-button display-none content-display">[[[Proceed]]]</button>
+                </div>
+            </div>
+            @Html.Partial("../Shared/_StartupFooter")
+        </div>
+    </div>
+</body>
+</html>

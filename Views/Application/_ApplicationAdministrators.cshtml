@@ -1,0 +1,88 @@
+﻿@model Application
+
+<div role="tabpanel" class="tab-pane" id="admins-tab">
+    <div id="admin-list-container" class="list col-xs-12 admin-page-body">
+        <div class="col-lg-12 short-description no-padding pull-left">
+            <span>
+                [[[The following users have administrative access to the application.]]]
+            </span>
+        </div>
+        <div id="search-area" class="pull-right">
+            <input type="text" class="pull-left" id="search-app-admins" placeholder="[[[Search administrators]]]" />
+            <span class="su su-inner-close close-icon pull-left" id="admin-clear-search" title="[[[Clear search]]]"></span>
+            <span class="su su-search search-icon pull-left" title="[[[Search]]]"></span>
+        </div>
+        <div id="add-admins-button" class="pull-right">
+            <button class="primary-button">[[[Grant Administrator Access]]]</button>
+        </div>
+        <div id="remove-admins-button" class="pull-right hide">
+            <button class="critical-action-button remove-button">[[[Revoke Administrator Access]]]</button>
+        </div>
+        <div class="col-xs-12 no-padding">
+            <div id="admins_grid">
+            </div>
+        </div>
+    </div>
+
+    <div class="modal no-padding" id="add-admins-dialog" tabindex="-1" role="dialog">
+        <div class="col-lg-12 modal-dialog no-padding" role="document">
+            <div class="col-lg-12 modal-content no-padding" autocomplete="off">
+                <div class="col-md-12 modal-header">
+                    <div class="col-xs-8 no-padding">
+                        <i class="su head-icon"></i>
+                        <span class="modal-title">[[[Grant Administrator Access to users]]]– @Model.Name</span>
+                    </div>
+                    <div class="col-xs-4 no-padding">
+                        <a href="javascript:void(0);" onclick="onAddAdminsDialogClose()" class="close"><i class="su su-close"></i></a>
+                    </div>
+                    <div class="description pull-left">
+                        <span>
+                            [[[Select the users who would be granted application administrative access.]]]
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-body col-xs-12">
+                    
+                    <div id="add-admin-search-area" class="pull-right">
+                        <input type="text" class="pull-left" id="add-admin-search" placeholder="[[[Search administrators]]]" />
+                        <span class="su su-inner-close close-icon pull-left" id="add-admin-clear-search" title="[[[Clear search]]]"></span>
+                        <span class="su su-search search-icon pull-left" title="[[[Search]]]"></span>
+                    </div>
+                    <div class="col-xs-12 no-padding">
+                        <div id="add_admins_grid">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 modal-footer  no-right-padding no-left-padding">
+                    <input type="hidden" value="">
+                    <input type="button" onclick="provideAccessstoAdmins()" class="primary-button" id="provide-admin-access-button" value="[[[Grant access]]]" />
+                    <input type="button" onclick="onAddAdminsDialogClose()" class="secondary-button popup-close" value="[[[Cancel]]]" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal no-padding" id="admin-remove-confirmation" tabindex="-1" role="dialog">
+        <div class="col-lg-12 modal-dialog no-padding" role="document">
+            <div class="col-lg-12 modal-content no-padding" autocomplete="off">
+                <div class="col-md-12 modal-header">
+                    <div class="col-xs-8 no-padding">
+                        <i class="su su-delete head-icon"></i>
+                        <span class="modal-title">[[[Revoke Administrator(s) Access]]]</span>
+                    </div>
+                    <div class="col-xs-4 no-padding">
+                        <a href="javascript:void(0);" onclick="onAdminRemoveDialogClose()" class="close"><i class="su su-close"></i></a>
+                    </div>
+                </div>
+                <div class="modal-body col-xs-12 no-padding">
+                    <div class="col-xs-12 no-left-padding no-bottom-padding no-right-padding">
+                        <div class="delete-msg">[[[Are you sure you want to revoke administrative access for the selected user(s)?]]]</div>
+                    </div>
+                </div>
+                <div class="col-xs-12 modal-footer  no-right-padding no-left-padding">
+                    <input type="button" class="critical-action-button admin-remove-confirm-button" value="[[[Yes]]]" />
+                    <input type="button" onclick="onAdminRemoveDialogClose()" class="secondary-button popup-close" value="[[[No]]]" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

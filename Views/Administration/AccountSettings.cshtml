@@ -1,0 +1,63 @@
+﻿@model PasswordSettings
+@{
+    var passwordSettings = ViewBag.PasswordSettings;
+    ViewBag.Title = GlobalAppSettings.SystemSettings.OrganizationName + " -[[[User Settings]]] ";
+    ViewBag.MessageBox = false;
+}
+
+@section styles{
+    @Styles.Render("~/styles/account-settings")    
+}
+
+@section scripts{
+    <script type="text/javascript">
+        var checkMailSettingUrl = "@Url.Action("checkmailsettingsexist", "Administration")";
+        var saveUserSettingsUrl = "@Url.Action("SaveUserSettings", "Administration")";        
+        var userPasswordSettingUrl = "@Url.Action("UpdatePasswordPolicies", "Administration")";
+    </script>
+    @Scripts.Render("~/scripts/account-settings")   
+}
+
+@section  MainSection{
+
+    @Html.Partial("_AdminMenu")
+
+    <div id="user-settings-container" class="col-xs-12 admin-page-container" role="tabpanel">
+        <div id="user-settings-header" class="col-xs-12 admin-page-header">
+            <hgroup>
+                <h1 class="h2 page-title">[[[ACCOUNT SETTINGS]]]</h1>
+                <h5 class="page-description">[[[Configuration for managing user accounts in the UMS]]]</h5>
+            </hgroup>
+        </div>
+        <div class="panel-group app-textbox-label" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-account">
+                <div class="panel-heading" role="tab" id="account-panel">
+                    <h1 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#account-activation" aria-expanded="true" aria-controls="collapseOne">
+                            [[[Account Activation]]]
+                        </a>
+                    </h1>
+                </div>
+                <div id="account-activation" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="account-panel">
+                    <div class="panel-body">
+                        @Html.Partial("_ActivationType")
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-password">
+                <div class="panel-heading" role="tab" id="password-panel">
+                    <h1 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#password-policy" aria-expanded="true" aria-controls="collapseOne">
+                            [[[Password Policy]]]
+                        </a>
+                    </h1>
+                </div>
+                <div id="password-policy" class="panel-collapse collapse" role="tabpanel" aria-labelledby="password-panel">
+                    <div class="panel-body">
+                        @Html.Partial("_PasswordPolicy")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }

@@ -1,0 +1,87 @@
+﻿@using Microsoft.Owin.Security
+@using System.Web.Configuration;
+@{
+    var applicationInfo = ViewBag.ApplicationInfo;
+    var applicationName = "Login with " + ViewBag.ApplicationInfo.Name + " Account";
+    var validateAzureUser = ViewBag.validatingAzureUser;
+    var organizationName = GlobalAppSettings.SystemSettings.OrganizationName;
+    var welcomeNote = GlobalAppSettings.SystemSettings.WelcomeNoteText;
+    var providerType = ViewBag.ProviderType;
+    var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes().ToList();
+    var isAzureApplication = !string.IsNullOrEmpty(WebConfigurationManager.AppSettings["IsAzureApplication"]) && Convert.ToBoolean(WebConfigurationManager.AppSettings["IsAzureApplication"]);
+    ViewBag.Title = organizationName + " - Log In";
+}
+
+@section styles{
+    @Styles.Render("~/bundles/styles/accounts")
+}
+
+@section MainSection{
+    <div class="container">
+        <div class="inner-container">
+            <div class="login-header">
+                @if (GlobalAppSettings.SystemSettings.StorageType == (int)StorageType.AzureBlob)
+                {
+                    <img src="@GlobalAppSettings.AzureBlob.AzureBlobStorageUri/@GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName/@GlobalAppSettings.GetStorageMode()/Content/Images/Application/@GlobalAppSettings.SystemSettings.LoginLogo" onerror="if (this.src != '/Content/Images/Application/Login_Logo.png') this.src = '/Content/Images/Application/Login_Logo.png';" />
+                }
+                else
+                {
+                    <img src="@Url.Content("~/Content/Images/Application/" + GlobalAppSettings.SystemSettings.LoginLogo)" onerror="if (this.src != '@Url.Content("~/Content/Images/Application/Login_Logo.png")') this.src = '@Url.Content("~/Content/Images/Application/Login_Logo.png")';" />
+                }
+                <div class="title">
+                    @welcomeNote
+                </div>
+            </div>
+            <div class="login-body">
+                <img id="application-logo" src="@Url.Content("~/apps/icon?id="+ @applicationInfo.ClientId + "&ImageSize=110")" />
+                <div class="application-name">
+                    @applicationName
+                </div>
+                @Html.Partial("_LoginForm")
+                @Html.Partial("_ExternalAuthentication")
+                <input type="hidden" id="client-id-windows-auth" value="@applicationInfo.ClientId" />
+                <div id="access-denied" class="error-message validation-holder">
+                    <span class="su su-login-error"></span>[[[Access is denied]]]
+                </div>
+            </div>           
+        </div>
+    </div>
+}
+
+@section scripts{
+    @Scripts.Render("~/bundles/scripts/accounts/login")
+
+    <script>
+        var i_am_ie9 = false;
+        var isValidUser = "";
+        if ("@validateAzureUser" !== "") {
+            isValidUser = "@Html.Raw(validateAzureUser)";
+        }
+    </script>
+    <script>
+        var rootUrl = "@Url.Content("~/")";
+        if (rootUrl.toLowerCase() === "/")
+            rootUrl = "";
+        var homeUrl = "@Url.Action("Profilepage", "user")";
+        $(document)
+            .ready(function () {
+                $("body, .login-main, #server-app-container").removeAttr("style");
+                if (isValidUser != "null" && isValidUser != "") {
+                    $("#validate-azure-user").append(isValidUser);
+                    $("#validate-azure-user").css("display", "block");
+                }
+                switch ("@providerType") {
+                    case "adfs":
+                        if ("@loginProviders.Any()" === "True") {
+                            $(".external-login").submit();
+                        } else {
+
+                        }
+                        break;
+
+                    case "windows":
+                        $("#login-button-windows").click();
+                }
+            });
+    </script>
+}

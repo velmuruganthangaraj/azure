@@ -1,0 +1,435 @@
+﻿@import (reference) "../Mixins.less";
+@import (reference) "../Variables/FontSize.less";
+@import (reference) "../../Fonts/variables.less";
+@import "../../Fonts/font-RobotoRegular.css";
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    #server-app-container {
+        height: 100%;
+        background: @admin-container-bg;
+        opacity: 1;
+        height:100%;
+        -webkit-transition: opacity 600ms ease-out;
+        -moz-transition: opacity 600ms ease-out;
+        -o-transition: opacity 600ms ease-out;
+        transition: opacity 600ms ease-out;
+        width: 100%;
+        min-height: 100%;
+        overflow: auto;
+
+        #content-area {
+            min-height: 100%;
+            width: 100%;
+            margin-bottom: -82px;
+            padding: 35px 30px 65px 70px;
+
+            .container {
+                vertical-align: middle;
+                padding: 25px 45px 45px 20px;
+                clear: both;
+                border-radius: 5px;
+
+                .inner-container {
+                    margin: 0 auto;
+                    width: 450px;
+
+                    .login-header {
+                        text-align: center;
+                        padding-bottom: 35px;
+
+                        .title {
+                            color: @title-text;
+                            font-size: 17px;
+                            margin-top: 20px;
+                        }
+                    }
+
+                    .login-body {
+                        background: @primary-btn-text-color;
+                        padding: 45px 45px 30px 45px;
+
+                        #access-denied, #validate-azure-user, #validate-ad-user {
+                            text-align: center;
+                            display: none;
+                            white-space: nowrap;
+                            font-size: 12px;
+                            color: @validation-text-color;
+                            margin-top: 15px;
+                        }
+                    }
+                }
+            }
+        }
+
+        #base-footer-div {
+            background-color: @admin-container-bg;
+            color: @primary-text-color;
+            padding: 25px 30px 17px 30px;
+            position: relative;
+            width: 100%;
+            font-weight: 600;
+            font-family: RobotoRegular;
+
+            #enablefooter {
+                margin-top: 7px !important;
+            }
+
+            #lang_menu {
+                #dropdown-lang {
+                    color: @primary-text-color !important;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width:320px) {
+    #server-app-container {
+        #content-area {
+            padding: 0 !important;
+
+            .container {
+                padding: 0 !important;
+
+                .inner-container {
+                    width: 100% !important;
+
+                    .login-body #remember-label {
+                        font-size: 80%;
+                    }
+
+                    .forgot-pwd-link {
+                        font-size: 80%;
+                    }
+
+                    .login-icon {
+                        width: 100%;
+                    }
+                }
+
+                .login-password-show {
+                    left: 85%;
+                }
+
+                .external-container {
+                    .or-line {
+                        width: 100%;
+                    }
+
+                    .page-wrapper {
+                        padding-left: 1%;
+
+                        .su {
+                            font-size: 22px !important;
+                        }
+
+                        button {
+                            padding: 15px;
+                        }
+
+                        .adfs-login {
+                            padding-left: 5%;
+                        }
+
+                        .google-login {
+                            padding-left: 8%;
+                        }
+
+                        img {
+                            width: 22px;
+                        }
+                    }
+                }
+            }
+        }
+
+        #base-footer-div {
+            position: relative !important;
+            padding: 0px 0px 0px 15px !important;
+        }
+    }
+}
+
+@media(min-width:320px) and (max-width:380px) {
+    #server-app-container {
+        #content-area {
+            padding: 0 !important;
+
+            .container {
+                padding: 0 !important;
+
+                .inner-container {
+                    width: 100% !important;
+
+                    .login-body #remember-label {
+                        font-size: 80%;
+                    }
+
+                    .forgot-pwd-link {
+                        font-size: 80%;
+                    }
+
+                    .login-icon {
+                        width: 100%;
+                    }
+                }
+
+                .login-password-show {
+                    left: 85%;
+                }
+
+                .external-container {
+                    .or-line {
+                        width: 100%;
+                    }
+
+                    .page-wrapper {
+                        padding-left: 1%;
+
+                        .su {
+                            font-size: 22px !important;
+                        }
+
+                        button {
+                            padding: 15px;
+                        }
+
+                        .adfs-login {
+                            padding-left: 5%;
+                        }
+
+                        .google-login {
+                            padding-left: 8%;
+                        }
+
+                        img {
+                            width: 22px;
+                        }
+                    }
+                }
+            }
+        }
+
+        #base-footer-div {
+            position: relative !important;
+            padding: 0px 0px 0px 15px !important;
+
+            footer {
+                .layout-footer {
+                    padding: 5px 0px;
+                }
+            }
+        }
+    }
+}
+
+@media(min-width:381px) and (max-width:480px) {
+    #server-app-container {
+        #content-area {
+            padding: 0 !important;
+
+            .container {
+                padding: 0 !important;
+
+                .inner-container {
+                    width: 100% !important;
+
+                    .login-body #remember-label {
+                        font-size: 80%;
+                    }
+
+                    .forgot-pwd-link {
+                        font-size: 80%;
+                    }
+
+                    .login-icon {
+                        width: 100%;
+                    }
+                }
+
+                .login-password-show {
+                    left: 85%;
+                }
+
+                .external-container {
+                    .or-line {
+                        width: 100%;
+                    }
+
+                    .page-wrapper {
+                        margin-left: 1%;
+
+                        .su {
+                            font-size: 30px !important;
+                        }
+
+                        button {
+                            padding: 15px;
+                        }
+
+                        img {
+                            width: 30px;
+                        }
+
+                        .google-login {
+                            padding-left: 10%;
+                        }
+                    }
+                }
+            }
+        }
+
+        #base-footer-div {
+            position: relative !important;
+            padding: 0px 0px 0px 15px !important;
+
+            footer {
+                .layout-footer {
+                    padding: 5px 0px;
+                }
+            }
+        }
+    }
+}
+
+@media(min-width:481px)and (max-width:900px) {
+    #server-app-container {
+        #content-area {
+            padding: 0 !important;
+            width: 100%;
+            margin-bottom: -100px !important;
+
+            .container {
+                padding-right: 1% !important;
+                padding-left: 1% !important;
+                width: 100%;
+
+                .inner-container {
+                    .login-body #remember-label {
+                        font-size: 80%;
+                    }
+
+                    .forgot-pwd-link {
+                        font-size: 80%;
+                    }
+
+                    .login-icon {
+                        width: 100%;
+                    }
+                }
+
+                .login-password-show {
+                    left: 85%;
+                }
+
+                .external-container .or-line {
+                    width: 100%;
+                }
+            }
+        }
+
+        #base-footer-div {
+            position: relative !important;
+            padding: 0px 0px 0px 15px !important;
+
+            #enablefooter {
+                width: 170px;
+
+                #poweredbysyncfusion {
+                    width: 155px !important;
+                }
+            }
+        }
+    }
+}
+
+@media(min-width:900px) and (max-width:1040px) {
+    #server-app-container {
+        #content-area {
+            padding: 0 !important;
+            width: 100%;
+            margin-bottom: -100px !important;
+
+            .container {
+                padding-right: 1% !important;
+                padding-left: 1% !important;
+                width: 100%;
+
+                .inner-container {
+                    .login-body #remember-label {
+                        font-size: 80%;
+                    }
+
+                    .forgot-pwd-link {
+                        font-size: 80%;
+                    }
+
+                    .login-icon {
+                        width: 100%;
+                    }
+                }
+
+                .login-password-show {
+                    left: 85%;
+                }
+
+                .external-container .or-line {
+                    width: 100%;
+                }
+            }
+        }
+
+        #base-footer-div {
+            position: relative !important;
+            padding: 0px 0px 0px 15px !important;
+            #enablefooter {
+                width: 170px;
+                #poweredbysyncfusion {
+                    width: 155px !important;
+                }
+            }
+        }
+    }
+}
+
+@media(min-width:1040px) {
+    #server-app-container {
+        #content-area {
+            padding: 0 !important;
+            width: 100%;
+
+            .container {
+                padding-right: 1% !important;
+                padding-left: 1% !important;
+                width: 100%;
+
+                .inner-container {
+                    .login-body #remember-label {
+                        font-size: 80%;
+                    }
+
+                    .forgot-pwd-link {
+                        font-size: 80%;
+                    }
+
+                    .login-icon {
+                        width: 100%;
+                    }
+                }
+
+                .login-password-show {
+                    left: 90%;
+                }
+
+                .external-container .or-line {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

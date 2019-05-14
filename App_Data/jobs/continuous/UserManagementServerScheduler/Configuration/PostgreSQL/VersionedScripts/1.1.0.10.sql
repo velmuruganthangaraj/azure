@@ -1,0 +1,2 @@
+ALTER TABLE SfUMS_Applications ALTER COLUMN Url TYPE varchar(4000)
+;

@@ -1,0 +1,242 @@
+﻿@import (reference) "../Themes/Default.less";
+@import (reference) "../Mixins.less";
+
+#application-logo {
+    margin: auto;
+    display: block;
+}
+
+.application-name {
+    text-align: center;
+    font-size: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.login-form {
+    #error-username {
+        color: @validation-text-color;
+        font-size: @validation-large-text-size;
+        left: 1px;
+        padding: 0px;
+    }
+
+    #error-password {
+        color: @validation-text-color;
+        font-size: @validation-large-text-size;
+        margin-left: -17px;
+        padding: 0px;
+    }
+
+    .validation-holder {
+        color: @validation-text-color;
+        font-size: 12px;
+        display: block;
+        height: 20px;
+    }
+
+    #message {
+        color: @validation-text-color;
+        display: block;
+        width: 100%;
+        margin-bottom: 25px;
+
+        .pwd-success {
+            color: @success-text-color;
+        }
+    }
+
+    .login-fields {
+        clear: both;
+        margin-left: 10px;
+        margin-right: 10px;
+        padding-bottom: 16px;
+
+        label {
+            font-weight: inherit;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-family: RobotoRegular;
+        }
+
+        #password-field {
+            .validation-holder {
+                color: @validation-text-color;
+                font-size: 12px;
+                display: block;
+                position: relative;
+                top: -20px;
+            }
+        }
+
+        .form-control {
+            height: 40px;
+            border-color: @background-color;
+        }
+
+        .login-options {
+            line-height: 20px;
+            margin-top: -25px;
+            color: @profile-btn-text-color;
+            font-family: RobotoRegular;
+
+            .disable-text-select {
+                -moz-user-select: none;
+                -ms-user-select: none;
+                -webkit-user-select: none;
+                user-select: none;
+                margin-top: -25px;
+            }
+
+            .material-checkbox {
+                .material-checkbox-controls();
+
+                &:checked + input + label::before {
+                    bottom: 10px !important;
+                    left: 1px;
+                }
+            }
+
+            .material-checkbox + input + label {
+                padding-top: 6px !important;
+            }
+
+            .forgot-pwd-link {
+                color: @forget-pwd-color;
+                float: right;
+                margin-top: -20px;
+                font-size: 14px;
+                font-weight: 500;
+                font-family: RobotoRegular;
+
+                &:hover {
+                    color: @primary-btn-hover;
+                    text-decoration: none;
+                }
+            }
+        }
+
+        .login-button {
+            background-color: @primary-btn-bg;
+            position: relative;
+            width: 80%;
+            height: 36px;
+            border: none;
+        }
+
+        .login-icon {
+            border-radius: 4px;
+            color: @grid-header-bg;
+            font-size: 17px;
+            margin-top: 24px;
+            margin-bottom: -5px;
+            width: 340px;
+            font-weight: 900;
+            font-family: RobotoRegular;
+        }
+
+        .input-field-form {
+            padding-bottom: 12px;
+            color: @profile-btn-text-color;
+            font-family: RobotoRegular;
+        }
+
+        .has-error {
+            .form-control {
+                border-color: @login-border-color;
+            }
+        }
+    }
+
+    .login-password-show {
+        cursor: pointer;
+        position: relative;
+        left: 309px;
+        top: -28px;
+    }
+}
+
+.external-container {
+    img {
+        width: 350px;
+    }
+
+    .login-with {
+        text-align: center;
+        font-weight: 500;
+        font-size: 14px;
+        color: @login-label-text;
+        font-family: RobotoRegular;
+    }
+
+    .page-wrapper {
+        display: inline-block;
+        width: 100%;
+        padding-top: 14px;
+        padding-bottom: 14px;
+        text-align: center;
+
+        .su {
+            font-size: 35px;
+            color: @button-color;
+        }
+
+        img {
+            width: 35px;
+            padding-top: 0;
+        }
+
+        button {
+            padding: 20px;
+            border-radius: 45px;
+            background-color: initial;
+            border: 2px solid #cecece;
+        }
+
+        .active-directory-login {
+            display: inline-block;
+        }
+
+        .external-login {
+            display: inline-block;
+
+            .adfs-login {
+                #windows-login {
+                    img {
+                        display: block;
+                    }
+                }
+            }
+        }
+
+        .external-login.button-spacing {
+            margin-left: 30px;
+        }
+
+        .google-login {
+            width: 33%;
+            float: left;
+            display: inline-block;
+            padding-left: 30px;
+        }
+
+        .error-message {
+            width: 100%;
+            text-align: center;
+            display: none;
+
+            span {
+                color: @validation-text-color;
+                font-size: 12px;
+                font-weight: bold;
+                padding: 6px;
+            }
+        }
+    }
+}
+
+#access-denied{
+    margin-top: 0px !important;
+    margin-bottom: 10px;
+}
+

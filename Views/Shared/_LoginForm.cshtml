@@ -1,0 +1,70 @@
+﻿@{
+    var userSelectedCookieLanguage = TempData["CookieLanguage"] != null;
+    var uname = TempData["currentValue"] as string;
+}
+
+<div id="alert-notification"></div>
+
+<form method="post" id="login-form" name="loginForm" class="login-form" action="@Url.Action("login", "Accounts")" onsubmit="return FormValidate()">
+
+    @if (!string.IsNullOrWhiteSpace((string)TempData["errorUserStatus"]))
+    {
+        <span id="message" class="text-center validation-holder" style="display: @TempData[" errorUserStatus"]">
+            @if (TempData["Message"] as string != "User name is empty.")
+            {
+                <span>@TempData["Message"]</span>
+            }
+        </span>
+    }
+    else
+    {
+        <span id="message" class="text-center">
+            @if (!string.IsNullOrWhiteSpace((string)TempData["changePasswordstatus"]))
+            {
+                <span class="pwd-success">@TempData["changePasswordstatus"]</span>
+            }
+            else
+            {
+                <span>@TempData["User"]</span>
+            }
+        </span>
+    }
+
+    <div class="login-fields">
+        <div class="input-field-form">
+            <label><b>Username or Email address</b></label>
+            <input id="hidden-username" type="hidden" value="@uname" />
+            <input type="text" required md-no-asterisk ng-model="uname" value="@uname" name="username" id="login-username" placeholder="[[[Username or Email address]]]" class="form-control" maxlength="100" />
+            <span id="error-username" style="display: @TempData[" errorUserStatus"]">
+                @TempData["errorUserName"]
+            </span>
+            <span class="validation-holder"></span>
+            <span class="special-char-msg-login"></span>
+        </div>
+        <div class="input-field-form" id="password-field">
+            <label><b>Password</b></label>
+            <input required md-no-asterisk ng-model="pwd" name="password" type="password" id="login-password" placeholder="[[[Password]]]" class="form-control">
+            <span class="su su-eye login-password-show show-hide-password special-char"></span>
+            <span id="error-password" style="display: @TempData[" errorPasswordStatus"]">
+                @TempData["errorPassword"]
+            </span>
+            <span class="validation-holder"></span>
+        </div>
+        <div class="login-options">
+            <div id="remember-me" class="check-box">
+                @Html.CheckBox("remember", new { @class = "material-checkbox pull-left", @id = "remember" })
+                @Html.Label("remember", "[[[Remember me]]]", new { @class = "disable-text-select", @id = "remember-label" })
+            </div>
+            <a href="@Url.Action("ForgotPassword", "Accounts")" class="forgot-pwd-link" tabindex="6">[[[Forgot password?]]]</a>
+        </div>
+        <button class="login-button login-icon" ng-click="dsAuth()" type="submit" name="Submit" id="login-button">
+            [[[Login]]]
+        </button>
+    </div>
+
+    <input type="hidden" value="@ViewBag.ReturnURL" id="ReturnURL" name="ReturnURL" />
+    @if (userSelectedCookieLanguage)
+    {
+        <input type="hidden" value="@TempData["CookieLanguage"]" id="cookieLanguage" name="cookieLanguage" />
+    }
+</form>

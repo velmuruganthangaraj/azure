@@ -1,0 +1,67 @@
+﻿@using Microsoft.Owin.Security
+@using System.Web.Configuration;
+@{
+    var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes().ToList();
+    var showExternalAuthentication = loginProviders.Any();
+    var isAzureApplication = !string.IsNullOrEmpty(WebConfigurationManager.AppSettings["IsAzureApplication"]) && Convert.ToBoolean(WebConfigurationManager.AppSettings["IsAzureApplication"]);
+    var showWindowsAuthentication = !isAzureApplication && GlobalAppSettings.SystemSettings.ShowWindowsAuthentication;
+    @*var showGsuiteAuthentication = ViewBag.ShowGsuiteAuthentication != null ? ViewBag.ShowGsuiteAuthentication : false;*@
+    var loginAction = ViewBag.ReturnURL != null ? Url.Action("ExternalLogin", "Accounts") + "?returnUrl=" + Url.Encode(ViewBag.ReturnURL.ToString()) : Url.Action("ExternalLogin", "Accounts");
+}
+@if (showWindowsAuthentication || showExternalAuthentication)
+{
+    <div class="external-container">
+        <img src="~/Content/Images/OR-Line-Mobile.png" class="or-line" />
+        <div id="alternative-login">
+            <div class="login-with">[[[Login with]]]</div>
+            <div class="page-wrapper">
+                @if (showWindowsAuthentication)
+                {
+                    <div class="active-directory-login">
+                        <button id="login-button-windows" class="link-button login-auth button-style" data-toggle="tooltip" data-placement="bottom" data-container="body" title="[[[Windows Authentication]]]" ng-click="winAuth()" type="button">
+
+                            <i class="su su-ms-adfs pull-left" style="margin: 0 auto"></i>
+                        </button>
+                    </div>
+                }
+
+                @if (showExternalAuthentication)
+                {
+                    var ssoProvider = loginProviders.First();
+                    <form method="post" action="@loginAction" class="external-login @(showWindowsAuthentication ? " button-spacing" : string.Empty)">
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("provider", ssoProvider.AuthenticationType)
+                        <div class="adfs-login">
+                            <button type="submit" class="link-button button-style" id="windows-login" data-toggle="tooltip" data-placement="bottom" data-container="body" title="[[[Microsoft ADFS]]]">
+                                <img src="~/Content/Images/Application/Microsoft.png" alt="microsoft" />
+                            </button>
+                        </div>
+                    </form>
+                }
+
+                @*@if (showGsuiteAuthentication)
+                    {
+                        using (Html.BeginForm("ExternalLogin", "Accounts", new { returnUrl = ViewBag.ReturnURL }, FormMethod.Post, new { @class = "external-login" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("provider", "GSuite")
+                            <div class="google-login">
+                                <button type="submit" class="link-button" id="google-login" data-toggle="tooltip" data-placement="bottom" data-container="body" title="[[[G suite]]]">
+                                    <img src="~/Content/Images/Application/Google.png" alt="google" />
+                                </button>
+                            </div>
+                        }
+                    }*@
+
+                @if (showWindowsAuthentication)
+                {
+                    <div id="validate-ad-user" class="error-message validation-holder"></div>
+                }
+                @if (showExternalAuthentication)
+                {
+                    <div id="validate-azure-user" class="error-message validation-holder"></div>
+                }
+            </div>
+        </div>
+    </div>
+}

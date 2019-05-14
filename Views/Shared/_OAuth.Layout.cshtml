@@ -1,0 +1,56 @@
+﻿@{
+    Layout = null;
+    var defaultAppLogo = Url.Content("~/Content/Images/Application/Main_Logo.png");
+    var appLogo = GlobalAppSettings.SystemSettings.StorageType == (int)StorageType.AzureBlob ?
+                    GlobalAppSettings.AzureBlob.AzureBlobStorageUri + "/" + GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName + "/" + GlobalAppSettings.GetStorageMode() + "/Content/Images/Application/" + GlobalAppSettings.SystemSettings.MainScreenLogo :
+                    Url.Content("~/Content/Images/Application/" + GlobalAppSettings.SystemSettings.MainScreenLogo);
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    @RenderSection("meta", false)
+    <title>
+        @ViewBag.Title
+    </title>
+    @Styles.Render("~/styles/layout")
+
+    @RenderSection("styles", false)
+    @RenderSection("scripts", false)
+    @if (GlobalAppSettings.SystemSettings.StorageType == (int)StorageType.AzureBlob)
+    {
+        <link rel="icon" href="@(GlobalAppSettings.AzureBlob != null ? GlobalAppSettings.AzureBlob.AzureBlobStorageUri : string.Empty)/@GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName/@GlobalAppSettings.GetStorageMode()/Content/Images/Application/@GlobalAppSettings.SystemSettings.FavIcon" onerror="if (this.href !== null && this.href.toLowerCase() !== '~/content/images/application/favicon.png') this.href = '~/Content/Images/Application/Favicon.png';" />
+    }
+    else
+    {
+        <link rel="icon" href="~/Content/Images/Application/@GlobalAppSettings.SystemSettings.FavIcon" onerror="if (this.href !== null && this.href.toLowerCase() !== '~/content/images/application/favicon.png') this.href = '~/Content/Images/Application/Favicon.png';" />
+    }
+    <style>
+        #base-footer-div {
+            padding: 25px 30px 10px 30px !important;
+        }
+    </style>
+
+</head>
+<body class="clearfix" id="body">
+    <div id="server-app-container">
+        <section id="header-area">
+            <div class="header-bar col-lg-12 col-md-12 col-sm-12">
+                <div class="main-screen-logo mobile-hidden">
+                    <span data-toggle="dropdown" title="[[[Application navigation]]]">
+                        <i class="su su-apps-menu application-navigation-logo" style="font-size: 25px;"></i>
+                    </span>
+                </div>
+                <div class="org-name-wrapper">
+                    <h5 class="header-org-name">@GlobalAppSettings.SystemSettings.OrganizationName</h5>
+                </div>
+            </div>
+        </section>
+        <div id="content-area" class="clearfix">
+            @RenderSection("MainSection", true)
+        </div>
+        @Html.Partial("../Shared/_Footer")
+    </div>
+</body>
+</html>
