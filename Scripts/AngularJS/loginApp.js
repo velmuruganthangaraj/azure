@@ -1,6 +1,6 @@
 ﻿var loginApp = angular.module("loginApp", []);
 
-loginApp.controller('loginController', ["$scope", function ($scope) {
+loginApp.controller("loginController", ["$scope", function ($scope) {
     if ($("#login-username").val() != "") {
         $scope.uname = $("#login-username").val();
     }

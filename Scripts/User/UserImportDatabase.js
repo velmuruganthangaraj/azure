@@ -12,7 +12,6 @@ var treeobj, inputObj, count = 0;
 var onFirstChk = true;
 window._temp = [];
 
-
 $(function () {
     $("#content-area").ejWaitingPopup();
     addPlacehoder(".connection-properties-form");
@@ -36,15 +35,15 @@ $(function () {
     });
     $.validator.addMethod("isRequired", function (value, element) {
         return !isEmptyOrWhitespace(value);
-    }, "[[[Please enter the name]]]");
+    }, "[[[Please enter the name.]]]");
 
     $.validator.addMethod("hasWhiteSpace", function (value, element) {
         return /\s/.test(value);
-    }, "[[[Username contains space]]]");
+    }, "[[[Username contains space.]]]");
 
     $.validator.addMethod("isValidUser", function (value, element) {
         return isValidUserName(value)
-    }, "[[[Username contains invalid characters]]]");
+    }, "[[[Username contains invalid characters.]]]");
 
     $.validator.addMethod("isValidadminPassword", function (value, element) {
         return validateUserpassword(value)
@@ -87,14 +86,13 @@ $(function () {
         },
         messages: {
             mySqlUserName: {
-                isRequired: "[[[Please enter Username]]]"
+                isRequired: "[[[Please enter username.]]]"
             },
             mysqlPassword: {
-                required: "[[[Please enter Password]]]"
+                required: "[[[Please enter password.]]]"
             }
         }
     });
-
 
     $("#sql-content-holder").validate({
         errorElement: "span",
@@ -131,16 +129,18 @@ $(function () {
         },
         messages: {
             servername: {
-                isRequired: "[[[Please enter Server name]]]"
+                isRequired: "[[[Please enter server name.]]]"
             },
             username: {
-                isRequired: "[[[Please enter Username]]]"
+                isRequired: "[[[Please enter username.]]]"
             },
             password: {
-                required: "[[[Please enter Password]]]"
+                required: "[[[Please enter password.]]]"
             }
         }
     });
+
+    enableOrDiasbleUsernamePasswordField();
 
     $("#oracle-content-holder").validate({
         errorElement: "span",
@@ -177,13 +177,13 @@ $(function () {
         },
         messages: {
             servername: {
-                isRequired: "[[[Please enter Server name]]]"
+                isRequired: "[[[Please enter server name.]]]"
             },
             adminUserName: {
-                isRequired: "[[[Please enter Admin username]]]"
+                isRequired: "[[[Please enter admin username.]]]"
             },
             adminPassword: {
-                isRequired: "[[[Please enter Admin password]]]"
+                isRequired: "[[[Please enter admin password.]]]"
             }
         }
     });
@@ -226,16 +226,16 @@ $(function () {
         },
         messages: {
             servername: {
-                isRequired: "[[[Please enter Server name]]]"
+                isRequired: "[[[Please enter server name.]]]"
             },
             port: {
-                isRequired: "[[[Please enter Port number]]]"
+                isRequired: "[[[Please enter port number.]]]"
             },
             username: {
-                isRequired: "[[[Please enter Username]]]"
+                isRequired: "[[[Please enter username.]]]"
             },
             password: {
-                required: "[[[Please enter Password]]]"
+                required: "[[[Please enter password.]]]"
             }
         }
     });
@@ -244,6 +244,12 @@ $(function () {
         $("#database-type").trigger("change");
         initialLoad = false;
         $(".waiting-icon").hide();
+        var windowsCheck = $("#check-windows").val().toLowerCase() == "windows";
+        var databaseType = $("#database-type").val().toLowerCase();
+        if (windowsCheck && databaseType == "mssql") {
+            $("#txt-login").val("").attr("disabled", true);
+            $("#txt-password-db").val("").attr("disabled", true);
+        }
     });
 
     $("#database-type").on("change", function () {
@@ -315,6 +321,10 @@ $(function () {
     });
 
     $("#check-windows").on("click change", function () {
+        enableOrDiasbleUsernamePasswordField();
+    });
+
+    function enableOrDiasbleUsernamePasswordField() {
         var windowsCheck = $("#check-windows").val() == "windows";
         var databaseType = $("#database-type").val();
         if (windowsCheck && databaseType == "MSSQL") {
@@ -326,7 +336,7 @@ $(function () {
         }
         $(".has-error").removeClass("has-error");
         $(".validation-txt-errors").hide();
-    });
+    };
 
     $("#test-connection").on("click", function () {
         $("#content-area").ejWaitingPopup("show");
@@ -339,7 +349,7 @@ $(function () {
             case "mssql":
                 canProceed = $("#sql-content-holder").valid();
                 if ($("#txt-dbname").val() == "") {
-                    $("#txt-dbname").siblings(".validation-txt-errors").html("[[[Please select Database name]]]");
+                    $("#txt-dbname").siblings(".validation-txt-errors").html("[[[Please select database name.]]]");
                     $("#txt-dbname").siblings(".validation-txt-errors").show();
                     $("#content-area").ejWaitingPopup("hide");
                     return;
@@ -348,13 +358,13 @@ $(function () {
             case "mysql":
                 canProceed = $("#mysql-content-holder").valid();
                 if ($("#mysql-odbc-dsn").val() == "") {
-                    $("#dsn-validate").html("[[[Please select MySQL ODBC DSN]]]");
+                    $("#dsn-validate").html("[[[Please select MySQL ODBC DSN.]]]");
                     $("#dsn-validate").show();
                     $("#content-area").ejWaitingPopup("hide");
                     return;
                 }
                 if ($("#mysql-txt-dbname").val() == "") {
-                    $("#mysql-txt-dbname").siblings(".validation-txt-errors").html("[[[Please select Database name]]]");
+                    $("#mysql-txt-dbname").siblings(".validation-txt-errors").html("[[[Please select database name.]]]");
                     $("#mysql-txt-dbname").siblings(".validation-txt-errors").show();
                     $("#content-area").ejWaitingPopup("hide");
                     return;
@@ -363,19 +373,19 @@ $(function () {
             case "oracle":
                 canProceed = $("#oracle-content-holder").valid();
                 if ($("#oracle-dsn").val() == "") {
-                    $("#oracle-dsn-validate").html("[[[Please select Oracle ODBC DSN]]]");
+                    $("#oracle-dsn-validate").html("[[[Please select Oracle ODBC DSN.]]]");
                     $("#oracle-dsn-validate").show();
                     $("#content-area").ejWaitingPopup("hide");
                     return;
                 }
                 if ($("#client-username").val() == null) {
-                    $("#client-username").siblings(".validation-txt-errors").html("[[[Please select Database name]]]");
+                    $("#client-username").siblings(".validation-txt-errors").html("[[[Please select database name.]]]");
                     $("#client-username").siblings(".validation-txt-errors").show();
                     $("#content-area").ejWaitingPopup("hide");
                     return;
                 }
                 if ($("#client-password").val() == "") {
-                    $("#client-password").siblings(".validation-txt-errors").html("[[[Please enter Database password]]]");
+                    $("#client-password").siblings(".validation-txt-errors").html("[[[Please enter database password.]]]");
                     $("#client-password").siblings(".validation-txt-errors").show();
                     $("#client-password").closest(".txt-holder").addClass("has-error");
                     $("#content-area").ejWaitingPopup("hide");
@@ -385,7 +395,7 @@ $(function () {
             case "postgresql":
                 canProceed = $("#postgresql-content-holder").valid();
                 if ($("#postgresql-dbname").val() == "") {
-                    $("#postgresql-dbname").siblings(".validation-txt-errors").html("[[[Please select Database name]]]");
+                    $("#postgresql-dbname").siblings(".validation-txt-errors").html("[[[Please select database name.]]]");
                     $("#postgresql-dbname").siblings(".validation-txt-errors").show();
                     $("#content-area").ejWaitingPopup("hide");
                     return;
@@ -430,7 +440,7 @@ $(function () {
                     break;
                 case "mysql":
                     if ($("#mysql-odbc-dsn").val() == "") {
-                        $("#dsn-validate").html("[[[Please select MySQL ODBC DSN]]]");
+                        $("#dsn-validate").html("[[[Please select MySQL ODBC DSN.]]]");
                         $("#dsn-validate").show();
                         $(this).siblings(".bootstrap-select").find("button.selectpicker").click();
                         $(".waiting-icon").hide();
@@ -441,7 +451,7 @@ $(function () {
                 case "oracle":
                     canProceed = $("#oracle-content-holder").valid();
                     if ($("#oracle-dsn").val() == "") {
-                        $("#oracle-dsn-validate").html("[[[Please select Oracle ODBC DSN]]]");
+                        $("#oracle-dsn-validate").html("[[[Please select Oracle ODBC DSN.]]]");
                         $("#oracle-dsn-validate").show();
                         $(this).siblings(".bootstrap-select").find("button.selectpicker").click();
                         $(".waiting-icon").hide();
@@ -505,7 +515,6 @@ $(function () {
                     gridObj.refreshContent();
                     result.Data.Success ? $("#error-value").find("span").html("") : $("#error-value").find("span").html(result.Data.Message);
                     hideWaitingPopup("Grid");
-
                 }
             );
         }
@@ -523,7 +532,7 @@ $(function () {
             case "mssql":
                 canProceed = $("#sql-content-holder").valid();
                 if ($("#txt-dbname").val() == "") {
-                    $("#txt-dbname").siblings(".validation-txt-errors").html("[[[Please select Database name]]]");
+                    $("#txt-dbname").siblings(".validation-txt-errors").html("[[[Please select database name.]]]");
                     $("#txt-dbname").siblings(".validation-txt-errors").show();
                     $("#content-area").ejWaitingPopup("hide");
                     return;
@@ -532,13 +541,13 @@ $(function () {
             case "mysql":
                 canProceed = $("#mysql-content-holder").valid();
                 if ($("#mysql-odbc-dsn").val() == "") {
-                    $("#dsn-validate").html("[[[Please select MySQL ODBC DSN]]]");
+                    $("#dsn-validate").html("[[[Please select MySQL ODBC DSN.]]]");
                     $("#dsn-validate").show();
                     $("#content-area").ejWaitingPopup("hide");
                     return;
                 }
                 if ($("#mysql-txt-dbname").val() == "") {
-                    $("#mysql-txt-dbname").siblings(".validation-txt-errors").html("[[[Please select Database name]]]");
+                    $("#mysql-txt-dbname").siblings(".validation-txt-errors").html("[[[Please select database name.]]]");
                     $("#mysql-txt-dbname").siblings(".validation-txt-errors").show();
                     $("#content-area").ejWaitingPopup("hide");
                     return;
@@ -547,19 +556,19 @@ $(function () {
             case "oracle":
                 canProceed = $("#oracle-content-holder").valid();
                 if ($("#oracle-dsn").val() == "") {
-                    $("#oracle-dsn-validate").html("[[[Please select Oracle ODBC DSN]]]");
+                    $("#oracle-dsn-validate").html("[[[Please select Oracle ODBC DSN.]]]");
                     $("#oracle-dsn-validate").show();
                     $("#content-area").ejWaitingPopup("hide");
                     return;
                 }
                 if ($("#client-username").val() == null) {
-                    $("#client-username").siblings(".validation-txt-errors").html("[[[Please select Database name/Username]]]");
+                    $("#client-username").siblings(".validation-txt-errors").html("[[[Please select database name/username.]]]");
                     $("#client-username").siblings(".validation-txt-errors").show();
                     $("#content-area").ejWaitingPopup("hide");
                     return;
                 }
                 if ($("#client-password").val() == "") {
-                    $("#client-password").siblings(".validation-txt-errors").html("[[[Please enter Database password]]]");
+                    $("#client-password").siblings(".validation-txt-errors").html("[[[Please enter database password.]]]");
                     $("#client-password").siblings(".validation-txt-errors").show();
                     $("#client-password").closest(".txt-holder").addClass("has-error");
                     $("#content-area").ejWaitingPopup("hide");
@@ -569,7 +578,7 @@ $(function () {
             case "postgresql":
                 canProceed = $("#postgresql-content-holder").valid();
                 if ($("#postgresql-dbname").val() == "") {
-                    $("#postgresql-dbname").siblings(".validation-txt-errors").html("[[[Please select Database name]]]");
+                    $("#postgresql-dbname").siblings(".validation-txt-errors").html("[[[Please select database name.]]]");
                     $("#postgresql-dbname").siblings(".validation-txt-errors").show();
                     $("#content-area").ejWaitingPopup("hide");
                     return;
@@ -664,7 +673,7 @@ $(function () {
             },
             function (result) {
                 if (result.status) {
-                    SuccessAlert("[[[Database Settings]]]", "[[[Settings has been updated successfully.]]]", 7000);
+                    SuccessAlert("[[[Database Settings]]]", "[[[Settings have been updated successfully.]]]", 7000);
                 } else {
                     WarningAlert("[[[Database Settings]]]", "[[[Error while updating settings.]]]", 7000);
                 }
@@ -677,13 +686,11 @@ $(function () {
                 objectSelected = [];
                 importDatabaseQuerySchema = {};
                 $("#content-area").ejWaitingPopup("hide");
-
             }
         );
     });
 
     $(document).on("click", "#apply-connections", function () {
-
         $("#content-area").ejWaitingPopup("show");
         doAjaxPost("POST", getResultDataUrl,
             { connection: JSON.stringify(getFormData()), schemaInfo: JSON.stringify(importDatabaseQuerySchema), sortValue: $("#sort-value").val(), recordCount: $("#record-count").val() },
@@ -789,7 +796,6 @@ $(function () {
                 $("#rolename").focus(this.blur);
                 $("#rolename").val($(this).val().substring(0, 25) + "_role");
                 $("#rolename").next(".placeholder").removeClass("show").addClass("hide");
-
             }
         } else if ((userAgent.indexOf("Safari") != -1) && (userAgent.indexOf("Chrome") == -1)) {
             $("#rolename").val(($(this).val() === "") ? "" : $(this).val().substring(0, 25) + "_role");
@@ -1158,7 +1164,6 @@ function openGetRelationPopup(targetField) {
                 leftTableList.push(importDatabaseQuerySchema.LastNameTable);
             }
             break;
-
     }
     var leftTableCollection = [];
     var rightTableCollection = {};
@@ -1360,7 +1365,6 @@ function headCheckboxOnChange(e) {
     enableimportbutton();
 }
 
-
 function enableimportbutton() {
     gridObj = $("#Grid").data("ejGrid");
     if (objectSelected.length > 0) {
@@ -1373,13 +1377,13 @@ function enableimportbutton() {
 
 function SaveSelectedUsers() {
     if (objectSelected.length > 0) {
-        showWaitingPopup("content-area");
+        showWaitingPopup("server-app-container");
         $.ajax({
             type: "POST",
             data: { selectedUsers: objectSelected },
             url: saveSelectedUsersUrl,
             success: function (result) {
-                hideWaitingPopup("content-area");
+                hideWaitingPopup("server-app-container");
                 if (result.Status) {
                     if (result.IsUserLimitExceed) {
                         $("#limit-user").ejDialog("open");
@@ -1391,11 +1395,11 @@ function SaveSelectedUsers() {
                         }
                     } else {
                         var message = "";
-                        message += "<li class='list-unstyled'>" + (result.Data.SuccessUserCount) + " [[[User(s) has been imported successfully.]]]</li>";
+                        message += "<li class='list-unstyled'>" + (result.Data.SuccessUserCount) + " [[[user(s) has been imported successfully.]]]</li>";
                         if (parseInt(result.Data.FailureUserCount) > 0) {
                             message += "<li class='list-unstyled'>" + result.Data.FailureUserCount + " [[[duplicate user(s) exists.]]] <br />([[[Username or Email address already exists or repeated]]]).</li>";
                         }
-                        messageBox("su-user-1", "[[[Import users from database]]]", message, "success", function () {
+                        messageBox("su-user-1", "[[[Import Users from Database]]]", message, "success", function () {
                             $("#change-selected-column").click();
                             var gridObj = $("#Grid").data("ejGrid");
                             gridObj.clearSelection();
@@ -1407,7 +1411,7 @@ function SaveSelectedUsers() {
                         });
                     }
                 } else {
-                    messageBox("su-user-1", "[[[Import users from database]]]", "[[[Internal server error. Please try again.]]]", "success", function () {
+                    messageBox("su-user-1", "[[[Import Users from Database]]]", "[[[Internal server error. Please try again.]]]", "success", function () {
                         parent.onCloseMessageBox();
                     });
                 }

@@ -4,11 +4,12 @@
         $scope.preventFormPost = false;
 
         $scope.SaveUserAccountData = function ($event) {
-            if (($event.keyCode == 13 || $event.type == "click") && $scope.preventFormPost === false) {
+            if (($event.keyCode == 13 || $event.type == "click") && $scope.preventFormPost === false) {                
                 $event.preventDefault();
                 getFormData();
                 if ($(".admin-account-fields-container").valid()) {
                     $scope.preventFormPost = true;
+                    $("#txt-confirm-password").prop("disabled", "disabled");
                     var elem = $(".startup-page-conatiner");
                     elem.ejWaitingPopup({ text: " " });
                     $(".e-text").find(".configuration-status").remove();
@@ -17,14 +18,15 @@
                     var globalAdminDetails = $("#global-admin-details").val();
                     var systemSettingsData = $("#system-settings-data").val();
                     var azureData = $("#azure-data").val();
-                    var isRequireSamples = $('input[name=include-samples]:checked').val() == "1" ? true : false;
-                    setSystemSettingsData = { globalAdminDetails: globalAdminDetails, systemSettingsData: systemSettingsData, azureData: azureData, isRequireSamples: isRequireSamples };
+                    var appDetails = $("#app-details").val();
+                    setSystemSettingsData = { systemSettingsData: systemSettingsData, azureData: azureData, appDetails: appDetails, globalAdminDetails: globalAdminDetails };
                     $http.post(setSystemSettingsUrl, setSystemSettingsData)
                         .success(function (setSystemSettingsResponse) {
                             window.location = setSystemSettingsResponse.redirectUrl;
                         })
                         .error(function (setSystemSettingsResponse) {
                             $scope.preventFormPost = false;
+                            $("#txt-confirm-password").removeProp("disabled");
                         });
                 }
                 return false;
@@ -38,6 +40,8 @@
         [[[Enter your details to create a system administrator account.]]]
     </div>
     <form id="admin-account-fields-container" class="admin-account-fields-container" autocomplete="off" ng-keypress="SaveUserAccountData($event)">
+        <input type="hidden" id="ums-password-policy" data-policy-uppercase="True" data-policy-lowercase="True" data-policy-number="True" data-policy-specialcharacter="True" data-policy-partofusername="True" data-policy-minimumlength="6" />
+        <input type="hidden" id="user-details" data-username="" data-email="" data-displayname="" />
         <div class="admin-avatar">
             <img src="@Url.Content("~/Content/images/ProfilePictures/default.png")" width="120" height="120" />
         </div>
@@ -70,7 +74,7 @@
         <div class="form-div form-group input-alignment">
             <input type="text" class="display-none">
             <input type="password" class="fake-password" name="fake_passwordfield_to_turnoff_autocomplete">
-            <input type="password" tabindex="4" id="txt-password" class="form-control" placeholder="[[[Password]]]" name="password" autocomplete="off" maxlength="85" />
+            <input type="password" tabindex="4" id="new-password" class="form-control" placeholder="[[[Password]]]" name="password" autocomplete="off" maxlength="85" />
             <span class="su su-eye display-none show-hide-password"></span>
             <div class="startup-validation" id="new-password"></div>
         </div>

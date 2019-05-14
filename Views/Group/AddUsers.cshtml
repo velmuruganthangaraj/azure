@@ -45,7 +45,7 @@
         </div>
         <div id="InfoContainer" class="TabInvisible TabContent ">
             <div class="row">
-                <div class="GroupInfoLabel col-md-4 pull-left">[[[Group Name]]]</div>
+                <div class="GroupInfoLabel col-md-4 pull-left">[[[Group name]]]</div>
                 <div class="GroupInfoText col-md-4 pull-left">
                     @if (canEdit)
                     {
@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="GroupInfoLabel col-md-4 pull-left">Color</div>
+                <div class="GroupInfoLabel col-md-4 pull-left">[[[Color]]]</div>
                 @if (canEdit)
                 {
                     <div id="GroupInfoColor" class="GroupInfoText col-md-2 pull-left" data-color="@ViewBag.GroupDetails.GroupColor">
@@ -92,13 +92,13 @@
     <div class="col-md-3 no-right-padding no-left-padding no-margin right-panel-top-padding" id="UserContainer">
         <div class="col-md-12 " id="UserHeader">
             <div class="tabStyleArrowUserList"></div>
-            <div class=" pull-left  User`n UserHeader">[[[Users]]]</div>
+            <div class="pull-left  User`n UserHeader">Users</div>
 
             <div class="su su-search searchIcon UserSelection"></div>
             <div class="su su-sort sortIcon SortAscending UserSelection "></div>
         </div>
         <div id="UserSearchBar" class="col-xs-12" style="display: none">
-            <input id="UserSearch" class="form-control" autofocus placeholder="[[[Search Here]]]..." />
+            <input id="UserSearch" class="form-control" autofocus placeholder="[[[Search here]]]..." />
         </div>
 
         <div class="col-xs-12 page-inner-small-padding" id="UserListContainer">

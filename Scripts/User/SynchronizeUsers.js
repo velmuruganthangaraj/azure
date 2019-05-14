@@ -45,7 +45,7 @@ function fnRecordClick(args) {
 function rowBound() {
     if (isFirstRequest) {
         isFirstRequest = false;
-        if (location.pathname.toLowerCase() === "/" || location.pathname.split("/")[location.pathname.split("/").length - 1].toLowerCase() == "reports") {
+        if (location.pathname.toLowerCase() === "/" || location.pathname.split("/")[location.pathname.split("/").length - 1].toLowerCase() == "ump") {
             refreshScroller();
         }
     }
@@ -128,7 +128,7 @@ function SynchronizeUsers() {
             var title = synchronizeSelectedUsersUrl.indexOf("azure") > 0 ? "[[[Azure Active Directory Synchronization]]]" : "[[[Active Directory Synchronization]]]";
             parent.messageBox("su-user-1", title, result.Message, "success", function () {
                 parent.onCloseMessageBox();
-            });
+            });            
             gridObj.clearSelection();
             selectedObject = [];
             gridObj.option("dataSource", result.Data);
@@ -138,7 +138,7 @@ function SynchronizeUsers() {
             $("#messageBox_wrapper, .e-dialog-scroller, #messageBox").addClass("msg-box-height");  //For height adjustment purpose
             $(".message-box-btn-holder").addClass("msg-footer-height");
             var title = synchronizeSelectedUsersUrl.indexOf("azure") > 0 ? "[[[Azure Active Directory Synchronization]]]" : "[[[Active Directory Synchronization]]]";
-            parent.messageBox("su-user-1", title, "[[[Synchronizing users with active directory has been failed.]]]", "success", function () {
+            parent.messageBox("su-user-1", title, "[[[Synchronizing users with active directory has been failed.]]]", "success", function () {               
                 parent.onCloseMessageBox();
             });
             hideWaitingPopup("server-app-container");

@@ -1,53 +1,53 @@
-﻿@{
+﻿﻿@{
     ViewBag.Title = GlobalAppSettings.SystemSettings.OrganizationName + " - [[[Synchronize Users]]]";
 }
-
 @section styles{
     @Styles.Render("~/Styles/import-database-users-sync")
 }
 @section scripts{
     @Scripts.Render("~/Scripts/synchronize-users")
-
     <script>
             var synchronizeSelectedDbUsersUrl = "@Url.Action("SynchronizeSelectedImportedUsers", "UserManagement")";
     </script>
     <script type="text/x-jsrender" id="user-profile-template">
         <a class="user-name" title="{{:FullName}}" data-toggle="tooltip" href="@Url.Action("ViewProfile", "UserManagement")/?username={{:UserName}}">{{:FullName}}</a>
     </script>
-
+    <script type="text/x-jsrender" id="username-template">
+        <span title="{{:UserName}}" class="grid-content" data-toggle="tooltip">
+            {{:UserName}}
+        </span>
+    </script>
+    <script type="text/x-jsrender" id="email-template">
+        <span title="{{:EmailId}}" class="grid-content" data-toggle="tooltip">
+            {{:EmailId}}
+        </span>
+    </script>
     <script type="text/x-jsrender" id="checkbox-row-template">
         <input type="checkbox" class="checkbox-row material-checkbox" name="checkbox-row" data-checked-id="{{:UserId}}" id="row-check{{:UserId}}" />
         <input name="row-check{{:UserId}}" type="hidden" value="false">
         <label for="row-check{{:UserId}}"> </label>
     </script>
-
     <script type="text/x-jsrender" id="checkbox-header-template">
         @Html.CheckBox("checkbox-header", new { @class = "material-checkbox" })
         @Html.Label("checkbox-header", " ", new { @class = "checkbox-header-label" })
     </script>
-
     <script type="text/x-jsrender" id="name-header">
         <div class="item-header">[[[Name]]]</div>
     </script>
-
     <script type="text/x-jsrender" id="username-header">
         <div class="item-header">[[[Username]]]</div>
     </script>
-
     <script type="text/x-jsrender" id="email-header">
         <div class="item-header">[[[Email Address]]]</div>
     </script>
-
     <script type="text/x-jsrender" id="userid-header">
         <div class="item-header">[[[User id]]]</div>
     </script>
-
     <script type="text/x-jsrender" id="user-detail-validation">
         {{if IsDuplicated}}
         <span class="su su-login-error user-import-validation" title="{{:DisplayMessage}}" data-html="true" data-toggle="tooltip" data-placement="left"></span>
         {{/if}}
     </script>
-
     <script type="text/javascript" language="javascript">
         ej.support.stableSort = false;
         var data = @Html.Raw(Json.Encode(ViewBag.DatabaseUsers));
@@ -104,6 +104,7 @@
                         {
                             field: "UserName",
                             headerText: "[[[Username]]]",
+                            templateID: "#username-template",
                             headerTemplateID: "#username-header",
                             type: "string",
                             allowFiltering: true,
@@ -112,6 +113,7 @@
                         {
                             field: "EmailId",
                             headerText: "[[[Email Address]]]",
+                            templateID: "#email-template",
                             headerTemplateID: "#email-header",
                             type: "string",
                             allowFiltering: true,
@@ -119,7 +121,7 @@
                         },
                         {
                             field: "UserId",
-                            headerText: "User id",
+                            headerText: "[[[User id]]]",
                             headerTemplateID: "#userid-header",
                             type: "string",
                             cssClass: "user-id",
@@ -141,10 +143,8 @@
         });
     </script>
 }
-
 @section MainSection{
     @Html.Partial("../UserManagement/_UserMenu")
-
     <div class="col-xs-12 admin-page-container">
         <div class="admin-page-header col-xs-12" id="user-title">
             <a href="@Url.Action("index", "UserManagement")" title="[[[Users]]]" class="back-button pull-left">
@@ -153,9 +153,8 @@
             <div class="col-xs-7 page-title" id="user-title-with-count">[[[Database User Synchronization - USERS]]] (<span id="total-record-count"></span>)</div>
             @*<input type="hidden" id="user_count" value="@ViewBag.userCount">*@
             <div class="col-xs-6 page-description">
-                [[[Select Users to synchronize with Existing Database]]]
+                [[[Select users to synchronize with existing database]]]
             </div>
-
             <div class="hide" id="synchronize-users">
                 <span class="primary-button pull-right top-margin" title="[[[Synchronize Users with Exsiting Database]]]" onclick="SynchronizeDatabaseUsers()">[[[Synchronize]]]</span>
             </div>
@@ -168,7 +167,6 @@
                 <span class="su close-icon su-inner-close pull-left no-margin" id="clear-search" title="[[[Clear search]]]"></span>
                 <span class="su su-search search-icon pull-left no-margin search-user" title="[[[Search]]]"></span>
             </div>
-
             <div id="user_grid"></div>
         </div>
     </div>

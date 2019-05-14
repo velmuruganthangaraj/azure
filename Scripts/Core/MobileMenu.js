@@ -12,7 +12,8 @@ function refreshSidePanelMenu() {
     $("#main-nav").css("height", (window.innerHeight - $("#header-area").outerHeight()));
 
     if (window.innerHeight < 400) {
-        $(".li-logout").css("bottom", "inherit");
+        var b = 400 - window.innerHeight;
+        $(".li-logout").css("bottom", -b);
     } else {
         $(".li-logout").css("bottom", 0);
     }

@@ -1,4 +1,4 @@
-﻿function CheckMailSettingsAndNotify(args, selection, successMessage) {
+﻿function CheckMailSettingsAndNotify(args,selection,successMessage) {
     ShowWaitingProgress(".Sticky-header", "show");
     $.ajax({
         type: "POST",
@@ -15,11 +15,11 @@
                 }
             }
         }
-    });
+    });    
 }
 
 function ValidateMailSettingsAndShowToast(args, selection, successMessage) {
-    $.ajax({
+     $.ajax({
         type: "POST",
         url: checkMailSettingUrl,
         success: function (result) {

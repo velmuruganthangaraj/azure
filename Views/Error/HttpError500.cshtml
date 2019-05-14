@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "[[[Internal Server Error]]]";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.MessageBox = false;
+    Layout = HttpContext.Current.User.Identity.IsAuthenticated ? "~/Views/Shared/_Layout.cshtml" : "~/Views/Shared/_OAuth.Layout.cshtml";
 }
 
 @section scripts{

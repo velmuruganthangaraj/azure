@@ -44,7 +44,7 @@
                         if (lastPageRecordCount != 0 && lastPageRecordCount <= 1) {
                             gridObj.model.pageSettings.currentPage = currentPage - 1;
                         }
-                        gridObj.refreshContent()
+                        gridObj.refreshContent();
                     } else {
                     }
                 }

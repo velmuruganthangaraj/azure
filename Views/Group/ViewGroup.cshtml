@@ -32,9 +32,9 @@
                 locale: "en-us",
                 filterSettings: { filterType: "menu" },
                 actionBegin: "fnOnEditGroupActionBegin",
-                actionComplete: "fnOnUserGridActionComplete",
+                actionComplete: "fnOnEditGroupActionComplete",
                 dataBound: function (args) {
-                    if (location.pathname.toLowerCase() === "/" || location.pathname.split("/")[location.pathname.split("/").length-1].toLowerCase() == "reports") {
+                    if (location.pathname.toLowerCase() === "/" || location.pathname.split("/")[location.pathname.split("/").length-1].toLowerCase() == "ump") {
                         refreshScroller();
                     }
                     $('[data-toggle="tooltip"]').tooltip();
@@ -79,10 +79,10 @@
         $("#userList").selectpicker("refresh");
     </script>
     <script type="text/x-jsrender" id="NameTemplate">
-        <span class="item-name" title="{{:DisplayName}}" data-toggle="tooltip">{{:DisplayName}}</span>
+        <div class="item-name grid-content" title="{{:DisplayName}}" data-toggle="tooltip">{{:DisplayName}}</div>
     </script>
     <script type="text/x-jsrender" id="EmailTemplate">
-        <span title="{{:Email}}" data-toggle="tooltip">{{:Email}}</span>
+        <div class="item-name grid-content" title="{{:Email}}" data-toggle="tooltip">{{:Email}}</div>
     </script>
     <script type="text/x-jsrender" id="NameHeader">
         <div class="item-name">[[[Name]]]</div>
@@ -105,21 +105,20 @@
 
     <div id="view-page-container" class="row admin-page-container" ng-controller="GroupEditController">
         <div id="group-header" class="col-md-12 import-area admin-page-header pull-left">
-            <a href="@Url.Action("group","group")" title="[[[Groups]]]" class="back-button pull-left" data-toggle="tooltip" data-placement="top" data-container="body">
-                <i class="su su-arrow-back"> </i>
+            <a href="@Url.Action("group","group")" title="[[[Groups]]]" class="back-button pull-left">               
+                    <i class="su su-arrow-back"> </i>              
             </a>
             <hgroup class="col-md-5 col-xs-12 wrapper">
                 <h2 class="page-title"><span ng-bind="allGroupDetails.GroupName" title="{{allGroupDetails.GroupName}}"></span></h2>
             </hgroup>
             <div class="col-md-6 col-xs-12 group-buttons pull-right no-padding">
-                <a type="button" class="link-button manage-permissions" title="" href="@Url.Action("grouppermission", "permission")?groupId=@ViewBag.groupId">[[[Manage Permissions]]]</a>
                 @if (!ViewBag.IsActiveDirectory && !ViewBag.IsAzureADGroup)
                 {
-                    <a type="button" class="link-button" href="@Url.Action("editgroup","group")?groupId=@ViewBag.groupId">[[[Edit Group]]]</a>
+                    <a type="button" class="link-button" href="@Url.Action("editgroup","group")?groupId=@ViewBag.groupId">[[[Edit group]]]</a>
                 }
                 @if (ViewBag.groupId != 1)
                 {
-                    <input type="button" class="critical-action-button delete-group delete" title="" data-groupid="@ViewBag.groupId" value="[[[Delete Group]]]" data-groupname="{{allGroupDetails.GroupName}}" />
+                    <input type="button" class="critical-action-button delete-group delete" title="" data-groupid="@ViewBag.groupId" value="[[[Delete group]]]" data-groupname="{{allGroupDetails.GroupName}}" />
                 }
             </div>
         </div>

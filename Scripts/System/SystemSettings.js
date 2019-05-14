@@ -4,11 +4,11 @@ var isKeyUp = false;
 var ruleName;
 var rules;
 $(document).ready(function () {
-    $("#file-storage").prop("checked",$("#file-storage").val().toLowerCase() == storageType.toLowerCase());
+    $("#file-storage").prop("checked", $("#file-storage").val().toLowerCase() == storageType.toLowerCase());
     $("#blob-storage").prop("checked", $("#blob-storage").val().toLowerCase() == storageType.toLowerCase());
-    $("#https").prop("checked", $("#https").val().toLowerCase() == connectionType.toLowerCase());   
+    $("#https").prop("checked", $("#https").val().toLowerCase() == connectionType.toLowerCase());
 
-    $("#http").prop("checked", $("#http").val().toLowerCase() == connectionType.toLowerCase());    
+    $("#http").prop("checked", $("#http").val().toLowerCase() == connectionType.toLowerCase());
     $("#custom-endpoint").prop({ "checked": $("#custom-endpoint").val().toLowerCase() == connectionType.toLowerCase() });
     //enable default
     if (!$("#https").prop("checked") && !$("#http").prop("checked") && !$("#custom-endpoint").prop("checked")) {
@@ -40,23 +40,20 @@ $(document).ready(function () {
             // Azure blob Storage
             $("#file-storage").prop("disabled", true);
 
-        $("#blob-storage-form").find("input").attr("readonly", true);          
-        $("#blob-storage-form").slideDown("slow");
-        $("#https").prop({ "checked": $("#https").val().toLowerCase() == connectionType.toLowerCase(), disabled: $("#https").val().toLowerCase() != connectionType.toLowerCase() });
-        $("#http").prop({ "checked": $("#http").val().toLowerCase() == connectionType.toLowerCase(), disabled: $("#http").val().toLowerCase() != connectionType.toLowerCase() });
-        $("#custom-endpoint").prop({ "checked": $("#custom-endpoint").val().toLowerCase() == connectionType.toLowerCase(), disabled: $("#custom-endpoint").val().toLowerCase() != connectionType.toLowerCase() });
-        $(".file-storage-button").hide();
-    }
+            $("#blob-storage-form").find("input").attr("readonly", true);
+            $("#blob-storage-form").slideDown("slow");
+            $("#https").prop({ "checked": $("#https").val().toLowerCase() == connectionType.toLowerCase(), disabled: $("#https").val().toLowerCase() != connectionType.toLowerCase() });
+            $("#http").prop({ "checked": $("#http").val().toLowerCase() == connectionType.toLowerCase(), disabled: $("#http").val().toLowerCase() != connectionType.toLowerCase() });
+            $("#custom-endpoint").prop({ "checked": $("#custom-endpoint").val().toLowerCase() == connectionType.toLowerCase(), disabled: $("#custom-endpoint").val().toLowerCase() != connectionType.toLowerCase() });
+            $(".file-storage-button").hide();
+        }
         $("#move-to-next").hide();
         $("#db-content-holder,#db-config-submit").show();
-        $(".sqlcenot").show();  
+        $(".sqlcenot").show();
         $("#new-db").prop("checked", true);
         $(".sql-server-existing-db, #sql-existing-db-submit").hide();
     }
 
-    $("#information-icon").on("click", function () {
-        $("#help-message").toggle();
-    });
 
     $(window).resize(function () {
         changeFooterPostion();
@@ -69,7 +66,6 @@ $(document).ready(function () {
     $("#database-type").on("change", function () {
         $(".validation-txt-errors").hide();
         $(".validation-errors").css("display", "none");
-        $("#information-icon").css("display", "none");
         $(".has-error").removeClass("has-error");
         var checkedVal = $("#database-type").val().toLowerCase();
         switch (checkedVal) {
@@ -208,7 +204,6 @@ $(document).ready(function () {
         $(".has-error").removeClass("has-error");
         $(".validation-txt-errors").hide();
         $(".validation-errors").html("");
-        $("#information-icon").css("display", "none");
         var canProceed = $("#db-content-holder").valid();
         if (canProceed) {
             showWaitingPopup($(".startup-page-conatiner"));
@@ -240,9 +235,9 @@ $(document).ready(function () {
                                     $("ul li[data-move-to='startup-page-two']").addClass("selected");
                                     $("#db_loader").hide();
                                     $("#system-settings-db-selection-container").hide();
+                                    window.connectionString = result.Data.value;
                                     StorageSettings();
                                     $("#txt-username").focus();
-                                    window.connectionString = result.Data.value;
                                     delete window.serverName;
                                     delete window.login;
                                     delete window.password;
@@ -251,14 +246,13 @@ $(document).ready(function () {
                                 else {
                                     $("#db-config-submit").prop("disabled", false);
                                     $("#db_loader").hide();
-                                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                                    $("#information-icon").css("display", "inline");
+                                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                                 }
                                 changeFooterPostion();
                                 $("#startup-page-conatiner").css("height", $(document).height());
                             }
                         );
-                        $(".db-connect-outer-container").find(".title").html("[[[Database Creation]]]!");
+                        $(".db-connect-outer-container").find(".title").html("[[[Database Creation!]]]");
                         $("#txt-dbname").focus();
                     }
                     else {
@@ -267,8 +261,7 @@ $(document).ready(function () {
                         $("#db-config-submit").show();
                         $("#db-config-submit").prop("disabled", false);
                         $("#db_loader").hide();
-                        $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                        $("#information-icon").css("display", "inline");
+                        $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                     }
                 }
             );
@@ -279,7 +272,6 @@ $(document).ready(function () {
         $(".has-error").removeClass("has-error");
         $(".validation-txt-errors").hide();
         $(".validation-errors").html("");
-        $("#information-icon").css("display", "none");
         var canProceed = $("#postgresql-content-holder").valid();
         if (canProceed) {
             showWaitingPopup($(".startup-page-conatiner"));
@@ -310,9 +302,9 @@ $(document).ready(function () {
                                     $("ul li[data-move-to='startup-page-two']").addClass("selected");
                                     $("#db_loader").hide();
                                     $("#system-settings-db-selection-container").hide();
+                                    window.connectionString = result.Data.value;
                                     StorageSettings();
                                     $("#txt-username").focus();
-                                    window.connectionString = result.Data.value;
                                     delete window.serverName;
                                     delete window.port;
                                     delete window.login;
@@ -322,14 +314,13 @@ $(document).ready(function () {
                                 else {
                                     $("#postgresql-config-submit").prop("disabled", false);
                                     $("#db_loader").hide();
-                                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                                    $("#information-icon").css("display", "inline");
+                                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                                 }
                                 changeFooterPostion();
                                 $("#startup-page-conatiner").css("height", $(document).height());
                             }
                         );
-                        $(".db-connect-outer-container").find(".title").html("[[[Database Creation]]]!");
+                        $(".db-connect-outer-container").find(".title").html("[[[Database Creation!]]]");
                         $("#txt-dbname").focus();
                     }
                     else {
@@ -338,8 +329,7 @@ $(document).ready(function () {
                         $("#postgresql-config-submit").show();
                         $("#postgresql-config-submit").prop("disabled", false);
                         $("#db_loader").hide();
-                        $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                        $("#information-icon").css("display", "inline");
+                        $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                     }
                 }
             );
@@ -350,10 +340,9 @@ $(document).ready(function () {
         $(".has-error").removeClass("has-error");
         $(".validation-txt-errors").hide();
         $(".validation-errors").html("");
-        $("#information-icon").css("display", "none");
         var canProceed = $("#mysql-content-holder").valid();
         if ($("#mysql-odbc-dsn").val() == "") {
-            $("#dsn-validate").html("[[[Please select DSN]]]");
+            $("#dsn-validate").html("[[[Please select DSN.]]]");
             $("#dsn-validate").show();
             return;
         }
@@ -384,9 +373,9 @@ $(document).ready(function () {
                                     $("ul li[data-move-to='startup-page-two']").addClass("selected");
                                     $("#db_loader").hide();
                                     $("#system-settings-db-selection-container").hide();
+                                    window.connectionString = result.Data.value;
                                     StorageSettings();
                                     $("#txt-username").focus();
-                                    window.connectionString = result.Data.value;
                                     delete window.serverName;
                                     delete window.login;
                                     delete window.password;
@@ -395,14 +384,13 @@ $(document).ready(function () {
                                 else {
                                     $("#mysql-config-submit").prop("disabled", false);
                                     $("#db_loader").hide();
-                                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                                    $("#information-icon").css("display", "inline");
+                                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                                 }
                                 changeFooterPostion();
                                 $("#startup-page-conatiner").css("height", $(document).height());
                             }
                         );
-                        $(".db-connect-outer-container").find(".title").html("[[[ Creation]]]!");
+                        $(".db-connect-outer-container").find(".title").html("[[[Creation]]]!");
                         $("#txt-dbname").focus();
                     }
                     else {
@@ -410,8 +398,7 @@ $(document).ready(function () {
                         $("#db_config_generate").hide();
                         $("#mysql-config-submit").prop("disabled", false);
                         $("#db_loader").hide();
-                        $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                        $("#information-icon").css("display", "inline");
+                        $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                         changeFooterPostion();
                     }
                 }
@@ -423,7 +410,6 @@ $(document).ready(function () {
         $(".has-error").removeClass("has-error");
         $(".validation-txt-errors").hide();
         $(".validation-errors").html("");
-        $("#information-icon").css("display", "none");
         var canProceed = $("#oracle-content-holder").valid();
         var databaseType = $("input[name='OracledatabaseType']").val();
         var clientPassword = $("#database-password").val();
@@ -431,7 +417,7 @@ $(document).ready(function () {
             clientPassword = $("#client-password").val();
 
         if ($("#oracle-dsn").val() == "") {
-            $("#oracle-dsn-validate").html("[[[Please select DSN]]]");
+            $("#oracle-dsn-validate").html("[[[Please select DSN.]]]");
             $("#oracle-dsn-validate").show();
             canProceed = false;
             return;
@@ -459,21 +445,20 @@ $(document).ready(function () {
                                     $("ul li[data-move-to='startup-page-two']").addClass("selected");
                                     $("#db_loader").hide();
                                     $("#system-settings-db-selection-container").hide();
+                                    window.connectionString = result.Data.value;
                                     StorageSettings();
                                     $("#txt-username").focus();
-                                    window.connectionString = result.Data.value;
                                 }
                                 else {
                                     $("#oracle-config-submit").prop("disabled", false);
                                     $("#db_loader").hide();
-                                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                                    $("#information-icon").css("display", "inline");
+                                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                                 }
                                 changeFooterPostion();
                                 $("#startup-page-conatiner").css("height", $(document).height());
                             }
                         );
-                        $(".db-connect-outer-container").find(".title").html("Database Creation!");
+                        $(".db-connect-outer-container").find(".title").html("[[[Database Creation!]]]");
                         $("#txt-dbname").focus();
                     }
                     else {
@@ -482,8 +467,7 @@ $(document).ready(function () {
                         $("#oracle-config-submit").show();
                         $("#oracle-config-submit").prop("disabled", false);
                         $("#db_loader").hide();
-                        $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                        $("#information-icon").css("display", "inline");
+                        $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                         changeFooterPostion();
                     }
                 }
@@ -532,25 +516,25 @@ $(document).ready(function () {
                     $("ul li[data-move-to='startup-page-two']").addClass("selected");
                     $("#db_loader").hide();
                     $("#system-settings-db-selection-container").hide();
-                    StorageSettings();
                     window.connectionString = result.Data.value;
+                    StorageSettings();
                     changeFooterPostion();
                     delete window.serverName;
                     delete window.login;
                     delete window.password;
                     delete window.databaseName;
                     addPlacehoder("body")
+                    $("#system-settings-filestorage-container").slideDown("slow");
                 }
                 else {
                     $("#db_config_generate").prop("disabled", false);
                     $("#db_loader").hide();
                     $("#connection-validation").find(".validation-errors").html(result.Data.value);
-                    $("#information-icon").css("display", "inline");
                 }
             }
         );
     });
-   
+
     $("#btn_proceed_page1").on("click", function () {
         $("#steps-container").find(".selected").removeClass("selected");
         $("li[data-move-to='startup-page-two']").addClass("selected");
@@ -563,58 +547,23 @@ $(document).ready(function () {
 
     $.validator.addMethod("isRequired", function (value, element) {
         return !isEmptyOrWhitespace(value);
-    }, "[[[Please enter the name]]]");
+    }, "[[[Please enter the name.]]]");
 
     $.validator.addMethod("hasWhiteSpace", function (value, element) {
         return /\s/.test(value);
-    }, "[[[Username contains space]]]");
+    }, "[[[Username contains space.]]]");
 
     $.validator.addMethod("isValidUser", function (value, element) {
         return isValidUserName(value)
-    }, "[[[Username contains invalid characters]]]");
+    }, "[[[Username contains invalid characters.]]]");
 
     $.validator.addMethod("isValidEmail", function (value, element) {
-         if (value.trim() == "") {
-            return true;
-        } else {
-            return IsEmail(value);
-        }
-    }, "[[[Please enter a valid email address]]]");
+        return IsEmail(value);
+    }, "[[[Please enter a valid email address.]]]");
 
     $.validator.addMethod("isValidName", function (value, element) {
         return IsValidName("name", value);
-    }, "[[[Please avoid special characters]]]");
-
-    $.validator.addMethod("isValidadminPassword", function (value, element) {
-        var validateMethods = new Array();
-        validateMethods.push(validateUserpassword.p_policy_uppercase);
-        validateMethods.push(validateUserpassword.p_policy_lowercase);
-        validateMethods.push(validateUserpassword.p_policy_number);
-        validateMethods.push(validateUserpassword.p_policy_specialcharacter);
-        validateMethods.push(validateUserpassword.p_policy_length);
-        for (var n = 0; n < validateMethods.length ; n++) {
-            var currentMethodName = validateMethods[n];
-            if (currentMethodName(value) != "" && currentMethodName(value) != undefined) {
-                ruleName = currentMethodName(value);
-                if ($("#password_policy_rules").find("li#" + ruleName + " span").attr("class") != "su-tick") {
-                    $("#password_policy_rules").find("li#" + ruleName + " span").addClass("su su-tick").removeClass("su su-close");
-                    $("#password_policy_rules").find("li#" + ruleName).addClass("clear-error");
-                    ruleName = ""
-                }
-            }
-            else {
-                ruleName = name;
-                $(element).closest(".form-group").addClass("has-error");
-                if ($("#password_policy_rules").find("li#" + ruleName + " span").attr("class") == "su-tick") {
-                    $("#password_policy_rules").find("li#" + ruleName + " span").addClass("su su-close").removeClass("su-tick");
-                    $("#password_policy_rules").find("li#" + ruleName).removeClass("clear-error");
-                    ruleName = "";
-                }
-            }
-        }
-        if ($("#password_policy_rules li>span.su-tick").length == $("#password_policy_rules").find("li>span").length)
-            return true;
-    }, "");
+    }, "[[[Please avoid special characters.]]]");
 
     $.validator.addMethod("isValidPrefix", function (value, element) {
         if (/^[a-zA-Z\_]+$/g.test(value) || value === "") {
@@ -622,67 +571,76 @@ $(document).ready(function () {
         } else {
             return false;
         }
-    }, "[[[Please avoid special characters, numbers and white spaces]]]");
+    }, "[[[Please avoid special characters, numbers and white spaces.]]]");
 
 
-    $.validator.addMethod("isValidDatabaseName", function(value, element) {
+    $.validator.addMethod("isValidDatabaseName", function (value, element) {
         if (/^[a-zA-Z_0-9@~!#\$\^&()+=\-,\.\/\{\} ]+$/.test(value) && !/^[\s]+|[\s]+$/g.test(value)) {
             return true;
         }
-    }, "[[[Please avoid special characters, Leading and Trailing spaces]]]");
+    }, "[[[Please avoid special characters (<>%*?\":`;'[]|\\) and leading and trailing spaces.]]]");
 
     $.validator.addMethod("sqlUsernamevalidation", function (value, element) {
         if (/^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\\\',\.\/\{\}\|:<>\? ]+$/.test(value) && !/^[\s]/g.test(value)) {
             return true;
         }
-    }, "[[[Please avoid special characters and Leading spaces]]]");
+    }, "[[[Please avoid special characters (\";) and leading spaces.]]]");
 
-    $.validator.addMethod("isValidCredentials", function(value, element) {
+    $.validator.addMethod("isValidCredentials", function (value, element) {
         return /^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\\\',\.\/\{\}\|:<>\? ]+$/.test(value);
-    }, "[[[Please avoid special characters]]]");
+    }, "[[[Please avoid special characters (\";)]]]");
 
     $.validator.addMethod("mySqlCredentials", function (value, element) {
         if ((/^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\\\',\.\/\{\}\|\":<>\? ]+$/.test(value) && !/^[\s]+|[\s]+$/g.test(value)) || value === "") {
             return true;
         }
-    }, "[[[Please avoid special characters, Leading and Trailing spaces]]]");
+    }, "[[[Please avoid special characters; leading and trailing spaces.]]]");
 
     $.validator.addMethod("oraclePasswordValidation", function (value, element) {
         if (/^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\\,\.\/\{\}\|:<>\? ]+$/.test(value) && !/^[\s]+|[\s]+$/g.test(value)) {
             return true;
         }
-    }, "[[[Please avoid special characters, Leading and Trailing spaces]]]");
+    }, "[[[Please avoid special characters (';\") and leading and trailing spaces.]]]");
 
     $.validator.addMethod("oracleUsernameValidation", function (value, element) {
         if (/^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\\,\.\/\{\}\|:<>\? ]+$/.test(value)) {
             return true;
         }
-    }, "[[[Please avoid special characters]]]");
+    }, "[[[Please avoid special characters (';\")]]]");
 
     $.validator.addMethod("additionalSpecialCharValidation", function (value, element) {
         if (/^[a-zA-Z_0-9`~!\$\^()=\-\.\{\} ]+$/.test(value) || value === "") {
             return true;
         }
-    }, "[[[Please avoid special characters]]]");
+    }, "[[[Please avoid special characters.]]]");
 
     $.validator.addMethod("postgresqlUsernamevalidation", function (value, element) {
         if (/^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\',\.\/\{\}\|:<>\? ]+$/.test(value) && !/^[\s]+|[\s]+$/g.test(value)) {
             return true;
         }
-    }, "[[[Please avoid special characters, Leading and Trailing spaces]]]");
+    }, "[[[Please avoid special characters (\"\\;) and leading spaces and trailing spaces.]]]");
 
     $.validator.addMethod("isValidPostgresqlCredentials", function (value, element) {
         return /^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\',\.\/\{\}\|:<>\? ]+$/.test(value);
-    }, "[[[Please avoid special characters");
+    }, "[[[Please avoid special characters (\"\\;)]]]");
 
     $.validator.addMethod("isValidPortNumber", function (value, element) {
         return /^\d{1,5}$/.test(value) && value < 65536 && !/^[\s]/g.test(value);
-    }, "[[[Please enter valid port number]]]");
+    }, "[[[Please enter valid port number.]]]");
 
     $(".admin-account-fields-container").validate({
         focusInvalid: false,
         errorElement: "span",
         onkeyup: function (element, event) {
+            if ($(element).attr('id') == "txt-username") {
+                $("#user-details").attr("data-username", $("#txt-username").val()); 
+            }
+            if ($(element).attr('id') == "txt-emailid") {
+                $("#user-details").attr("data-email", $("#txt-emailid").val());
+            }
+            if ($(element).attr('id') == "txt-firstname" || $(element).attr('id') == "txt-lastname") {
+                $("#user-details").attr("data-displayname", $("#txt-firstname").val() + " " + $("#txt-lastname").val());
+            }
             if (event.keyCode != 9) {
                 isKeyUp = true;
                 $(element).valid();
@@ -700,7 +658,7 @@ $(document).ready(function () {
                 hasWhiteSpace: false,
                 isValidName: true,
                 isValidUser: true,
-                additionalSpecialCharValidation:true
+                additionalSpecialCharValidation: true
             },
             firstname: {
                 isRequired: true,
@@ -711,48 +669,25 @@ $(document).ready(function () {
                 additionalSpecialCharValidation: true
             },
             email: {
-                isValidName:true,
+                isRequired: true,
+                isValidName: true,
                 isValidEmail: true
             },
             password: {
                 required: true,
-                isValidadminPassword: true
+                isValidPassword: true
             },
             confirm: {
                 required: true,
-                equalTo: "#txt-password"
+                equalTo: "#new-password"
             }
         },
         highlight: function (element) {
-            $(element).closest(".form-group").addClass("has-error");
             $(element).parent().find(">.startup-validation").show();
-            if ($(element).attr("id") == "txt-password") {
-                for (var i = 0; i < $("#password_policy_rules").find("li>span").length; i++) {
-                    if ($($("#password_policy_rules").find("li>span")[i]).attr("class") == "su-tick")
-                        $(element).closest(".form-group").removeClass("has-error");
-                    else
-                        rules = "unsatisfied-rule";
-                }
-                if (rules != "" && rules != undefined) {
-                    $(element).closest(".form-group").addClass("has-error");
-                    rules = "";
-                }
-            }
+            passwordBoxHightlight(element);
         },
         unhighlight: function (element) {
-            $(element).closest(".form-group").removeClass("has-error");
-            if ($(element).attr("id") == "txt-password") {
-                for (var i = 0; i < $("#password_policy_rules").find("li>span").length; i++) {
-                    if ($($("#password_policy_rules").find("li>span")[i]).attr("class") != "su-tick")
-                        rules = "unsatisfied-rule";
-                    if ($($("#password_policy_rules").find("li>span")[i]).attr("class") == "su-tick")
-                        $(element).closest(".form-group").removeClass("has-error");
-                }
-                if (rules != "" && rules != undefined) {
-                    $(element).closest(".form-group").addClass("has-error");
-                    rules = "";
-                }
-            }
+            passwordBoxUnhightlight(element);
             $(element).parent().find(">.startup-validation").hide();
         },
         errorPlacement: function (error, element) {
@@ -760,53 +695,40 @@ $(document).ready(function () {
         },
         messages: {
             username: {
-                isRequired: "[[[Please enter username]]]"
+                isRequired: "[[[Please enter username.]]]"
             },
             firstname: {
-                isRequired: "[[[Please enter first name]]]"
+                isRequired: "[[[Please enter first name.]]]"
             },
             lastname: {
-                isValidName: "[[[Please avoid special characters]]]"
+                isValidName: "[[[Please avoid special characters.]]]"
+            },
+            email: {
+                isRequired: "[[[Please enter email address.]]]"
             },
             password: {
-                required: "[[[Please enter password]]]"
+                required: "[[[Please enter password.]]]"
             },
             confirm: {
-                required: "[[[Please confirm password]]]",
-                equalTo: "[[[Passwords Mismatch]]]"
+                required: "[[[Please confirm password.]]]",
+                equalTo: "[[[Passwords mismatch.]]]"
             }
         }
     });
 
-    $("#txt-password").bind("keyup", function (e) {
-        if ($("#txt-password").val() == $("#txt-confirm-password").val()) {
+    $("#new-password").bind("keyup", function (e) {
+        if ($("#new-password").val() == $("#txt-confirm-password").val()) {
             $("#txt-confirm-password").closest(".form-group").removeClass("has-error");
             $("#txt-confirm-password").parent().find(">.startup-validation").hide();
         }
         createPasswordPolicyRules();
     });
 
-    $("#txt-password").on("change", function () {
+    $("#new-password").on("change", function () {
         createPasswordPolicyRules();
-        $("#txt-password").valid();
+        $("#new-password").valid();
     })
 
-    function createPasswordPolicyRules() {
-        if ($("#txt-password").val() != "" && $("#txt-password").next("ul").length == 0) {
-            $("#txt-password").after("<ul id='password_policy_rules'></ul>");
-            $("#password_policy_rules").append("<li id='p_policy_heading'>[[[Password must meet the following requirements. It must contain,]]]</li>")
-            $("#password_policy_rules").append("<li id='p_policy_length'><span class='su su-close'></span>[[[at least 6 characters.]]]</li>")
-            $("#password_policy_rules").append("<li id='p_policy_uppercase'><span class='su su-close'></span>[[[1 uppercase.]]]</li>")
-            $("#password_policy_rules").append("<li id='p_policy_lowercase'><span class='su su-close'></span>[[[1 lowercase.]]]</li>")
-            $("#password_policy_rules").append("<li id='p_policy_number'><span class='su su-close'></span>[[[1 numeric.]]]</li>")
-            $("#password_policy_rules").append("<li id='p_policy_specialcharacter'><span class='su su-close'></span>[[[1 special character.]]]</li>")
-            $("#confirm-password-section").css("margin-top", "-80px")
-        }
-        if ($("#txt-password").val() == "" && $("#txt-password").next("ul").length != 0) {
-            $("#txt-password").next("ul").remove();
-            $("#confirm-password-section").css("margin-top", "5px")
-        }
-    }
     $("#oracle-content-holder").validate({
         errorElement: "span",
         onkeyup: function (element, event) {
@@ -845,7 +767,7 @@ $(document).ready(function () {
             },
             clientPassword: {
                 required: true,
-                oraclePasswordValidation:true
+                oraclePasswordValidation: true
             },
             confirmClientPassword: {
                 required: {
@@ -878,23 +800,23 @@ $(document).ready(function () {
         },
         messages: {
             servername: {
-                isRequired: "[[[Please enter server name]]]"
+                isRequired: "[[[Please enter server name.]]]"
             },
             adminUserName: {
-                isRequired: "[[[Please enter admin username]]]"
+                isRequired: "[[[Please enter admin username.]]]"
             },
             adminPassword: {
-                required: "[[[Please enter admin password]]]"
+                required: "[[[Please enter admin password.]]]"
             },
             clientUserName: {
-                required: "[[[Please enter database name]]]"
+                required: "[[[Please enter database name.]]]"
             },
             clientPassword: {
-                required: "[[[Please enter the database password]]]"
+                required: "[[[Please enter the database password.]]]"
             },
             confirmClientPassword: {
-                required: "[[[Please confirm password]]]",
-                equalTo: "[[[Passwords Mismatch]]]"
+                required: "[[[Please confirm password.]]]",
+                equalTo: "[[[Passwords mismatch.]]]"
             }
         }
     });
@@ -903,14 +825,14 @@ $(document).ready(function () {
 
     $.validator.addMethod("IsValidEndPoint", function (value, element) {
         return IsValidEndPoint(value);
-    }, "[[[Invalid Blob Service endpoint]]]");
+    }, "[[[Invalid Blob service endpoint.]]]");
 
     $.validator.addMethod("IsCustomEndpoint", function (value, element) {
         return IsCustomEndPoint(value, element);
-    }, "[[[Invalid End point]]]");
+    }, "[[[Invalid end point.]]]");
     $.validator.addMethod("IsValidCustomEndPoint", function (value, element) {
         return IsValidCustomEndPoint(value, element);
-    }, "[[[Invalid custom End point]]]");
+    }, "[[[Invalid custom end point.]]]");
 
     $("#blob-storage-form").validate({
         focusInvalid: false,
@@ -963,21 +885,21 @@ $(document).ready(function () {
         },
         messages: {
             accountname: {
-                isRequired: "[[[Please enter Storage Account name]]]"
+                isRequired: "[[[Please enter storage account name.]]]"
             },
             endpoint: {
-                isRequired: "[[[Please enter Blob Service endpoint]]]"
+                isRequired: "[[[Please enter Blob service endpoint.]]]"
             },
             accesskey: {
-                isRequired: "[[[Please enter Access key]]]"
+                isRequired: "[[[Please enter access key.]]]"
             },
             containername: {
-                required: "[[[Please enter Container name]]]"
+                required: "[[[Please enter container name.]]]"
             },
             bloburl: {
-                IsCustomEndpoint: "[[[Please enter Blob URL]]]",
-                IsValidEndPoint: "[[[Please enter valid Blob URL]]]",
-                IsValidCustomEndPoint: "[[[Subdomain name should match with the Account name]]]"
+                IsCustomEndpoint: "[[[Please enter Blob URL.]]]",
+                IsValidEndPoint: "[[[Please enter valid Blob URL.]]]",
+                IsValidCustomEndPoint: "[[[Subdomain name should match with the account name.]]]"
             }
         }
 
@@ -1013,7 +935,7 @@ $(document).ready(function () {
         },
         messages: {
             password: {
-                isRequired: "[[[Please enter password]]]"
+                isRequired: "[[[Please enter password.]]]"
             }
         }
     });
@@ -1041,7 +963,7 @@ $(document).ready(function () {
         },
         messages: {
             servername: {
-                isRequired: "[[[Please enter server name]]]"
+                isRequired: "[[[Please enter server name.]]]"
             }
         }
     });
@@ -1069,7 +991,7 @@ $(document).ready(function () {
         },
         messages: {
             username: {
-                isRequired: "[[[Please enter username]]]"
+                isRequired: "[[[Please enter username.]]]"
             }
         }
     });
@@ -1131,16 +1053,16 @@ $(document).ready(function () {
         },
         messages: {
             servername: {
-                isRequired: "[[[Please enter server name]]]"
+                isRequired: "[[[Please enter server name.]]]"
             },
             username: {
-                required: "[[[Please enter username]]]"
+                required: "[[[Please enter username.]]]"
             },
             password: {
-                required: "[[[Please enter password]]]"
+                required: "[[[Please enter password.]]]"
             },
             dbname: {
-                required: "[[[Please enter the database name]]]"
+                required: "[[[Please enter the database name.]]]"
             }
         }
     });
@@ -1159,7 +1081,7 @@ $(document).ready(function () {
         onfocusout: function (element) { $(element).valid(); },
         rules: {
             mySqlUserName: {
-                mySqlCredentials:true
+                mySqlCredentials: true
             },
             mysqlPassword: {
                 mySqlCredentials: true
@@ -1197,7 +1119,7 @@ $(document).ready(function () {
         },
         messages: {
             mySqlDataBaseName: {
-                required: "[[[Please enter database name]]]"
+                required: "[[[Please enter database name.]]]"
             }
 
         }
@@ -1261,19 +1183,19 @@ $(document).ready(function () {
         },
         messages: {
             servername: {
-                isRequired: "[[[Please enter server name]]]"
+                isRequired: "[[[Please enter server name.]]]"
             },
             port: {
-                required: "[[[Please enter port number]]]"
+                required: "[[[Please enter port number.]]]"
             },
             username: {
-                required: "[[[Please enter username]]]"
+                required: "[[[Please enter username.]]]"
             },
             password: {
-                required: "[[[Please enter password]]]"
+                required: "[[[Please enter password.]]]"
             },
             dbname: {
-                required: "[[[Please enter the database name]]]"
+                required: "[[[Please enter the database name.]]]"
             }
         }
     });
@@ -1312,9 +1234,14 @@ function validate_storage_type() {
                         if (result.Data.Key.toString().toLowerCase() == "true") {
                             window.azureconnectionString = result.Data.ConnectionString;
                             $("#system-settings-filestorage-container").hide();
-                            $("#system-settings-admins-container").slideDown("slow");
+                            if ($("#is-existing-ds").val().toLowerCase() === "true") {
+                                redirectToDataMigration();
+                            } else {
+                                $("#system-settings-user-account-container").slideDown("slow");
+                            }
                             hideWaitingPopup(".startup-page-conatiner");
                             changeFooterPostion();
+                            $("#txt-username").focus();
                         } else {
                             hideWaitingPopup(".startup-page-conatiner");
                             $(".azure-validation,.blob-error-message").css("display", "block");
@@ -1337,18 +1264,34 @@ function validate_storage_type() {
         $("div.placeholder").remove();
         hideWaitingPopup(".startup-page-conatiner");
         $("#system-settings-filestorage-container").hide();
-        $("#system-settings-admins-container").slideDown("slow");
+        if ($("#is-existing-ds").val().toLowerCase() === "true") {
+            redirectToDataMigration();
+        } else {
+            $("#system-settings-user-account-container").slideDown("slow");
+        }
+        addPlacehoder("#system-settings-user-account-container");
         changeFooterPostion();
         return false;
     }
-
 }
 
-function showUserAccountContainer() {
-    $("#system-settings-admins-container").hide();
-    $("#system-settings-user-account-container").slideDown("slow");
-    $("#txt-username").focus();
-    changeFooterPostion();
+function redirectToDataMigration() {
+    var elem = $(".startup-page-conatiner");
+    elem.ejWaitingPopup({ text: " " });
+    $(".e-text").find(".configuration-status").remove();
+    $(".e-text").append('<span class="configuration-status"></span>');
+    elem.ejWaitingPopup("show");
+    getFormData();
+    var systemSettingsData = $("#system-settings-data").val();
+    var azureData = $("#azure-data").val();
+    var appDetails = $("#app-details").val();
+    setSystemSettingsData = { systemSettingsData: systemSettingsData, azureData: azureData, appDetails: appDetails };
+    $.ajax({
+        type: "POST", url: setSystemSettingsUrl, data: setSystemSettingsData,
+        success: function (setSystemSettingsResponse) {
+            window.location = setSystemSettingsResponse.redirectUrl;
+        }
+    });
 }
 
 function IsValidEndPoint(domainName) {
@@ -1362,7 +1305,7 @@ function IsValidEndPoint(domainName) {
 
 function IsCustomEndPoint(fieldValue, element) {
     var connectionType = $("input[name='Connection']:checked").val();
-    if (connectionType == "customendpoint") {
+    if (connectionType == "custom-endpoint") {
         if (fieldValue == "")
             return false;
         else
@@ -1375,7 +1318,7 @@ function IsCustomEndPoint(fieldValue, element) {
 function IsValidCustomEndPoint(fieldValue, element) {
     var connectionType = $("input[name='Connection']:checked").val();
     var accountname = $("#txt-accountname").val();
-    if (connectionType == "customendpoint") {
+    if (connectionType == "custom-endpoint") {
         var accountName = $("#txt-accountname").val();
         var elementDomainName = $(element).val().split(".");
         var subdomain = elementDomainName.shift();
@@ -1399,7 +1342,7 @@ function changeFooterPostion() {
         $("#base-footer-div").addClass("footer-fixed");
     } else {
         $("#base-footer-div").removeClass("footer-fixed");
-    }   
+    }
 }
 
 function isValidUserName(userName) {
@@ -1451,22 +1394,22 @@ function getFormData() {
         var database = $("#database-type").val().toLowerCase();
         switch (database) {
             case "mssqlce":
-                var prefix = "SyncRS_";
+                var prefix = $("#ums-table-prefix").val();
                 break;
             case "mssql":
-                var prefix = ($("#table-prefix").val() === "" || $("#new-db").is(":checked")) ? "SyncRS_" : $("#table-prefix").val();
+                var prefix = ($("#table-prefix").val() === "" || $("#new-db").is(":checked")) ? $("#ums-table-prefix").val() : $("#table-prefix").val();
                 var databaseName = $("#new-db").is(":checked") ? $("#txt-dbname").val() : $("#databaseName").val();
                 break;
             case "mysql":
-                var prefix = ($("#table-prefix-mysql").val() === "" || $("#new-db-mysql").is(":checked")) ? "SyncRS_" : $("#table-prefix-mysql").val();
+                var prefix = ($("#table-prefix-mysql").val() === "" || $("#new-db-mysql").is(":checked")) ? $("#ums-table-prefix").val() : $("#table-prefix-mysql").val();
                 var databaseName = $("#new-db-mysql").is(":checked") ? "`" + $("#mysql-database-name").val() + "`" : "`" + $("#database-name-mysql").val() + "`";
                 break;
             case "oracle":
-                var prefix = ($("#table-prefix-oracle").val() === "" || $("#new-db-oracle").is(":checked")) ? "SyncRS_" : $("#table-prefix-oracle").val();
+                var prefix = ($("#table-prefix-oracle").val() === "" || $("#new-db-oracle").is(":checked")) ? $("#ums-table-prefix").val() : $("#table-prefix-oracle").val();
                 var databaseName = $("#new-db-oracle").is(":checked") ? $("#client-username").val() : $("#database-name-oracle").val();
                 break;
             case "postgresql":
-                var prefix = ($("#table-prefix-postgresql").val() === "" || $("#new-db-postgresql").is(":checked")) ? "SyncRS_" : $("#table-prefix-postgresql").val();
+                var prefix = ($("#table-prefix-postgresql").val() === "" || $("#new-db-postgresql").is(":checked")) ? $("#ums-table-prefix").val() : $("#table-prefix-postgresql").val();
                 var databaseName = $("#new-db-postgresql").is(":checked") ? $("#postgresql-dbname").val() : $("#database-name-postgresql").val();
                 break;
         }
@@ -1481,7 +1424,7 @@ function getFormData() {
             FirstName: $("#txt-firstname").val(),
             LastName: $("#txt-lastname").val(),
             Email: $("#txt-emailid").val(),
-            Password: $("#txt-password").val()
+            Password: $("#new-password").val()
         };
         var systemSettingsData = {
             SQLConfiguration:
@@ -1502,9 +1445,18 @@ function getFormData() {
             ConnectionString: window.azureconnectionString
         };
 
+        var appDetails = {
+            AppName: $("#app-name").val(),
+            AppUrl: $("#app-url").val(),
+            AppConfigure: $("#app-configure").val(),
+            RedirectUrl: $("#redirect-url").val(),
+            ApplicationType: $("#application-type").val()
+        };
+
         $("#global-admin-details").val(JSON.stringify(globalAdmin));
         $("#system-settings-data").val(JSON.stringify(systemSettingsData));
         $("#azure-data").val(JSON.stringify(azureData));
+        $("#app-details").val(JSON.stringify(appDetails));
     }
 }
 
@@ -1542,11 +1494,11 @@ $(document).on("change", ".css-radio", function () {
                 $(".database-name, #db-config-submit").hide();
                 changeFooterPostion();
                 DomResize();
-            } else {                
+            } else {
                 $(".sql-server-existing-db, #sql-existing-db-submit").hide();
                 $(".database-name, #db-config-submit").slideDown("slow");
                 $(".databse-dropdown ul").html("");
-                $("#database-name").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");               
+                $("#database-name").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");
                 changeFooterPostion();
                 DomResize();
             }
@@ -1561,7 +1513,7 @@ $(document).on("change", ".css-radio", function () {
                 $(".mysql-existing-db,#mysql-existing-db-submit").hide();
                 $(".mysql-create-db, #mysql-config-submit").slideDown("slow");
                 $(".database-dropdown-mysql ul").html("");
-                $("#database-name-mysql").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");                
+                $("#database-name-mysql").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");
                 changeFooterPostion();
                 DomResize();
             }
@@ -1575,7 +1527,7 @@ $(document).on("change", ".css-radio", function () {
                 $(".oracle-existing-db, #oracle-existing-db-submit").hide();
                 $(".oracle-new-db, #oracle-config-submit").slideDown("slow");
                 $(".database-dropdown-oracle ul").html("");
-                $("#database-name-oracle").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");                
+                $("#database-name-oracle").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");
                 DomResize();
             }
             break;
@@ -1589,7 +1541,7 @@ $(document).on("change", ".css-radio", function () {
                 $(".postgresql-existing-db, #postgresql-existing-db-submit").hide();
                 $(".database-name-postgresql, #postgresql-config-submit").slideDown("slow");
                 $(".database-dropdown-postgresql ul").html("");
-                $("#database-name-postgresql").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");                
+                $("#database-name-postgresql").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");
                 changeFooterPostion();
                 DomResize();
             }
@@ -1600,7 +1552,7 @@ $(document).on("change", ".css-radio", function () {
 
 $(document).on("click", ".databse-dropdown .dropdown-toggle", function () {
     $(".databse-dropdown ul").html("");
-    $("#database-name").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");   
+    $("#database-name").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");
     var iswindows = $("#check-windows").val() === "windows";
     if (!iswindows) {
         $("#txt-login").valid();
@@ -1638,21 +1590,19 @@ $(document).on("click", ".databse-dropdown .dropdown-toggle", function () {
                             option += '<option value=\"' + items[t] + '\">' + items[t] + "</option>";
                         }
                         $("#connection-validation").find(".validation-errors").html("");
-                        $("#information-icon").css("display", "none");
-                        $("#database-name").append(option).selectpicker("refresh");                        
+                        $("#database-name").append(option).selectpicker("refresh");
                         for (var i = 0; i < $("#db-content-holder .databse-dropdown .bootstrap-select li a .text").length ; i++) {
                             var dbTitle = $("#db-content-holder .databse-dropdown .bootstrap-select li a .text").eq(i).text();
                             $("#db-content-holder .databse-dropdown .bootstrap-select li a").eq(i).attr("title", dbTitle);
                         }
                     } else {
-                        $("#database-name").selectpicker("refresh").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");                   
-                        $(".databse-dropdown ul").html("<li class='no-results active' title='[[[no database found]]]' style='display: list-item;'>[[[No database found]]]</li>");
+                        $("#database-name").selectpicker("refresh").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");
+                        $(".databse-dropdown ul").html("<li class='no-results active' title='[[[No database found]]]' style='display: list-item;'>[[[No database found]]]</li>");
                     }
                     $("#waiting-icon").hide();
                 } else {
-                    $("#database-name").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");                   
-                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                    $("#information-icon").css("display", "inline");
+                    $("#database-name").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");
+                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                     changeFooterPostion();
                     $("#waiting-icon").hide();
                 }
@@ -1663,67 +1613,65 @@ $(document).on("click", ".databse-dropdown .dropdown-toggle", function () {
 
 $(document).on("click", ".database-dropdown-mysql .dropdown-toggle", function () {
     $(".database-dropdown-mysql ul").html("");
-    $("#database-name-mysql").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");    
+    $("#database-name-mysql").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");
     if ($("#mysql-odbc-dsn").val() == "") {
-        $("#dsn-validate").html("[[[Please select DSN]]]").show();        
+        $("#dsn-validate").html("[[[Please select DSN.]]]").show();
         return;
     }
-        $("#waiting-iconmysql").show();
-        window.dsn = $("#mysql-odbc-dsn").val();
-        window.login = $("#mysql-username").val();
-        window.password = $("#mysql-password").val();
-        window.databaseName = $("#mysql-database-name").val();
-        doAjaxPost("POST", getAllDatabaseUrl,
-            {
-                data: JSON.stringify({ DSN: window.dsn, userName: window.login, password: window.password, databaseName: window.databaseName, ServerType: "MySQL" })
-            },
-            function (result) {
-                if (result.Data.key) {
-                    $("#database-error-mysql").hide();
-                    var items = result.Data.value;
-                    var option = "";
-                    if (items.length > 0) {
-                        for (var t = 0; t < items.length; t++) {
-                            option += '<option value=\"' + items[t] + '\">' + items[t] + "</option>";
-                        }
-                        $("#connection-validation").find(".validation-errors").html("");
-                        $("#information-icon").css("display", "none");
-                        $("#database-name-mysql").append(option).selectpicker("refresh");                        
-                        for (var i = 0; i < $("#mysql-content-holder .database-dropdown-mysql .bootstrap-select li a .text").length ; i++) {
-                            var dbTitle = $("#mysql-content-holder .database-dropdown-mysql .bootstrap-select li a .text").eq(i).text();
-                            $("#mysql-content-holder .database-dropdown-mysql .bootstrap-select li a").eq(i).attr("title", dbTitle);
-                        }
-                    } else {
-                        $("#database-name-mysql").selectpicker("refresh").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");                       
-                        $(".database-dropdown-mysql ul").html("<li class='no-results active' title='[[[no database found]]]' style='display: list-item;'>[[[No database found]]]</li>");
+    $("#waiting-iconmysql").show();
+    window.dsn = $("#mysql-odbc-dsn").val();
+    window.login = $("#mysql-username").val();
+    window.password = $("#mysql-password").val();
+    window.databaseName = $("#mysql-database-name").val();
+    doAjaxPost("POST", getAllDatabaseUrl,
+        {
+            data: JSON.stringify({ DSN: window.dsn, userName: window.login, password: window.password, databaseName: window.databaseName, ServerType: "MySQL" })
+        },
+        function (result) {
+            if (result.Data.key) {
+                $("#database-error-mysql").hide();
+                var items = result.Data.value;
+                var option = "";
+                if (items.length > 0) {
+                    for (var t = 0; t < items.length; t++) {
+                        option += '<option value=\"' + items[t] + '\">' + items[t] + "</option>";
                     }
-                    $("#waiting-iconmysql").hide();
+                    $("#connection-validation").find(".validation-errors").html("");
+                    $("#database-name-mysql").append(option).selectpicker("refresh");
+                    for (var i = 0; i < $("#mysql-content-holder .database-dropdown-mysql .bootstrap-select li a .text").length ; i++) {
+                        var dbTitle = $("#mysql-content-holder .database-dropdown-mysql .bootstrap-select li a .text").eq(i).text();
+                        $("#mysql-content-holder .database-dropdown-mysql .bootstrap-select li a").eq(i).attr("title", dbTitle);
+                    }
                 } else {
-                    $("#database-name-mysql").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");                    
-                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                    $("#information-icon").css("display", "inline");
-                    changeFooterPostion();
-                    $("#waiting-iconmysql").hide();
+                    $("#database-name-mysql").selectpicker("refresh").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");
+                    $(".database-dropdown-mysql ul").html("<li class='no-results active' title='[[[No database found]]]' style='display: list-item;'>[[[No database found]]]</li>");
                 }
+                $("#waiting-iconmysql").hide();
+            } else {
+                $("#database-name-mysql").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");
+                $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
+                changeFooterPostion();
+                $("#waiting-iconmysql").hide();
             }
-        );
+        }
+    );
 });
 
 $(document).on("click", ".database-dropdown-oracle .dropdown-toggle", function () {
     $(".database-dropdown-oracle ul").html("");
-    $("#database-name-oracle").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");    
+    $("#database-name-oracle").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");
     if ($("#oracle-dsn").val() === "" || $("#admin-username").val() === "" || $("#admin-password").val() === "") {
         if ($("#oracle-dsn").val() === "") {
             $("#oracle-dsn").closest(".txt-holder").addClass("has-error");
-            $("#oracle-dsn-validate").html("[[[Please select DSN]]]").show();           
+            $("#oracle-dsn-validate").html("[[[Please select DSN.]]]").show();
         }
         if ($("#admin-username").val() === "") {
             $("#admin-username").closest(".txt-holder").addClass("has-error");
-            $("#admin-username").parent().find(">.startup-validation").html("[[[Please enter admin username]]]").show();            
+            $("#admin-username").parent().find(">.startup-validation").html("[[[Please enter admin username.]]]").show();
         }
         if ($("#admin-password").val() === "") {
             $("#admin-password").closest(".txt-holder").addClass("has-error");
-            $("#admin-password").parent().find(">.startup-validation").html("[[[Please enter admin password]]]").show();            
+            $("#admin-password").parent().find(">.startup-validation").html("[[[Please enter admin password.]]]").show();
         }
         return;
     }
@@ -1743,21 +1691,19 @@ $(document).on("click", ".database-dropdown-oracle .dropdown-toggle", function (
                         option += '<option value=\"' + items[t] + '\">' + items[t] + "</option>";
                     }
                     $("#connection-validation").find(".validation-errors").html("");
-                    $("#information-icon").css("display", "none");
-                    $("#database-name-oracle").append(option).selectpicker("refresh");                    
+                    $("#database-name-oracle").append(option).selectpicker("refresh");
                     for (var i = 0; i < $("#oracle-content-holder .database-dropdown-oracle .bootstrap-select li a .text").length ; i++) {
                         var dbTitle = $("#oracle-content-holder .database-dropdown-oracle .bootstrap-select li a .text").eq(i).text();
                         $("#oracle-content-holder .database-dropdown-oracle .bootstrap-select li a").eq(i).attr("title", dbTitle);
                     }
                 } else {
-                    $("#database-name-oracle").selectpicker("refresh").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");                    
-                    $(".database-dropdown-oracle ul").html("<li class='no-results active' title='[[[no database found]]]' style='display: list-item;'>[[[No database found]]]</li>");
+                    $("#database-name-oracle").selectpicker("refresh").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");
+                    $(".database-dropdown-oracle ul").html("<li class='no-results active' title='[[[No database found]]]' style='display: list-item;'>[[[No database found]]]</li>");
                 }
                 $("#waiting-icon-oracle").hide();
             } else {
-                $("#database-name-oracle").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");                
-                $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                $("#information-icon").css("display", "inline");
+                $("#database-name-oracle").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");
+                $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                 changeFooterPostion();
                 $("#waiting-icon-oracle").hide();
             }
@@ -1767,7 +1713,7 @@ $(document).on("click", ".database-dropdown-oracle .dropdown-toggle", function (
 
 $(document).on("click", ".database-dropdown-postgresql .dropdown-toggle", function () {
     $(".database-dropdown-postgresql ul").html("");
-    $("#database-name-postgresql").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");  
+    $("#database-name-postgresql").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");
 
     if ($("#postgresql-content-holder").valid()) {
         var canProceed = true;
@@ -1796,22 +1742,20 @@ $(document).on("click", ".database-dropdown-postgresql .dropdown-toggle", functi
                             option += '<option value=\"' + items[t] + '\">' + items[t] + "</option>";
                         }
                         $("#connection-validation").find(".validation-errors").html("");
-                        $("#information-icon").css("display", "none");
-                        $("#database-name-postgresql").append(option).selectpicker("refresh");                        
+                        $("#database-name-postgresql").append(option).selectpicker("refresh");
                         for (var i = 0; i < $("#db-content-holder .database-dropdown-postgresql .bootstrap-select li a .text").length ; i++) {
                             var dbTitle = $("#db-content-holder .database-dropdown-postgresql .bootstrap-select li a .text").eq(i).text();
                             $("#db-content-holder .database-dropdown-postgresql .bootstrap-select li a").eq(i).attr("title", dbTitle);
                         }
                     } else {
-                        $("#database-name-postgresql").selectpicker("refresh").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");                 
-                                       
-                        $(".database-dropdown-postgresql ul").html("<li class='no-results active' title='[[[no database found]]]' style='display: list-item;'>[[[No database found]]]</li>");
+                        $("#database-name-postgresql").selectpicker("refresh").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");
+
+                        $(".database-dropdown-postgresql ul").html("<li class='no-results active' title='[[[No database found]]]' style='display: list-item;'>[[[No database found]]]</li>");
                     }
                     $("#waiting-icon-postgressql").hide();
                 } else {
-                    $("#database-name-postgresql").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");                    
-                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                    $("#information-icon").css("display", "inline");
+                    $("#database-name-postgresql").html("<option value='' class='display-none'>[[[Select a database]]]</option>").selectpicker("refresh");
+                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                     changeFooterPostion();
                     $("#waiting-icon-postgressql").hide();
                 }
@@ -1826,17 +1770,16 @@ $(document).on("click", "#sql-existing-db-submit", function () {
     $(".has-error").removeClass("has-error");
     $(".validation-txt-errors").hide();
     $(".validation-errors").html("");
-    $("#information-icon").css("display", "none");
     DomResize();
     var canProceed = $("#db-content-holder").valid();
     if ($("#database-name").val() == "") {
-        $("#database-error").html("[[[Please select a database]]]").show();        
+        $("#database-error").html("[[[Please select a database.]]]").show();
         return;
     }
     if (/^[a-zA-Z_0-9@~!#\$\^&()+=\-,\.\/\{\} ]+$/.test($("#database-name").val()) && !/^[\s]+|[\s]+$/g.test($("#database-name").val())) {
         canProceed = true;
     } else {
-        $("#database-error").html("[[[Please avoid special characters, Leading and Trailing spaces]]]").show();        
+        $("#database-error").html("[[[Please avoid special characters (<>%*?\":`;'[]|\\) and leading and trailing spaces.]]]").show();
         return;
     }
     if (canProceed) {
@@ -1848,7 +1791,7 @@ $(document).on("click", "#sql-existing-db-submit", function () {
         window.login = $("#txt-login").val();
         window.password = $("#txt-password-db").val();
         var databaseType = $("#database-type").val();
-        var prefix = $("#table-prefix").val() === "" ? "SyncRS_" : $("#table-prefix").val();
+        var prefix = $("#table-prefix").val() === "" ? $("#ums-table-prefix").val() : $("#table-prefix").val();
         window.databaseName = $("#database-name").val();
         doAjaxPost("POST", connectDatabaseUrl,
             {
@@ -1874,7 +1817,7 @@ $(document).on("click", "#sql-existing-db-submit", function () {
                                 $(".message-content").html(html);
                                 $("#duplicate-table-list").ejDialog("open");
                                 $("#sql-existing-db-submit").prop("disabled", false);
-                            } else if (!result.Data.key && items.length <=0) {
+                            } else if (!result.Data.key && items.length <= 0) {
                                 doAjaxPost("POST", generateSQLTablesUrl,
                                     {
                                         data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, Prefix: prefix })
@@ -1886,9 +1829,9 @@ $(document).on("click", "#sql-existing-db-submit", function () {
                                             $("ul li[data-move-to='startup-page-two']").addClass("selected");
                                             $("#db_loader").hide();
                                             $("#system-settings-db-selection-container").hide();
+                                            window.connectionString = result.Data.value;
                                             StorageSettings();
                                             $("#txt-username").focus();
-                                            window.connectionString = result.Data.value;
                                             delete window.serverName;
                                             delete window.login;
                                             delete window.password;
@@ -1896,33 +1839,30 @@ $(document).on("click", "#sql-existing-db-submit", function () {
                                         } else {
                                             $("#sql-existing-db-submit").prop("disabled", false);
                                             $("#db_loader").hide();
-                                            $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                                            $("#information-icon").css("display", "inline");
+                                            $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                                             changeFooterPostion();
                                         }
                                         changeFooterPostion();
                                         $("#startup-page-conatiner").css("height", $(document).height());
                                     }
                                 );
-                                $(".db-connect-outer-container").find(".title").html("[[[Database Creation]]]!");
+                                $(".db-connect-outer-container").find(".title").html("[[[Database Creation!]]]");
                                 $("#database-name").focus();
-                            } else  {
+                            } else {
                                 hideWaitingPopup($(".startup-page-conatiner"));
                                 $("#db_config_generate, #db-config-submit").hide();
-                                $("#sql-existing-db-submit").show().prop("disabled", false);                                
+                                $("#sql-existing-db-submit").show().prop("disabled", false);
                                 $("#db_loader").hide();
-                                $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                                $("#information-icon").css("display", "inline");
+                                $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                                 changeFooterPostion();
                             }
                         });
                 } else {
                     hideWaitingPopup($(".startup-page-conatiner"));
                     $("#db_config_generate, #db-config-submit").hide();
-                    $("#sql-existing-db-submit").show().prop("disabled", false);                    
+                    $("#sql-existing-db-submit").show().prop("disabled", false);
                     $("#db_loader").hide();
-                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                    $("#information-icon").css("display", "inline");
+                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                     changeFooterPostion();
                 }
             }
@@ -1934,15 +1874,14 @@ $(document).on("click", "#mysql-existing-db-submit", function () {
     $(".has-error").removeClass("has-error");
     $(".validation-txt-errors").hide();
     $(".validation-errors").html("");
-    $("#information-icon").css("display", "none");
     DomResize();
     var canProceed = $("#mysql-content-holder").valid();
     if ($("#database-name-mysql").val() == "" || $("#mysql-odbc-dsn").val == "") {
         if ($("#database-name-mysql").val() == "") {
-            $("#database-error-mysql").html("[[[Please select a database]]]").show();            
+            $("#database-error-mysql").html("[[[Please select a database.]]]").show();
         }
         if ($("#mysql-odbc-dsn").val() == "") {
-            $("#dsn-validate").html("[[[Please select DSN]]]").show();           
+            $("#dsn-validate").html("[[[Please select DSN.]]]").show();
         }
 
         return;
@@ -1950,11 +1889,11 @@ $(document).on("click", "#mysql-existing-db-submit", function () {
     if (/^[a-zA-Z_0-9@~!#\$\^&()+=\-,\.\/\{\} ]+$/.test($("#database-name-mysql").val()) && !/^[\s]+|[\s]+$/g.test($("#database-name-mysql").val())) {
         canProceed = true;
     } else {
-        $("#database-error-mysql").html("[[[Please avoid special characters, Leading and Trailing spaces]]]");
+        $("#database-error-mysql").html("[[[Please avoid special characters (<>%*?\":`;'[]|\\) and leading and trailing spaces.]]]");
         $("#database-error-mysql").show();
         return;
     }
-    
+
     if (canProceed) {
         showWaitingPopup($(".startup-page-conatiner"));
         $(this).prop("disabled", true);
@@ -1963,7 +1902,7 @@ $(document).on("click", "#mysql-existing-db-submit", function () {
         window.login = $("#mysql-username").val();
         window.password = $("#mysql-password").val();
         var databaseType = $("#database-type").val();
-        var prefix = $("#table-prefix-mysql").val() === "" ? "SyncRS_" : $("#table-prefix-mysql").val();
+        var prefix = $("#table-prefix-mysql").val() === "" ? $("#ums-table-prefix").val() : $("#table-prefix-mysql").val();
         window.databaseName = $("#database-name-mysql").val();
         doAjaxPost("POST", connectDatabaseUrl,
             {
@@ -1987,7 +1926,8 @@ $(document).on("click", "#mysql-existing-db-submit", function () {
                                 }
                                 html += "</ol>";
                                 $(".message-content").html(html);
-                                $("#duplicate-table-list").ejDialog("open");                               
+                                $("#duplicate-table-list").ejDialog("open");
+                                $(".e-widget-content").addClass("add-scroller");
                                 $("#mysql-existing-db-submit").prop("disabled", false);
                             } else if (!result.Data.key && items.length <= 0) {
                                 doAjaxPost("POST", generateSQLTablesUrl,
@@ -2001,9 +1941,9 @@ $(document).on("click", "#mysql-existing-db-submit", function () {
                                             $("ul li[data-move-to='startup-page-two']").addClass("selected");
                                             $("#db_loader").hide();
                                             $("#system-settings-db-selection-container").hide();
+                                            window.connectionString = result.Data.value;
                                             StorageSettings();
                                             $("#txt-username").focus();
-                                            window.connectionString = result.Data.value;
                                             delete window.serverName;
                                             delete window.login;
                                             delete window.password;
@@ -2011,33 +1951,30 @@ $(document).on("click", "#mysql-existing-db-submit", function () {
                                         } else {
                                             $("#mysql-existing-db-submit").prop("disabled", false);
                                             $("#db_loader").hide();
-                                            $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                                            $("#information-icon").css("display", "inline");
+                                            $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                                             changeFooterPostion();
                                         }
                                         changeFooterPostion();
                                         $("#startup-page-conatiner").css("height", $(document).height());
                                     }
                                 );
-                                $(".db-connect-outer-container").find(".title").html("[[[Database Creation]]]!");
+                                $(".db-connect-outer-container").find(".title").html("[[[Database Creation!]]]");
                                 $("#database-name-mysql").focus();
                             } else {
                                 hideWaitingPopup($(".startup-page-conatiner"));
                                 $("#db_config_generate, #mysql-config-submit").hide();
-                                $("#mysql-existing-db-submit").show().prop("disabled", false);                               
+                                $("#mysql-existing-db-submit").show().prop("disabled", false);
                                 $("#db_loader").hide();
-                                $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                                $("#information-icon").css("display", "inline");
+                                $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                                 changeFooterPostion();
-                            } 
+                            }
                         });
                 } else {
                     hideWaitingPopup($(".startup-page-conatiner"));
                     $("#db_config_generate, #mysql-config-submit").hide();
-                    $("#mysql-existing-db-submit").show().prop("disabled", false);                    
+                    $("#mysql-existing-db-submit").show().prop("disabled", false);
                     $("#db_loader").hide();
-                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                    $("#information-icon").css("display", "inline");
+                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                     changeFooterPostion();
                 }
             }
@@ -2050,15 +1987,14 @@ $(document).on("click", "#oracle-existing-db-submit", function () {
     $(".has-error").removeClass("has-error");
     $(".validation-txt-errors").hide();
     $(".validation-errors").html("");
-    $("#information-icon").css("display", "none");
     DomResize();
     var canProceed = $("#oracle-content-holder").valid();
     if ($("#database-name-oracle").val() == "" || $("#oracle-dsn").val == "") {
         if ($("#database-name-oracle").val() == "") {
-            $("#database-error-oracle").html("[[[Please select a database]]]").show();            
+            $("#database-error-oracle").html("[[[Please select a database.]]]").show();
         }
         if ($("#oracle-dsn").val() == "") {
-            $("#oracle-dsn-validate").html("[[[Please select DSN]]]").show();            
+            $("#oracle-dsn-validate").html("[[[Please select DSN.]]]").show();
         }
 
         return;
@@ -2066,7 +2002,7 @@ $(document).on("click", "#oracle-existing-db-submit", function () {
     if (/^[a-zA-Z_0-9@~!#\$\^&()+=\-,\.\/\{\} ]+$/.test($("#database-name-oracle").val()) && !/^[\s]+|[\s]+$/g.test($("#database-name-oracle").val())) {
         canProceed = true;
     } else {
-        $("#database-error-oracle").html("[[[Please avoid special characters, Leading and Trailing spaces]]]").show();        
+        $("#database-error-oracle").html("[[[Please avoid special characters (<>%*?\":`;'[]|\\) and leading and trailing spaces.]]]").show();
         return;
     }
     if (canProceed) {
@@ -2079,7 +2015,7 @@ $(document).on("click", "#oracle-existing-db-submit", function () {
         var adminPassword = $("#admin-password").val();
         var clientUserName = $("#database-name-oracle").val();
         var clientPassword = $("#database-password").val();
-        var prefix = $("#table-prefix-oracle").val() === "" ? "SyncRS_" : $("#table-prefix-oracle").val();
+        var prefix = $("#table-prefix-oracle").val() === "" ? $("#ums-table-prefix").val() : $("#table-prefix-oracle").val();
         window.databaseName = $("#database-name-oracle").val();
         doAjaxPost("POST", connectOracleDatabaseUrl,
             {
@@ -2102,9 +2038,10 @@ $(document).on("click", "#oracle-existing-db-submit", function () {
                                 }
                                 html += "</ol>";
                                 $(".message-content").html(html);
-                                $("#duplicate-table-list").ejDialog("open");                               
+                                $("#duplicate-table-list").ejDialog("open");
+                                $(".e-widget-content").addClass("add-scroller");
                                 $("#oracle-existing-db-submit").prop("disabled", false);
-                            } 
+                            }
                             else if (!result.Data.key && items.length <= 0) {
                                 doAjaxPost("POST", generateSQLTablesUrl,
                                     {
@@ -2117,9 +2054,9 @@ $(document).on("click", "#oracle-existing-db-submit", function () {
                                             $("ul li[data-move-to='startup-page-two']").addClass("selected");
                                             $("#db_loader").hide();
                                             $("#system-settings-db-selection-container").hide();
+                                            window.connectionString = result.Data.value;
                                             StorageSettings();
                                             $("#txt-username").focus();
-                                            window.connectionString = result.Data.value;
                                             delete window.serverName;
                                             delete window.login;
                                             delete window.password;
@@ -2127,33 +2064,30 @@ $(document).on("click", "#oracle-existing-db-submit", function () {
                                         } else {
                                             $("#oracle-existing-db-submit").prop("disabled", false);
                                             $("#db_loader").hide();
-                                            $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                                            $("#information-icon").css("display", "inline");
+                                            $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                                             changeFooterPostion();
                                         }
                                         changeFooterPostion();
                                         $("#startup-page-conatiner").css("height", $(document).height());
                                     }
                                 );
-                                $(".db-connect-outer-container").find(".title").html("[[[Database Creation]]]!");
+                                $(".db-connect-outer-container").find(".title").html("[[[Database Creation!]]]");
                                 $("#database-name-oracle").focus();
-                            }else {
+                            } else {
                                 hideWaitingPopup($(".startup-page-conatiner"));
                                 $("#db_config_generate, #oracle-config-submit").hide();
-                                $("#oracle-existing-db-submit").show().prop("disabled", false);                                
+                                $("#oracle-existing-db-submit").show().prop("disabled", false);
                                 $("#db_loader").hide();
-                                $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                                $("#information-icon").css("display", "inline");
+                                $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                                 changeFooterPostion();
                             }
                         });
                 } else {
                     hideWaitingPopup($(".startup-page-conatiner"));
                     $("#db_config_generate, #oracle-config-submit").hide();
-                    $("#oracle-existing-db-submit").show().prop("disabled", false);                    
+                    $("#oracle-existing-db-submit").show().prop("disabled", false);
                     $("#db_loader").hide();
-                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                    $("#information-icon").css("display", "inline");
+                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                     changeFooterPostion();
                 }
             }
@@ -2166,17 +2100,16 @@ $(document).on("click", "#postgresql-existing-db-submit", function () {
     $(".has-error").removeClass("has-error");
     $(".validation-txt-errors").hide();
     $(".validation-errors").html("");
-    $("#information-icon").css("display", "none");
     DomResize();
     var canProceed = $("#postgresql-content-holder").valid();
     if ($("#database-name-postgresql").val() == "") {
-        $("#database-error-postgresql").html("[[[Please select a database]]]").show();        
+        $("#database-error-postgresql").html("[[[Please select a database]]]").show();
         return;
     }
     if (/^[a-zA-Z_0-9@~!#\$\^&()+=\-,\.\/\{\} ]+$/.test($("#database-name-postgresql").val()) && !/^[\s]+|[\s]+$/g.test($("#database-name-postgresql").val())) {
         canProceed = true;
     } else {
-        $("#database-error-postgresql").html("[[[Please avoid special characters, Leading and Trailing spaces]]]").show();        
+        $("#database-error-postgresql").html("[[[Please avoid special characters (<>%*?\":`;'[]|\\) and leading and trailing spaces.]]]").show();
         return;
     }
     if (canProceed) {
@@ -2188,7 +2121,7 @@ $(document).on("click", "#postgresql-existing-db-submit", function () {
         window.password = $("#postgresql-password-db").val();
         var databaseType = $("#database-type").val();
         window.port = $("#postgresql-port").val();
-        var prefix = $("#table-prefix-postgresql").val() === "" ? "SyncRS_" : $("#table-prefix-postgresql").val();
+        var prefix = $("#table-prefix-postgresql").val() === "" ? $("#ums-table-prefix").val() : $("#table-prefix-postgresql").val();
         window.databaseName = $("#database-name-postgresql").val();
         doAjaxPost("POST", connectDatabaseUrl,
             {
@@ -2212,7 +2145,8 @@ $(document).on("click", "#postgresql-existing-db-submit", function () {
                                 }
                                 html += "</ol>";
                                 $(".message-content").html(html);
-                                $("#duplicate-table-list").ejDialog("open");                               
+                                $("#duplicate-table-list").ejDialog("open");
+                                $(".e-widget-content").addClass("add-scroller");
                                 $("#postgresql-existing-db-submit").prop("disabled", false);
                             } else if (!result.Data.key && items.length <= 0) {
                                 doAjaxPost("POST", generateSQLTablesUrl,
@@ -2226,9 +2160,9 @@ $(document).on("click", "#postgresql-existing-db-submit", function () {
                                             $("ul li[data-move-to='startup-page-two']").addClass("selected");
                                             $("#db_loader").hide();
                                             $("#system-settings-db-selection-container").hide();
+                                            window.connectionString = result.Data.value;
                                             StorageSettings();
                                             $("#txt-username").focus();
-                                            window.connectionString = result.Data.value;
                                             delete window.serverName;
                                             delete window.login;
                                             delete window.password;
@@ -2236,33 +2170,30 @@ $(document).on("click", "#postgresql-existing-db-submit", function () {
                                         } else {
                                             $("#postgresql-existing-db-submit").prop("disabled", false);
                                             $("#db_loader").hide();
-                                            $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                                            $("#information-icon").css("display", "inline");
+                                            $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                                             changeFooterPostion();
                                         }
                                         changeFooterPostion();
                                         $("#startup-page-conatiner").css("height", $(document).height());
                                     }
                                 );
-                                $(".db-connect-outer-container").find(".title").html("[[[Database Creation]]]!");
+                                $(".db-connect-outer-container").find(".title").html("[[[Database Creation!]]]");
                                 $("#database-name-postgresql").focus();
                             } else {
                                 hideWaitingPopup($(".startup-page-conatiner"));
                                 $("#db_config_generate, #postgresql-config-submit").hide();
-                                $("#postgresql-existing-db-submit").show().prop("disabled", false);                                
+                                $("#postgresql-existing-db-submit").show().prop("disabled", false);
                                 $("#db_loader").hide();
-                                $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                                $("#information-icon").css("display", "inline");
+                                $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                                 changeFooterPostion();
                             }
                         });
                 } else {
                     hideWaitingPopup($(".startup-page-conatiner"));
                     $("#db_config_generate, #postgresql-config-submit").hide();
-                    $("#postgresql-existing-db-submit").show().prop("disabled", false);                    
+                    $("#postgresql-existing-db-submit").show().prop("disabled", false);
                     $("#db_loader").hide();
-                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "inline");
-                    $("#information-icon").css("display", "inline");
+                    $("#connection-validation").find(".validation-errors").html(result.Data.value).css("display", "block");
                     changeFooterPostion();
                 }
             }
@@ -2276,7 +2207,7 @@ function CloseDuplicateListBox() {
 
 $(document).on("change", "#mysql-odbc-dsn", function () {
     if ($("#mysql-odbc-dsn").val() != "") {
-        $("#dsn-validate").html("").show();        
+        $("#dsn-validate").html("").show();
     }
 });
 
@@ -2320,7 +2251,7 @@ $(document).on("click", function (e) {
 $(document).on("click", "#oracle-odbc-dropdown button.dropdown-toggle", function () {
     var dsn = $("#dsn-count").val();
     if (dsn <= 0) {
-        $("#oracle-odbc-dropdown ul").html("<li class='no-results active' title='[[[no dsn found]]]' style='display: list-item;'>[[[No dsn found]]]</li>");
+        $("#oracle-odbc-dropdown ul").html("<li class='no-results active' title='[[[No DSN found]]]' style='display: list-item;'>[[[No DSN found]]]</li>");
         $("#database-name-oracle").selectpicker("refresh");
     }
 });
@@ -2328,7 +2259,7 @@ $(document).on("click", "#oracle-odbc-dropdown button.dropdown-toggle", function
 $(document).on("click", "#mysql-odbc-dropdown button.dropdown-toggle", function () {
     var dsn = $("#dsn-count").val();
     if (dsn <= 0) {
-        $("#mysql-odbc-dropdown ul").html("<li class='no-results active' title='[[[no dsn found]]]' style='display: list-item;'>[[[No dsn found]]]</li>");
+        $("#mysql-odbc-dropdown ul").html("<li class='no-results active' title='[[[No DSN found]]]' style='display: list-item;'>[[[No DSN found]]]</li>");
         $("#database-name-mysql").selectpicker("refresh");
     }
 });
@@ -2344,14 +2275,6 @@ $(document).on("click", ".css-radio", function () {
 });
 $(document).on("click", "#database-type-dropdown, .proceed-button", function () {
     $(".css-radio").siblings("label").addClass("notransition");
-});
-
-$(document).on("click", "#include-no", function () {
-    $("#delete-resource-info").css("display", "none");
-});
-
-$(document).on("click", "#include-yes", function () {
-    $("#delete-resource-info").css("display", "block");
 });
 
 function StorageSettings() {

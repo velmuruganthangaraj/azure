@@ -19,8 +19,10 @@ input::-ms-reveal {
 
 ul#password_policy_rules {
     font-size: @info-font-size;
-    position: absolute;
+    position: relative;
     text-align: left;
+    margin: unset !important;
+    padding-top: 5px !important;
 }
 
 .placeholder {
@@ -168,7 +170,7 @@ body {
                     .form-area {
                         margin-top: 30px;
 
-                        #password,
+                        #new-password,
                         #re-password {
                             height: @textbox-lg-height;
                         }
@@ -356,10 +358,6 @@ body {
                             font-size: 16px !important;
                         }
 
-                        #password_policy_rules {
-                            right: -1% !important;
-                        }
-
                         #windows-login {
                             margin-left: 120px !important;
                         }
@@ -369,7 +367,7 @@ body {
                         }
 
                         .form-area {
-                            #password,
+                            #new-password,
                             #re-password {
                                 height: @textbox-height;
                             }
@@ -419,5 +417,17 @@ body {
 @media (max-width: 366px) {
     #copyrightinfo {
         font-size: 9px !important;
+    }
+}
+
+@media (max-width: 1400px) {
+    #password_policy_rules {
+        white-space: unset !important;
+    }
+}
+
+@media screen and (min-width: 1366px) , screen and (min-height: 768px) {
+    .login-container {
+        margin-bottom: 75px !important;
     }
 }

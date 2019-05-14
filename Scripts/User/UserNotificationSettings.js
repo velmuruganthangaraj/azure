@@ -7,8 +7,6 @@ $(document).ready(function () {
         updatedNotificationSettings = {
             EnableSystemNotification: parseInt($("#system-notify-status").val()),
             EnableMailNotification: parseInt($("#mail-notify-status").val()),
-            EnableAutoWatchOfCommentsOfCreatedItems: parseInt($("#autowatch-created-comment-status").val()),
-            EnableAutoWatchOfCommentsOfAccessibleItems: parseInt($("#autowatch-access-comment-status").val())
         };
         $(".notification-disabled").attr("disabled", false).selectpicker("refresh");
         $(".selectpicker").addClass("enable");
@@ -21,23 +19,19 @@ $(document).ready(function () {
         notificationSettings = {
             EnableSystemNotification: parseInt($("#system-notify-status").val()),
             EnableMailNotification: parseInt($("#mail-notify-status").val()),
-            EnableAutoWatchOfCommentsOfCreatedItems: parseInt($("#autowatch-created-comment-status").val()),
-            EnableAutoWatchOfCommentsOfAccessibleItems: parseInt($("#autowatch-access-comment-status").val())
         };
         $("#content-area").ejWaitingPopup("show");
         $.ajax({
             type: "POST",
-            url: "/user/savenotificationsettings",
+            url: saveUserNotificationSettingsUrl,
             data: { notificationSettings: JSON.stringify(notificationSettings) },
             success: function (result) {
                 if (result.Status) {
                     updatedNotificationSettings = {
                         EnableSystemNotification: parseInt($("#system-notify-status").val()),
                         EnableMailNotification: parseInt($("#mail-notify-status").val()),
-                        EnableAutoWatchOfCommentsOfCreatedItems: parseInt($("#autowatch-created-comment-status").val()),
-                        EnableAutoWatchOfCommentsOfAccessibleItems: parseInt($("#autowatch-access-comment-status").val())
                     };
-                    SuccessAlert("[[[Update Notification Settings]]]", "[[[Notification settings has been updated successfully.]]]", 7000);
+                    SuccessAlert("[[[Update Notification Settings]]]", "[[[Notification settings have been updated successfully.]]]", 7000);
                 }
                 else {
                     WarningAlert("[[[Update Notification Settings]]]", "[[[Error while updating notification settings.]]]", 7000);

@@ -4,25 +4,39 @@
     .admin-page-template();
 }
 
-
 @media screen and (min-width: 1400px) {
     .admin-page-container {
         .admin-page-header {
-            .back-button{
+            .back-button {
                 font-size: @app-large-text-size + 8;
             }
+
             .page-title {
                 font-size: @app-large-text-size + 2;
             }
+
             .page-description {
                 font-size: @app-large-text-size;
             }
-            .header{
+
+            .header {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
         }
+        .panel-group {
+            .panel {
+                margin-top:60px;                
+            .panel-heading{
+                .panel-title{
+                    font-size: 14px;
+                    font-weight: 700;
+                    padding-left: 0px;
+                }
+            }
+            }
+            }
         .admin-page-body {
             font-size: @app-large-text-size;
 
@@ -35,7 +49,8 @@
                 font-size: @app-large-text-size;
                 height: @textbox-lg-height;
             }
-            .validation-errors, .validation-message{
+
+            .validation-errors, .validation-message {
                 font-size: @validation-large-text-size;
             }
 
@@ -51,5 +66,5 @@
                 }
             }
         }
-    }   
+    }
 }

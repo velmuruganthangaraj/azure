@@ -1,10 +1,13 @@
-.MakeFlyNewGroup, .MakeFlyDeleteUsers {
+@import (reference) "Mixins.less";
+
+.user-add-group, .user-delete-button {
     cursor: pointer;
     float: right;
 }
 
 #userTitle {
     border-bottom: 1px solid #B8B8B8;
+    margin-bottom: 25px;
 
     #userTitleWithCount {
         font-size: 18px;
@@ -44,7 +47,7 @@
         float: left;
     }
 
-    .modal-footer.dialogFooter {
+    .modal-footer.dialog-footer {
         float: left;
     }
 
@@ -59,11 +62,10 @@
 }
 
 #grid_validation_messages {
-
     .validation-message {
         display: none;
         float: right;
-        color: red;
+        color: @validation-text-color;
         width: 100%;
         padding-top: 6px;
     }
@@ -73,7 +75,7 @@
     }
 }
 
-#NewAddGroup, #ExistingAddGroup {
+#addnew-group, #add-existing-group {
     margin: 0 17px;
 }
 
@@ -203,12 +205,12 @@
     width: 200px;
 }
 
-.DisplayNone, #empty_validation {
+.display-none, #empty_validation {
     display: none;
 }
 
 .form-inline {
-    #ADDUSER {
+    #add-user {
         left: 341px;
         font-size: 12px;
         margin-top: 43px;
@@ -265,7 +267,7 @@
 #user_import_validation, .user-import-validation {
     color: #a94442;
     cursor: pointer;
-    float:left;
+    float: left;
 }
 
 .group-import-validation {
@@ -277,11 +279,11 @@
     display: block;
     float: left;
     height: 20px;
-    color: red;
+    color: @validation-text-color;
     width: 100%;
 }
 
-#Grid {
+#user_import_grid {
     .e-gridcontent {
         height: auto !important;
     }
@@ -291,7 +293,7 @@
     margin-bottom: 30px;
 }
 
-#grid_validation_messages {
+#grid-validation-messages {
     float: left;
     margin-top: 0;
     text-align: center;
@@ -299,12 +301,12 @@
     margin-bottom: 3px;
     height: 20px;
 
-    #grid_nodata_validation, #grid_error_validation {
+    #grid-nodata-validation, #grid-error-validation {
         color: #a94442;
         display: none;
     }
 
-    #grid_validation {
+    #grid-validation {
         color: #3c763d;
         display: none;
     }
@@ -314,18 +316,16 @@
     border-radius: 5px;
     cursor: pointer;
     display: table;
-    height: 25px;
     text-align: center;
-    width: 90px;
 }
 
-#AddUserInGroup {
+#add-user-in-group {
     float: right;
     display: none;
-	margin-bottom:10px;
+    margin-bottom: 10px;
 }
 
-.MakeFlyDeleteUsers {
+.user-delete-button {
     margin-left: 10px;
 }
 
@@ -340,7 +340,7 @@
     margin-top: 4px;
 }
 
-#user_add_dialog_wrapper {
+#modal {
     border: none;
 
     #user_add_dialog_title {
@@ -353,26 +353,26 @@
     }
 }
 
-#user_delete_confirmation #PopupContainer {
+#user-delete-confirmation #popup-container {
     height: 100%;
 
-    .dialogFooter {
+    .dialog-footer {
         bottom: 0;
         position: absolute;
     }
 }
 
-#singleuser_delete_confirmation #PopupContainer {
+#singleuser-delete-confirmation #popup-container {
     height: 100%;
 
-    .dialogFooter {
+    .dialog-footer {
         bottom: 0;
         position: absolute;
     }
 }
 
-#PopupContainer {
-    .dialogFooter {
+#popup-container {
+    .dialog-footer {
         background: #e5e5e5 none repeat scroll 0 0;
         border-top: 1px solid #bbbbbb;
         margin-top: 26px;
@@ -382,7 +382,7 @@
             width: 100%;
             text-align: center;
 
-            .PopupClose {
+            .popup-close {
                 float: none;
             }
         }
@@ -401,9 +401,10 @@
 .useradd_validation_messages {
     color: #a94442;
     margin-bottom: -20px;
+    font-size: 12px;
 }
 
-.validationMessage {
+.validation-message {
     margin-left: 13px;
 }
 
@@ -415,7 +416,7 @@
         left: -160px;
         padding: 0px;
         margin: 0px;
-        width: 185px;
+        width: 190px;
 
         a {
             padding: 5px 10px;
@@ -444,8 +445,6 @@
     padding: 6px 0px;
 }
 
-
-
 #page_content_Div {
     form {
         div {
@@ -465,6 +464,7 @@
             color: #7f7f7f;
         }
     }
+
     .azure-ad-indication {
         float: left;
         padding: 10px 0 0 0;
@@ -492,18 +492,19 @@
     padding: 9px 12px;
 }
 
-.import-area {
+/*.import-area {
     padding-bottom: 10px;
     border-bottom: 1px solid #E2E2E2;
-}
+}*/
 
 .directory-path {
-    margin-right:5px;
+    margin-right: 5px;
 }
 
 .back-button {
     float: left;
     padding: 6px 10px 0 0;
+    //background-color:@primary-color;
 }
 
 .group-validation-icon {
@@ -516,8 +517,8 @@
     width: 16px;
 }
 
-#user_add_confirmation {
-    .dialogBody {
+#user-add-dialog-wrapper {
+    .dialog-body {
         background: white;
     }
 
@@ -529,25 +530,26 @@
         float: left;
         margin: 0;
 
-        .PopupClose {
+        .popup-close {
             float: right;
         }
 
-        .PopupTitle {
+        .popup-title {
             font-size: 20px;
             padding: 0px 0px;
         }
 
-        .Head-icon {
+        .head-icon {
             font-size: 20px;
             padding: 0px 3px;
         }
     }
 
-    .dialogFooter {
+    .dialog-footer {
         background: #e5e5e5 none repeat scroll 0 0;
         border-top: 1px solid #bbbbbb;
         padding: 13px 0;
+        margin-right: 20px;
         margin-top: 50px;
         width: 498px;
 
@@ -555,17 +557,15 @@
             width: 100%;
             text-align: center;
 
-            .PopupClose {
+            .popup-close {
                 float: none;
             }
         }
     }
 }
 
-
-
 #searchArea {
-    right: 30px;
+    position: relative;
     margin-left: 10px;
     float: right;
 
@@ -590,6 +590,7 @@
         padding-left: 5px;
         height: 30px;
         color: #a7a9ac;
+        line-height: 23px;
     }
 
     .su-search {
@@ -604,6 +605,21 @@
         border-radius: 0px 4px 4px 0px;
         background-color: #FFF;
         cursor: pointer;
+    }
+
+    .close-icon {
+        background-color: #FFF;
+        border-width: 1px 1px 1px 0;
+        border: 1px solid #e4e4e4;
+        border-left: 0;
+        border-radius: 0px 4px 4px 0px;
+        display: none;
+        float: left;
+        height: 35px;
+        margin: 0;
+        padding-left: 4px;
+        padding-top: 9px;
+        width: 25px;
     }
 }
 
@@ -676,7 +692,15 @@ input.upload-btn {
 .synchronize-users, .synchronize-azure-users {
     float: right;
     margin-left: 10px;
-	margin-bottom:10px;
+    margin-bottom: 10px;
+}
+
+#user-delete-confirmation-wrapper {
+    #popup-container {
+        .dialog-footer {
+            margin-top: 33px;
+        }
+    }
 }
 
 ul.pull-right {
@@ -690,4 +714,8 @@ ul.pull-right {
 
 .tooltip-inner {
     max-width: 400px !important;
+}
+
+.back-navigation {
+    color: @primary-color;
 }

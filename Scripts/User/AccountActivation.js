@@ -1,11 +1,11 @@
 ﻿$(document).ready(function () {
     $("#Save_Activate").on('click', function () {
         if ($("#new_password").val() == '') {
-            $("#password_validate").html("Please enter password");
+            $("#password_validate").html("[[[Please enter password.]]]");
             return;
         }
         if ($("#new_password").val() != $("#Confirm_password").val()) {
-            $("#re_password_validate").html("Passwords mismatch");
+            $("#re_password_validate").html("[[[Passwords mismatch.]]]");
             return;
         }
         $.ajax({
@@ -18,7 +18,17 @@
             }
         });
     });
-    $(".showHidePassword").on('mousedown', function () {
+    if (window.innerWidth < 1041) {
+        $(".showHidePassword").on("click", function () {
+            if ($(this).siblings("input").is(":password")) {
+                $(this).siblings("input").attr('type', 'text');
+            }
+            else {
+                $(this).siblings("input").attr('type', 'password');
+            }
+        });
+    }
+    $(".showHidePassword").on("mousedown", function () {
         if ($(this).siblings("input").is(":password")) {
             $(this).siblings("input").attr('type', 'text');
         }
@@ -26,7 +36,8 @@
             $(this).siblings("input").attr('type', 'password');
         }
     });
-    $(".showHidePassword").on('mouseup', function () {
+
+    $(".showHidePassword").on("mouseup", function () {
         if ($(this).siblings("input").is(":password")) {
             $(this).siblings("input").attr('type', 'text');
         }

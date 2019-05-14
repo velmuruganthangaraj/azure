@@ -4,12 +4,12 @@
 }
 
 <!DOCTYPE html>
-<html class="report-server">
+<html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
     <title>
-        [[[Notifications]]]
+        Notifications
     </title>
     @Styles.Render("~/styles/notification-listing-partial")
     @Scripts.Render("~/scripts/notification-listing-partial")
@@ -71,70 +71,8 @@
             }
             $scope.bindDisplayText = function(notificationContent) {
                 var appendComment = notificationContent.Url.indexOf("?")>0 ? "&comment=" : "?comment=";
-                var viewUrl = "@Url.Action("Index", "FileRender")";
-                var embedUrl = notificationContent.Url.indexOf("/embed/")> 0 ? notificationContent.Url.replace("/embed/","/") : notificationContent.Url.replace("/reports",viewUrl);
-                var displayText = "<span class='notification-picture-menu'><img class = 'img-circle' src='@Url.Content("~/Content/Images/ProfilePictures/default-32.png")' width='32' height='32' data-actual-image='@Url.Action("Avatar", "User")?Username=" + notificationContent.DoneById + "&ImageSize=32' /></span><span class='notification-text-content'>";
-                switch (notificationContent.LogCategory) {
-                    case @((int) LogCategory.Comment):
-                        switch (notificationContent.LogTypeId)
-                        {
-                            case @((int) ItemCommentLogType.Added):
-                                displayText += (notificationContent.DoneById == notificationContent.CurrentUserId)
-                                    ? "[[[You have]]]"
-                                    : "<span>" + notificationContent.DoneByFullName + "</span>" +
-                                      " [[[has]]]";
-                                displayText += " [[[commented on the]]] ";
-                                displayText += "Report";
-                                displayText+=" - ";
-                                break;
-                            case @((int) ItemCommentLogType.Edited):
-                            case @((int) ItemCommentLogType.Deleted):
-                                displayText += (notificationContent.DoneById == notificationContent.CurrentUserId)
-                                    ? "[[[You have]]] "
-                                    : "<span>" + notificationContent.DoneByFullName + "</span>" +
-                                      " [[[has]]] ";
-                                displayText += notificationContent.LogTypeId == @((int) ItemCommentLogType.Edited) ? "edited" : "deleted";
-                                displayText += (notificationContent.CommentOwner == notificationContent.CurrentUserId)
-                                    ? " [[[your comment on the]]] "
-                                    : " [[[a comment on the]]] ";
-                                displayText += "Report";
-                                displayText += " - ";
-                                break;
-                            case @((int) ItemCommentLogType.UserMention):
-                                displayText += (notificationContent.DoneById == notificationContent.CurrentUserId)
-                                    ? "<span>"+notificationContent.DoneByFullName+"</span>" +"[[[ has mentioned you in the comment on the]]] "
-                                    : "<span>" + notificationContent.DoneByFullName+ "</span>" +
-                                      " [[[has mentioned you in the comment on the]]] ";
-                                displayText += "Report";
-                                displayText += " - ";
-                                break;
-                            case @((int) ItemCommentLogType.Replied):
-                                displayText += (notificationContent.DoneById == notificationContent.CurrentUserId)
-                                    ? "[[[You have]]] "
-                                    : "<span>" + notificationContent.DoneByFullName + "</span>" +
-                                      " [[[has]]] ";
-                                displayText += (notificationContent.ParentCommentDetail.UserId ==
-                                                notificationContent.CurrentUserId)
-                                    ? " [[[replied to your comment on the]]] "
-                                    : " [[[replied to]]] " + notificationContent.ParentCommentDetail.UserDisplayName +
-                                      "'s [[[comment on the]]] ";
-                                displayText += "Report";
-                                displayText += " - ";
-                                break;
-                        }
-                        switch (notificationContent.ItemTypeId)
-                        {
-                            case @((int) ItemType.Report):
-                                displayText += "<a target='_blank' href='" + embedUrl;
-                                displayText +=  appendComment + notificationContent.TargetFieldId;
-                                displayText += "'>" + notificationContent.ItemName +"</a>";
-                                break;
-                            default:
-                                displayText += notificationContent.ItemName;
-                                break;
-                        }
-                        break;
-                }
+                var displayText = "<span class='notification-picture-menu'><img class = 'img-circle' src='@Url.Content("~/Content/Images/ProfilePictures/default-32.png")' width='32' height='32' data-actual-image='/@GlobalAppSettings.SystemSettings.Language/@Url.Action("Avatar", "User")?Username=" + notificationContent.DoneById + "&ImageSize=32' /></span><span class='notification-text-content'>";
+                
                 displayText += "</span>";
                 return $sce.trustAsHtml(displayText);;
             }
@@ -237,7 +175,7 @@
                                         <span ng-bind="returnString('[[[Minutes ago]]]')"></span>
                                     </span>
                                     <span ng-if="timerMinutes+item.MinutesAgo!=0 && timerMinutes+item.MinutesAgo==1" class="notification-period">
-                                        <span ng-bind="returnString('[[[A minutes ago]]]')" class="timer-class"></span>
+                                        <span ng-bind="returnString('[[[A minute ago]]]')" class="timer-class"></span>
                                     </span>
                                 </span>
                                 <span ng-if="item.IsToday && timerMinutes+item.MinutesAgo>=60" class="notification-period">

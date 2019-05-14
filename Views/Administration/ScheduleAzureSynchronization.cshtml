@@ -23,7 +23,7 @@
 <input type="hidden" value="@GlobalAppSettings.SystemSettings.DateFormat" id="dateFormat" />
     <div id="schedule-synchronization-container" class="row admin-page-container">
         <div id="schedule-header" class="col-md-12 import-area admin-page-header pull-left">
-            <a href="@Url.Action("user-directory-settings","administration")" title="[[[User Directory Settings]]]" class="back-button pull-left">
+            <a href="@Url.Action("user-directory-settings","administration")" title="[[[Active Directory settings]]]" class="back-button pull-left">
                 <i class="su su-arrow-back back-navigaion img-size"> </i>
             </a>
             <hgroup>
@@ -31,7 +31,6 @@
                 <h5 class="page-description">[[[Schedule to synchronize users and groups with Azure AD]]]</h5>
             </hgroup>
         </div>
-
         <div class="col-sm-12 col-xs-12 no-padding schedule-info no-margin">
             <div id="enable-checkbox" class="pad-enable display-inline">
                 @Html.CheckBox("enable-schedule", new { @class = "material-checkbox  pull-left" })
@@ -48,7 +47,6 @@
                 </div>
             </div>
         </div>
-
         <div id="schedule-panel" class="admin-page-body col-lg-12">
             <div class="col-sm-12 col-xs-12 no-padding">
                 <div class="col-sm-2 col-xs-2">
@@ -67,8 +65,11 @@
                         <div class="pull-left mar-top">
                             @Html.Label("every-x-hours", "[[[Every]]]", new { @class = "pointer normal-font notransition" })
                         </div>
-                        <div class="clspad pull-left top-margin"><input type="text" class="time-format pull-left" id="every-x-hours-value" /></div>
-                        <div class="clspad pull-left"><label for="every-x-hours" class="pointer normal-font pull-left" id="time-format">HH:MM</label></div>                        
+                        <div class="clspad pull-left top-margin"><input type="text" class="time-format pull-left validation-input col-sm-4 col-xs-4 change-event" id="every-x-hours-value" /></div>
+                        <div class="clspad pull-left"><label for="every-x-hours" class="pointer normal-font pull-left" id="time-format">HH:MM</label></div>
+                        <div>
+                            <span class="frequency-error">[[[Please enter greater than 3 minutes]]]</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -81,10 +82,10 @@
                         <div class="pull-left mar-top">
                             @Html.RadioButton("daily-recurrence-type", " ", new { @class = "css-radio", @checked = "checked", id = "daily-every-x-days" })
                             @Html.Label("daily-every-x-days", "[[[Every]]]", new { @class = "pull-left app-radio-label normal-font" })
-                            <div class="clspad pull-left  mar-top textbox-pad">
+                            <div class="pull-left mar-top textbox-pad">
                                 @Html.TextBox("every-x-days", null, new { @class = "form-control pull-left numeric-text-box" })
                             </div>
-                            <div class="clspad pull-left margin">
+                            <div class="clspad pull-left month-margin">
                                 @Html.Label("daily-week-days", "[[[day(s)]]]", new { @class = "pull-left app-textbox-label" })
                             </div>
                         </div>
@@ -113,19 +114,19 @@
                     <div class="col-sm-10 col-xs-10 " id="days-check-box">
                         <div id="enable-sunday" class="col-sm-2 col-xs-2 no-padding no-margin">
                             @Html.CheckBox("sun", false, new { @class = "material-checkbox  schedule-checkbox" })
-                            @Html.Label("sun", "[[[Sunday]]]", new { @class = "clspadleft normal-font" })
+                            @Html.Label("sun", "[[[Sunday]]]", new { @class = "clspadleft app-checkbox-label normal-font" })
                         </div>
                         <div id="enable-monday" class="col-sm-2 col-xs-2 no-padding no-margin">
                             @Html.CheckBox("mon", false, new { @class = "material-checkbox  schedule-checkbox" })
-                            @Html.Label("mon", "[[[Monday]]]", new { @class = "clspadleft normal-font" })
+                            @Html.Label("mon", "[[[Monday]]]", new { @class = "clspadleft app-checkbox-label normal-font" })
                         </div>
                         <div id="enable-tuesday" class="col-sm-2 col-xs-2 no-padding no-margin">
                             @Html.CheckBox("tues", false, new { @class = "material-checkbox  schedule-checkbox" })
-                            @Html.Label("tues", "[[[Tuesday]]]", new { @class = "clspadleft normal-font" })
+                            @Html.Label("tues", "[[[Tuesday]]]", new { @class = "clspadleft app-checkbox-label normal-font" })
                         </div>
                         <div id="enable-wednesday" class="col-sm-2 col-xs-3 no-padding no-margin">
                             @Html.CheckBox("wed", false, new { @class = "material-checkbox  schedule-checkbox" })
-                            @Html.Label("wed", "[[[Wednesday]]]", new { @class = "clspadleft normal-font" })
+                            @Html.Label("wed", "[[[Wednesday]]]", new { @class = "clspadleft app-checkbox-label normal-font" })
                         </div>
                     </div>
                 </div>
@@ -134,15 +135,15 @@
                     <div class="col-sm-10 col-xs-10" id="days-check-box">
                         <div id="enable-thursday" class="col-sm-2 col-xs-2 no-padding no-margin">
                             @Html.CheckBox("thu", false, new { @class = "material-checkbox  schedule-checkbox" })
-                            @Html.Label("thu", "[[[Thursday]]]", new { @class = "clspadleft normal-font" })
+                            @Html.Label("thu", "[[[Thursday]]]", new { @class = "clspadleft app-checkbox-label normal-font" })
                         </div>
                         <div id="enable-friday" class="col-sm-2 col-xs-2 no-padding no-margin">
                             @Html.CheckBox("fri", false, new { @class = "material-checkbox  schedule-checkbox" })
-                            @Html.Label("fri", "[[[Friday]]]", new { @class = "clspadleft normal-font" })
+                            @Html.Label("fri", "[[[Friday]]]", new { @class = "clspadleft app-checkbox-label normal-font" })
                         </div>
                         <div id="enable-saturday" class="col-sm-2 col-xs-2 no-padding no-margin">
                             @Html.CheckBox("sat", false, new { @class = "material-checkbox  schedule-checkbox" })
-                            @Html.Label("sat", "[[[Saturday]]]", new { @class = "clspadleft normal-font" })
+                            @Html.Label("sat", "[[[Saturday]]]", new { @class = "clspadleft app-checkbox-label normal-font" })
                         </div>
                         <div class="col-sm-4 col-xs-4 no-padding no-margin no-float validation-message" id="weekly-day-error-container">
                             <div id="weekly-days-validator"></div>
@@ -183,7 +184,7 @@
                         <div class="pull-left">
                             @Html.Label("monthly-dow", "[[[of every]]]", new { @class = "clspad pull-left month-margin app-textbox-label" })
                             <div class="monthly-select pull-left">
-                                @Html.TextBox("monthly-dow-every-x-months", null, new { @class = "clspad numeric-text-box pull-left" })
+                                @Html.TextBox("monthly-dow-every-x-months", null, new { @class = "numeric-text-box pull-left" })
                             </div>
                             @Html.Label("monthly-dow", "[[[month(s)]]]", new { @class = "clspad pull-left month-margin app-textbox-label" })
                         </div>
@@ -196,7 +197,7 @@
                         @Html.Label("[[[Recurs]]]", new { @class = "app-textbox-label display label-font" })
                     </div>
                     <div class="col-sm-10 col-xs-10">
-                        @Html.Label(" ", "[[[Every]]]", new { @class = "pull-left app-textbox-label" })
+                        @Html.Label(" ", "[[[Every]]]", new { @class = "pull-left app-textbox-label normal-font" })
                         <div class="monthly-select pull-left">
                             @Html.TextBox("every-x-years", null, new { @class = "form-control numeric-text-box" })
                         </div>
@@ -208,10 +209,10 @@
                     <div class="col-sm-10 col-xs-10">
                         @Html.RadioButton("yearly", " ", new { @class = "css-radio", @checked = "checked", id = "yearly" })
                         @Html.Label("yearly", "[[[The]]]", new { @class = "pull-left app-radio-label normal-font" })
-                        <div class="pull-left daybox-width">
-                            <select id="yearly-month" class="select-picker schedule schedule-dropdown monthly-select monthbox-width" data-width="160px" data-size="5"></select>
+                        <div class="pull-left">
+                            <select id="yearly-month" class="select-picker schedule schedule-dropdown monthly-select no-padding left-margin monthbox-width" data-width="160px" data-size="5"></select>
                         </div>
-                        <div class="monthly-select pull-left">
+                        <div class="monthly-select left-margin pull-left">
                             @Html.TextBox("yearly-day", null, new { @class = "form-control pull-left numeric-text-box" })
                         </div>
                     </div>
@@ -233,7 +234,7 @@
                         </div>
                         <div class="no-margin i-search-fields  pull-left">
                             @Html.Label("yearly-dow", "[[[of]]]", new { @class = "clspad pull-left month-margin app-textbox-label" })
-                            <div class="monthly-select pull-left monthbox-width dropbox-width">
+                            <div class="monthly-select pull-left yearbox-width">
                                 <select data-width="160px" id="yearly-dow-month" class="select-picker schedule schedule-dropdown" data-size="5"></select>
                             </div>
                         </div>

@@ -1,6 +1,7 @@
 ﻿@import (reference) "../Fonts/font-RobotoRegular.css";
 @import (reference) "Themes/Default.less";
 @import (reference) "Mixins.less";
+
 //Confirmation message Dialog box
 #duplicate-table-list {
     .message-header {
@@ -85,7 +86,7 @@
     .system-settings-startup-page-fields {
         border-width: 1px;
         width: 300px;
-        margin: 11px auto 0 auto;
+        margin: 11px auto 0px auto;
     }
 
     .no-margin-dropdown-ul {
@@ -169,7 +170,7 @@
             .su-eye {
                 cursor: pointer;
                 position: absolute;
-                right: 7px;
+                right: 10px;
                 top: 8px;
             }
 
@@ -183,8 +184,8 @@
             .dsn-info {
                 cursor: pointer;
                 position: absolute;
-                top: 17px;
-                right: -29px;
+                top: 18px;
+                right: -22px;
             }
 
             #dsn-messgage {
@@ -295,7 +296,7 @@
 
                     #connection-validation {
                         margin: 0 auto;
-                        padding: 5px 0 0;
+                        padding: 5px 25px 0;
                         width: 100%;
                         float: left;
 
@@ -308,16 +309,6 @@
                             text-align: center;
                             width: 100%;
                         }
-
-                        .cursor-type {
-                            cursor: pointer;
-                        }
-                    }
-
-                    #help-message {
-                        padding: 5px;
-                        left: 270px;
-                        width: 200px;
                     }
 
                     label {
@@ -328,22 +319,21 @@
                     .new-db {
                         display: inline-block;
                         float: left;
-                        margin: 11px 0;
+                        margin: 11px 0px;
                     }
 
                     .existing-db {
                         display: inline-block;
                         float: left;
-                        margin: 11px 0;
+                        margin: 11px 0px;
                         padding-left: 36px;
-                        padding-top: 0;
+                        padding-top: 0px;
                     }
 
                     #db-content-holder {
-
                         .databse-dropdown {
                             .bootstrap-select {
-                                margin: 0;
+                                margin: 0px;
                             }
 
                             #waiting-icon {
@@ -355,9 +345,7 @@
 
                         .dropdown-menu {
                             .inner {
-                                a {
-                                    padding: 3px 12px;
-                                }
+                                margin-left: -8px;
                             }
                         }
                     }
@@ -365,7 +353,7 @@
                     #mysql-content-holder {
                         .database-dropdown-mysql {
                             .bootstrap-select {
-                                margin: 0;
+                                margin: 0px;
                             }
 
                             #waiting-iconmysql {
@@ -377,9 +365,7 @@
 
                         .dropdown-menu {
                             .inner {
-                                a {
-                                    padding: 3px 12px;
-                                }
+                                margin-left: -8px;
                             }
                         }
                     }
@@ -387,7 +373,7 @@
                     #oracle-content-holder {
                         .database-dropdown-oracle {
                             .bootstrap-select {
-                                margin: 0;
+                                margin: 0px;
                             }
 
                             #waiting-icon-oracle {
@@ -399,9 +385,7 @@
 
                         .dropdown-menu {
                             .inner {
-                                a {
-                                    padding: 3px 12px;
-                                }
+                                margin-left: -8px;
                             }
                         }
                     }
@@ -409,7 +393,7 @@
                     #postgresql-content-holder {
                         .database-dropdown-postgresql {
                             .bootstrap-select {
-                                margin: 0;
+                                margin: 0px;
                             }
 
                             #waiting-icon-postgressql {
@@ -450,18 +434,13 @@
 
                         span.text {
                             float: left;
-                            margin-left: 3px;
-                            margin-top: 2px;
+                            margin-left: 6px;
                         }
 
                         .is-blob-storage-label {
                             color: @profile-btn-text-color;
                             cursor: pointer;
                             font-weight: 500;
-                        }
-
-                        .file-storage-disabled {
-                            cursor: default;
                         }
 
                         .blob-storage-align {
@@ -545,54 +524,6 @@
                 }
             }
             //File storage container settings ends
-            //Include Sample Resource container styles
-            #system-settings-admins-container {
-                display: none;
-
-                #include-samples {
-                    text-align: center;
-                    #delete-resource-info{
-                        cursor: pointer;
-                    }
-                    
-                    .info-detail{
-                        padding: 5px;
-                    }
-                }
-
-                .include-sample {
-                    margin: 20px 0;
-
-                    .center-include-samples {
-                        > div {
-                            float: left;
-                        }
-
-                        span.text {
-                            float: left;
-                            margin-left: 3px;
-                            margin-top: 0px;
-                        }
-
-                        .pointer {
-                            color: @profile-btn-text-color;
-                            cursor: pointer;
-                            font-weight: 500;
-                        }
-
-                        .file-storage-disabled {
-                            cursor: default;
-                        }
-
-                        .blob-storage-align {
-                            margin-left: -9px;
-                        }
-
-                        margin-left: 15px;
-                    }
-                }
-            }
-            //Include Sample Resource container ends
             //User account container styles
             #system-settings-user-account-container {
                 display: none;
@@ -615,7 +546,7 @@
                     }
 
                     input[type="text"], input[type="password"] {
-                        margin: 10px auto 0;
+                        margin: 10px auto 0px;
                         width: 270px;
                     }
 
@@ -690,7 +621,7 @@
 
                     &:disabled {
                         background: #CCC;
-                        cursor: default;
+                        cursor: not-allowed;
                     }
                 }
             }
@@ -732,7 +663,7 @@
                     margin-top: 10px;
                     font-size: @app-large-text-size;
                     height: 125px;
-                    overflow-y: auto;
+                    overflow: auto;
                     text-align: left;
 
                     .list-area {
@@ -775,8 +706,6 @@
 }
 //startup setting bg container ends
 
-
-
 /* don't show the eye for password inputs */
 ::-ms-reveal {
     width: 0;
@@ -810,11 +739,10 @@ input[type="radio"][class="css-radio"] + label:before {
     bottom: 0;
 }
 
-//Password policy rules
+//Password poicy rules
 ul#password_policy_rules {
-    margin-left: -35px !important;
+    margin-left: -40px !important;
     margin-top: 10px !important;
-    margin-bottom: 100px;
 }
 
 #password_policy_rules #p_policy_heading {
@@ -826,9 +754,9 @@ ul#password_policy_rules {
 
 #password_policy_rules {
     li {
-        text-align: left;
-        margin-left: 40px;
         font-size: @app-text-size !important;
+        margin-left: 40px;
+        text-align: left !important;
 
         span {
             font-size: @app-text-size !important;
@@ -852,12 +780,6 @@ ul#password_policy_rules {
                 }
 
                 #system-settings-filestorage-container {
-                    .database-types .center-storage-types > div {
-                        span.text {
-                            margin-top: 0;
-                        }
-                    }
-
                     .storage-block #blob-storage-form {
                         .text-caption {
                             font-size: @app-text-size;
@@ -899,14 +821,27 @@ ul#password_policy_rules {
 
 #enablefooter {
     width: auto;
-    padding-left: 0;
+    padding-left: 0px;
 }
 
 #lang_menu {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 180px;
 }
 
-.form-control[disabled] {
-    cursor: default;
+.add-scroller {
+    overflow-y: scroll;
+}
+
+.client-config-info{
+    padding: 5px;
+    margin: 10px 40px;
+    font-size: @app-large-text-size;
+}
+
+@media (max-width: 989px) {
+    ul#password_policy_rules li {
+        margin-left: unset !important;
+    }
 }

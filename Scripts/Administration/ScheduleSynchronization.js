@@ -19,6 +19,7 @@ $(document).ready(function () {
     var item = "";
     var recurrenceType = "";
     var editScheduleDetail = "";
+    $("#hourly-schedule-option, #daily-schedule-option, #weekly-schedule-option, #monthly-schedule-option, #yearly-schedule-option").css("display", "none");
     $.ajax({
         type: "POST",
         url: getScheduleInfoUrl,
@@ -49,7 +50,6 @@ $(document).ready(function () {
                         editScheduleDetail = "[[[Occurs every ]]]" + timeText;
                         $("#hourly-schedule-option").find("input").val(conversionToMinutes);
                         break;
-
                     case "daily":
                         recurrenceType = "Daily";
                         $("#daily-schedule-option").css("display", "block");
@@ -182,29 +182,28 @@ $(document).ready(function () {
                         break;
                 }
                 $("#recurrence-type").find("option[value='" + recurrenceType + "']").prop("selected", "selected");
-                $("#recurrence-type").selectpicker("refresh");
-                var startTime = "";
+                $("#recurrence-type").selectpicker("refresh");                
+                var startdatestring = "";
                 if (dateFormat == "dd/MM/yyyy") {
                     var date = item.StartDateString.split('/');
                     var dd = date[0];
                     var mm = date[1];
                     var yyyy = date[2]
                     var zonedate = mm + '/' + dd + '/' + yyyy;
-                    var startdatestring = new Date(zonedate);
+                    startdatestring = new Date(zonedate);
                 }
                 else {
-                    var startdatestring = new Date(item.StartDateString);
+                    startdatestring = new Date(item.StartDateString);
                 }
+                var startTime = "";
                 if (timeformat.toLowerCase() == "false") {
                     startTime = new Date(startdatestring);
-                    var time = DateCustomFormat(dateFormat + " hh:mm", startTime, timeformat);
                     var period = startTime.getHours() >= 12 ? "PM" : "AM";
                     var hours = period == "PM" ? startTime.getHours() - 12 : startTime.getHours();
                     $("#start-date").ejTimePicker({ value: hours + ":" + startTime.getMinutes() + " " + period + "" });
                 }
                 else {
                     startTime = new Date(startdatestring);
-                    var time = DateCustomFormat(dateFormat + " HH:mm", startTime, timeformat);
                     $("#start-date").ejTimePicker({ value: startTime.getHours() + ":" + startTime.getMinutes() + " " });
                 }
                 $("#next-schedule").html(item.NextScheduleString);
@@ -213,6 +212,7 @@ $(document).ready(function () {
 
 
             } else {
+                $("#hourly-schedule-option").css("display", "block");
                 $("#enable-schedule").prop("checked", false).trigger("change");
                 $(".recurrence-information").html("");
             }
@@ -244,10 +244,10 @@ function renderSchedulePopUp() {
         success: function (data) {
             if (data.RecurrenceType != null && data.RecurrenceType.length > 0) {
                 recurrenceTypeList = "<option value= " + data.RecurrenceType[4] + ">" + "[[[Hourly]]]" + "</option>"
-                                    + "<option value= " + data.RecurrenceType[0] + ">" + "[[[Daily]]]" + "</option>"
-                                    + "<option value= " + data.RecurrenceType[1] + ">" + "[[[Weekly]]]" + "</option>"
-                                    + "<option value= " + data.RecurrenceType[2] + ">" + "[[[Monthly]]]" + "</option>"
-                                    + "<option value= " + data.RecurrenceType[3] + ">" + "[[[Yearly]]]" + "</option>";
+                                     + "<option value= " + data.RecurrenceType[0] + ">" + "[[[Daily]]]" + "</option>"
+                                     + "<option value= " + data.RecurrenceType[1] + ">" + "[[[Weekly]]]" + "</option>"
+                                     + "<option value= " + data.RecurrenceType[2] + ">" + "[[[Monthly]]]" + "</option>"
+                                     + "<option value= " + data.RecurrenceType[3] + ">" + "[[[Yearly]]]" + "</option>";
             }
 
             for (var t = 0; t < data.Days.length; t++) {
@@ -283,9 +283,7 @@ function renderSchedulePopUp() {
     $("#every-x-days, #monthly-date, #yearly-day").ejNumericTextbox({ name: "numeric", value: 1, minValue: 1, maxValue: 31, width: "65px", height: "34px" });
     $("#every-x-weeks, #monthly-every-x-months, #monthly-dow-every-x-months, #every-x-years").ejNumericTextbox({ name: "numeric", value: 1, minValue: 1, maxValue: 99, width: "65px", height: "34px" });
     $("#occurenceCount").ejNumericTextbox({ name: "numeric", value: 1, minValue: 1, maxValue: 999, width: "65px", height: "34px" });
-    
-    if (timeformat.toLowerCase() == "false")
-    {
+    if (timeformat.toLowerCase() == "false") {
         $("#start-date").ejTimePicker({
             interval: 10,
             value: zoneDateTime,
@@ -333,7 +331,6 @@ $(document).on("click", "#update-schedule-synchronization-bottom", function () {
                     timeText += timesplit[1] + " minute(s)";
                 addScheduleDetail = "[[[Occurs every ]]]" + timeText;
                 break;
-
             case "daily":
                 if ($("#daily-every-x-days").is(":checked")) {
                     scheduleItem.RecurrenceType = "Daily";
@@ -438,6 +435,27 @@ function validateSchedule() {
     var startDateTimeObj = $("#start-date").data("ejTimePicker");
 
     switch ($("#recurrence-type").val().toString().toLowerCase()) {
+        case "hourly":
+            if ($(".time-format").val() == "") {
+                $(".frequency-error").css("display", "inline");
+                $(".time-format").parent("span").addClass("validation-error");
+                return false;
+            }
+            else {
+                var time = $(".time-format").val();
+                var timesplit = time.split(':');
+                var minutes = (timesplit[0] * 60) + timesplit[1];
+                if (minutes > 3) {
+                    $(".frequency-error").css("display", "none");
+                    $(".time-format").parent("span").removeClass("validation-error");
+                }
+                else {
+                    $(".frequency-error").css("display", "inline");
+                    $(".time-format").parent("span").addClass("validation-error");
+                    return false;
+                }
+            }
+            break;
         case "daily":
             break;
         case "weekly":

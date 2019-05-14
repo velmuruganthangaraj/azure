@@ -1,4 +1,10 @@
-﻿<div id="user-add-dialog-wrapper">
+﻿@{ 
+    var passwordSettings = (PasswordSettings)ViewBag.PasswordSettings;
+    var userDetail = (User)ViewBag.UserDetail;
+}
+<div id = "user-add-dialog-wrapper">
+    <input type="hidden" id="ums-password-policy" data-policy-uppercase="@(passwordSettings.EnableUpperCase == PasswordPreferenceOption.Enable)" data-policy-lowercase="@(passwordSettings.EnableLowerCase == PasswordPreferenceOption.Enable)" data-policy-number="@(passwordSettings.EnableNumber == PasswordPreferenceOption.Enable)" data-policy-specialcharacter="@(passwordSettings.EnableSpecialCharacters == PasswordPreferenceOption.Enable)" data-policy-partofusername="@(passwordSettings.EnablePartOfUserName == PasswordPreferenceOption.Enable)" data-policy-minimumlength="@(passwordSettings.MinimumLength)" />
+    <input type="hidden" id="user-details" data-username="@userDetail.UserName" data-email="@userDetail.Email" data-displayname="@userDetail.DisplayName" />
     <div class="modal" tabindex="-1" role="dialog">
         <div id="user-add-dialog" class="modal-dialog" role="document">
             <form class="col-lg-12 no-padding add-user-dialog-form modal-content" id="dialog-container" autocomplete="off">
@@ -14,38 +20,79 @@
                     </div>
                 </div>
                 <div id="message" class="validation-message"></div>
-                <div class="modal-body col-xs-12 no-padding form">
-                    <div class="col-xs-12 form-padding">
-                        <label class="col-xs-4 app-textbox-label text-right">[[[Username]]]<span class="mandatory">*</span></label>
-                        <div class="col-xs-8 no-left-padding">
-                            <input type="text" id="username" class="form-control validation" placeholder="[[[Username]]]" name="username" data-name="username" maxlength="95">
-                            <span class="useradd-validation-messages" id="invalid-username"></span>
+                <div class="modal-body col-xs-12 form">
+                    <div id="user-field-container" class="col-xs-12">
+                        <div class="col-xs-12 form-padding">
+                            <label class="col-xs-4 app-textbox-label no-padding text-right">[[[Username]]]<span class="mandatory"> *</span></label>
+                            <div class="col-xs-8 no-left-padding">
+                                <input type="text" id="username" class="form-control form-width validation" placeholder="[[[Username]]]" name="username" data-name="username" maxlength="95">
+                                <span class="useradd-validation-messages" id="invalid-username"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 form-padding">
+                            <label class="col-xs-4 app-textbox-label no-padding text-right">[[[Email address]]]</label>
+                            <div class="col-xs-8 no-left-padding">
+                                <input type="text" id="mailid" maxlength="254" placeholder="[[[Email address]]]" class="form-control form-width validation" name="email-address" data-name="email address" />
+                                <span class="useradd-validation-messages" id="invalid-email"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 form-padding">
+                            <label class="col-xs-4 app-textbox-label no-padding text-right">[[[First name]]]<span class="mandatory"> *</span></label>
+                            <div class="col-xs-8 no-left-padding">
+                                <input type="text" id="firstname" maxlength="254" class="form-control form-width  validation" placeholder="[[[First name]]]" name="first-name" data-name="first name">
+                                <span class="useradd-validation-messages" id="invalid-firstname"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 form-padding last-name">
+                            <label class="col-xs-4 app-textbox-label no-padding text-right">[[[Last name]]]</label>
+                            <div class="col-xs-8 no-left-padding">
+                                <input type="text" id="lastname" maxlength="254" class="form-control form-width validation" placeholder="[[[Last name]]]" name="last-name" data-name="last name">
+                                <span class="useradd-validation-messages"></span>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 form-padding">
-                        <label class="col-xs-4 app-textbox-label text-right">[[[Email address]]]<span class="mandatory"></span></label>
-                        <div class="col-xs-8 no-left-padding">
-                            <input type="text" id="mailid" maxlength="254" placeholder="[[[Email address]]]" class="form-control validation" name="email-address" data-name="email address" />
-                            <span class="useradd-validation-messages" id="invalid-email"></span>
+                    @if (ViewBag.ActivationType == ActivationType.AutomaticActivation)
+                    {
+                        <div id="password-container" class="col-xs-12">
+                            <div id="change-password" class="change-password-div">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="change-password-content">
+                                    <div class="user-profile-table" cellpadding="20">
+                                        <div class="col-xs-12 form-padding password-div">
+                                            <div class="col-xs-4  no-padding label-section text-right">
+                                                @Html.Label("new-password", "[[[New password]]]", new { @class = "password-label" })
+                                                <span class="mandatory">*</span>
+                                            </div>
+                                            <div class="col-xs-8 password-section">                   
+                                                <input id="fake-password" name="fake-password" type="password" class = "fake-password-avoid-autocomplete" autocomplete="off">
+                                                <input class="form-control password-fields-user-profile-edit validation" id="new-password" maxlength="4000" name="new-password" type="password" value="" autocomplete="off" aria-invalid="true"  placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" >                     
+                                                <span class="su su-eye view-green show-hide-password"></span>
+                                                <div>
+                                                    <span id="new-password-validate" class="useradd-validation-messages password-validate-holder"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="confirm-password-section" class="col-xs-12 form-padding password-div">
+                                            <div class="col-xs-4 no-padding confirm-section label-section text-right">
+                                                @Html.Label("confirm-password", "[[[Confirm password]]]", new { @class = "password-label" })
+                                                <span class="mandatory">*</span>
+                                            </div>
+                                            <div class="col-xs-8 confirm-section password-section">                                             
+                                                <input class="form-control validation password-fields-user-profile-edit" id="confirm-password" maxlength="4000" name="confirm-password" type="password" value="" autocomplete="off" aria-invalid="true" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
+                                                <span class="su su-eye view-green show-hide-password"></span>
+                                                <span id="confirm-password-validate" class="useradd-validation-messages password-validate-holder"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-xs-12 form-padding">
-                        <label class="col-xs-4 app-textbox-label text-right">[[[First name]]]<span class="mandatory">*</span></label>
-                        <div class="col-xs-8 no-left-padding">
-                            <input type="text" id="firstname" maxlength="254" class="form-control  validation" placeholder="[[[First name]]]" name="first-name" data-name="first name">
-                            <span class="useradd-validation-messages" id="invalid-firstname"></span>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 form-padding last-name">
-                        <label class="col-xs-4 app-textbox-label text-right">[[[Last name]]]</label>
-                        <div class="col-xs-8 no-left-padding">
-                            <input type="text" id="lastname" maxlength="254" class="form-control  validation" placeholder="[[[Last name]]]" name="last-name" data-name="last name">
-                            <span class="useradd-validation-messages"></span>
-                        </div>
-                    </div>
+                    }
                 </div>
+
                 <div class="col-xs-12 modal-footer">
-                    <div class="col-xs-4"></div>
+                    <div class="col-xs-4">
+                        <input type="button" id="activation-type" class="hidden" value=@ViewBag.ActivationType />
+                    </div>
                     <div class="col-xs-8 no-padding">
                         <input type="button" id="add-user" class="primary-button" value="[[[Add]]]" />
                         <input type="button" id="cancel-user" class="secondary-button popup-close" value="[[[Cancel]]]" onclick="onUserAddDialogClose()" />

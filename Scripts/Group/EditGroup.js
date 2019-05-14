@@ -1,11 +1,11 @@
 ﻿$(document).ready(function () {
     $.validator.addMethod("isValidName", function (value, element) {
-        return IsValidName("name", value)
-    }, "[[[Please avoid special characters]]]");
+        return IsValidName("name", value);
+    }, "[[[Please avoid special characters.]]]");
 
     $.validator.addMethod("isRequired", function (value, element) {
         return !isEmptyOrWhitespace(value);
-    }, "[[[Please enter the name]]]");
+    }, "[[[Please enter the name.]]]");
 
     $(".group-form").validate({
         errorElement: "span",
@@ -19,7 +19,7 @@
         },
         highlight: function (element) {
             $(element).closest("div").addClass("has-error");
-            $("#group-info-name").attr("placeholder", "Group name");
+            $("#group-info-name").attr("placeholder","Group name");
         },
         unhighlight: function (element) {
             $(element).closest("div").removeClass("has-error");
@@ -30,7 +30,7 @@
         },
         messages: {
             "groupname": {
-                isRequired: "[[[Please enter group name]]]"
+                isRequired: "[[[Please enter group name.]]]"
             }
         }
     });
@@ -54,17 +54,17 @@
     });
 
     if ($("#user-list option").length > 0) {
-        $("#user-list-container .bs-deselect-all").after("<div class='bs-select-all-custom'><span>[[[Select All]]]</span><span class='bs-select-custom-tick glyphicon glyphicon-ok'></span></div>");
+        $("#user-list-container .bs-deselect-all").after("<div class='bs-select-all-custom'><span>[[[Select all]]]</span><span class='bs-select-custom-tick glyphicon glyphicon-ok'></span></div>");
     }
     else {
-        $("#user-list-container .bs-deselect-all").after("<span class='noResult'>[[[No Results Found]]]</span>");
+        $("#user-list-container .bs-deselect-all").after("<span class='noResult'>[[[No results found]]]</span>");
     }
 
     $("#user-list-container").on('click', ".bs-select-all-custom", function (e) {
         $("#user-list-container").addClass("value-changed");
         $("#user-list").data("selectpicker").selectAll();
         $(this).removeClass("bs-select-all-custom").addClass("bs-deselect-all-custom");
-        $($(this).children("span")[0]).text("[[[Clear All]]]");
+        $($(this).children("span")[0]).text("[[[Clear all]]]");
         e.stopPropagation();
     });
 
@@ -72,7 +72,7 @@
         $("#user-list-container").addClass("value-changed");
         $("#user-list").data("selectpicker").deselectAll();
         $(this).removeClass("bs-deselect-all-custom").addClass("bs-select-all-custom");
-        $($(this).children("span")[0]).text("[[[Select All]]]");
+        $($(this).children("span")[0]).text("[[[Select all]]]");
         e.stopPropagation();
     });
 
@@ -82,11 +82,11 @@
         var allListCount = $("#user-list-container .bootstrap-select li").length;
 
         if (selectedCount == allListCount) {
-            $($("#user-list-container div.bs-select-all-custom").children("span")[0]).text("[[[Clear All]]]");
+            $($("#user-list-container div.bs-select-all-custom").children("span")[0]).text("[[[Clear all]]]");
             $("#user-list-container div.bs-select-all-custom").removeClass("bs-select-all-custom").addClass("bs-deselect-all-custom");
         }
         else {
-            $($("#user-list-container .bs-deselect-all-custom").children("span")[0]).text("[[[Select All]]]");
+            $($("#user-list-container .bs-deselect-all-custom").children("span")[0]).text("[[[Select all]]]");
             $("#user-list-container .bs-deselect-all-custom").removeClass("bs-deselect-all-custom").addClass("bs-select-all-custom");
         }
         e.stopPropagation();
@@ -114,7 +114,7 @@
                         });
                     } else {
                         if (data.key == "name") {
-                            $("#invalid-groupname").html("[[[Group already exists with this name]]]").css("display", "block");
+                            $("#invalid-groupname").html("[[[Group name already exists]]]").css("display", "block");
                             $("#group-info-name").closest("div").addClass("has-error");
                         }
                         else
@@ -153,11 +153,11 @@
                            $("#user-list").selectpicker("refresh");
                            if ($("#user-list option").length > 0) {
                                $("#user-list-container div.bs-deselect-all-custom").removeClass("bs-deselect-all-custom").addClass("bs-select-all-custom");
-                               $("#user-list-container div.bs-select-all-custom").children("span:eq(0)").text("[[[Select All]]]");
+                               $("#user-list-container div.bs-select-all-custom").children("span:eq(0)").text("[[[Select all]]]");
                            }
                            else {
                                $("#user-list-container div.bs-deselect-all-custom").hide();
-                               $("#user-list-container .bs-deselect-all").after("<span class='noResult'>[[[No Results Found]]]</span>");
+                               $("#user-list-container .bs-deselect-all").after("<span class='noResult'>[[[No results found]]]</span>");
                                $(".bootstrap-select").trigger("click");
                            }
                            var gridObj = $("#Grid").ejGrid("instance");
@@ -167,7 +167,6 @@
                    }
               );
     });
-    $(".back-button").tooltip();
 });
 
 function RefreshGroupUsers(groupId, gridObj) {
@@ -188,7 +187,7 @@ function fnOnEditGroupActionBegin(args) {
     }
 }
 
-function fnOnUserGridActionComplete(args) {
+function fnOnEditGroupActionComplete() {
     $('[data-toggle="tooltip"]').tooltip();
 }
 

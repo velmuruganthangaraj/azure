@@ -1,19 +1,44 @@
-ALTER TABLE "SyncRS_ScheduleDetail" ADD "IsParameterEnabled" NUMBER(1) DEFAULT (0) NOT NULL
-;
-CREATE TABLE "SyncRS_ScheduleParameter" (
-	"Id" int PRIMARY KEY NOT NULL,
-	"ScheduleId" NCHAR(36) NOT NULL,
-	"Parameter" VARCHAR2(4000) NOT NULL,
-	"IsActive" NUMBER(1) NOT NULL)
+ALTER TABLE "SfUMS_User" ADD "DomainId" VARCHAR2(4000) NULL
+; 
+
+ALTER TABLE "SfUMS_Group" ADD "DomainId" VARCHAR2(4000) NULL
+; 
+
+INSERT into "SfUMS_ApplicationType" ("Id","Type") values(3,'Report Server')
 ;
 
-CREATE SEQUENCE "SyncRS_ScheduleParameter_seq"
-START WITH     1
-INCREMENT BY   1
-NOCACHE
-NOCYCLE;
-
-ALTER TABLE "SyncRS_ScheduleParameter" ADD FOREIGN KEY("ScheduleId") REFERENCES "SyncRS_Item" ("Id")
+CREATE INDEX "IX_SfUMS_ADGrp" ON "SfUMS_ADGroup" ("GroupId")
 ;
-ALTER TABLE "SyncRS_ScheduleDetail" ADD "ExportFileSettingsInfo" VARCHAR2(4000) NULL
+
+CREATE INDEX "IX_SfUMS_ADUsr" ON "SfUMS_ADUser" ("UserId")
+;
+
+CREATE INDEX "IX_SfUMS_AzrADGrp" ON "SfUMS_AzureADGroup" ("GroupId")
+;
+
+CREATE INDEX "IX_SfUMS_AzrADUsr" ON "SfUMS_AzureADUser" ("UserId")
+;
+
+CREATE INDEX "IX_SfUMS_Grp" ON "SfUMS_Group" ("Name", "Description")
+;
+
+CREATE INDEX "IX_SfUMS_Usr" ON "SfUMS_User" ("UserName", "Email", "DisplayName")
+;
+
+CREATE INDEX "IX_SfUMS_UsrGrp" ON "SfUMS_UserGroup" ("GroupId", "UserId")
+;
+
+CREATE INDEX "IX_SfUMS_UsrLogin" ON "SfUMS_UserLogin" ("UserId")
+;
+
+CREATE INDEX "IX_SfUMS_AppAcsGrps" ON "SfUMS_AppAccessToGroups" ("ApplicationId", "GroupId")
+;
+
+CREATE INDEX "IX_SfUMS_AppAcsUsrs" ON "SfUMS_AppAccessToUsers" ("ApplicationId", "UserId")
+;
+
+CREATE INDEX "IX_SfUMS_AppAdmin" ON "SfUMS_AppAdmin" ("ApplicationId", "UserId")
+;
+
+CREATE INDEX "IX_SfUMS_Apps" ON "SfUMS_Applications" ("Name", "ClientId", "Url")
 ;

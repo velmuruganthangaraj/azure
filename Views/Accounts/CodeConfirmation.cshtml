@@ -1,9 +1,18 @@
 ﻿@{
     Layout = null;
     ViewBag.Title = GlobalAppSettings.SystemSettings.OrganizationName + " - [[[Password Helper]]]";
+    var loginImage = string.Empty;
+    if (GlobalAppSettings.SystemSettings.StorageType == (int)StorageType.AzureBlob)
+    {
+        loginImage = GlobalAppSettings.AzureBlob.AzureBlobStorageUri + "/" + GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName + "/" + GlobalAppSettings.GetStorageMode() + "/Content/Images/Application/" + GlobalAppSettings.SystemSettings.LoginLogo;
+    }
+    else
+    {
+        loginImage = GlobalAppSettings.SystemSettings.BaseUrl + "/Content/Images/Application/" + GlobalAppSettings.SystemSettings.LoginLogo;
+    }
 }
 <!DOCTYPE html>
-<html class="report-server">
+<html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
@@ -18,6 +27,7 @@
         <link rel="icon" href="~/Content/Images/Application/@GlobalAppSettings.SystemSettings.FavIcon" onerror="if (this.href != '~/Content/Images/Application/Favicon.png') this.href = '~/Content/Images/Application/Favicon.png';" />
     }
 
+    @Scripts.Render("~/bundles/scripts/accounts")
     <script>
         i_am_ie9 = false;
     </script>
@@ -36,15 +46,7 @@
                 <div class="login-inner-container">
                     <div class="login-logo ">
                         <div>
-                            @if (GlobalAppSettings.SystemSettings.StorageType == (int)StorageType.AzureBlob)
-                            {
-                                <img src="@GlobalAppSettings.AzureBlob.AzureBlobStorageUri/@GlobalAppSettings.AzureBlob.AzureBlobStorageContainerName/@GlobalAppSettings.GetStorageMode()/Content/Images/Application/@GlobalAppSettings.SystemSettings.LoginLogo" onerror="if (this.src != '/Content/Images/Application/Login_Logo.png') this.src = '/Content/Images/Application/Login_Logo.png';" />
-                            }
-                            else
-                            {
-                                <img src="@Url.Content("~/Content/Images/Application/" + GlobalAppSettings.SystemSettings.LoginLogo)" onerror="if (this.src != '@Url.Content("~/Content/Images/Application/Login_Logo.png")') this.src = '@Url.Content("~/Content/Images/Application/Login_Logo.png")';" />
-                            }
-
+                            <img src="@loginImage" onerror="if (this.src != '/Content/Images/Application/Login_Logo.png') this.src = '/Content/Images/Application/Login_Logo.png';" />
                         </div>
                     </div>
                     <img src="@Url.Content("~/Content/Images/divider_light.png")" class="upper-divider" />
@@ -61,19 +63,19 @@
                                 }
                                 else
                                 {
-                                <p class="align-center">
-                                    [[[An email with instructions on how to change your password has been sent to]]] <a href='mailto:  @TempData["message"]'> @TempData["message"] </a>
-                                </p>
+                                    <p class="align-center">
+                                        [[[An email with instructions on how to change your password has been sent to]]] <a href='mailto:  @TempData["message"]'> @TempData["message"] </a>
+                                    </p>
                                 }
 
-                                </p>
+                            </p>                            
+                        </div>
+                        <div><h5 class="alert-danger text-center"><br /><br />[[[The reset password link expires in two hours!]]]</h5></div>
+                        <div class="resend-btn-holder bottom-margin text-center">
+                            <div>
+                                [[[If it does not arrive]]], <a id="mail-resend" href="@(Url.Action("resendforgotpasswordmail","accounts"))?userId=@Request["userId"]" class="link-hover">[[[click here ]]]</a>[[[to resend the email]]].
                             </div>
-                            <div><h5 class="alert-danger text-center"><br /><br />[[[The reset password link expires in two hours!]]]</h5></div>
-                            <div class="resend-btn-holder bottom-margin text-center">
-                                <div>
-                                    [[[If it does not arrive]]], <a id="mail-resend" href="@(Url.Action("resendforgotpasswordmail","accounts"))?userId=@Request["userId"]" class="link-hover">[[[click here ]]]</a>[[[to resend the email]]].
-                                </div>
-                            </div>
+                        </div> 
                     }
                     else
                     {
@@ -84,14 +86,12 @@
 
                     <img src="@Url.Content("~/Content/Images/divider_dark.png")" class="lower-divider top-margin" />
                     <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 forgot-password-caption">
-                        <span class="remember-text">[[[Know your password?]]]<a type="button" class="btn btn-link link-hover redirect-login" href="@Url.Action("login","accounts")">[[[Log In]]]</a></span>
-                    </div>
+                        <span class="remember-text">[[[Know your password?]]]<a type="button" class="btn btn-link link-hover redirect-login" href="@Url.Action("login","accounts")">[[[Log In]]]</a></span></div>
                 </div>
             </div>
             @Html.Partial("../Shared/_Footer")
         </div>
     </div>
-    @Scripts.Render("~/bundles/scripts/accounts")
     <script>
         $(document).ready(function () {
             refreshCodeConfirmationFooter();

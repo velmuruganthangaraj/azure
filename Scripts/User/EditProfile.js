@@ -1,6 +1,5 @@
-﻿var isKeyUp = false;
+var isKeyUp = false;
 var userDetails;
-var browser = ej.browserInfo();
 $(document).ready(function () {
     var extension;
     var custompath;
@@ -26,24 +25,19 @@ $(document).ready(function () {
         } else {
             return IsEmail(value);
         }
-    }, "[[[Please enter a valid email address]]]");
+    }, "[[[Please enter a valid email address.]]]");
 
     $.validator.addMethod("isValidName", function (value, element) {
         return IsValidName("name", value)
-    }, "[[[Please avoid special characters]]]");
+    }, "[[[Please avoid special characters.]]]");
 
     $.validator.addMethod("isRequired", function (value, element) {
         return !isEmptyOrWhitespace(value);
-    }, "[[[Please enter the name]]]");
+    }, "[[[Please enter the name.]]]");
 
     $.validator.addMethod("isValidPhoneNumber", function (value, element) {
         return IsValidContactNumber(value);
-    }, "[[[Please enter the valid phone number]]]");
-
-    var isAdminUser = false;
-    if (isAdmin) {
-        isAdminUser = isAdmin;
-    }
+    }, "[[[Please enter the valid phone number.]]]");
 
     $(".edit-profile-form").validate({
         errorElement: "span",
@@ -56,7 +50,7 @@ $(document).ready(function () {
             } else true
         },
         onfocusout: function (element) { $(element).valid(); $("#success-message").html(""); },
-        rules: {
+          rules: {
             "user-email": {
                 isValidName: true,
                 isValidEmail: true
@@ -71,7 +65,6 @@ $(document).ready(function () {
             "user-phonenumber": {
                 isValidPhoneNumber: true
             }
-
         },
         highlight: function (element) {
             var read = $("#" + element.id).not(":disabled");
@@ -91,13 +84,12 @@ $(document).ready(function () {
         },
         messages: {
             "user-email": {
-                isRequired: "[[[Please enter your email address]]]"
+                isRequired: "[[[Please enter your email address.]]]"
             },
             "user-firstname": {
-                isRequired: "[[[Please enter your first name]]]"
+                isRequired: "[[[Please enter your first name.]]]"
             }
         }
-
     });
 
     $(".edit-profile-field").bind("keypress", function (e) {
@@ -108,7 +100,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#upload-image').click(function () {
+     $('#upload-image').click(function () {
         var isUpdated = $(".img-container").children("img").attr("src");
         var userId = $("#user-id").val();
         var isNewFile = false;
@@ -138,29 +130,23 @@ $(document).ready(function () {
                 beforeSend: ShowWaitingProgress("#avatar-upload-box", "show"),
                 dataType: "json",
                 success: function (result) {
-                    parent.messageBox("su-image", "[[[Change Profile picture]]]", "[[[Profile picture has been saved successfully.]]]", "success", function () {
+                        parent.messageBox("su-image", "[[[Change Profile Picture]]]", "[[[Profile picture has been saved successfully.]]]", "success", function () {
                         parent.$("#user-profile-picture").attr("src", avatarUrl + "?username=" + $("#user-name").val() + "&imageSize=110&v=" + $.now());
                         parent.$(".profile-picture,#profile-picture-menu").find("img").attr("src", avatarUrl + "?username=" + $("#user-name").val() + "&imageSize=32&v=" + $.now());
                         var value = parent.$("#avatar-delete-click").length;
                         if (value == 0) {
                             $(".img-view-holder").on("mouseenter", function () {
-                                if ($("#avatar-delete-click").length == 0) {
-                                    if ($("#user-profile-picture").attr("src") == "/user/getdefaultavatar") {
-                                        $("#avatar-delete-click").css("display", "none");
-                                    }
-                                    else {
-                                        $("<span>", { class: "su su-delete", id: "avatar-delete-click", title: "[[[Delete profile picture]]]" }).insertAfter("#avatar-button-click").addClass("profile-picture-edit-button").css("left", "86px");
-                                    }
+                                if ($("#avatar-delete-click").length == 0 && $("#user-profile-picture").attr("src").toLowerCase() != "/user/getdefaultavatar") {
+                                    $("<span>", { class: "su su-delete", id: "avatar-delete-click", title: "[[[Delete profile picture]]]" }).insertAfter("#avatar-button-click").addClass("profile-picture-edit-button").css("left", "86px");
                                 }
                             });
                             $(".img-view-holder").on("mouseleave", function () {
                                 $("#avatar-delete-click").css("display", "none");
                             });
-
                         }
                         parent.onCloseMessageBox();
                     });
-                    $("#image-path").val("browse image path");
+                    $("#image-path").val("Browse image path");
                     $("#profile-picture").attr("src", rootBaseUrl + "/Content/Images/Preview.jpg");
                     $('#upload-image').attr("disabled", "disabled");
                     if ($(".img-container").children().hasClass("jcrop-active")) {
@@ -170,8 +156,8 @@ $(document).ready(function () {
                     ShowWaitingProgress("#avatar-upload-box", "hide");
                 },
                 error: function (result) {
-                    parent.messageBox("su-open", "[[[Change Profile picture]]]", "[[[Failed to update the Profile picture, try again later.]]]", "error", function () {
-                        parent.onCloseMessageBox();
+                    parent.messageBox("su-open", "[[[Change Profile Picture]]]", "[[[Failed to update the profile picture, try again later.]]]", "error", function () {
+                    parent.onCloseMessageBox();
                     });
                 }
             });
@@ -179,16 +165,15 @@ $(document).ready(function () {
     });
 
     $(document).on("click", "#avatar-delete-click", function () {
-        messageBox("su-delete", "[[[Delete Profile Picture]]]", "<div class='delete-msg'>[[[Are you sure you want to delete the profile picture?]]]</div>", "error", function () {
+        messageBox("su-delete", "[[[Delete Profile Picture]]]", "[[[Are you sure you want to delete the profile picture?]]]", "error", function () {
             deleteUserAvatar();
         });
     });
 
     $(".img-view-holder").on("mouseenter", function () {
         $("#user-profile-picture").addClass("user-profile-picture");
-        $("#avatar-button-click,#avatar-delete-click").css("display", "inline-block");
-
-        if ($("#user-profile-picture").attr("src") == "/user/getdefaultavatar") {
+        $("#avatar-button-click").css("display", "inline");
+        if ($("#user-profile-picture").attr("src").toLowerCase() == "/user/getdefaultavatar") {
             $("#avatar-delete-click").css("display", "none");
         }
         else {
@@ -202,7 +187,7 @@ $(document).ready(function () {
     });
 
     $("#avatar-button-click").click(function () {
-        $("#image-path").val("[[[browse image path]]]").removeClass("ValidationErrorImage");
+        $("#image-path").val("[[[Browse image path]]]").removeClass("ValidationErrorImage");
         $("#image-path").closest("div").removeClass("has-error");
         $("#avatar-upload-box").ejDialog("open");
         $("#cancel-avatar-popup").click(function () {
@@ -213,14 +198,11 @@ $(document).ready(function () {
             }
             $("#avatar-upload-box").ejDialog("close");
         });
-        $('.e-uploadinput').attr({ title: "No file selected.", accept: ".png, .jpg ,.jpeg" });
-
-        if (browser.name.toLowerCase() == "msie" || browser.name.toLowerCase() == "webkit") {
-            $(".e-selectpart").addClass("upload-box");
-        }
-        else {
-            $(".e-selectpart").removeClass("upload-box");
-        }
+        $('.e-uploadinput').val("").attr({ title: "No file selected.", accept: ".png, .jpg ,.jpeg" });
+        var maxIndex = getMaxZIndex() + 2;
+        $("#avatar-upload-box a.popup-close").on("mouseover", function () {
+            $(".tooltip").css("z-index", maxIndex);
+        });
     });
 
     $("#upload-picture").ejUploadbox({
@@ -258,7 +240,7 @@ $(document).ready(function () {
             $("#image-path").closest("div").removeClass("has-error");
             $("#image-path").val(uploadFileName);
             $(".jcrop-selection.jcrop-current").children("button").css("background", "");
-            $("#profile-picture").attr("src", rootBaseUrl + "/content/images/ProfilePictures/" + $("#user-name").val() + "/" + filename + "?v=" + $.now());
+            $("#profile-picture").attr("src", rootBaseUrl + "/Content/Images/ProfilePictures/" + $("#user-name").val() + "/" + filename + "?v=" + $.now());
 
             var cb, filter;
 
@@ -290,7 +272,6 @@ $(document).ready(function () {
                 });
                 var jcrop_api;
                 $('#profile-picture').Jcrop({
-
                     selectionComponent: CircleSel,
                     applyFilters: ['constrain', 'extent', 'backoff', 'ratio', 'round'],
                     aspectRatio: 1,
@@ -356,21 +337,17 @@ $(document).ready(function () {
                         }
 
                         cb.ui.selection.refresh();
-
                     }).on('selectstart', function (e) {
                         e.preventDefault();
                     }).on('click', 'a[data-action]', function (e) {
                         e.preventDefault();
                     });
                 }
-
             });
             ShowWaitingProgress("#avatar-upload-box", "hide");
             $('#upload-image').removeAttr("disabled");
-
         }
     });
-
 });
 
 function editUser(fulldata) {
@@ -403,7 +380,6 @@ function SaveProfile() {
     $("#success-message").html("");
     $("#email-duplicate-validation").closest("div").prev("div").removeClass("has-error");
     var isValid = $('.edit-profile-form').valid();
-    var emailid = $('#user-email').val().trim();
 
     if (isValid) {
         ShowWaitingProgress("#content-area", "show");
@@ -411,40 +387,40 @@ function SaveProfile() {
             updateUserProfileUrl,
             {
                 username: $("#user-name").val(),
-                email: emailid,
+                email: $("#user-email").val(),
                 picturename: $("#upload-picture").attr("data-filename"),
                 firstname: $("#user-firstname").val(),
                 lastname: $("#user-lastname").val(),
                 mobile: $("#user-phonenumber").val()
             },
-              function (result) {
-                  ShowWaitingProgress("#content-area", "hide");
-                  if (result.Data.status) {
-                      var updateddetails = result.Data.profileinfo;
-                      var updatedfirstname = (updateddetails.firstName != null) ? $("#user-firstname").val(updateddetails.firstName) : $("#user-firstname").val(updateddetails.previousFirstName);
-                      var updatedlastname = (updateddetails.lastName != null) ? $("#user-lastname").val(updateddetails.lastName) : $("#user-lastname").val(updateddetails.previousLastName);
-                      var updatedemail = (updateddetails.email != null) ? $("#user-email").val(updateddetails.email) : $("#user-email").val(updateddetails.previousMail);
-                      var updatedmobile = (updateddetails.mobile != null) ? $("#user-phonenumber").val(updateddetails.mobile) : $("#user-phonenumber").val(updateddetails.previousMobile);
-                      userDetails = {
-                          FirstName: updatedfirstname.val(),
-                          LastName: updatedlastname.val(),
-                          ContactNumber: updatedmobile.val(),
-                          Email: updatedemail.val()
-                      };
-                      var newFirtName = $("#user-firstname").val().trim();
-                      var newLastName = $("#user-lastname").val().trim();
-                      var newEmail = $("#user-email").val();
-                      $("#profile-name").text(newFirtName + " " + newLastName);
-                      $("#profile-email").text(newEmail);
-                      SuccessAlert("[[[Update Profile]]]", result.Data.value, 7000);
-                  }
-                  else if (!result.Data.status && result.Data.key == "email") {
-                      $("#email-duplicate-validation").html(result.Data.value).css("display", "block");
-                      $("#email-duplicate-validation").closest("div").prev("div").addClass("has-error");
-                  } else {
-                      WarningAlert("[[[Update Profile]]]", result.Data.value, 7000);
-                  }
-              }
+            function (result) {
+                ShowWaitingProgress("#content-area", "hide");
+                if (result.Data.status) {
+                    var updateddetails = result.Data.profileinfo;
+                    var updatedfirstname = (updateddetails.firstName != null) ? $("#user-firstname").val(updateddetails.firstName) : $("#user-firstname").val(updateddetails.previousFirstName);
+                    var updatedlastname = (updateddetails.lastName != null) ? $("#user-lastname").val(updateddetails.lastName) : $("#user-lastname").val(updateddetails.previousLastName);
+                    var updatedemail = (updateddetails.email != null) ? $("#user-email").val(updateddetails.email) : $("#user-email").val(updateddetails.previousMail);
+                    var updatedmobile = (updateddetails.mobile != null) ? $("#user-phonenumber").val(updateddetails.mobile) : $("#user-phonenumber").val(updateddetails.previousMobile);
+                    userDetails = {
+                        FirstName: updatedfirstname.val(),
+                        LastName: updatedlastname.val(),
+                        ContactNumber: updatedmobile.val(),
+                        Email: updatedemail.val()
+                    };
+                    var newFirtName = $("#user-firstname").val().trim();
+                    var newLastName = $("#user-lastname").val().trim();
+                    var newEmail = $("#user-email").val();
+                    $("#profile-name").text(newFirtName + " " + newLastName);
+                    $("#profile-email").text(newEmail);
+                    SuccessAlert("[[[Update Profile]]]", result.Data.value, 7000);
+                }
+                else if (!result.Data.status && result.Data.key == "email") {
+                    $("#email-duplicate-validation").html(result.Data.value).css("display", "block");
+                    $("#email-duplicate-validation").closest("div").prev("div").addClass("has-error");
+                } else {
+                    WarningAlert("[[[Update Profile]]]", result.Data.value, 7000);
+                }
+            }
         );
         $(".edit-profile-field").attr("disabled", true).removeClass("enable");
         $("#save-button").hide();
@@ -463,16 +439,16 @@ function onPictureCropEnd(coordinates) {
 }
 
 $(document).on("click", "#edit", function (e) {
-    var isAdUser = $("#is-aduser").html().toLowerCase();
+    var isAdUser = $("#is-external-user").html().toLowerCase();
     $("#edit,#group-div").hide();
     $("#save-button").show();
     $("#cancel-button").css("display", "inline");
     if (isAdUser == "false") {
         $(".edit-profile-field").attr("disabled", false).addClass("enable");
-    }
+        }
     else {
         $(".edit-profile-field").attr("disabled", true).removeClass("enable");
-    }
+         }
 });
 
 $(document).on("click", "#cancel-button", function (e) {

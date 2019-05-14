@@ -70,10 +70,9 @@ function fnActionComplete(args) {
 }
 
 function SaveActiveDirectoryUsers() {
-
     if (objectSelected.length > 0) {
         $(".empty-validation").css("display", "none");
-        showWaitingPopup("content-area");
+        showWaitingPopup("server-app-container");
         $.ajax({
             type: "POST",
             data: { selectedUsers: objectSelected, searchKey: $("#ad-user-import").val() },
@@ -83,29 +82,26 @@ function SaveActiveDirectoryUsers() {
                     searchedResult = $.grep(result.Data, function (item) { return item.IsDuplicated != true; });
                     var gridObj = $("#Grid").data("ejGrid");
                     gridObj.option("dataSource", result.Data);
-                    var title = saveSelectedActiveDirectoryUserUrl.indexOf("azure") > 0 ? "[[[Azure  Active Directory user import]]]" : "[[[Active Directory user import]]]";
+                    var title = saveSelectedActiveDirectoryUserUrl.indexOf("azure") > 0 ? "[[[Azure Active Directory User Import]]]" : "[[[Active Directory User Import]]]";
                     if ($.type(result) == "object" && result.Count != 0) {
-                        var message = "";                       
+                        var message = "";
                         if (objectSelected.length != result.Count)
                             message += "<li>" + (parseInt(objectSelected.length) - parseInt(result.Count)) + " [[[User(s) has been imported and activated successfully.]]]</li>";
 
                         if (result.Count > 0)
-                            message += "<li>" + result.Count + " [[[duplicate user(s) exists.]]] <br />([[[Username or Email address already exists or repeated]]]).</li>";
-                        
-                        message = "[[[User has been imported and activated successfully.]]]<ul class='list-area' style='margin-top:-6px;'>" + message + "</ul>";
-                        message += "<ul style='margin-left-11px;list-style: none'><li>[[[Please click OK to check the list behind regarding the invalid or duplicate users.]]]</li></ul>";
-                        $("#messageBox").find(".message-content").removeClass("message-content-validUsers");
+                            message += "<li>" + result.Count + " [[[duplicate user(s) exists.]]] <br />([[[Username or Email address already exists or repeated.]]])</li>";
+
+                        message = "[[[User has been imported and activated successfully.]]]<ul class='list-area'>" + message + "</ul>";
+                        message += "[[[Please click OK to check the list behind regarding the invalid or duplicate users.]]]";
                         parent.messageBox("su-user-1", title, message, "success", function () {
                             parent.onCloseMessageBox();
-                        }, undefined, undefined, undefined, undefined, "success-message-large");
+                        });
                     } else {
-                        $("#messageBox").find(".message-content").addClass("message-content-validUsers");
-                        parent.messageBox("su-user-1", title, objectSelected.length + " [[[User(s) has been imported and activated successfully.]]]", "success", function () {                           
+                        parent.messageBox("su-user-1", title, objectSelected.length + " [[[User(s) has been imported and activated successfully.]]]", "success", function () {
                             parent.onCloseMessageBox();
                         });
                         $(".user-count").html(objectSelected.length);
                         $("#import-button").attr("disabled", "disabled");
-                        $("#messageBox_wrapper").removeClass("success-message-large");
                     }
                     gridObj.clearSelection();
                     objectSelected = [];
@@ -118,10 +114,9 @@ function SaveActiveDirectoryUsers() {
                     } else {
                         $("#zero-user-acc").show();
                     }
-
                 }
 
-                hideWaitingPopup("content-area");
+                hideWaitingPopup("server-app-container");
             }
         });
     } else {
@@ -159,7 +154,6 @@ function headCheckboxOnChange(e) {
     }
 
     enableimportbutton();
-
 }
 
 function enableimportbutton() {
@@ -171,7 +165,6 @@ function enableimportbutton() {
         $("#import-button").attr("disabled", true);
     }
 }
-
 
 function recordClick(args) {
     gridObj = $("#Grid").data("ejGrid");
@@ -242,6 +235,8 @@ function searchADUsers(searchKey) {
             }
         });
     } else {
+        var gridObj = $("#Grid").data("ejGrid");
+        gridObj.option("dataSource", "");
         objectSelected = [];
         enableimportbutton();
     }

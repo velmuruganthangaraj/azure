@@ -31,7 +31,7 @@ $(document).ready(function () {
         },
         error: function () {
             if (loginFileExtension !== ".png" && loginFileExtension !== ".jpg" && loginFileExtension !== ".jpeg") {
-                $("#upload-login-image-textbox").addClass("validation-error-image").val("[[[Invalid file format]]]");
+                $("#upload-login-image-textbox").addClass("validation-error-image").val("[[[Invalid file format.]]]");
                 $("#upload-login-image-textbox").closest("div").addClass("has-error");
                 $("#upload-login-image-textbox").parent().find(".e-box").addClass("upload-error-border");
             }
@@ -47,37 +47,37 @@ $(document).ready(function () {
         }
     });
 
-    $("#upload-Main-screen-image").ejUploadbox({
-        saveUrl: window.fileUploadUrl + "?imageType=mainlogo&&timeStamp=" + currentDate,
-        autoUpload: true,
-        showFileDetails: false,
-        buttonText: { browse: ".  .  ." },
-        extensionsAllow: ".PNG,.png,.jpg,.JPG,.jpeg,.JPEG",
-        height: window.innerWidth <= 1366 ? 26 : 30,
-        begin: function () {
-            ShowWaitingProgress("#content-area", "show");
-        },
-        fileSelect: function (e) {
-            mainFileExtension = e.files[0].extension.toLowerCase();
-            mainFileName = e.files[0].name;
-        },
-        error: function () {
-            if (mainFileExtension !== ".png" && mainFileExtension !== ".jpg" && mainFileExtension !== ".jpeg") {
-                $("#upload-main-screen-image-textbox").addClass("validation-error-image").val("[[[Invalid file format]]]");
-                $("#upload-main-screen-image-textbox").closest("div").addClass("has-error");
-                $("#upload-main-screen-image-textbox").parent().find(".e-box").addClass("upload-error-border");
-            }
-        },
-        complete: function () {
-            window.SystemSettingsProperties.MainScreenLogo = "main_logo_" + currentDate + ".png";
-            var imageUrl = window.baseRootUrl + "/Content/Images/Application/" + "main_logo_" + currentDate + ".png?v=" + $.now();
-            $("#mainscreen_logo_img").attr("src", imageUrl);
-            $("#upload-main-screen-image-textbox").removeClass("ValidationErrorImage").val(mainFileName);
-            $("#upload-main-screen-image-textbox").closest("div").removeClass("has-error");
-            $("#upload-main-screen-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
-            ShowWaitingProgress("#content-area", "hide");
-        }
-    });
+    //$("#upload-Main-screen-image").ejUploadbox({
+    //    saveUrl: window.fileUploadUrl + "?imageType=mainlogo&&timeStamp=" + currentDate,
+    //    autoUpload: true,
+    //    showFileDetails: false,
+    //    buttonText: { browse: ".  .  ." },
+    //    extensionsAllow: ".PNG,.png,.jpg,.JPG,.jpeg,.JPEG",
+    //    height: window.innerWidth <= 1366 ? 26 : 30,
+    //    begin: function () {
+    //        ShowWaitingProgress("#content-area", "show");
+    //    },
+    //    fileSelect: function (e) {
+    //        mainFileExtension = e.files[0].extension.toLowerCase();
+    //        mainFileName = e.files[0].name;
+    //    },
+    //    error: function () {
+    //        if (mainFileExtension !== ".png" && mainFileExtension !== ".jpg" && mainFileExtension !== ".jpeg") {
+    //            $("#upload-main-screen-image-textbox").addClass("validation-error-image").val("[[[Invalid file format.]]]");
+    //            $("#upload-main-screen-image-textbox").closest("div").addClass("has-error");
+    //            $("#upload-main-screen-image-textbox").parent().find(".e-box").addClass("upload-error-border");
+    //        }
+    //    },
+    //    complete: function () {
+    //        window.SystemSettingsProperties.MainScreenLogo = "main_logo_" + currentDate + ".png";
+    //        var imageUrl = window.baseRootUrl + "/Content/Images/Application/" + "main_logo_" + currentDate + ".png?v=" + $.now();
+    //        $("#mainscreen_logo_img").attr("src", imageUrl);
+    //        $("#upload-main-screen-image-textbox").removeClass("ValidationErrorImage").val(mainFileName);
+    //        $("#upload-main-screen-image-textbox").closest("div").removeClass("has-error");
+    //        $("#upload-main-screen-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
+    //        ShowWaitingProgress("#content-area", "hide");
+    //    }
+    //});
 
     $("#upload-favicon-image").ejUploadbox({
         saveUrl: window.fileUploadUrl + "?imageType=favicon&&timeStamp=" + currentDate,
@@ -95,7 +95,7 @@ $(document).ready(function () {
         },
         error: function (e) {
             if (favExtension !== ".png" && favExtension !== ".jpg" && favExtension !== ".jpeg") {
-                $("#upload-favicon-image-textbox").addClass("validation-error-image").val("[[[Invalid file format]]]");
+                $("#upload-favicon-image-textbox").addClass("validation-error-image").val("[[[Invalid file format.]]]");
                 $("#upload-favicon-image-textbox").closest("div").addClass("has-error");
                 $("#upload-favicon-image-textbox").parent().find(".e-box").addClass("upload-error-border");
             }
@@ -205,26 +205,25 @@ $(document).ready(function () {
             url: window.updateSystemSettingsUrl,
             data: { systemSettingsData: JSON.stringify(systemSettingsData) },
             beforeSend: showWaitingPopup($("#server-app-container")),
-            success: function (result) {
-                if (isReloadPage) {
-                    if (isUrlChange) {
-                        window.location.href = $("#enable-ssl").val() + "://" + siteURL + "/administration";
+            success: function (data) {
+                if (data.IsSuccess) {
+                    if (isReloadPage) {
+                        if (isUrlChange) {
+                            window.location.href = $("#enable-ssl").val() + "://" + siteURL + "/administration";
+                        }
+                        else {
+                            window.location.href = $("#enable-ssl").val() + "://" + location.host + location.pathname;
+                        }
+                    } else {
+                        $("#main_screen_logo a img").attr("src", window.baseRootUrl + "/Content/Images/Application/" + systemSettingsData.MainScreenLogo);
+                        var link = document.createElement("link");
+                        link.type = "image/x-icon";
+                        link.rel = "shortcut icon";
+                        link.href = window.baseRootUrl + "/Content/Images/Application/" + systemSettingsData.FavIcon;
+                        document.getElementsByTagName("head")[0].appendChild(link);
+                        var pageTitle = $("#site-orgname").val() + " - " + document.title.split("-")[1];
+                        document.title = pageTitle;
                     }
-                    else {
-                        window.location.href = $("#enable-ssl").val() + "://" + location.host + location.pathname;
-                    }
-                } else {
-                    $("#main_screen_logo a img").attr("src", window.baseRootUrl + "/Content/Images/Application/" + systemSettingsData.MainScreenLogo);
-                    var link = document.createElement("link");
-                    link.type = "image/x-icon";
-                    link.rel = "shortcut icon";
-                    link.href = window.baseRootUrl + "/Content/Images/Application/" + systemSettingsData.FavIcon;
-                    document.getElementsByTagName("head")[0].appendChild(link);
-                    var pageTitle = $("#site-orgname").val() + " - " + document.title.split("-")[1];
-                    document.title = pageTitle;
-                }
-
-                if (result.status) {
                     if ($("#enablepoweredbysyncfusion").is(":checked")) {
                         $("#poweredbysyncfusion").removeClass("hide").addClass("show");
                     } else {
@@ -240,9 +239,15 @@ $(document).ready(function () {
                     } else {
                         $("#footer-separator").removeClass("show").addClass("hide");
                     }
-                    SuccessAlert(messageHeader, "[[[Settings has been updated successfully.]]]", 7000);
+                    SuccessAlert(messageHeader, "[[[Settings have been updated successfully.]]]", 7000);
                     SetCookie();
-                } else {
+                }
+                else if (data.IsFailure) {
+                    $("#site-url-validation").parent("span").addClass("has-error");
+                    $("#site-url-validation").text(data.Message);
+                    $("#site-url-validation").css("display", "block");
+                }
+                else if (data.Exception) {
                     WarningAlert(messageHeader, "[[[Error while updating settings.]]]", 7000);
                     $(".error-message, .success-message").css("display", "none");
                 }
@@ -253,9 +258,9 @@ $(document).ready(function () {
 
     $(document).on("click", "#time_format", function () {
         if ($("#time_format").is(":checked")) {
-            $(".time").html("[[[13.00]]]");
+            $(".time").html("[[[13:00]]]");
         } else {
-            $(".time").html("[[[1.00 PM]]]");
+            $(".time").html("[[[1:00 PM]]]");
         }
     });
 
@@ -266,7 +271,8 @@ $(document).ready(function () {
             LdapURL: $("#ldapurl").val().trim(),
             EnableSsl: $("#enable-ldap-ssl").is(":checked"),
             DistinguishedName: $("#distinguished-name").val(),
-            PortNo: $("#ldap-port-number").val().trim()
+            PortNo: $("#ldap-port-number").val().trim(),
+            ActiveDirectoryNewUserLogin: $("#enable-ad-new-user-login").is(":checked")
         };
 
         $.ajax({
@@ -276,10 +282,10 @@ $(document).ready(function () {
             beforeSend: showWaitingPopup($("#server-app-container")),
             success: function (result) {
                 if (result.status) {
-                    SuccessAlert("[[[Active Directory Settings]]]", "[[[Settings has been updated successfully.]]]", 7000);
+                    SuccessAlert("[[[User Directory Settings]]]", "[[[Settings have been updated successfully.]]]", 7000);
                 }
                 else {
-                    WarningAlert("[[[Active Directory Settings]]]", "[[[Error while updating settings.]]]", 7000);
+                    WarningAlert("[[[User Directory Settings]]]", "[[[Error while updating settings.]]]", 7000);
                 }
                 $(".error-message, .success-message").css("display", "none");
             },
@@ -289,17 +295,26 @@ $(document).ready(function () {
         });
     });
 
+    $.validator.addMethod("isValidUrl", function (value, element) {
+        var givenUrl = $("#enable-ssl").val() + "://" + $("#site_url").val();
+        var url = parseURL(givenUrl);
+        if (isValidUrl(givenUrl) == false || parseInt(url.port) > 65535)
+            return false;
+        else
+            return true;
+    }, "[[[Please enter valid URL.]]]");
+
     $.validator.addMethod("isRequired", function (value, element) {
         return !isEmptyOrWhitespace(value);
-    }, "[[[Please enter the name]]]");
+    }, "[[[Please enter the name.]]]");
 
     $.validator.addMethod("isValidName", function (value, element) {
         return IsValidName("name", value);
-    }, "[[[Please avoid special characters]]]");
+    }, "[[[Please avoid special characters.]]]");
 
     $.validator.addMethod("isValidEmail", function (value, element) {
         return IsEmail(value);
-    }, "[[[Invalid email address]]]");
+    }, "[[[Invalid email address.]]]");
 
     $("#look-and-feel-form").validate({
         errorElement: "span",
@@ -312,7 +327,8 @@ $(document).ready(function () {
         onfocusout: function (element) { $(element).valid(); },
         rules: {
             "site_url": {
-                isRequired: true
+                isRequired: true,
+                isValidUrl: true
             }
         },
         highlight: function (element) {
@@ -327,7 +343,7 @@ $(document).ready(function () {
         },
         messages: {
             "site_url": {
-                isRequired: "[[[Please enter URL]]]"
+                isRequired: "[[[Please enter URL.]]]"
             }
         }
     });
@@ -394,108 +410,72 @@ $(document).ready(function () {
         },
         messages: {
             "smtp_address": {
-                isRequired: "[[[Please enter SMTP server]]]"
+                isRequired: "[[[Please enter SMTP server.]]]"
             },
             "port_number": {
-                isRequired: "[[[Please enter SMTP port]]]"
+                isRequired: "[[[Please enter SMTP port.]]]"
             },
             "mail_display_name": {
-                isRequired: "[[[Please enter sender name]]]"
+                isRequired: "[[[Please enter sender name.]]]"
             },
             "mail_user_name": {
-                isRequired: "[[[Please enter sender email address]]]"
+                isRequired: "[[[Please enter sender email address.]]]"
             },
             "mail_password": {
-                required: "[[[Please enter password]]]"
+                required: "[[[Please enter password.]]]"
             },
             "sender_user_name": {
-                required: "[[[Please enter username]]]"
+                required: "[[[Please enter username.]]]"
             }
         }
     });
 
-    $(document).on("change", "#mail-password , #sender-user-name", function () {
-        if ($("#mail-password").val() !== "")
-            $("#mail-password-error").remove();
-        if ($("#sender-user-name").val() !== "")
-            $("#sender-user-name-error").remove();
-    });
+    if ($("#schema-selection").length == 0) {
+        $("#connect-database").show();
+        $("#connect-database").prop("disabled", false);
+        $("#save-db-settings").hide();
+        $("#change-connection").hide();
 
-    $("a[data-toggle='tab']").on('click', function (e) {
-        if ($(this).attr("id") == "azure-ad") {
-            $("#update-active-dir-settings").hide();
-            $("#UpdateAzureADSettings-bottom").removeClass("hidden");
-            $("#save-db-settings").hide();
-            $("#connect-database").hide();
-            $("#change-connection").hide();
-            $("#azure-ad-tab span.validation-message").addClass("ng-hide").parent().removeClass("has-error");
-        }
-        else if ($(this).attr("id") == "windows-ad") {
-            $("#UpdateAzureADSettings-bottom").addClass("hidden");
-            $("#update-active-dir-settings").show();
-            $("#save-db-settings").hide();
-            $("#connect-database").hide();
-            $("#change-connection").hide();
-            $("#windows-ad-tab .error").hide().parent().parent().removeClass("has-error");
-        }
-        else {
-            if ($("#schema-selection").length == 0) {
-                $("#connect-database").show();
-                $("#connect-database").prop("disabled", false);
-                $("#save-db-settings").hide();
-                $("#update-active-dir-settings").hide();
-                $("#change-connection").hide();
-                $("#UpdateAzureADSettings-bottom").addClass("hidden");
-            } else {
-                $("#change-connection").trigger("click");
-                $("#connect-database").show();
-                $("#save-db-settings").hide();
-                $("#update-active-dir-settings").hide();
-                $("#change-connection").hide();
-                $("#UpdateAzureADSettings-bottom").addClass("hidden");
-            }
-        }
-        $(".success-message, .error-message").hide();
-    });
-
-    if ($("#active-directory-container").is(":visible")) {
-        var query = (window.location.search).toString();
-        if (query == "?tab=azure-ad") {
-            $("#azure-ad").tab("show");
-            $("#update-active-dir-settings").hide();
-            $("#UpdateAzureADSettings-bottom").removeClass("hidden");
-        }
+    } else {
+        $("#change-connection").trigger("click");
+        $("#connect-database").show();
+        $("#save-db-settings").hide();
+        $("#change-connection").hide();
     }
 
+    if ($("#active-directory-container").is(":visible")) {
+
+        var query = (window.location.search).toString();
+        if (query == "?tab=azure-ad") {
+            $('#azure-ad-tab').addClass("in");
+            $('#azure-active-directory').find(".collapsed").removeClass("collapsed");
+            $('#windows-ad-tab').removeClass("in");
+            $('#database-settings-tab').removeClass("in");
+        }
+    }
+    
     $(document).ready(function () {
         if ($("#active-directory-container").is(":visible")) {
+            $("[data-toggle='popover']").popover({
+                container: 'body'
+            });
             if (location.href.match(/azure-ad/)) {
-                $("#azure-ad").tab("show");
-                $("#update-active-dir-settings").hide();
-                $("#UpdateAzureADSettings-bottom").removeClass("hidden");
-                $("#save-db-settings").hide();
-                $("#connect-database").hide();
-                $("#change-connection").hide();
-
+                $('#azure-ad-tab').addClass("in");
+                $('#azure-active-directory').find(".collapsed").removeClass("collapsed");
+                $('#windows-ad-tab').removeClass("in");
+                $('#database-settings-tab').removeClass("in");
             }
-            else if (location.href.match(/database-settings/)) {
-                $("#database-settings").tab("show");
-                $("#connect-database").show();
-                $("#save-db-settings").hide();
-                $("#update-active-dir-settings").hide();
-                $("#UpdateAzureADSettings-bottom").addClass("hidden");
-                $("#change-connection").hide();
-
+            else if (location.href.match(/database-settings-tab/)) {
+                $('#database-settings-tab').addClass("in");
+                $('#database-settings').find(".collapsed").removeClass("collapsed");
+                $('#windows-ad-tab').removeClass("in");
+                $('#azure-ad-tab').removeClass("in");
             } else {
-                $("#windows-ad").tab("show");
-                $("#update-active-dir-settings").show();
-                $("#UpdateAzureADSettings-bottom").addClass("hidden");
-                $("#save-db-settings").hide();
-                $("#connect-database").hide();
-                $("#change-connection").hide();
-
+                $('#windows-ad-tab').addClass("in");
+                $('#windows-active-directory').find(".collapsed").removeClass("collapsed");
+                $('#azure-ad-tab').removeClass("in");
+                $('#database-settings-tab').removeClass("in");
             }
-
         }
     });
 
@@ -506,7 +486,6 @@ $(document).ready(function () {
         else {
             $("#poweredbysyncfusion").removeClass("hide").show();
         }
-        addFooterSeparator();
     });
 
     $(document).on("change", "#enablecopyrightinfo", function () {
@@ -558,6 +537,24 @@ $(document).on("mouseleave", ".tooltip-container", function () {
     var image = $(this).attr("data-image").toLowerCase();
 
     $(".highlight-image[data-image='" + image + "']").find(".form-control, .input-group-addon").removeAttr("style");
+});
+
+$(document).on('click', function (e) {
+    if ($(".popover").children().hasClass("popover-content")) {
+        $(".popover-content").attr("id", "popover-content");
+        $(".arrow").attr("id", "arrow");
+    }
+
+    if (e.target.id !== "popover-content" && e.target.id !== "enable-azure-ad-new-user-login-info" && e.target.id !== "enable-ad-new-user-login-info" ) {
+        $(".popover").css("display", "none");
+    }
+    $('.popover').each(function () {
+        if (!($(this).is(e.target) || $(this).has(e.target).length > 0)
+             && $(this).siblings('.popover').length !== 0
+             && $(this).siblings('.popover').has(e.target).length === 0) {
+            $(this).popover().remove();
+        }
+    });
 });
 
 function ActiveDirectoryFormValidate() {
@@ -612,7 +609,7 @@ function AzureADFormValidate() {
                 $("#azure-ad-setting .success-message").css("display", "block");
             }
             else {
-                $("#azure-ad-setting .error-message").html("<span style='color:red'>" + data.value + "</span>");
+                $("#azure-ad-setting .error-message").html("<span style='color:#A94442'>" + data.value + "</span>");
                 $("#azure-ad-setting .success-message").css("display", "none");
                 $("#azure-ad-setting .error-message").css("display", "block");
             }
@@ -627,9 +624,9 @@ function RemoveUploadBoxError() {
     $("#upload-login-image-textbox").removeClass("ValidationErrorImage").val("[[[Browse file path]]]");
     $("#upload-login-image-textbox").closest("div").removeClass("has-error");
     $("#upload-login-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
-    $("#upload-main-screen-image-textbox").removeClass("ValidationErrorImage").val("[[[Browse file path]]]");
-    $("#upload-main-screen-image-textbox").closest("div").removeClass("has-error");
-    $("#upload-main-screen-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
+    //$("#upload-main-screen-image-textbox").removeClass("ValidationErrorImage").val("[[[Browse file path]]]");
+    //$("#upload-main-screen-image-textbox").closest("div").removeClass("has-error");
+    //$("#upload-main-screen-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
     $("#upload-favicon-image-textbox").removeClass("ValidationErrorImage").val("[[[Browse file path]]]");
     $("#upload-favicon-image-textbox").closest("div").removeClass("has-error");
     $("#upload-favicon-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
@@ -669,7 +666,7 @@ function SetCookie() {
         $.ajax({
             type: "POST",
             url: window.setLanguageUrl,
-            data: { languageTag: $("#language").val(), returnUrl: $("#return_url").val() + "/administration" },
+            data: { langtag: $("#language").val(), returnUrl: $("#return_url").val() + "/administration" },
             success: function (result) {
                 window.location.href = result.Data;
             }
@@ -681,7 +678,8 @@ $(document).on("click", "#UpdateAzureADSettings-bottom", function () {
     var adSettingsData = {
         TenantName: $("#tenantName").val().trim(),
         ClientID: $("#clientId").val().trim(),
-        ClientKey: $("#clientKey").val().trim()
+        ClientKey: $("#clientKey").val().trim(),
+        AzureActiveDirectoryNewUserLogin: $("#enable-azure-ad-new-user-login").is(":checked")
     };
 
     $.ajax({
@@ -691,10 +689,10 @@ $(document).on("click", "#UpdateAzureADSettings-bottom", function () {
         beforeSend: showWaitingPopup($("#server-app-container")),
         success: function (result) {
             if (result.status) {
-                SuccessAlert("[[[Azure Active Directory Settings]]]", "[[[Settings has been updated successfully.]]]", 7000);
+                SuccessAlert("[[[User Directory Settings]]]", "[[[Settings have been updated successfully.]]]", 7000);
             }
             else {
-                WarningAlert("[[[Azure Active Directory Settings]]]", "[[[Error while updating settings.]]]", 7000);
+                WarningAlert("[[[User Directory Settings]]]", "[[[Error while updating settings.]]]", 7000);
             }
             $(".azure-ad-button-area .error-message, .azure-ad-button-area .success-message").css("display", "none");
             hideWaitingPopup($("#server-app-container"));

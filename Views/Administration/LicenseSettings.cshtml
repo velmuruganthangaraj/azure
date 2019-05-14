@@ -12,7 +12,6 @@
 }
 
 @section MainSection{
-
     @Html.Partial("_AdminMenu")
 
     <div id="license-settings-container" class="col-xs-12 admin-page-container">
@@ -25,15 +24,15 @@
         <div id="license-setting-body" class="admin-page-body">
             <div class="field-container">
                 <div class="license-info">
-                    <label class="col-lg-2 col-md-3 no-padding">[[[Total license count]]]</label>
+                    <label class="col-lg-3 col-md-3 no-padding">[[[Total license count]]]</label>
                     <span id="license-count" class="license-count">@ViewBag.UserCount</span>
                 </div>
                 <div class="license-info">
-                    <label class="col-lg-2 col-md-3 no-padding">[[[Licenses currently in use]]]</label>
+                    <label class="col-lg-3 col-md-3 no-padding">[[[Licenses currently in use]]]</label>
                     <span id="used-license-count" class="license-count">@ViewBag.UsedUserCount</span>
                 </div>
                 <div class="license-info">
-                    <label class="col-lg-2 col-md-3 no-padding">[[[Remaining licenses available]]]</label>
+                    <label class="col-lg-3 col-md-3 no-padding">[[[Remaining licenses available]]]</label>
                     <span id="remaining-license-count" class="license-count">@ViewBag.RemainingCount</span>
                 </div>
             </div>

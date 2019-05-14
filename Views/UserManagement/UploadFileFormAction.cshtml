@@ -3,11 +3,11 @@
 }
 
 @section styles{
-    @Styles.Render("~/Styles/user-management-module")
+    @Styles.Render("~/Styles/user-csv-import")
 }
 
 @section scripts{
-    @Scripts.Render("~/Scripts/user-management")
+    @Scripts.Render("~/Scripts/user-csv-import")
     <script>
         var checkMailSettingUrl = "@Url.Action("checkmailsettingsexist", "Administration")";
         var postactionUrl = "@Url.Action("postaction", "UserManagement")";
@@ -25,7 +25,7 @@
         var deleteSingleFromUserListUrl = "@Url.Action("DeleteSingleFromUserList", "UserManagement")";
     </script>
 
-
+    
     <script>
             $(document).ready(function() {
                 $("a").click(function() {
@@ -40,12 +40,12 @@
                 var data = data1.Data.Data;
                 $("#user_import_grid").ejGrid({
                     dataSource: data,
-                    gridLines: ej.Grid.GridLines.None,
-                    enableAltRow: false,
-                    allowPaging: false,
-                    allowSorting: false,
+                    allowPaging: true,
+                    allowSorting: true,
                     allowSelection: false,
-                    allowScrolling: false,
+                    allowScrolling: true,
+                    pageSettings: { pageSize: 20 },
+                    allowSearching: true,
                     locale: "en-us",
                     actionComplete:"onComplete",
                     dataBound: function (args) {
@@ -65,7 +65,7 @@
                         { field: "Email", cssClass: "email-id", headerText: "[[[Email Address]]]", width: 50 },
                         { field: "Fullname", headerText: "[[[Name]]]", width: 50 },
                         { field: "Password", cssClass: "password", headerText: "[[[Password]]]", width: 30 },
-                        { field: "DisplayMessage", cssClass: "user-validation", headerText: "[[[Error]]]", width: 100, visible: false }
+                        { field: "DisplayMessage", cssClass: "user-validation", headerText: "[[[Error]]]", width: 50, visible: false }
                     ],
 
                 });
@@ -90,7 +90,7 @@
         <div class="col-lg-12 admin-page-header">
             <div class="col-md-12 import-area no-padding">
                 <a href="@Url.Action("index", "UserManagement")" title="[[[Users]]]" class="back-button pull-left">
-                    <i class="su su-arrow-back"> </i>
+                     <i class="su su-arrow-back"> </i>
                 </a>
                 <h1 class="page-title pull-left">
                     [[[IMPORT USERS ]]]
@@ -98,13 +98,13 @@
                 @if (GlobalAppSettings.SystemSettings.ActivationType == ActivationType.AutomaticActivation)
                 {
                     <div class="import-users">
-                        <input type="button" value="[[[Import and Activate]]]" title="[[[Import and activate users from the list below]]]" onclick="SaveUserListFromCSV()" id="import-button" class="primary-button pull-right" disabled />
+                        <input type="button" value="[[[Import and activate]]]" title="[[[Import and activate users from the list below]]]" onclick="SaveUserListFromCSV()" id="import-button" class="primary-button pull-right" disabled />
                     </div>
                 }
                 else
                 {
                     <div class="import-users">
-                        <input type="button" value="[[[Import Users]]]" title="[[[Import users from the list below]]]" onclick="SaveUserListFromCSV()" id="import-button" class="primary-button pull-right" disabled />
+                        <input type="button" value="[[[Import users]]]" title="[[[Import users from the list below]]]" onclick="SaveUserListFromCSV()" id="import-button" class="primary-button pull-right" disabled />
                     </div>
                 }
             </div>
@@ -114,14 +114,14 @@
                 <div class="col-md-12 import-file no-padding">
                     <div class="col-md-6 no-padding">
                         <div class="col-md-8 no-padding">
-                            <input type="text" class="form-control col-md-6 no-margin" id="filename" readonly value="[[[Browse file path (.csv)]]]" disabled>
+                            <input type="text" class="form-control col-md-6 no-margin" id="filename" readonly value="[[[Browse file path]]] (.csv)" disabled>
                             <span id="trigger-file" class="input-group-addon btn popup no-left-border">
                                 ...
                             </span>
                             <input type="file" accept=".csv" name="csvfile" id="csvfile" class="btn popup upload-btn">
                             @if (ViewBag.result.ToLower() == "error")
                             {
-                                <span id="user-import-validation-msg">[[[Please upload a valid csv file.]]]</span>
+                                <span id="user-import-validation-msg">[[[Please upload a valid CSV file.]]]</span>
                             }
                             else if (ViewBag.ValidateMessage.ToLower() != "success")
                             {
@@ -138,17 +138,17 @@
                         </div>
 
                         <div class="col-md-2">
-                            <input type="submit" class="primary-button" title="[[[Upload CSV File here]]]" id="csv-upload" disabled="" value="[[[Upload]]]" />
+                            <input type="submit" class="primary-button" title="[[[Upload CSV file here]]]" id="csv-upload" disabled="" value="[[[Upload]]]" />
                         </div>
                     </div>
-                    <p class="col-lg-12 no-padding"><a href="@Url.Action("DownloadTemplate", "UserManagement")" class="download-template" title="[[[Download sample template]]]">[[[Download Template]]]</a></p>
+                    <p class="col-lg-12 no-padding"><a href="@Url.Action("DownloadTemplate", "UserManagement")" class="download-template" title="[[[Download sample template]]]">[[[Download template]]]</a></p>
                 </div>
             </form>
             <div class="col-xs-12 grid-area no-padding">
                 <div class="list" id="grid-validation-messages">
                     <span id="grid-nodata-validation">[[[There is no data in the uploaded file. Please check and try uploading again.]]]</span>
-                    <span id="grid-validation"><span id="userCount">@ViewBag.UserCount</span> [[[User(s) has been added successfully.]]]</span>
-                    <span id="grid-error-validation">[[[Duplicate or Invalid data is found. Please change the data accordingly and re-upload the file.]]] </span>
+                    <span id="grid-validation"><span id="userCount">@ViewBag.UserCount</span> [[[user(s) has been added successfully.]]]</span>
+                    <span id="grid-error-validation">[[[Duplicate or invalid data is found. Please change the data accordingly and re-upload the file.]]] </span>
                 </div>
                 <div id="grid-container" class="col-md-12 no-padding">
                     <div class="col-md-12 container-fluid page-inner-padding no-padding ">

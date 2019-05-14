@@ -2,7 +2,6 @@
 var regexIe8 = new RegExp("Trident(\/4.0)|(Trident\/5.0)");
 var isKeyUp = false;
 $(document).ready(function () {
-
     $(".dbselect").ejRadioButton({ size: "medium", checked: false });
     $("#https").ejRadioButton({ size: "medium", checked: ($("#https").val().toLowerCase() != connectionType.toLowerCase()) ? false : true });
     $("#http").ejRadioButton({ size: "medium", checked: ($("#http").val().toLowerCase() != connectionType.toLowerCase()) ? false : true });
@@ -21,11 +20,10 @@ $(document).ready(function () {
         var accountName = $("#txt_accountname").val();
         var accessKey = $("#txt_accesskey").val();
 
-        if (checkedVal == 'http' || checkedVal == 'https') {
+        if (checkedVal == "http" || checkedVal == "https") {
             $(".customendpointformelement").hide();
             var finalValue = "DefaultEndpointsProtocol=" + checkedVal + ";AccountName=" + accountName + ";AccountKey=" + accessKey;
             $("#connectionString").val(finalValue);
-
         } else {
             var blobUrl = $("#txt_bloburl").val();
 
@@ -41,10 +39,9 @@ $(document).ready(function () {
         var checkedVal = $("input[name='Connection']:checked").val();
         var accountName = $("#txt_accountname").val();
         var accessKey = $("#txt_accesskey").val();
-        if (checkedVal == 'http' || checkedVal == 'https') {
+        if (checkedVal == "http" || checkedVal == "https") {
             var finalValue = "DefaultEndpointsProtocol=" + checkedVal + ";AccountName=" + accountName + ";AccountKey=" + accessKey;
             $("#connectionString").val(finalValue);
-
         } else {
             var blobUrl = $("#txt_bloburl").val();
 
@@ -52,23 +49,23 @@ $(document).ready(function () {
             $("#connectionString").val(finalValue);
         }
     });
- 
+
     $.validator.addMethod("isRequired", function (value, element) {
         return !isEmptyOrWhitespace(value);
-    }, "[[[Please enter the name]]]");
+    }, "[[[Please enter the name.]]]");
 
     $.validator.addMethod("IsValidEndPoint", function (value, element) {
         return IsValidEndPoint(value);
-    }, "[[[Invalid Blob Service endpoint]]]");
+    }, "[[[Invalid Blob service endpoint.]]]");
 
     $.validator.addMethod("IsCustomEndpoint", function (value, element) {
         return IsCustomEndPoint(value, element);
-    }, "[[[Invalid End point]]]");
+    }, "[[[Invalid end point.]]]");
     $.validator.addMethod("IsValidCustomEndPoint", function (value, element) {
         return IsValidCustomEndPoint(value, element);
-    }, "[[[Invalid custom End point]]]");
+    }, "[[[Invalid custom end point.]]]");
 
-    $('#blob_storage_form').validate({
+    $("#blob_storage_form").validate({
         focusInvalid: false,
         errorElement: "span",
         onkeyup: function (element, event) {
@@ -105,11 +102,11 @@ $(document).ready(function () {
             }
         },
         highlight: function (element) {
-            $(element).closest('.form-group').addClass("has-error");
+            $(element).closest(".form-group").addClass("has-error");
             $(element).parent().find(">.su-login-error").show();
         },
         unhighlight: function (element) {
-            $(element).closest('.form-group').removeClass('has-error');
+            $(element).closest(".form-group").removeClass("has-error");
             $(element).parent().find(">.su-login-error").hide();
         },
         errorPlacement: function (error, element) {
@@ -117,37 +114,32 @@ $(document).ready(function () {
         },
         messages: {
             txt_accountname: {
-                isRequired: "[[[Please enter Storage Account name]]]"
+                isRequired: "[[[Please enter storage account name.]]]"
             },
             txt_endpoint: {
-                isRequired: "[[[Please enter Blob Service endpoint]]]"
+                isRequired: "[[[Please enter blob service endpoint.]]]"
             },
             txt_accesskey: {
-                isRequired: "[[[Please enter Access key]]]"
+                isRequired: "[[[Please enter access key.]]]"
             },
             txt_containername: {
-                required: "[[[Please enter Container name]]]"
+                required: "[[[Please enter container name.]]]"
             },
             txt_bloburl: {
-                IsCustomEndpoint: "[[[Please enter Blob URL]]]",
-                IsValidEndPoint: "[[[Please enter valid Blob URL]]]",
-                IsValidCustomEndPoint: "[[[Subdomain name should match with the Account name]]]"
+                IsCustomEndpoint: "[[[Please enter Blob URL.]]]",
+                IsValidEndPoint: "[[[Please enter valid Blob URL.]]]",
+                IsValidCustomEndPoint: "[[[Subdomain name should match with the account name.]]]"
             }
         }
-
     });
-
-   
-
-
 });
 
 function validate_storage_type() {
     $("#DisplayValidationMessage").hide();
     showWaitingPopup("page_content_Div");
     var storageType = $("#StorageType").val();
-    if (storageType == '1') {
-        if ($('#blob_storage_form').valid()) {
+    if (storageType == "1") {
+        if ($("#blob_storage_form").valid()) {
             window.accountname = $("#txt_accountname").val();
             window.endpoint = $("#txt_endpoint").val();
             window.accesskey = $("#txt_accesskey").val();
@@ -157,9 +149,8 @@ function validate_storage_type() {
             var connectionString = "";
             var storageEndPoint = $("#txt_endpoint").val();
 
-            if (connectionType == 'http' || connectionType == 'https') {
+            if (connectionType == "http" || connectionType == "https") {
                 connectionString = "DefaultEndpointsProtocol=" + connectionType + ";AccountName=" + window.accountname + ";AccountKey=" + window.accesskey;
-
             } else {
                 connectionString = "BlobEndpoint=" + blobUrl + ";AccountName=" + window.accountname + ";AccountKey=" + window.accesskey;
             }
@@ -170,7 +161,7 @@ function validate_storage_type() {
                 },
                 function (result) {
                     if (typeof result.Data != "undefined") {
-                        if (result.Data.Key.toString().toLowerCase() == 'true') {
+                        if (result.Data.Key.toString().toLowerCase() == "true") {
                             window.azureconnectionString = result.Data.ConnectionString;
                             $("#system-settings-container-page2").hide();
                             $("#system-settings-container-page3").show();
@@ -183,7 +174,7 @@ function validate_storage_type() {
                         }
                     } else {
                         hideWaitingPopup("page_content_Div");
-                        $("#DisplayValidationMessage").html("[[[Invalid Azure Blob Storage!]]]").show();
+                        $("#DisplayValidationMessage").html("[[[Invalid Azure Blob storage!]]]").show();
                     }
                 }
             );
@@ -201,7 +192,6 @@ function validate_storage_type() {
         changeFooterPostion();
         return false;
     }
-
 }
 
 function IsValidEndPoint(domainName) {
@@ -242,8 +232,6 @@ function IsValidCustomEndPoint(fieldValue, element) {
         return false;
 }
 
-
-
 $(document).on("focus", "input[type=text],input[type=password]", function () {
     if (regexIe8.test(userAgent)) {
         $(this).next(".placeholder").removeClass("show").addClass("hide");
@@ -255,7 +243,6 @@ $(document).on("focusout", "input[type=text],input[type=password]", function () 
         $(this).next(".placeholder").removeClass("hide").addClass("show");
     }
 });
-
 
 $(document).on("focus", ".placeholder", function () {
     $(this).prev("input").focus();
@@ -280,7 +267,4 @@ function addPlacehoder(object) {
             }
         });
     }
-
 }
-
-

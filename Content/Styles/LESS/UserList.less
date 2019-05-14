@@ -1,17 +1,16 @@
 ﻿@import (reference) "Mixins.less";
 
-body{
+body {
     overflow: hidden !important;
 }
 
 #base-container {
     .admin-page-header {
         #user-title {
-
-            #user-management-options{
+            #user-management-options {
                 list-style: none;
 
-                > li{
+                > li {
                     display: inline-block;
                     float: inherit;
                     margin-left: 15px;
@@ -29,13 +28,13 @@ body{
                 .add-user-dropdown {
                     left: -119px;
                 }
-                .sync-user-dropdown{
+
+                .sync-user-dropdown {
                     left: -126px;
                 }
             }
 
-            #add-user-in-group {              
-
+            #add-user-in-group {
                 .user-add-group, .user-delete-button {
                     margin-left: 15px;
                     float: right;
@@ -48,20 +47,16 @@ body{
         #user_grid {
             .dropdown {
                 position: absolute;
+                right: 35px;
 
                 .dropdown-menu {
                     left: -172px;
                     width: 190px;
                 }
             }
-
-            table {
-                th:last-child {
-                    cursor: default;
-                }
-            }
         }
-        .margin{
+
+        .margin {
             margin-left: 3px;
         }
     }
@@ -69,20 +64,18 @@ body{
     .ad-azure-indication {
         padding: 10px 0 0 5px;
 
-        .su{
-            color:@ad-icon-color;
+        .su {
+            color: @ad-icon-color;
         }
     }
 }
-
-
 
 .e-grid .e-gridheader .e-headercell.e-headertemplate {
     padding-left: 15px !important;
 }
 
-.e-grid .e-gridcontent tr:first-child td, .e-grid tr:first-child.e-editedrow td.e-rowcell, .e-grid .e-gridcontent .e-firstrow > td{
-    border-top:1px solid @grid-border-color;
+.e-grid .e-gridcontent tr:first-child td, .e-grid tr:first-child.e-editedrow td.e-rowcell, .e-grid .e-gridcontent .e-firstrow > td {
+    border-top: 1px solid @grid-border-color;
 }
 
 #popup-container {
@@ -90,7 +83,7 @@ body{
         .modal-dialog {
             #movable-dialog {
                 border-radius: 0;
-                top: 150px;
+                top: 273px;
 
                 .modal-header {
                     border-bottom: 0;
@@ -100,9 +93,8 @@ body{
                         color: @primary-text-color;
                         font-size: @app-large-text-size;
                         opacity: 1;
-                        filter: none !important;
 
-                        &:hover{
+                        &:hover {
                             color: @primary-color;
                         }
                     }
@@ -214,7 +206,8 @@ body{
     }
 
     .modal-body {
-        padding: 0px;
+        padding: 0 0 10px 0 !important;
+
         .form-control {
             font-size: @app-text-size;
             width: 301px;
@@ -232,8 +225,8 @@ body{
             padding: 10px;
         }
 
-        .last-name{
-            margin-bottom:10px;
+        .last-name {
+            margin-bottom: 10px;
         }
 
         .useradd-validation-messages {
@@ -251,13 +244,78 @@ body{
             line-height: @textbox-height;
             color: @placeholder-color;
         }
+
+        #password-container {
+            margin-left: -5px;
+            margin-top: -7px;
+
+            .password-section {
+                padding-left: 15px;
+
+                ul {
+                    font-size: @app-text-size - 2;
+                    margin: 0;
+                }
+            }
+
+            .password-label {
+                font-size: @app-text-size;
+                font-weight: 400;
+                margin: 7px 0 0 -1px;
+            }
+
+            .form-control {
+                width: 230px;
+                height: @textbox-height;
+            }
+
+            #fake-password {
+                display: none;
+            }
+
+            #new-password-validate, #confirm-password-validate {
+                font-size: @app-text-size;
+                color: @validation-text-color;
+            }
+
+            .show-hide-password {
+                color: @primary-text-color;
+                cursor: pointer;
+                position: absolute;
+                left: 220px;
+                top: 8px;
+                visibility: visible;
+            }
+
+            .button-section {
+                padding-top: 12px;
+
+                #change-password-cancel {
+                    &:hover {
+                        color: @primary-btn-bg;
+                    }
+                }
+
+                .validation {
+                    margin-top: 10px;
+                }
+
+                #password-validation {
+                    margin-left: 10px;
+                }
+            }
+        }
     }
 }
 
-.e-dialog, #user-delete-confirmation, #singleuser-delete-confirmation {
-    padding: 0;
+ul#password_policy_rules {
+    margin-left: 0 !important;
+    margin-top: 7px;
+}
 
-//To retrieve the dialog box during window resize
+#user-delete-confirmation, #singleuser-delete-confirmation {
+    padding: 0;
+    //To retrieve the dialog box during window resize
     display: block;
 
     .modal-dialog {
@@ -268,6 +326,7 @@ body{
 
         .modal-body {
             padding: 0px !important;
+
             .delete-msg {
                 height: 50px;
                 font-size: @app-text-size;
@@ -287,46 +346,43 @@ body{
 
 // To wrap the text in tool tip
 .tooltip-inner {
- word-break: break-all;
-}
-
-.msg-box-height{
-    height: 160px !important;    
+    word-break: break-all;
+    white-space: pre;
+    max-width: none;
 }
 
 @media screen and (min-width: 1400px) {
-
-     #base-container .admin-page-header #user-title .dropdown {
+    #base-container .admin-page-header #user-title .dropdown {
         .add-user-dropdown {
-            left: -119px;
+            left: -120px;
         }
 
         .sync-user-dropdown {
-             left: -126px;
+            left: -125px;
         }
     }
-       #base-container #user-list-container {
-            #search-area {
-                input[type="text"] {
-                    height: @textbox-lg-height;
-                }
 
-                .close-icon {
-                    height: @textbox-lg-height;
-                }
+    #base-container #user-list-container {
+        #search-area {
+            input[type="text"] {
+                height: @textbox-lg-height;
+            }
 
-                .su-search {
-                    height: @textbox-lg-height;
-                }
+            .close-icon {
+                height: @textbox-lg-height;
+            }
+
+            .su-search {
+                height: @textbox-lg-height;
             }
         }
+    }
 
-        .e-dialog .modal-dialog .modal-content .modal-header {
-            .modal-title, a.close {
-                font-size: @app-large-text-size + 2;
-                filter: none !important;
-            }
+    .e-dialog .modal-dialog .modal-content .modal-header {
+        .modal-title, a.close {
+            font-size: @app-large-text-size + 2;
         }
+    }
 
     .e-dialog {
         .validation-message {
@@ -352,75 +408,47 @@ body{
             .placeholder {
                 line-height: @textbox-height + 4;
             }
-        }
-    }
 
-        #singleuser-delete-confirmation  .modal-dialog .modal-body .delete-msg, #user-delete-confirmation .modal-dialog .modal-body .delete-msg {
-            font-size: @app-large-text-size;
-        }
-
-        #popup-container #confirm-modal .modal-dialog #movable-dialog {
-            .modal-header {
-                .modal-title, a.close {
-                    font-size: @app-large-text-size + 2;
-                    filter: none !important;
+            #password-container {
+                .password-label {
+                    font-size: @app-large-text-size;
                 }
-
-                .subhead-menu {
+                .mandatory{
                     font-size: @app-large-text-size;
                 }
             }
+        }
+    }
 
-            .modal-body {
+    #singleuser-delete-confirmation .modal-dialog .modal-body .delete-msg, #user-delete-confirmation .modal-dialog .modal-body .delete-msg {
+        font-size: @app-large-text-size;
+    }
+
+    #popup-container #confirm-modal .modal-dialog #movable-dialog {
+        .modal-header {
+            .modal-title, a.close {
+                font-size: @app-large-text-size + 2;
+            }
+
+            .subhead-menu {
                 font-size: @app-large-text-size;
-
-                .form-control {
-                    font-size: @app-large-text-size;
-                    height: @textbox-lg-height;
-                }
-
-                .group-validation {
-                        font-size: @validation-large-text-size;
-                    }
-
-                .notification {
-                    font-size: @validation-large-text-size;
-                }
             }
         }
-    }
 
-#existing-group {
-    .group-dropdown {
-        padding-right: 10px;
-    }
-}
+        .modal-body {
+            font-size: @app-large-text-size;
 
-.tooltip-inner {
-    white-space:pre;
-    max-width:none;
-}
+            .form-control {
+                font-size: @app-large-text-size;
+                height: @textbox-lg-height;
+            }
 
-#messageBox {
-    .message-content {
-        .delete-success {
-            position: relative;
-        }
-    }
-}
+            .group-validation {
+                font-size: @validation-large-text-size;
+            }
 
-#messageBox_wrapper {
-    .e-dialog-scroller {
-        height: 150px;
-
-        #messageBox {
-            height: 100% !important;
-            width: 100% !important;
-
-            .message-content {
-                margin: 0px;
-                height: 70px;
-                padding: 15px 15px 15px 15px;
+            .notification {
+                font-size: @validation-large-text-size;
             }
         }
     }

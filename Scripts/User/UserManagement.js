@@ -2,10 +2,15 @@
 
 $(document).ready(function () {
     var isFirstRequest = false;
+    var automaticActivationType = $("#activation-type").val().toLowerCase() === "automaticactivation";
+    var rules;
     addPlacehoder("#user-add-dialog");
     addPlacehoder("#search-area");
+    if (!automaticActivationType) {
+        $("#user-field-container").removeClass("col-xs-6");
+    }
     $("#user-add-dialog").ejDialog({
-        width: "500px",
+        width:"500px",
         height: "auto",
         showOnInit: false,
         allowDraggable: true,
@@ -48,15 +53,15 @@ $(document).ready(function () {
 
     $.validator.addMethod("isRequired", function (value, element) {
         return !isEmptyOrWhitespace(value);
-    }, "[[[Please enter the name]]]");
+    }, "[[[Please enter the name.]]]");
 
     $.validator.addMethod("isValidUserName", function (value, element) {
         return IsValidName("username", value)
-    }, "[[[Please avoid special characters]]]");
+    }, "[[[Please avoid special characters.]]]");
 
     $.validator.addMethod("hasWhiteSpace", function (value, element) {
         return HasWhiteSpace(value)
-    }, "[[[Username should not contain white space]]]");
+    }, "[[[Username should not contain white space.]]]");
 
     $.validator.addMethod("isValidEmail", function (value, element) {
         if (value.trim() == "") {
@@ -64,20 +69,20 @@ $(document).ready(function () {
         } else {
             return IsEmail(value);
         }
-    }, "[[[Invalid email address]]]");
+    }, "[[[Invalid email address.]]]");
 
     $.validator.addMethod("isValidName", function (value, element) {
         return IsValidName("name", value)
-    }, "[[[Please avoid special characters]]]");
+    }, "[[[Please avoid special characters.]]]");
 
     $.validator.addMethod("additionalSpecialCharValidation", function (value, element) {
         if (/^[a-zA-Z_0-9`~!\$\^()=\-\.\{\} ]+$/.test(value) || value === "") {
             return true;
         }
-    }, "[[[Please avoid special characters]]]");
+    }, "[[[Please avoid special characters.]]]");
 
     $("#dialog-container").validate({
-        errorElement: 'span',
+        errorElement: "span",
         onkeyup: function (element, event) {
             if (event.keyCode != 9) {
                 isKeyUp = true;
@@ -106,36 +111,73 @@ $(document).ready(function () {
             "last-name": {
                 isValidName: true,
                 additionalSpecialCharValidation: true
+            },
+            "new-password": {
+                isRequired: true,
+                isValidPassword: true
+            },
+            "confirm-password": {
+                isRequired: true,
+                equalTo: "#new-password"
             }
         },
         highlight: function (element) {
-            $(element).closest('div').addClass("has-error");
+            passwordBoxHightlight(element)
         },
         unhighlight: function (element) {
-            $(element).closest('div').removeClass('has-error');
-            $(element).closest('div').find("span").html("");
+            $(element).closest("div").find("span").html("");
+            passwordBoxUnhightlight(element)
         },
         errorPlacement: function (error, element) {
-            $(element).closest('div').find("span").html(error.html()).css("display", "block");
+            $(element).closest("div").find(".useradd-validation-messages").html(error.html()).css("display", "block");
+            $(element).closest("div").find(".password-validate-holder").html(error.html());
         },
         messages: {
             "username": {
-                isRequired: "[[[Please enter username]]]"
+                isRequired: "[[[Please enter username.]]]"
             },
             "first-name": {
-                isRequired: "[[[Please enter first name]]]"
+                isRequired: "[[[Please enter first name.]]]"
+            },
+            "new-password": {
+                isRequired: "[[[Please enter your new password.]]]",
+            },
+            "confirm-password": {
+                isRequired: "[[[Please confirm your new password.]]]",
+                equalTo: "[[[Passwords mismatch.]]]"
             }
         }
     });
 
+    $("#new-password").bind("keyup", function () {
+        if ($("#new-password").val() == $("#confirm-password").val()) {
+            $("#confirm-password").closest("div").removeClass("has-error");
+            $("#confirm-password").closest("tr").next("tr").find("span").html("");
+        }
+        else if ($("#confirm-password").val() != "") {
+            $("#confirm-password").closest("div").addClass("has-error");
+            $("#confirm-password").closest("div").next("div").find("span").html("[[[Passwords mismatch.]]]").css("display", "block");
+        }
+        createPasswordPolicyRules();
+    });
+
+    $("#new-password").on("change", function () {
+        createPasswordPolicyRules();
+        $("#new-password").valid();
+    });
+    
     $(document).ready(function () {
         if (document.getElementById("existing-user-count") != null) {
             if ($("#existing-user-count").attr("data-value").toLowerCase() == "true" && $("#csv-file-error").attr("data-value").toLowerCase() != "error") {
-                parent.messageBox("su-user-1", "[[[Import users from CSV]]]", "[[[There is no data in the uploaded file. Please check and try uploading again.]]]", "success", function () {
+                parent.messageBox("su-user-1", "[[[Import Users from CSV]]]", "[[[There is no data in the uploaded file. Please check and try uploading again.]]]", "success", function () {
                     parent.onCloseMessageBox();
                 });
                 $("#import-button").attr("disabled", "disabled");
             }
+        }
+
+        if (getParameterByName("action") === "create") {
+            $(".create-trigger").trigger("click");
         }
     });
 
@@ -152,105 +194,55 @@ $(document).ready(function () {
 
     $(document).on("click", "#create-user", function () {
         $("#add-user").removeAttr("disabled");
-        $(".form input[type='text']").val('');
-        var usergrid = $('#user_grid').data("ejGrid");
+        $(".form input[type='text']").val("");
+        var usergrid = $("#user_grid").data("ejGrid");
         usergrid.clearSelection();
         $("#add-user-in-group").removeClass("show").addClass("hide");
         $(".validation").closest("div").removeClass("has-error");
         $(".useradd-validation-messages").css("display", "none");
+        setHeight();
     });
 
     $(".user-delete-button").on("click", function () {
         $("#user-delete-confirmation").ejDialog("open");
     });
 
-    $("input#add-user").on('click', function () {
+    $("input#add-user").on("click", function () {
         var userName = $("#username").val().trim();
-        var firstName = $("#firstname").val().trim();
-        var emailid = $('#mailid').val().trim();
+        var emailid = $("#mailid").val().trim();
         var isValid = $("#dialog-container").valid();
         if (isValid) {
             $(".useradd-validation-messages").css("display", "none");
-            var g = $('#user_grid').data("ejGrid");
-
+            $(".password-validate-holder").css("display", "none");
+            var g = $("#user_grid").data("ejGrid");
             showWaitingPopup("user-add-dialog_wrapper");
-
-            var lastName = $('#lastname').val().trim();
-            var values = "&username=" + userName + "&emailid=" + emailid + "&firstname=" + firstName + "&lastname=" + lastName;
-
             $.ajax({
                 type: "POST", url: isPresentusernameUrl, data: { userName: userName.toLowerCase() },
                 success: function (data) {
                     if (data.toLowerCase() == "true") {
-                        $('#username').closest('div').addClass("has-error");
-                        $("#invalid-username").html("[[[Username already exists]]]").css("display", "block");
+                        $("#username").closest("div").addClass("has-error");
+                        $("#invalid-username").html("[[[Username already exists.]]]").css("display", "block");
                         $(".useradd-validation-messages").css("display", "block");
                         hideWaitingPopup("user-add-dialog_wrapper");
                         return;
+                    }
+                    else if(isEmptyOrWhitespace(emailid))
+                    {
+                        createUser();
                     }
                     else {
                         $.ajax({
                             type: "POST", url: isPresentEmailId, data: { emailId: emailid.toLowerCase() },
                             success: function (data) {
                                 if (data.toLowerCase() == "true") {
-                                    $('#mailid').closest('div').addClass("has-error");
-                                    $("#invalid-email").html("[[[Email address already exists]]]").css("display", "block");
+                                    $("#mailid").closest("div").addClass("has-error");
+                                    $("#invalid-email").html("[[[Email address already exists.]]]").css("display", "block");
                                     $(".useradd-validation-messages").css("display", "block");
                                     hideWaitingPopup("user-add-dialog_wrapper");
                                     return;
                                 }
                                 else {
-                                    $.ajax({
-                                        type: "POST", url: postactionUrl, data: values,
-                                        success: function (data, result) {
-                                            if ($.type(data) == "object") {
-                                                if (data.Data.result == "success") {
-                                                    hideWaitingPopup("user-add-dialog_wrapper");
-                                                    $("#add-user").attr("disabled", "disabled");
-                                                    $("#create-user").removeClass("hide").addClass("show");
-                                                    $(".form input[type='text']").val('');
-                                                    var count = parent.$("#user-count-text").val();
-                                                    var currentVal = parseInt(count) + 1;
-                                                    parent.$("#user-count").html(currentVal);
-                                                    parent.$("#user-count-text").val(currentVal);
-                                                    onUserAddDialogClose();
-                                                    $.ajax({
-                                                        type: "POST",
-                                                        url: checkMailSettingUrl,
-                                                        success: function (result) {
-                                                            var messageText = "";
-                                                            if (result.activation == 0) {
-                                                                messageText = "[[[User has been added and activated successfully.]]]";
-                                                            }
-                                                            else if (result.result == "success" && result.activation == 1) {
-                                                                messageText = "[[[User has been added successfully.]]]";
-                                                            }
-                                                            else if (result.result == "failure" && result.isAdmin == true && result.activation == 1) {
-                                                                messageText = "[[[User has been created successfully. Activation emails cannot be sent until the user’s email settings are configured.]]]";
-                                                            }
-                                                            messageBox("su-user-add", "[[[Add User]]]", messageText, "success", function () {
-                                                                g.refreshContent();
-                                                                onCloseMessageBox();
-                                                            });
-                                                        }
-                                                    });
-                                                }
-                                                else if (data.IsUserLimitExceed) {
-                                                    hideWaitingPopup("user-add-dialog_wrapper");
-                                                    $("#limit-user").ejDialog("open");
-                                                    $("#zero-user-acc").show();
-                                                }
-                                                else {
-                                                    messageBox("su-user-add", "[[[Add User]]]", "Internal Server Error. please try again.", "error", function () {
-                                                        g.refreshContent();
-                                                        onCloseMessageBox();
-                                                    });
-                                                }
-                                            }
-                                            else {
-                                            }
-                                        }
-                                    });
+                                    createUser();
                                 }
                             }
                         });
@@ -304,8 +296,8 @@ $(document).ready(function () {
         }
     });
 
-    $("#user-delete-confirmation-wrapper,#user-delete-confirmation-overLay").keyup(function (e) {
-        if (e.keyCode == 13) {
+    $("#user-delete-confirmation,#user-delete-confirmation-overLay").keyup(function (e) {
+        if (e.keyCode == window.keyCode.Enter) {
             MakeFlyDeleteUsers();
         }
     });
@@ -316,23 +308,23 @@ $(document).ready(function () {
 
     function AddUserGroup() {
         $("#group-name-validation").closest("div").addClass("has-error");
-        var g = $('#user_grid').data("ejGrid");
+        var g = $("#user_grid").data("ejGrid");
         showWaitingPopup("movable-dialog");
         if ($("#new-group").css("display") == "none") {
             var GroupNameDropdown = $("#groupname-dropdown").val();
 
             var GroupUsers = document.getElementsByName("hiddenUserName[]");
-            var GrList = '';
+            var GrList = "";
             for (var t = 0; t < GroupUsers.length; t++) {
-                if (GrList == '')
+                if (GrList == "")
                     GrList = GroupUsers[t].value;
                 else
                     GrList = GrList + "," + GroupUsers[t].value;
             }
             var values = "GroupId=" + GroupNameDropdown + "&GroupUsers=" + GrList;
-            var msg = '';
+            var msg = "";
 
-            if (GroupNameDropdown == '') {
+            if (GroupNameDropdown == "") {
                 msg += "Test";
                 $("#groupname-dropdown").css("border", "1px solid #ff0000");
             } else
@@ -343,11 +335,10 @@ $(document).ready(function () {
                     CloseGroup();
                     $("#success-message").append(data);
                     g.refreshContent();
-                } else {
                 }
             });
         } else if ($("#existing-group").css("display") == "none") {
-            var g = $('#user_grid').data("ejGrid");
+            var g = $("#user_grid").data("ejGrid");
             var isValid = $(".new-group-form").valid();
             if (isValid) {
                 doAjaxPost("POST", checkGroupnameUrl, { GroupName: $("#group-name").val() }, function (data) {
@@ -356,9 +347,9 @@ $(document).ready(function () {
                         var GroupColor = "";
                         var GroupDescription = $("#group-description").val();
                         var GroupUsers = document.getElementsByName("hiddenUserName[]");
-                        var GrList = '';
+                        var GrList = "";
                         for (var t = 0; t < GroupUsers.length; t++) {
-                            if (GrList == '')
+                            if (GrList == "")
                                 GrList = GroupUsers[t].value;
                             else
                                 GrList = GrList + "," + GroupUsers[t].value;
@@ -372,13 +363,12 @@ $(document).ready(function () {
                                     $("#existing-group").show();
                                     $("#new-group").hide();
                                     g.refreshContent();
-                                } else {
                                 }
                             }
                         });
                     } else {
                         hideWaitingPopup("movable-dialog");
-                        $("#group-name-validation").html("[[[Group already exists with this name]]]").css("display", "block");
+                        $("#group-name-validation").html("[[[Group name already exists.]]]").css("display", "block");
                         $("#group-name-validation").closest("div").addClass("has-error");
                     }
                 });
@@ -406,7 +396,7 @@ function editUser(fulldata) {
     var formattedString = DateCustomFormat(window.dateFormat + " hh:mm:ss", dtObj);
     formattedString += (dtObj.getHours() >= 12) ? " PM" : " AM";
     $("#LastModified").html(formattedString);
-    $("#user-profile-picture").attr('src', avatarUrl + "?Username=" + specficuserdetails.UserName + "&ImageSize=150");
+    $("#user-profile-picture").attr("src", avatarUrl + "?Username=" + specficuserdetails.UserName + "&ImageSize=150");
     $("#upload-picture").attr("data-filename", specficuserdetails.Avatar.replace("Content//images//ProfilePictures//" + specficuserdetails.UserName + "//", ""));
 
     if (fulldata.FirstName != null && fulldata.FirstName != "") {
@@ -429,7 +419,7 @@ function fnOnUserGridLoad(args) {
 }
 
 function fnUserRowSelected(args) {
-    var usergrid = $('#user_grid').data("ejGrid");
+    var usergrid = $("#user_grid").data("ejGrid");
     var selectedUsers = usergrid.getSelectedRecords();
     var loggeduser = $(".user-delete-button").attr("data-log-user").toLowerCase();
     if (usergrid.getSelectedRecords().length == 1) {
@@ -445,7 +435,7 @@ function fnUserRowSelected(args) {
         });
     }
     else if (usergrid.getSelectedRecords().length > 1) {
-        $('#add-user-in-group').removeClass("hide").addClass("show");
+        $("#add-user-in-group").removeClass("hide").addClass("show");
         $(".user-delete-button").css("display", "block");
         jQuery.each(selectedUsers, function (index, record) {
             if (record.UserName.toLowerCase() == loggeduser) {
@@ -455,12 +445,12 @@ function fnUserRowSelected(args) {
         });
     }
     else {
-        $('#add-user-in-group').removeClass("show").addClass("hide");
+        $("#add-user-in-group").removeClass("show").addClass("hide");
     }
 }
 
 function fnUserRecordClick(args) {
-    var checkbox = args.row.find('.userList-grid-chkbx');
+    var checkbox = args.row.find(".userList-grid-chkbx");
     checkbox.prop("checked", !checkbox.prop("checked"));
 }
 
@@ -485,7 +475,7 @@ function fnOnUserGridActionComplete(args) {
     if (args.model.currentViewData.length == 0) {
         rowBound();
     }
-    var usergrid = $('#user_grid').data("ejGrid");
+    var usergrid = $("#user_grid").data("ejGrid");
     if (usergrid.getSelectedRecords().length != 0) {
         $("#add-user-in-group").removeClass("hide").addClass("show");
     }
@@ -500,7 +490,6 @@ function rowBound() {
     }
 }
 $(document).on("click", ".user-add-group", function () {
-
     $("body").ejWaitingPopup();
     $("body").ejWaitingPopup("show");
 
@@ -522,10 +511,10 @@ $(document).on("click", ".user-add-group", function () {
 
         $.validator.addMethod("isValidName", function (value, element) {
             return IsValidName("name", value)
-        }, "[[[Please avoid special characters]]]");
+        }, "[[[Please avoid special characters.]]]");
 
         $(".new-group-form").validate({
-            errorElement: 'span',
+            errorElement: "span",
             onkeyup: function (element) { $(element).valid(); },
             onfocusout: function (element) { $(element).valid(); },
             rules: {
@@ -535,21 +524,21 @@ $(document).on("click", ".user-add-group", function () {
                 }
             },
             highlight: function (element) {
-                $(element).closest('div').addClass("has-error");
+                $(element).closest("div").addClass("has-error");
                 $(".group-validation").css("display", "block");
             },
             unhighlight: function (element) {
-                if ($(element).attr('name') == 'group-name') {
-                    $(element).closest('div').removeClass('has-error');
-                    $(element).closest('div').find("span").html("");
+                if ($(element).attr("name") == "group-name") {
+                    $(element).closest("div").removeClass("has-error");
+                    $(element).closest("div").find("span").html("");
                 }
             },
             errorPlacement: function (error, element) {
-                $(element).closest('div').find("span").html(error.html());
+                $(element).closest("div").find("span").html(error.html());
             },
             messages: {
                 "group-name": {
-                    isRequired: "[[[Please enter group name]]]"
+                    isRequired: "[[[Please enter group name.]]]"
                 }
             }
         });
@@ -587,14 +576,14 @@ $(document).on("click", ".user-add-group", function () {
             $("#existing-group .btn-group .dropdown-menu .selectpicker li ").eq(i).find("a").attr("title", hoveredtext);
         }
         //$("#groupname-dropdown").focus();
+        SetPopupPosition();
         $("body").ejWaitingPopup("hide");
     }, 1500);
 });
 
 function MakeFlyDeleteUsers() {
-    showWaitingPopup("user-delete-confirmation");
     var userList = "";
-    var usergrid = $('#user_grid').data("ejGrid");
+    var usergrid = $("#user_grid").data("ejGrid");
     var selectedRecords = usergrid.getSelectedRecords();
     var SingleOrMultiple = "";
     if (selectedRecords.length > 1)
@@ -612,8 +601,7 @@ function MakeFlyDeleteUsers() {
     var values = "Users=" + userList;
     doAjaxPost("POST", deleteFromUserListUrl, values, function (data) {
         if (data.status) {
-            hideWaitingPopup("user-delete-confirmation");
-            parent.messageBox("su-open", "[[[Delete User(s)]]]", "<div class='delete-success'>[[[User(s) has been deleted successfully.]]]</div>", "success", function () {
+            parent.messageBox("su-open", "[[[Delete User(s)]]]", "[[[User(s) has been deleted successfully.]]]", "success", function () {
                 var count = parent.$("#user-count-text").val();
                 var currentVal = parseInt(count) - deleteUserCount;
                 parent.$("#user-count").html(currentVal);
@@ -630,15 +618,13 @@ function MakeFlyDeleteUsers() {
             onConfirmDeleteUser(selectedRecords.length);
         }
         else {
-            hideWaitingPopup("user-delete-confirmation");
-            parent.messageBox("su-open", "[[[Delete User(s)]]]", "<div class='delete-success'>[[[Failed to delete user(s), please try again later.]]]</div>", "success", function () {
+            parent.messageBox("su-open", "[[[Delete User(s)]]]", "[[[Failed to delete user(s), please try again later.]]]", "success", function () {
                 $("#user-delete-confirmation").ejDialog("close");
                 parent.onCloseMessageBox();
             });
         }
     }, function () {
-        hideWaitingPopup("user-delete-confirmation");
-        parent.messageBox("su-open", "[[[Delete User(s)]]]", "<div class='delete-success'>[[[Failed to delete user(s), please try again later.]]]</div>", "error", function () {
+        parent.messageBox("su-open", "[[[Delete User(s)]]]", "[[[Failed to delete user(s), please try again later.]]]", "error", function () {
             $("#user-delete-confirmation").ejDialog("close");
             parent.onCloseMessageBox();
         });
@@ -646,7 +632,7 @@ function MakeFlyDeleteUsers() {
 }
 
 function onConfirmDeleteUser(count) {
-    var usergrid = $('#user_grid').data("ejGrid");
+    var usergrid = $("#user_grid").data("ejGrid");
     var currentPage = usergrid.model.pageSettings.currentPage;
     var pageSize = usergrid.model.pageSettings.pageSize;
     var totalRecordsCount = usergrid.model.pageSettings.totalRecordsCount;
@@ -668,13 +654,22 @@ function CloseGroup() {
 
 function onUserAddDialogClose() {
     $("#user-add-dialog").ejDialog("close");
+    $("#dialog-container").trigger("reset");
+    $("#password_policy_rules").css("display", "none");
 }
 
 function onUserAddDialogOpen() {
     $(".dropdown").removeClass("open");
+    var automaticActivationType = $("#activation-type").val() == "AutomaticActivation" ? true : false;
+    if (automaticActivationType) {
+        $("#user-field-container").find(".form-width").css("width", "230px");
+    }
+    else {
+        $("#user-field-container").find(".app-textbox-label").removeClass("col-xs-4").addClass("col-xs-3")
+    }
     $("#user-add-dialog").ejDialog("open");
-    $(".e-dialog-icon").attr("title", "Close");
-    CheckMailSettingsAndNotify("[[[To send account activation email to the user, please configure email settings or change the account activation mode as Automatic Activation.]]]", $(".validation-message"), "");
+    $(".e-dialog-icon").attr("title", "[[[Close]]]");
+    CheckMailSettingsAndNotify("[[[To send account activation email to the user, please configure email settings or change the account activation mode as automatic activation.]]]", $(".validation-message"), "");
 }
 
 function onDeleteDialogClose() {
@@ -690,90 +685,6 @@ function onSingleDeleteDialogClose() {
     $("#singleuser-delete-confirmation").ejDialog("close");
 }
 
-function checkUserImported(t) {
-    var ejGrid = $("#user_import_grid").data("ejGrid");
-    var gridRows = ejGrid.getRows();
-    if (gridRows.length > 0) {    
-        $("#messageBox_wrapper, .e-dialog-scroller, #messageBox").removeClass("failed-msg-box-height").addClass("msg-box-height"); //Message box height adjustment 
-        $(".message-content").removeClass("text-center");
-        messageBox("su-user-1", "[[[Import users from CSV]]]", "[[[User import incomplete. Do you want to continue?]]]", "error", function () {            
-            parent.onCloseMessageBox();
-            window.location.href = $(t).attr("href");
-        }, function () {
-            parent.onCloseMessageBox();
-            return false;
-        });
-        return false;
-    } else {
-        return true;
-    }
-}
-function SaveUserListFromCSV() {
-    $(".user-import-validation").hide();
-    $("#grid-validation").css("display", "none");
-    showWaitingPopup("content-area");
-    var allUserList = $("#all-user-list").val();
-    var userNames = "";
-    var emailIds = "";
-    for (var i = 0; i < $("td.user-name").length; i++) {
-        if (userNames == "") {
-            userNames = $("td.user-name")[i].textContent;
-            emailIds = $("td.email-id")[i].textContent;
-        }
-        else {
-            userNames = userNames + "," + $("td.user-name")[i].textContent;
-            emailIds = emailIds + "," + $("td.email-id")[i].textContent;
-        }
-    }
-    $.ajax({
-        type: "POST",
-        url: saveSelectedCSVUserUrl,
-        data: "&userNames=" + userNames + "&emailIds=" + emailIds + "&AllUSerList=" + allUserList,
-        success: function (result) {
-            if (result.Status.toString().toLowerCase() == 'true') {
-                if ($.type(result) == "object" && result.Data.length != 0) {
-                    var gridObj = $("#user_import_grid").data("ejGrid");
-                    gridObj.showColumns("Error");
-                    var nameObj = $("td.user-name");
-                    for (var i = 0; i < result.Data.length; i++) {
-                        if (!result.Data[i].IsExist && result.Data[i].DisplayMessage != "") {
-                            var obj = $(nameObj[i]).siblings(":last");
-                            obj.html("<ol>" + result.Data[i].DisplayMessage + "</ol>");
-                        }
-                    }
-                    $('[data-toggle="tooltip"]').tooltip();
-                    hideWaitingPopup("content-area");
-                    $("#messageBox_wrapper, .e-dialog-scroller, #messageBox").removeClass("failed-msg-box-height").addClass("msg-box-height");//Message box height adjustment
-                    $(".message-content").addClass("text-center");
-                    messageBox("su-user-1", "[[[Import users from CSV]]]", "[[[Duplicate or Invalid data is found. Please change the data accordingly and re-upload the file.]]]", "success", function () {
-                        parent.onCloseMessageBox();
-                    });
-                    $("#import-button").attr("disabled", "disabled");
-                } else {                   
-                    $(".import-file #user-import-validation-msg").css("display", "none");
-                    $("#user_import_grid").ejGrid("option", { dataSource: [] });
-                    var messageText = result.activation == 0 ? " [[[user(s) has been added and activated successfully.]]]" : " [[[user(s) has been added successfully.]]]";
-                    $("#messageBox_wrapper, .e-dialog-scroller, #messageBox").removeClass("failed-msg-box-height").addClass("msg-box-height");//Message box height adjustment
-                    $(".message-content").addClass("text-center");
-                    messageBox("su-user-1", "[[[Import users from CSV]]]", result.Count + messageText, "success", function () {
-                        parent.onCloseMessageBox();
-                        window.location.href = userPageUrl;
-                    });
-                    $("#import-button").attr("disabled", "disabled");
-                    hideWaitingPopup("content-area");
-                }
-            } else {
-                $("#messageBox_wrapper, .e-dialog-scroller, #messageBox").removeClass("msg-box-height").addClass("failed-msg-box-height");//Message box height adjustment               
-                $(".message-content").addClass("text-center");
-                messageBox("su-user-1", "[[[Import users from CSV]]]", result.Message, "success", function () {
-                    parent.onCloseMessageBox();
-                });
-                hideWaitingPopup("content-area");
-            }
-        }
-    });
-}
-
 $(document).on("click", ".option-icon", function () {
     var loggeduser = $(".user-delete-button").attr("data-log-user");
 
@@ -787,7 +698,7 @@ $(document).on("click", ".option-icon", function () {
 
 function deleteSingleUser() {
     var userId = $(".Isdelete").attr("data-content");
-    var usergrid = $('#user_grid').data("ejGrid");
+    var usergrid = $("#user_grid").data("ejGrid");
     doAjaxPost("POST", deleteSingleFromUserListUrl, "UserId=" + userId, function (data) {
         if (data.status) {
             var count = parent.$("#user-count-text").val();
@@ -800,13 +711,14 @@ function deleteSingleUser() {
             if (data.AzureADUserCount == 0) {
                 $("#azure-ad-indication").html("");
             }
-            parent.messageBox("su-open", "[[[Delete User]]]", "<div class='delete-success'>[[[User has been deleted successfully.]]]</div>", "success", function () {
+
+            parent.messageBox("su-open", "[[[Delete User]]]", "[[[User has been deleted successfully.]]]", "success", function () {
                 parent.onCloseMessageBox();
             });
             onConfirmDeleteUser("1");
             $("#singleuser-delete-confirmation").ejDialog("close");
         } else {
-            parent.messageBox("su-open", "[[[Delete User]]]", "<div class='delete-success'>[[[Failed to delete user, please try again later.]]]</div>", "error", function () {
+            parent.messageBox("su-open", "[[[Delete User]]]", "[[[Failed to delete user, please try again later.]]]", "error", function () {
                 parent.onCloseMessageBox();
             });
         }
@@ -822,31 +734,93 @@ function HasWhiteSpace(value) {
     }
 }
 
-$(document).on("click", "#trigger-file,#filename", function () {
-    $("#filename").trigger("focus");
-    $("#grid-validation-messages span").css("display", "none");
-    $("#csvfile").trigger("click");
-});
-
-$(document).on("change", "#csvfile", function (e) {
-    var value = $(this).val();
-    if ($(this).val().substring($(this).val().lastIndexOf('.') + 1) != "csv") {
-        $("#csv-upload").attr("disabled", true);
-        $("#filename").val("Please upload a valid csv file.").css("color", "#c94442");
-        $("#filename,#trigger-file").addClass("error-file-upload");
-    } else {
-        $("#csv-upload").attr("disabled", false);
-        $("#filename,#trigger-file").removeClass("error-file-upload");
-        $("#filename").val(value).css("color", "#333");
-        $('#csvfile').attr('title', value);
-    }
-});
-
 $(document).on("click", ".search-user", function () {
     var gridObj = $("#user_grid").data("ejGrid");
     gridObj.model.pageSettings.currentPage = 1;
     gridObj.refreshContent();
 });
 
+function SetPopupPosition() {
+    var windowHeight = window.innerHeight;
+    if ($("#movable-dialog").length) {
+        var dialogHeight = $("#movable-dialog").height();
+        var position = (windowHeight / 2) - (dialogHeight / 2);
+        $("#movable-dialog").css({ 'top': position });
+    }
+}
 
+function setHeight() {
+    var automaticActivationType = $("#activation-type").val().toLowerCase() === "automaticactivation";
+    if (automaticActivationType) {
+        $("#dialog-container").find(".modal-body").css({ "height": "325px", "overflow-y": "auto" });
+    }
+    else {
+        $("#dialog-container").find(".modal-body").removeAttr("style")
+    }
+}
 
+function createUser() {
+    var userName = $("#username").val().trim();
+    var firstName = $("#firstname").val().trim();
+    var emailid = $("#mailid").val().trim();
+    var password = $("#new-password").val();
+    var confirmpassword = $("#confirm-password").val();
+    var lastName = $("#lastname").val().trim();
+    var automaticActivationType = $("#activation-type").val().toLowerCase() === "automaticactivation";
+    var g = $("#user_grid").data("ejGrid");
+    if (!automaticActivationType) {
+        var values = "&username=" + userName + "&emailid=" + emailid + "&firstname=" + firstName + "&lastname=" + lastName;
+    }
+    if (automaticActivationType) {
+        var values = "&username=" + userName + "&emailid=" + emailid + "&firstname=" + firstName + "&lastname=" + lastName + "&password=" + password;
+    }
+    $.ajax({
+        type: "POST", url: postactionUrl, data: values,
+        success: function (data, result) {
+            if ($.type(data) == "object") {
+                if (data.Data.result == "success") {
+                    hideWaitingPopup("user-add-dialog_wrapper");
+                    $("#add-user").attr("disabled", "disabled");
+                    $("#create-user").removeClass("hide").addClass("show");
+                    $(".form input[type='text']").val("");
+                    var count = parent.$("#user-count-text").val();
+                    var currentVal = parseInt(count) + 1;
+                    parent.$("#user-count").html(currentVal);
+                    parent.$("#user-count-text").val(currentVal);
+                    onUserAddDialogClose();
+                    $.ajax({
+                        type: "POST",
+                        url: checkMailSettingUrl,
+                        success: function (result) {
+                            var messageText = "";
+                            if (result.activation == 0) {
+                                messageText = "[[[User has been added and activated successfully.]]]";
+                            }
+                            else if (result.result == "success" && result.activation == 1) {
+                                messageText = "[[[User has been added successfully, and the account activation email sent.]]]";
+                            }
+                            else if (result.result == "failure" && result.isAdmin == true && result.activation == 1) {
+                                messageText = "[[[User has been created successfully. Activation emails cannot be sent until the user’s email settings are configured.]]]";
+                            }
+                            messageBox("su-user-add", "[[[Add User]]]", messageText, "success", function () {
+                                g.refreshContent();
+                                onCloseMessageBox();
+                            });
+                        }
+                    });
+                }
+                else if (data.IsUserLimitExceed) {
+                    hideWaitingPopup("user-add-dialog_wrapper");
+                    $("#limit-user").ejDialog("open");
+                    $("#zero-user-acc").show();
+                }
+                else {
+                    messageBox("su-user-add", "[[[Add User]]]", "[[[Internal server error. Please try again.]]]", "error", function () {
+                        g.refreshContent();
+                        onCloseMessageBox();
+                    });
+                }
+            }
+        }
+    });
+}

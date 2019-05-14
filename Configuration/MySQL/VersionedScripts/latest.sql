@@ -1,14 +1,44 @@
-ALTER TABLE {database_name}.SyncRS_ScheduleDetail ADD IsParameterEnabled tinyint(1) NOT NULL DEFAULT 0
-;
-CREATE TABLE {database_name}.SyncRS_ScheduleParameter(
-    Id int NOT NULL AUTO_INCREMENT,
-	ScheduleId char(38) NOT NULL,
-    Parameter varchar(4000) NOT NULL,
-    IsActive tinyint(1) NOT NULL,
-	PRIMARY KEY (Id))
+ALTER TABLE {database_name}.SfUMS_User ADD DomainId varchar(4000) NULL
+; 
+
+ALTER TABLE {database_name}.SfUMS_Group ADD DomainId varchar(4000) NULL
+; 
+
+INSERT into {database_name}.SfUMS_ApplicationType(Type,Id) values('Report Server',3)
 ;
 
-ALTER TABLE {database_name}.SyncRS_ScheduleParameter  ADD FOREIGN KEY(ScheduleId) REFERENCES {database_name}.SyncRS_Item (Id)
+CREATE INDEX IX_SfUMS_ADGrp ON {database_name}.SfUMS_ADGroup (GroupId)
 ;
-ALTER TABLE {database_name}.SyncRS_ScheduleDetail  ADD ExportFileSettingsInfo varchar(4000) NULL
+
+CREATE INDEX IX_SfUMS_IX_ADUsr ON {database_name}.SfUMS_ADUser (UserId)
+;
+
+CREATE INDEX IX_SfUMS_AzrADGrp ON {database_name}.SfUMS_AzureADGroup (GroupId)
+;
+
+CREATE INDEX IX_SfUMS_AzrADUsr ON {database_name}.SfUMS_AzureADUser (UserId)
+;
+
+CREATE INDEX IX_SfUMS_Grp ON {database_name}.SfUMS_Group (Name, Description(255))
+;
+
+CREATE INDEX IX_SfUMS_Usr ON {database_name}.SfUMS_User (UserName, Email, DisplayName)
+;
+
+CREATE INDEX IX_SfUMS_UsrGrp ON {database_name}.SfUMS_UserGroup (GroupId, UserId)
+;
+
+CREATE INDEX IX_SfUMS_UsrLogin ON {database_name}.SfUMS_UserLogin (UserId)
+;
+
+CREATE INDEX IX_SfUMS_AppAcsGrps ON {database_name}.SfUMS_AppAccessToGroups (ApplicationId, GroupId)
+;
+
+CREATE INDEX IX_SfUMS_AppAcsUsrs ON {database_name}.SfUMS_AppAccessToUsers (ApplicationId, UserId)
+;
+
+CREATE INDEX IX_SfUMS_AppAdmin ON {database_name}.SfUMS_AppAdmin (ApplicationId, UserId)
+;
+
+CREATE INDEX IX_SfUMS_Apps ON {database_name}.SfUMS_Applications (Name, ClientId, Url(255))
 ;

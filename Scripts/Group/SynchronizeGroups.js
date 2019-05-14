@@ -37,9 +37,9 @@ function fnActionComplete(args) {
             }
         }
         if (selectedObject.length != 0 && selectedObject.length === searchdata.result.length)
-            $("#checkbox-header").prop("checked", true);
+            $("#checkbox-header").prop("enabled", true);
         else
-            $("#checkbox-header").prop("checked", false);
+            $("#checkbox-header").prop("enabled", false);
     }
     var userCount = 0;
     if (gridObj.model.dataSource.length != null) {
@@ -136,12 +136,12 @@ $(document).on("click", "#syncronize-group", function () {
             var statusHtml = "";
             var isUserLimitExceed = false;
             if (result.ImportStatus.length > 0) {
-                statusHtml += "<h4>[[[Synchronization Group - Status]]]</h4><table style='text-align: left;table-layout:fixed;' class='table table-striped table-hover post-success-table'><thead class='thead-default'><tr><th>[[[Group Name]]]</th><th>[[[Users added]]]</th><th>[[[Users removed]]]</th><th>[[[Users Synchronized]]]</th><th title='[[[Invalid Username or Email Address]]]&#13;[[[Duplicated Username or Email Address]]]'>[[[Users not Synchronized]]]</th><th>[[[Status]]]</th></tr></thead>";
+                statusHtml += "<h4>[[[Synchronization group - Status]]]</h4><table style='text-align: left;table-layout:fixed;' class='table table-striped table-hover post-success-table'><thead class='thead-default'><tr><th>[[[Group name]]]</th><th>[[[Users added]]]</th><th>[[[Users removed]]]</th><th>[[[Users synchronized]]]</th><th title='[[[Invalid username or email address]]]&#13;[[[Duplicated username or email address]]]'>[[[Users not synchronized]]]</th><th>[[[Status]]]</th></tr></thead>";
                 for (var t = 0; t < result.ImportStatus.length; t++) {
-                    var status = "Success";
+                    var status = "[[[Success]]]";
                     var classname = "success";
                     if (result.ImportStatus[t].Status == false) {
-                        status = "Partial Success";
+                        status = "[[[Partial success]]]";
                         classname = "danger";
                     }
                     statusHtml += "<tr><td>" + result.ImportStatus[t].GroupName + "</td><td>" + result.ImportStatus[t].SynchronizationUserImported + "</td><td>" + result.ImportStatus[t].SynchronizationUserRemoved + "</td><td>" + result.ImportStatus[t].ImportedUsers + "</td><td>" + result.ImportStatus[t].FailedUsers + "</td><td class=" + classname + ">" + status + "</td></tr>";
@@ -160,9 +160,9 @@ $(document).on("click", "#syncronize-group", function () {
             $(".message-content").addClass("groupmsg-content-height");
             var title = synchronizeActiveDirectoryGroupUrl.indexOf("azure") > 0 ? "Azure Active Directory Synchronization" : "Active Directory Synchronization";
             parent.messageBox("su-group-1", title, result.Message + statusHtml, "success", function () {
-                parent.onCloseMessageBox();              
+                parent.onCloseMessageBox();
                 //window.location.href = "/administration/user-management/groups";
-            }, function () { }, 770, 350);
+            }, function () { }, 770,350);
             if (isUserLimitExceed) {
                 $("#limitUser").ejDialog("open");
                 $("#zero-user-acc").show();
@@ -175,9 +175,6 @@ $(document).on("keydown", "#search-ad-groups", function (e) {
     if (e.keyCode == "13") {
         var gridObj = $("#Grid").data("ejGrid");
         gridObj.search($("#search-ad-groups").val());
-        $("#checkbox-header").prop("checked", false);
-        $(".checkbox-row").prop("checked", false);
-        gridObj.clearSelection();
     }
 });
 
@@ -186,13 +183,5 @@ $(document).on("click", ".search-group", function () {
     gridObj.search($("#search-ad-groups").val());
 });
 
-$(document).on("click", "#clear-search", function () {
-    var gridObj = $("#Grid").data("ejGrid");
-    $("#checkbox-header").prop("checked", false);
-    $(".checkbox-row").prop("checked", false);
-    gridObj.clearSelection();
-});
 
-$(document).ready(function() {
-    $(".back-button").tooltip();
-});
+

@@ -36,13 +36,13 @@
             {{/if}}
         </script>
         <script type="text/x-jsrender" id="group-name-template">
-            <span title="{{:~renderDoubleQuotes(GroupName)}}" class="grid-content" data-toggle="tooltip">
+            <span title="{{:GroupName}}" class="grid-content" data-toggle="tooltip">
                 {{:GroupName}}
             </span>
         </script>
 
         <script type="text/x-jsrender" data-toggle="tooltip" id="group-description-template">
-            <span title="{{:~renderDoubleQuotes(GroupDescription)}}" class="grid-content" data-toggle="tooltip">
+            <span title="{{:GroupDescription}}" class="grid-content" data-toggle="tooltip">
                 {{:GroupDescription}}
             </span>
         </script>
@@ -128,17 +128,11 @@
                     },
                     columns: [
                         { headerTemplateID: "#checkbox-header-template", template: true, templateID: "#checkbox-row-template", textAlign: ej.TextAlign.Center, width: 5 },
-                        { field: "GroupName", cssClass: "group-name", headerText: "[[[Name]]]", templateID: "#group-name-template", headerTemplateID: "#name-header", width: 30, type: "string" },
-                        { field: "GroupDescription", cssClass: "desc", headerText: "[[[Description]]]", templateID: "#group-description-template", headerTemplateID: "#description-header", width: 50, type: "string" },
-                        { field: "GroupId", cssClass: "item-id", headerText: "[[[group id]]]", headerTemplateID: "#group-id-header", width: 10, visible: false },
+                        { field: "GroupName", cssClass: "group-name", headerText: "Name", templateID: "#group-name-template", headerTemplateID: "#name-header", width: 30, type: "string" },
+                        { field: "GroupDescription", cssClass: "desc", headerText: "Description", templateID: "#group-description-template", headerTemplateID: "#description-header", width: 50, type: "string" },
+                        { field: "GroupId", cssClass: "item-id", headerText: "group id", headerTemplateID: "#group-id-header", width: 10, visible: false },
                         { field: "", width: 5, templateID: "#user-detail-validation", allowFiltering: false }
                     ]
-                });
-
-                $.views.helpers({
-                    renderDoubleQuotes: function (inputString) {
-                        return inputString.replace(new RegExp("\"", 'g'), '&quot;');
-                    }
                 });
             });
         </script>
@@ -152,13 +146,13 @@
                         @if (ViewBag.AdImportGroup)
                         {
                             <h1 class="page-title">
-                                [[[IMPORT GROUPS]]] — [[[Active Directory]]]
+                                [[[IMPORT GROUPS]]] &mdash; [[[Active Directory]]]
                             </h1>
                         }
                         else
                         {
                             <h1 class="page-title">
-                                [[[IMPORT GROUPS]]] — [[[Azure AD]]]
+                                [[[IMPORT GROUPS]]] &mdash; [[[Azure AD]]]
                             </h1>
                         }
                     </div>
@@ -172,19 +166,19 @@
                             @if (ViewBag.AdImportGroup)
                             {
                                 <span class="directory-path no-padding">
-                                    [[[Directory Path ]]]:<input type="hidden" name="url" value="@ViewBag.ActiveDirectory.LdapUrl">
+                                    [[[Directory path ]]]:<input type="hidden" name="url" value="@ViewBag.ActiveDirectory.LdapUrl">
                                 </span>
                                 <span class="no-padding">
-                                    @ViewBag.ActiveDirectory.LdapUrl&nbsp;&nbsp; <a href="@Url.Action("user-directory-settings", "Administration")" data-toggle="tooltip" data-placement="top" title="[[[Update Active Directory Configuration settings]]]" class="link-button">[[[Modify]]]</a>
+                                    @ViewBag.ActiveDirectory.LdapUrl <a href="@Url.Action("user-directory-settings", "Administration")" title="[[[Update Active Directory configuration settings]]]" class="link-button">[[[Modify]]]</a>
                                 </span>
                             }
                             else
                             {
                                 <span class="directory-path no-padding">
-                                    [[[Tenant Name]]] :<input type="hidden" name="url" value="@ViewBag.ActiveDirectory.TenantName">
+                                    [[[Tenant name]]] :<input type="hidden" name="url" value="@ViewBag.ActiveDirectory.TenantName">
                                 </span>
                                 <span class="no-padding">
-                                    @ViewBag.ActiveDirectory.TenantName &nbsp;&nbsp;<a href="@Url.Action("user-directory-settings", "Administration")#azure-ad-tab" data-toggle="tooltip" data-placement="top" title="[[[Update Azure AD Configuration settings]]]" class="link-button">[[[Modify]]]</a>
+                                    @ViewBag.ActiveDirectory.TenantName &nbsp;&nbsp;<a href="@Url.Action("user-directory-settings", "Administration")?tab=azure-ad" title="[[[Update Active Directory configuration settings]]]" class="link-button">[[[Modify]]]</a>
                                 </span>
 
                             }
@@ -199,15 +193,15 @@
 
                     <div class="col-xs-12 no-padding user-data-grid">
                         <span class="import-message">
-                            [[[Please search and select the groups from the following list to import into Report Server]]]
+                            [[[Please search and select the groups from the following list to import into UMS]]]
                         </span>
                         <div class="col-xs-12 no-padding no-margin">
                             <div class="list" id="grid-validation-messages pull-left">
                                 <div class="col-xs-12">
                                     <span id="grid-nodata-validation" class="grid-nodata-validation no-padding">[[[There is no data in the uploaded file. Please check and try uploading again.]]]</span>
                                     <span id="grid-validation" class="grid-validation no-padding"><span id="groupcount" class="groupcount">@ViewBag.UserCount</span> [[[group(s) has been imported successfully.]]]</span>
-                                    <span id="grid-error-validation" class="grid-error-validation no-padding">[[[Duplicate or Invalid data is found. Please change the data accordingly and re-import.]]] </span>
-                                    <span id="empty-validation" class="validation-message pull-right empty-validation no-padding">[[[Please select group(s) to import]]]</span>
+                                    <span id="grid-error-validation" class="grid-error-validation no-padding">[[[Duplicate or invalid data is found. Please change the data accordingly and re-import.]]] </span>
+                                    <span id="empty-validation" class="validation-message pull-right empty-validation no-padding">[[[Please select group(s) to import.]]]</span>
                                 </div>
                             </div>
                         </div>
@@ -241,13 +235,13 @@
                 @if (ViewBag.AdImportGroup)
                 {
                     <h1 class="page-title">
-                        [[[IMPORT GROUPS]]] — [[[Active Directory]]]
+                        [[[IMPORT GROUPS]]] &mdash; [[[Active Directory]]]
                     </h1>
                 }
                 else
                 {
                     <h1 class="page-title">
-                        [[[IMPORT GROUPS]]] — [[[Azure AD]]]
+                        [[[IMPORT GROUPS]]] &mdash; [[[Azure AD]]]
                     </h1>
                 }
             </div>
@@ -255,11 +249,11 @@
             <div class="col-md-12 admin-page-body">
                 @if (ViewBag.AdImportGroup)
                 {
-                <a href="@Url.Action("user-directory-settings", "administration")" class="btn btn-link admin-page-link">[[[Please click here to configure the Active Directory settings]]]</a>
+                <a href="@Url.Action("user-directory-settings", "administration")" class="btn btn-link admin-page-link">[[[Please click here to configure the Active Directory settings.]]]</a>
                 }
                 else
                 {
-                <a href="@Url.Action("user-directory-settings", "administration")#azure-ad-tab" class="btn btn-link admin-page-link">[[[Please click here to configure the Azure Active Directory settings]]]</a>
+                <a href="@Url.Action("user-directory-settings", "administration")?tab=azure-ad" class="btn btn-link admin-page-link">[[[Please click here to configure the Azure Active Directory settings.]]]</a>
                 }
             </div>
         </div>

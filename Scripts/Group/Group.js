@@ -25,8 +25,8 @@ function actionbegin(args) {
 $(document).on("click", "#add-group", function () {
     var groupName = $("#GroupName").val().trim();
     $("#group-name").removeClass("has-error");
-    var isValid = $(".group-form").valid();
-
+    var isValid = $(".group-form").valid();    
+    
     if (isValid) {
         parent.$("#new-group-area_wrapper").ejWaitingPopup("show");
         doAjaxPost("POST", checkGroupnameUrl, { GroupName: groupName }, function (data) {
@@ -56,7 +56,7 @@ $(document).on("click", "#add-group", function () {
             } else {
                 parent.$("#new-group-area_wrapper").ejWaitingPopup("hide");
                 $("#group-name").addClass("has-error");
-                $(".error-message").html("[[[Group already exists with this name]]]");
+                $(".error-message").html("[[[Group name already exists.]]]");
             }
         });
     }
@@ -79,13 +79,13 @@ function RefreshCurrentDataOfGroupList(gridObj) {
 
 $(document).ready(function () {
     $.validator.addMethod("isValidName", function (value, element) {
-        return IsValidName("name", value)
+        return IsValidName("name", value);
     }, "[[[Please avoid special characters]]]");
 
     $.validator.addMethod("isRequired", function (value, element) {
         return !isEmptyOrWhitespace(value);
-    }, "[[[Please enter the name]]]");
-
+    }, "[[[Please enter the name]]]");   
+    
     $(".group-form").validate({
         errorElement: 'span',
         onkeyup: function (element, event) { if (event.keyCode != 9) $(element).valid(); else true; },
@@ -108,7 +108,7 @@ $(document).ready(function () {
         },
         messages: {
             "groupname": {
-                isRequired: "[[[Please enter group name]]]"
+                isRequired: "[[[Please enter group name.]]]"
             }
         }
     });
@@ -176,12 +176,11 @@ $(document).ready(function () {
         $("#groups-delete-confirmation").ejDialog("open");
     });
 
-    $("#groups-delete-confirmation-wrapper,#groups-delete-confirmation-overLay").keyup(function (e) {
-        if (e.keyCode == 13) {
+    $("#groups-delete-confirmation,#groups-delete-confirmation-overLay").keyup(function (e) {
+        if (e.keyCode == window.keycode.Enter) {
             MakeFlyDeleteGroups();
         }
     });
-    $("#new-user-dropdown, .link-button, #new-group-button, #import-group-ad").tooltip();
 });
 
 function onSuccessDeleteUser(gridObj) {
@@ -195,7 +194,7 @@ function onSuccessDeleteUser(gridObj) {
     }
     gridObj.refreshContent()
 }
-function fnOnGroupGridLoad(args) {
+function fnOnUserGridLoad(args) {
     args.model.dataSource.adaptor = new ej.UrlAdaptor();
     args.model.enableTouch = false;
 }
@@ -328,32 +327,32 @@ function MakeFlyDeleteGroups() {
                  adcount = parseInt(adcount) - parseInt(ad);
                  azureadcount = parseInt(azureadcount) - parseInt(azurecount);
                  if (groupcurrentValue > 0 || ad > 0 || azurecount > 0) {
-                     var servergroupcount = groupcurrentValue > 0 ? groupcurrentValue + " " + "Server Group(s)" : "";
-                     var activedirectorygroupcount = ad > 0 ? ad + " " + "Active Directory Group(s)" : "";
-                     var azureadgroupcount = azurecount > 0 ? azurecount + " " + "Azure ADGroup(s)" : ""
+                     var servergroupcount = groupcurrentValue > 0 ? groupcurrentValue + " " + "[[[Server group(s) has been deleted successfully.]]]" : "";
+                     var activedirectorygroupcount = ad > 0 ? ad + " " + "[[[Active Directory group(s) has been deleted successfully.]]]" : "";
+                     var azureadgroupcount = azurecount > 0 ? azurecount + " " + "[[[Azure AD group(s) has been deleted successfully.]]]" : ""
                  }
 
                  if (groupcurrentValue > 0 && ad > 0) {
-                     var servergroupcount = groupcurrentValue > 0 ? groupcurrentValue + " " + "Server Group(s) and" : "";
-                     var activedirectorygroupcount = ad > 0 ? ad + " " + "Active Directory Group(s)" : "";
+                     var servergroupcount = groupcurrentValue > 0 ? groupcurrentValue + " " + "[[[Server group(s) and]]]" : "";
+                     var activedirectorygroupcount = ad > 0 ? ad + " " + "[[[Active Directory group(s) has been deleted successfully.]]]" : "";
                  }
                  if (ad > 0 && azurecount > 0) {
-                     var activedirectorygroupcount = ad > 0 ? ad + " " + "Active Directory Group(s) and " : "";
-                     var azureadgroupcount = azurecount > 0 ? azurecount + " " + "Azure ADGroup(s)" : ""
+                     var activedirectorygroupcount = ad > 0 ? ad + " " + "[[[Active Directory group(s) and]]] " : "";
+                     var azureadgroupcount = azurecount > 0 ? azurecount + " " + "[[[Azure AD group(s) has been deleted successfully.]]]" : ""
                  }
                  if(groupcurrentValue > 0 && azurecount > 0){
-                     var servergroupcount = groupcurrentValue > 0 ? groupcurrentValue + " " + "Server Group(s) and" : "";
-                     var azureadgroupcount = azurecount > 0 ? azurecount + " " + "Azure ADGroup(s)" : ""
+                     var servergroupcount = groupcurrentValue > 0 ? groupcurrentValue + " " + "[[[Server group(s) and]]]" : "";
+                     var azureadgroupcount = azurecount > 0 ? azurecount + " " + "[[[Azure AD group(s) has been deleted successfully.]]]" : ""
                  }
                  if (groupcurrentValue > 0 && ad > 0 && azurecount > 0) {
-                     var servergroupcount = groupcurrentValue > 0 ? groupcurrentValue + " " + "Server Group(s) ," : "";
-                     var activedirectorygroupcount = ad > 0 ? ad + " " + "Active Directory Group(s) and " : "";
-                     var azureadgroupcount = azurecount > 0 ? azurecount + " " + "Azure ADGroup(s)" : ""
+                     var servergroupcount = groupcurrentValue > 0 ? groupcurrentValue + " " + "[[[Server group(s),]]]" : "";
+                     var activedirectorygroupcount = ad > 0 ? ad + " " + "[[[Active Directory group(s)]]] and " : "";
+                     var azureadgroupcount = azurecount > 0 ? azurecount + " " + "[[[Azure AD group(s) has been deleted successfully.]]]" : ""
                  }
-
+                 var deleteGroup = servergroupcount + activedirectorygroupcount + azureadgroupcount;
                  $("#groups-delete-confirmation").ejDialog("close");
                  onConfirmDeleteGroup(selectedRecords.length);
-                 SuccessAlert(" [[[Delete Groups]]]", "[[[" + servergroupcount + " " + activedirectorygroupcount + " " + azureadgroupcount + " has been deleted successfully.]]]", 7000);
+                 SuccessAlert("[[[Delete Groups]]]", deleteGroup, 7000);
                  parent.$("#group-count").html(currentVal);
                  parent.$("#group-count-text").val(currentVal);
                  parent.$("#adgroup-count-text").val(adcount);
@@ -375,7 +374,7 @@ function MakeFlyDeleteGroups() {
 
              else {
                  $("#groups-delete-confirmation").ejDialog("close");
-                 WarningAlert("[[[Delete Groups]]]", "[[[Failed to delete Group(s), please try again later.]]]", 7000);
+                 WarningAlert("[[[Delete Groups]]]", "[[[Failed to delete group(s), please try again later.]]]", 7000);
              }
              hideWaitingPopup($("#body"));
              $("#body").ejWaitingPopup("hide");

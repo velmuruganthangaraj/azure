@@ -5,7 +5,7 @@ $(document).ready(function () {
             return true;
         else
             return IsValidDomainName(value);
-    }, "[[[Invalid Host Domain name]]]");
+    }, "[[[Invalid host domain name.]]]");
 
     $("#kerberos-setting").validate({
         errorElement: "span",
@@ -35,10 +35,10 @@ $(document).ready(function () {
         },
         messages: {
             "machineName": {
-                required: "[[[Please enter machine name]]]"
+                required: "[[[Please enter machine name.]]]"
             },
             "hostDomain": {
-                required: "[[[Please enter Host Domain name]]]"
+                required: "[[[Please enter host domain name.]]]"
             }
         }
     });
@@ -80,7 +80,7 @@ function DownloadBatFile() {
             error: handleAjaxError(),
             success: function (data) {
                 hideWaitingPopup($("#server-app-container"));
-                SuccessAlert("[[[Kerberos Authentication Settings]]]", "[[[Settings has been updated successfully.]]]", 7000);
+                SuccessAlert("[[[Kerberos Authentication Settings]]]", "[[[Settings have been updated successfully.]]]", 7000);
                 $(".error-message, .success-message").css("display", "none");
                 window.location.href = downloadBatchUrl + "?machineName=" + machineName + "&hostDomain=" + hostDomain;
             }

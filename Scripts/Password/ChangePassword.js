@@ -17,41 +17,10 @@ $(document).ready(function () {
         }
         else if ($("#confirm-password").val() != '') {
             $("#confirm-password").closest('div').addClass("has-error");
-            $("#confirm-password").closest('div').next("div").find("span").html("[[[Password mismatch]]]").css("display", "block");
+            $("#confirm-password").closest('div').next("div").find("span").html("[[[Passwords mismatch.]]]").css("display", "block");
         }
         createPasswordPolicyRules();
     });
-
-    $.validator.addMethod("isEditadminPassword", function (value, element) {
-        var validateMethods = new Array();
-        validateMethods.push(validateUserpassword.p_policy_uppercase);
-        validateMethods.push(validateUserpassword.p_policy_lowercase);
-        validateMethods.push(validateUserpassword.p_policy_number);
-        validateMethods.push(validateUserpassword.p_policy_specialcharacter);
-        validateMethods.push(validateUserpassword.p_policy_length);
-        for (var n = 0; n < validateMethods.length ; n++) {
-            var currentMethodName = validateMethods[n];
-            if (currentMethodName(value) != "" && currentMethodName(value) != undefined) {
-                ruleName = currentMethodName(value);
-                if ($('#password_policy_rules').find('li#' + ruleName + ' span').attr("class") != "su-tick") {
-                    $('#password_policy_rules').find('li#' + ruleName + ' span').addClass("su su-tick").removeClass("su su-close");
-                    $('#password_policy_rules').find('li#' + ruleName).addClass("clear-error");
-                    ruleName = ""
-                }
-            }
-            else {
-                ruleName = name;
-                $(element).closest('div').addClass("has-error");
-                if ($('#password_policy_rules').find('li#' + ruleName + ' span').attr("class") == "su-tick") {
-                    $('#password_policy_rules').find('li#' + ruleName + ' span').addClass("su su-close").removeClass("su-tick");
-                    $('#password_policy_rules').find('li#' + ruleName).removeClass("clear-error");
-                    ruleName = "";
-                }
-            }
-        }
-        if ($('#password_policy_rules li>span.su-tick').length == $('#password_policy_rules').find('li>span').length)
-            return true;
-    }, "");
 
     $('.change-password-form').validate({
         errorElement: 'span',
@@ -70,7 +39,7 @@ $(document).ready(function () {
             },
             "new-password": {
                 required: true,
-                isEditadminPassword: true
+                isValidPassword: true
             },
             "confirm-password": {
                 required: true,
@@ -78,49 +47,24 @@ $(document).ready(function () {
             }
         },
         highlight: function (element) {
-            $(element).closest('div').addClass("has-error");
-            if ($(element).attr('id') == "new-password") {
-                for (var i = 0; i < $('#password_policy_rules').find('li>span').length; i++) {
-                    if ($($('#password_policy_rules').find('li>span')[i]).attr('class') == "su-tick")
-                        $(element).closest('div').removeClass("has-error");
-                    else
-                        rules = "unsatisfied-rule";
-                }
-                if (rules != "" && rules != undefined) {
-                    $(element).closest('div').addClass("has-error");
-                    rules = "";
-                }
-            }
+            passwordBoxHightlight(element)
         },
         unhighlight: function (element) {
-            $(element).closest('div').removeClass('has-error');
-            if ($(element).attr('id') == "new-password") {
-                for (var i = 0; i < $('#password_policy_rules').find('li>span').length; i++) {
-                    if ($($('#password_policy_rules').find('li>span')[i]).attr('class') != "su-tick")
-                        rules = "unsatisfied-rule";
-                    if ($($('#password_policy_rules').find('li>span')[i]).attr('class') == "su-tick")
-                        $(element).closest('div').removeClass("has-error");
-                }
-                if (rules != "" && rules != undefined) {
-                    $(element).closest('div').addClass("has-error");
-                    rules = "";
-                }
-            }
-            $(element).closest('div').find(".password-validate-holder").html("");
+            passwordBoxUnhightlight(element)
         },
         errorPlacement: function (error, element) {
             $(element).closest('div').find(".password-validate-holder").html(error.html());
         },
         messages: {
             "old-password": {
-                required: "[[[Please enter your old password]]]"
+                required: "[[[Please enter your old password.]]]"
             },
             "new-password": {
-                required: "[[[Please enter your new password]]]",
+                required: "[[[Please enter your new password.]]]",
             },
             "confirm-password": {
-                required: "[[[Please confirm your new password]]]",
-                equalTo: "[[[Password mismatch]]]"
+                required: "[[[Please confirm your new password.]]]",
+                equalTo: "[[[Passwords mismatch.]]]"
             }
         }
     });
@@ -130,26 +74,6 @@ $('#new-password').on("change", function () {
     createPasswordPolicyRules();
     $("#new-password").valid();
 });
-
-function createPasswordPolicyRules() {
-    if ($("#new-password").val() != '' && $("#new-password").next("ul").length == 0) {
-        $("#new-password").after("<ul id='password_policy_rules'></ul>");
-        $("#password_policy_rules").append("<li id='p_policy_heading'>[[[Password must meet the following requirements. It must contain,]]]</li>")
-        $("#password_policy_rules").append("<li id='p_policy_length'><span class='su su-close'></span>[[[at least 6 characters.]]]</li>")
-        $("#password_policy_rules").append("<li id='p_policy_uppercase'><span class='su su-close'></span>[[[1 uppercase.]]]</li>")
-        $("#password_policy_rules").append("<li id='p_policy_lowercase'><span class='su su-close'></span>[[[1 lowercase.]]]</li>")
-        $("#password_policy_rules").append("<li id='p_policy_number'><span class='su su-close'></span>[[[1 numeric.]]]</li>")
-        $("#password_policy_rules").append("<li id='p_policy_specialcharacter'><span class='su su-close'></span>[[[1 special character.]]]</li>")
-        $("#confirm-password-section").css("margin-top", "-53px")
-        $(".button-section").css("margin-top", "-20px");
-        $(".button-section").addClass("top-margin");
-    }
-    if ($("#new-password").val() == '' && $("#new-password").next("ul").length != 0) {
-        $("#new-password").next("ul").remove();
-        $("#confirm-password-section").css("margin-top", "25px")
-        $(".button-section").css("margin-top", "20px");
-    }
-}
 
 function onChangePasswordClick() {
     $(".password-validate-holder").html("");
@@ -178,7 +102,7 @@ function onChangePasswordClick() {
                      if (!result.Data.status && result.Data.key == "password") {
                          $("#old-password-validate").html(result.Data.value);
                          $("#old-password-validate").closest("div").prev("div").addClass("has-error");
-                     }
+                        }
                      else {
                          SuccessAlert("[[[Update Password]]]", "[[[Password has been updated successfully.]]]", 7000);
                      }

@@ -1,13 +1,16 @@
 ﻿@import (reference) "Mixins.less";
 
-body{
+body {
     overflow: hidden !important;
 }
 
-#group-directory-container {  
-
-   .admin-page-header {
+#group-directory-container {
+    .admin-page-header {
         padding-bottom: 15px;
+
+        .page-title {
+            padding-top: 10px;
+        }
     }
 
     #group-header {
@@ -21,16 +24,18 @@ body{
                 padding: 0;
             }
         }
-       #synchronize-dropdown-menu{
+
+        #synchronize-dropdown-menu {
             left: -125px;
         }
-        #dropdown-options{
+
+        #dropdown-options {
             left: -108px;
         }
 
         .caret {
             color: @primary-btn-text-color;
-        }       
+        }
 
         .group-margin {
             margin-left: -30px;
@@ -41,6 +46,7 @@ body{
         }
 
         .synchronize-groups {
+            margin-left: 10px;
             margin-bottom: 10px;
         }
 
@@ -62,11 +68,6 @@ body{
         #Grid {
             width: 100%;
             margin-left: 2px;
-            table {
-                th:last-child {
-                    cursor: default;
-                }
-            }
         }
 
         .e-rowcell .dropdown {
@@ -84,7 +85,7 @@ body{
 
                         .su-close {
                             color: @sub-text-color;
-                            font-size:@app-large-text-size;
+                            font-size: @app-large-text-size;
                             margin-right: 4px;
                         }
                     }
@@ -97,16 +98,13 @@ body{
         }
 
         .ad-azure-indication {
-        padding: 10px 0 0 5px;
+            padding: 10px 0 0 5px;
 
-        .su {
-            color: @sub-text-color;
+            .su {
+                color: @sub-text-color;
+            }
         }
     }
-
-    }
-
-    
 }
 
 #new-group-area {
@@ -122,11 +120,10 @@ body{
 }
 
 .help-text {
-    padding-top: 5px;
     font-size: @app-text-size - 2;
 }
 
-#delete-group-area,#delete-group-iframe {
+#delete-group-area, #delete-group-iframe {
     iframe {
         height: 150px;
         border: 0;
@@ -151,21 +148,20 @@ body{
             .row {
                 margin-top: 10px;
             }
-            .form-control{
-                color:@primary-text-color;
+
+            .form-control {
+                color: @primary-text-color;
             }
+
             .group-info-label {
                 padding: 5px;
             }
-            #group-info-name {
-                font-size: @app-text-size;
-                padding: 6px 12px;
-            }
-            #group-info-description {
+
+            #group-info-name, #group-info-description {
                 font-size: @app-text-size;
                 padding: 5px;
             }
-         
+
             .group-info-text {
                 #group-info-description {
                     height: 105px;
@@ -175,18 +171,19 @@ body{
                 #required-content {
                     font-size: @app-text-size -2;
                 }
-                 :-ms-input-placeholder.form-control {
-                 color: @placeholder-color !important;
-                     }
 
-                 .placeholder {
-                        color: @placeholder-color !important;
-                        height: 30px;
-                        line-height: 35px;
-                        padding-left: 5px;
-                        position: absolute;
-                        top: 0;
-                    }
+                :-ms-input-placeholder.form-control {
+                    color: @placeholder-color !important;
+                }
+
+                .placeholder {
+                    color: @placeholder-color !important;
+                    height: 30px;
+                    line-height: 35px;
+                    padding-left: 5px;
+                    position: absolute;
+                    top: 0;
+                }
             }
 
             .margin-left {
@@ -226,17 +223,19 @@ body{
                         &:hover {
                             text-decoration: underline;
                         }
-                        }
-                     .bs-select-all-custom .bs-select-custom-tick{
-                         display:none;
-                     }
-                        .bs-deselect-all-custom .bs-select-custom-tick {
-                            display: inline;
-                            float: right;
-                            margin-right: 22px;
-                        }
-                  
-                     .bs-actionsbox:hover, .bs-select-all-custom :hover {
+                    }
+
+                    .bs-select-all-custom .bs-select-custom-tick {
+                        display: none;
+                    }
+
+                    .bs-deselect-all-custom .bs-select-custom-tick {
+                        display: inline;
+                        float: right;
+                        margin-right: 22px;
+                    }
+
+                    .bs-actionsbox:hover, .bs-select-all-custom :hover {
                         cursor: pointer;
                     }
 
@@ -253,71 +252,73 @@ body{
                             text-overflow: ellipsis;
                             margin-top: -2px;
                         }
-                    .dropdown-menu {
 
-                        li {
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            white-space: nowrap;
-                            width: 275px;
+                        .dropdown-menu {
+                            li {
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                width: 275px;
 
-                            a {
-                                background: none;
+                                a {
+                                    background: none;
 
-                                .text {
-                                    float: left;
-                                    font-size: @app-text-size;
-                                    overflow: hidden;
-                                    text-overflow: ellipsis;
-                                    white-space: nowrap;
-                                    width: 195px;
+                                    .text {
+                                        float: left;
+                                        font-size: @app-text-size;
+                                        overflow: hidden;
+                                        text-overflow: ellipsis;
+                                        white-space: nowrap;
+                                        width: 195px;
 
-                                    &:focus, &:active {
-                                        color: @secondary-btn-bg;
+                                        &:focus, &:active {
+                                            color: @secondary-btn-bg;
+                                        }
                                     }
-                                }
 
-                                .check-mark {
-                                    font-size: @app-text-size;
-                                    left: 210px;
+                                    .check-mark {
+                                        font-size: @app-text-size;
+                                        left: 210px;
 
-                                    &:focus, &:active {
-                                        color: @secondary-btn-bg;
+                                        &:focus, &:active {
+                                            color: @secondary-btn-bg;
+                                        }
+                                    }
+
+                                    &:hover {
+                                        background: none;
                                     }
                                 }
 
                                 &:hover {
-                                    background: none;
+                                    background-color: @admin-pages-border-color;
+                                }
+
+                                &:focus, &:active {
+                                    background-color: @primary-btn-bg;
                                 }
                             }
 
-                            &:hover {
-                                background-color: @admin-pages-border-color;
-                            }
-
-                            &:focus, &:active {
+                            li.active {
                                 background-color: @primary-btn-bg;
                             }
-                        }
 
-                        li.active{
-                            background-color: @primary-btn-bg;
-                        }
-
-                        .check-mark {
-                            margin: 0 !important;
-                        }
-                        .selected{
-                            background-color:@primary-btn-bg;
-                            .text,.check-mark{
-                                color:@secondary-btn-bg;
+                            .check-mark {
+                                margin: 0 !important;
                             }
-                   &:hover{
-                                background-color:@primary-btn-bg;
 
+                            .selected {
+                                background-color: @primary-btn-bg;
+
+                                .text, .check-mark {
+                                    color: @secondary-btn-bg;
+                                }
+
+                                &:hover {
+                                    background-color: @primary-btn-bg;
+                                }
                             }
                         }
-                    }
                     }
                 }
 
@@ -392,7 +393,7 @@ body{
                 float: left;
                 width: 100%;
                 margin-left: 2px;
-                            
+
                 .e-gridcontent .e-alt_row {
                     background: none;
                 }
@@ -426,13 +427,13 @@ body{
 
 // style for deletegroup
 #delete-group-area_wrapper {
-    height:150px !important;
+    height: 150px !important;
+
     .e-dialog {
         height: 150px !important;
         width: 497px !important;
     }
 }
-
 
 #group-delete-confirmation {
     padding: 0;
@@ -442,21 +443,20 @@ body{
         height: 150px;
 
         .modal-body {
-            .delete-msg{
-                margin:0;
+            .delete-msg {
+                margin: 0;
             }
-              .highlight-name{
-                font-style:italic;
-                color:@success-text-color;
+            .highlight-name {
+                font-style: italic;
             }
         }
-        .modal-footer{
-            bottom:0;
-            position:fixed;
-        }
-            }
-}
 
+        .modal-footer {
+            bottom: 0;
+            position: fixed;
+        }
+    }
+}
 
 @media screen and (min-width: 1400px) {
     #base-container {
@@ -538,28 +538,29 @@ body{
 }
 
 /*Add group >1400 resolution style*/
- .lg-flexible-creategroup{
-        #popup-container,#delete-popup-container {
-            .header-menu {
-                  .popup-close.close-dialog {
-                        .su-close {
-                            color: @primary-text-color;
-                            font-size:@app-text-size;
-                            margin-right: 4px;
-                             &:hover{
-                                color: @primary-color;
-                            }
-                        }                       
-                    }                
+.lg-flexible-creategroup {
+    #popup-container, #delete-popup-container {
+        .header-menu {
+            .popup-close.close-dialog {
+                .su-close {
+                    color: @primary-text-color;
+                    font-size: @app-text-size;
+                    margin-right: 4px;
+                    
+                    &:hover {
+                    color: @primary-color;
+                     }
+                } 
             }
+        }
 
-            .popup-title {
-                font-size: @app-large-text-size + 2;
-            }
+        .popup-title {
+            font-size: @app-large-text-size + 2;
+        }
 
-            .head-icon {
-                font-size: @app-large-text-size + 2;
-            }     
+        .head-icon {
+            font-size: @app-large-text-size + 2;
+        }
 
         .dialog-body {
             font-size: @app-large-text-size;
@@ -585,7 +586,7 @@ body{
             }
 
             .form-control {
-                height: @textbox-lg-height;
+                height: @textbox-height;
             }
 
             textarea {
@@ -594,8 +595,6 @@ body{
         }
     }
 }
-
-
 
 .e-dialog, #groups-delete-confirmation {
     padding: 0;
@@ -607,10 +606,8 @@ body{
         width: 378px;
 
         .modal-body {
-            margin-bottom: 20px;
-
             .delete-msg {
-                font-size: 12px;
+                font-size:  @app-large-text-size;
             }
         }
     }
@@ -628,7 +625,6 @@ body{
 
 .lg-flexible-deletegroup {
     #group-delete-confirmation .modal-content {
-
         .modal-header {
             .modal-title {
                 font-size: @app-large-text-size + 2;
@@ -645,9 +641,7 @@ body{
 
 @media screen and (min-width: 1400px) {
     #group-directory-container {
-
         #group-header {
-
             #synchronize-dropdown-menu {
                 left: -125px;
             }
@@ -700,7 +694,7 @@ body{
 
         .modal-body {
             display: table !important;
-            font-size:@app-text-size;
+            font-size: @app-text-size;
             height: 50px;
 
             .delete-msg {
@@ -724,23 +718,25 @@ body{
     }
 }
 
-.lg-flexible{
-    #user-delete-confirmation{
-     .modal-content{
-         .modal-header
-         { .modal-title{
-             font-size:@app-large-text-size + 2;
-         }
-           .popup-close{
-                font-size:@app-large-text-size + 2;
-           }
-           }
-       .modal-body{
-           font-size:@app-large-text-size;
-       }
-   }
-}
+.lg-flexible {
+    #user-delete-confirmation {
+        .modal-content {
+            .modal-header {
+                .modal-title {
+                    font-size: @app-large-text-size + 2;
+                }
+
+                .popup-close {
+                    font-size: @app-large-text-size + 2;
+                }
+            }
+
+            .modal-body {
+                font-size: @app-large-text-size;
+            }
+        }
     }
+}
 
 #messageBox_wrapper {
     width: 450px !important;
@@ -755,13 +751,4 @@ body{
             width: 448px !important;
         }
     }
-}
-
-#invalid-groupname {
-    margin-left: -6px;                 
-}
-#messageBox {
-    .message-content{
-            margin-top: 25px;
-   }
 }

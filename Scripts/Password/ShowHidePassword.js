@@ -7,7 +7,7 @@
             $(this).siblings("input").attr('type', 'password');
         }
     });
-
+    
     $(".show-hide-password").on("mouseup", function () {
         if ($(this).siblings("input").is(":password")) {
             $(this).siblings("input").attr('type', 'text');

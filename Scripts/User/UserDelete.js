@@ -29,4 +29,3 @@ function deleteSingleUser(userId) {
         $("#userprofile-delete-confirmation").ejDialog("close");
     });
 }
-

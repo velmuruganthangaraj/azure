@@ -11,13 +11,8 @@
 	</ConfigFile>
 	
 	<ConfigFile>
-		<FileName>web.config</FileName>
-		<location>\ReportService\</location>
-	</ConfigFile>		
-	
-	<ConfigFile>
-		<FileName>Syncfusion.Server.Base.Reports.Scheduler.AzureWebJob.exe.config</FileName>
-		<location>\App_Data\jobs\continuous\ReportServerScheduler\</location>
+		<FileName>Syncfusion.Server.Base.Scheduler.AzureWebJob.exe.config</FileName>
+		<location>\App_Data\jobs\continuous\UserManagementServerScheduler\</location>
 	</ConfigFile>
 
 </configFiles>

@@ -10,16 +10,15 @@
 
 @section scripts{
 
-    <script>
+<script>
     serverApp.controller("adSettingsController", ["$scope", function($scope) {
         $scope.regex = '^(?!(ftp|https?):\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-]+(\.[a-z]{2,6})?(:\d{1,5})?(\/[a-zA-Z0-9]+[a-zA-Z0-9]*(\.[a-z]{2,8})?)*?$';
         $scope.distinguishedNameRegex = /^(\w+[=]{1}[a-zA-Z0-9-_]+)([\,{1}]\w+[=]{1}[a-zA-Z0-9-_]+)*$/;
     }]);
+    
+</script>
 
-    </script>
-
-    <script type="text/javascript">
-
+<script type="text/javascript">
     var SystemSettingsProperties = @Html.Raw(Json.Encode(ViewBag.SystemSettings));
     var fileUploadUrl = "@Url.Action("Upload", "fileupload")";
     var updateSystemSettingsUrl = "@Url.Action("UpdateSystemSettings", "Administration")";
@@ -28,6 +27,8 @@
     var azureadTestconnectionUrl = "@Url.Action("AzureADTestConnection", "Administration")";
     var setLanguageUrl = "@Url.Action("SetLanguage", "Administration")";
     var updateAzureADSettingsUrl = "@Url.Action("UpdateAzureADSettings", "Administration")";
+    @*var updateGoogleSuiteSettingsUrl = "@Url.Action("UpdateGoogleSuiteSettings", "Administration")";
+    var clearGoogleSuiteTokenUrl = "@Url.Action("ClearGoogleSuiteToken", "Administration")";*@
     var saveDbSettingsUrl = "@Url.Action("SaveDatabaseSettings", "Administration")";
     var testConnectionUrl = "@Url.Action("TestDatabaseConnection", "UserManagement")";
     var connectDatabaseUrl = "@Url.Action("ConnectDatabaseToImport", "UserManagement")";
@@ -51,7 +52,7 @@
             }
         });
     });
-    </script>
+</script>
 
     <script type="text/javascript">
 
@@ -65,7 +66,7 @@
                     section.toLowerCase().indexOf("user-management") > 0) {
                     $("li[data-current-content='groups'],li[data-current-content='users']").show();
                 } else {
-                    $("li[data-current-content='emailsettings'],li[data-current-content='general'],li[data-current-content='activedirectorysettings'],li[data-current-content='notificationsettings'],li[data-current-content='usersettings'],li[data-current-content='databasesettings'],li[data-current-content='licensesettings'], li[data-current-content='samlsettings']").show();
+                    $("li[data-current-content='emailsettings'],li[data-current-content='general'],li[data-current-content='activedirectorysettings'],li[data-current-content='notificationsettings'],li[data-current-content='usersettings'],li[data-current-content='databasesettings'],li[data-current-content='licensesettings'], li[data-current-content='authenticationsettings']").show();
                 }
                 if (section.toLowerCase().indexOf("groups") > 0) {
                     $("li[data-current-content='groups'] a").addClass('active');
@@ -87,7 +88,7 @@
                 } else if (section.toLowerCase().indexOf("user-settings") > 0) {
                     $("li[data-current-content='usersettings'] a").addClass('active');
                 } else if (section.toLowerCase().indexOf("saml-settings") > 0) {
-                    $("li[data-current-content='samlsettings'] a").addClass('active');
+                    $("li[data-current-content='authenticationsettings'] a").addClass('active');
                 } else if (section.toLowerCase().indexOf("database-settings") > 0) {
                     $("li[data-current-content='databasesettings'] a").addClass('active');
                 } else if (section.toLowerCase().indexOf("license-settings") > 0) {

@@ -57,74 +57,10 @@
             }
             $scope.bindDisplayText = function(notificationContent, image) {
                 var appendComment = notificationContent.Url.indexOf("?")>0 ? "&comment=" : "?comment=";
-                var viewUrl = "@Url.Action("Index", "FileRender")";
-                var embedUrl = notificationContent.Url.indexOf("/embed/")> 0 ? notificationContent.Url.replace("/embed/","/") : notificationContent.Url.replace("/reports",viewUrl);
                 var displayImage = "<span class='notification-picture-menu'><img class = 'img-circle' src='@Url.Action("Avatar", "User")?Username=" +
                     notificationContent.DoneById + "&ImageSize=64' width='40' height='40' /></span>";
                 var displayText = "<span class='notification-text-content'>";
-                switch (notificationContent.LogCategory) {
-                    case @((int) LogCategory.Comment):
-                        switch (notificationContent.LogTypeId)
-                        {
-                            case @((int) ItemCommentLogType.Added):
-                                displayText += (notificationContent.DoneById == notificationContent.CurrentUserId)
-                                    ? "[[[You have]]]"
-                                    : "<span>" + notificationContent.DoneByFullName + "</span>" +
-                                      " [[[has]]]";
-                                displayText += " [[[commented on the]]] ";
-                                displayText += "Report";
-                                displayText+=" - ";
-                                break;
-                            case @((int) ItemCommentLogType.Edited):
-                            case @((int) ItemCommentLogType.Deleted):
-                                displayText += (notificationContent.DoneById == notificationContent.CurrentUserId)
-                                    ? "[[[You have]]] "
-                                    : "<span>" + notificationContent.DoneByFullName + "</span>" +
-                                      " [[[has]]] ";
-                                displayText += notificationContent.LogTypeId == @((int) ItemCommentLogType.Edited) ? "edited" : "deleted";
-                                displayText += (notificationContent.CommentOwner == notificationContent.CurrentUserId)
-                                    ? " [[[your comment on the]]] "
-                                    : " [[[a comment on the]]] ";
-                                displayText += "Report";
-                                displayText += " - ";
-                                break;
-                            case @((int) ItemCommentLogType.UserMention):
-                                displayText += (notificationContent.DoneById == notificationContent.CurrentUserId)
-                                    ? "<span>"+notificationContent.DoneByFullName+"</span>" +"[[[ has mentioned you in the comment on the]]] "
-                                    : "<span>" + notificationContent.DoneByFullName+ "</span>" +
-                                      " [[[has mentioned you in the comment on the]]] ";
-                                displayText += "Report";
-                                displayText += " - ";
-                                break;
-                            case @((int) ItemCommentLogType.Replied):
-                                displayText += (notificationContent.DoneById == notificationContent.CurrentUserId)
-                                    ? "[[[You have]]] "
-                                    : "<span>" + notificationContent.DoneByFullName + "</span>" +
-                                      " [[[has]]] ";
-                                displayText += (notificationContent.ParentCommentDetail.UserId ==
-                                                notificationContent.CurrentUserId)
-                                    ? " [[[replied to your comment on the]]] "
-                                    : " [[[replied to]]] " + notificationContent.ParentCommentDetail.UserDisplayName +
-                                      "'s [[[comment on the]]] ";
-                                displayText += "Report";
-                                displayText += " - ";
-                                break;
-                        }
-                        switch (notificationContent.ItemTypeId)
-                        {
-                            case @((int) ItemType.Report):
-
-                                displayText += "<a target='_blank' href='" + embedUrl;
-                                displayText +=  appendComment + notificationContent.TargetFieldId;
-                                displayText += "'>" + notificationContent.ItemName +"</a>";
-                                break;
-
-                            default:
-                                displayText += notificationContent.ItemName;
-                                break;
-                        }
-                        break;
-                }
+                
                 var a;
                 if(image){
                     a = displayImage += "</span>";
@@ -211,7 +147,7 @@
                 <p>
                     <span ng-bind-html="bindDisplayText(item, false)"></span><br />
                     <span id="tooltip_dom{{$index}}" title="{{item.UpdatedDateString}}" data-html="false" data-toggle="tooltip" data-placement="right" class="time-option">
-                        <span ng-if="item.IsToday && timerMinutes+item.MinutesAgo<60" class="notification-period">
+                            <span ng-if="item.IsToday && timerMinutes+item.MinutesAgo<60" class="notification-period">
                             <span ng-if="timerMinutes+item.MinutesAgo==0" class="notification-period" ng-bind="Just now">
                                 <time ng-bind="returnString('[[[Just now]]]')"></time>
                             </span>
@@ -237,7 +173,7 @@
                             </span>
                         </span>
                     </span>
-                </p>
+                </p>             
                 {{bindTooltip($index)}}
             </li>
         </ul>

@@ -19,7 +19,8 @@ function fnActionComplete(args) {
         if (args.requestType == "filtering" || args.requestType == "searching")
             objectSelected = [];
 
-        if (gridObj.model.currentViewData.length == 0) {
+        if (gridObj.model.currentViewData.length == 0)
+        {
             $("#checkbox-header").prop("disabled", true);
         }
         if (typeof gridObj.model.currentViewData != "undefined") {
@@ -64,7 +65,7 @@ function SaveActiveDirectoryGroups() {
             data: { selectedGroups: objectSelected },
             success: function (result) {
                 var gridObj = $("#Grid").data("ejGrid");
-                var statusHtml = "<h5>[[[Import Group - Status]]]</h5><table style='text-align: left;table-layout:fixed;' class='table table-striped table-hover post-success-table'><thead class='thead-default'><tr><th>[[[Group Name]]]</th><th>[[[Users imported]]]</th><th title='[[[Invalid Username or Email Address]]]&#13;[[[Duplicated Username or Email Address]]]'>[[[Users not imported]]]</th><th>[[[Status]]]</th></tr></thead>";
+                var statusHtml = "<h5>[[[Import group - Status]]]</h5><table style='text-align: left;table-layout:fixed;' class='table table-striped table-hover post-success-table'><thead class='thead-default'><tr><th>[[[Group name]]]</th><th>[[[Users imported]]]</th><th title='[[[Invalid username or email address]]]&#13;[[[Duplicated username or email address]]]'>[[[Users not imported]]]</th><th>[[[Status]]]</th></tr></thead>";
                 var isUserLimitExceed = false;
                 for (var t = 0; t < result.ImportStatus.length; t++) {
                     var status = "Success";
@@ -79,9 +80,9 @@ function SaveActiveDirectoryGroups() {
                     }
                 }
                 statusHtml += "</table>";
-                var title = saveSelectedActiveDirectoryGroupsUrl.indexOf("azure") > 0 ? "[[[Azure Active Directory group import]]]" : "[[[Active Directory group import]]]";
+                var title = saveSelectedActiveDirectoryGroupsUrl.indexOf("azure") > 0 ? "[[[Azure Active Directory Group Import]]]" : "[[[Active Directory Group Import]]]";
                 if ($.type(result) == "object" && result.Count != 0) {
-                    parent.messageBox("su-group-1", title, "[[[Duplicate or Invalid data is found. Please change the data accordingly and re-import.]]]", "success", function () {
+                    parent.messageBox("su-group-1", title, "[[[Duplicate or invalid data is found. Please change the data accordingly and re-import.]]]", "success", function () {
                         parent.onCloseMessageBox();
                         searchADGroups($("#ad-group-import").val());
                     }, function () { }, 575);
@@ -152,7 +153,7 @@ function enableimportbutton() {
 function fnOnADGroupGridActionBegin(args) {
     if (args.requestType != "refresh") {
         $(".grid-error-validation, .empty-validation, .grid-validation").css("display", "none");
-    }    
+    }
     var searchValue = $("#ad-group-import").val().trim();
     this.model.query._params.push({ key: "searchKey", value: searchValue });
     var filerSettings = [], i;
@@ -244,6 +245,8 @@ function searchADGroups(searchKey) {
             error: handleAjaxError()
         });
     } else {
+        var gridObj = $("#Grid").data("ejGrid");
+        gridObj.option("dataSource", "");
         objectSelected = [];
         enableimportbutton();
     }

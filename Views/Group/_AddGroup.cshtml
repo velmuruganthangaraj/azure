@@ -1,9 +1,9 @@
-﻿@{
+﻿@{ 
     Layout = null;
 }
 
 <!DOCTYPE html>
-<html class="report-server">
+<html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
@@ -20,7 +20,6 @@
 
     <script>
         $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
             if (($(parent.window).width()) > 1400) {
                 $("#resolution-fix").addClass("lg-flexible-creategroup");
             } else {
@@ -33,7 +32,7 @@
                 parent.$("#new-group-area iframe").attr("src", "");
             });
         });
-
+        
     </script>
 </head>
 <body class="white-bg" id="resolution-fix">
@@ -44,7 +43,7 @@
                 <span class="popup-title no-padding">[[[Add Group]]]</span>
             </div>
             <div class="col-xs-6 no-padding">
-                <a href="javascript:void(0);" class="popup-close close-dialog pull-right" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom"><span class="su su-close pull-right"></span></a>
+                <a href="javascript:void(0);" class="popup-close close-dialog pull-right" title="[[[Close]]]"><span class="su su-close pull-right"></span></a>
                 <div id="folder-setting-arrow" class="down-arrow"></div>
             </div>
         </div>
@@ -53,12 +52,12 @@
             <div class="col-xs-12 namepad">
                 <div class="col-xs-3 text-right no-padding top-margin">[[[Name]]]<span class="mandatory">*</span></div>
                 <div class="col-xs-1"></div>
-                <div class="col-xs-8 grouppad" id="group-name">
-                    <input type="text" id="GroupName" class="form-control has-error" placeholder="[[[Group name]]]" name="groupname" tabindex="1" maxlength="60" autofocus>
-                    <span id="invalid-groupname" class="error-message pull-left" title="[[[Please enter group name]]]" data-toggle="tooltip" data-placement="bottom" data-content=""></span>
+                    <div class="col-xs-8 grouppad" id="group-name">
+                        <input type="text" id="GroupName" class="form-control has-error" placeholder="[[[Group name]]]" name="groupname" tabindex="1" maxlength="60" autofocus>
+                        <span id="invalid-groupname" class="error-message pull-left" title="[[[Please enter group name]]]" data-content=""></span>
+                    </div>
                 </div>
-            </div>
-            <div class="col-xs-12 namepad no-padding">
+            <div class="col-xs-12 namepad">
                 <div class="col-xs-3 text-right no-padding top-margin">[[[Description]]]</div>
                 <div class="col-xs-1"></div>
                 <div class="col-xs-8 grouppad">

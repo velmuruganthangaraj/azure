@@ -1,6 +1,5 @@
 ﻿var isKeyUp = false;
 var userDetails;
-var browser = ej.browserInfo();
 $(document).ready(function () {
     var custompath;
     var currentDate = $.now();
@@ -37,19 +36,19 @@ $(document).ready(function () {
         } else {
             return IsEmail(value);
         }
-    }, "[[[Invalid email address]]]");
+    }, "[[[Invalid email address.]]]");
 
     $.validator.addMethod("isRequired", function (value, element) {
         return !isEmptyOrWhitespace(value);
-    }, "[[[Please enter the name]]]");
+    }, "[[[Please enter the name.]]]");
 
     $.validator.addMethod("isValidName", function (value, element) {
         return IsValidName("name", value);
-    }, "[[[Please avoid special characters]]]");
+    }, "[[[Please avoid special characters.]]]");
 
     $.validator.addMethod("isValidPhoneNumber", function (value, element) {
         return IsValidContactNumber(value);
-    }, "[[[Please enter the valid phone number]]]");
+    }, "[[[Please enter the valid phone number.]]]");
 
     addPlacehoder("#user-phonenumber");
 
@@ -84,7 +83,6 @@ $(document).ready(function () {
             "user-phonenumber": {
                 isValidPhoneNumber: true
             }
-
         },
         highlight: function (element) {
             var read = $("#" + element.id).not(":disabled");
@@ -104,10 +102,9 @@ $(document).ready(function () {
         },
         messages: {
             "user-firstname": {
-                isRequired: "[[[Please enter first name]]]"
+                isRequired: "[[[Please enter first name.]]]"
             }
         }
-
     });
 
     $("#new-password").bind("keyup", function () {
@@ -117,41 +114,11 @@ $(document).ready(function () {
         }
         else if ($("#confirm-password").val() != '') {
             $("#confirm-password").closest('div').addClass("has-error");
-            $("#confirm-password").closest('div').next("div").find("span").html("[[[Password mismatch]]]").css("display", "block");
+            $("#confirm-password").closest('div').next("div").find("span").html("[[[Passwords mismatch.]]]").css("display", "block");
         }
         createPasswordPolicyRules();
     });
 
-    $.validator.addMethod("isUserPassword", function (value, element) {
-        var validateMethods = new Array();
-        validateMethods.push(validateUserpassword.p_policy_uppercase);
-        validateMethods.push(validateUserpassword.p_policy_lowercase);
-        validateMethods.push(validateUserpassword.p_policy_number);
-        validateMethods.push(validateUserpassword.p_policy_specialcharacter);
-        validateMethods.push(validateUserpassword.p_policy_length);
-        for (var n = 0; n < validateMethods.length ; n++) {
-            var currentMethodName = validateMethods[n];
-            if (currentMethodName(value) != "" && currentMethodName(value) != undefined) {
-                ruleName = currentMethodName(value);
-                if ($('#password_policy_rules').find('li#' + ruleName + ' span').attr("class") != "su-tick") {
-                    $('#password_policy_rules').find('li#' + ruleName + ' span').addClass("su su-tick").removeClass("su su-close");
-                    $('#password_policy_rules').find('li#' + ruleName).addClass("clear-error");
-                    ruleName = ""
-                }
-            }
-            else {
-                ruleName = name;
-                $(element).closest('div').addClass("has-error");
-                if ($('#password_policy_rules').find('li#' + ruleName + ' span').attr("class") == "su-tick") {
-                    $('#password_policy_rules').find('li#' + ruleName + ' span').addClass("su su-close").removeClass("su-tick");
-                    $('#password_policy_rules').find('li#' + ruleName).removeClass("clear-error");
-                    ruleName = "";
-                }
-            }
-        }
-        if ($('#password_policy_rules li>span.su-tick').length == $('#password_policy_rules').find('li>span').length)
-            return true;
-    }, "");
     $('.change-password-form').validate({
         errorElement: 'span',
         onkeyup: function (element, event) {
@@ -168,87 +135,38 @@ $(document).ready(function () {
         rules: {
             "new-password": {
                 required: true,
-                isUserPassword: true
+                isValidPassword: true
             },
             "confirm-password": {
                 required: true,
                 equalTo: "#new-password"
             }
-
         },
         highlight: function (element) {
-            $(element).closest('div').addClass("has-error");
-            if ($(element).attr('id') == "new-password") {
-                for (var i = 0; i < $('#password_policy_rules').find('li>span').length; i++) {
-                    if ($($('#password_policy_rules').find('li>span')[i]).attr('class') == "su-tick")
-                        $(element).closest('div').removeClass("has-error");
-                    else
-                        rules = "unsatisfied-rule";
-                }
-                if (rules != "" && rules != undefined) {
-                    $(element).closest('div').addClass("has-error");
-                    rules = "";
-                }
-            }
+            passwordBoxHightlight(element)
         },
         unhighlight: function (element) {
-            $(element).closest('div').removeClass('has-error');
-            if ($(element).attr('id') == "new-password") {
-                for (var i = 0; i < $('#password_policy_rules').find('li>span').length; i++) {
-                    if ($($('#password_policy_rules').find('li>span')[i]).attr('class') != "su-tick")
-                        rules = "unsatisfied-rule";
-                    if ($($('#password_policy_rules').find('li>span')[i]).attr('class') == "su-tick")
-                        $(element).closest('div').removeClass("has-error");
-                }
-                if (rules != "" && rules != undefined) {
-                    $(element).closest('div').addClass("has-error");
-                    rules = "";
-                }
-            }
-            $(element).closest('div').find(".password-validate-holder").html("");
+            passwordBoxUnhightlight(element)
         },
         errorPlacement: function (error, element) {
             $(element).closest('div').find(".password-validate-holder").html(error.html());
         },
         messages: {
             "new-password": {
-                required: "[[[Please enter your new password]]]",
+                required: "[[[Please enter your new password.]]]",
             },
             "confirm-password": {
-                required: "[[[Please confirm your new password]]]",
-                equalTo: "[[[Password mismatch]]]"
+                required: "[[[Please confirm your new password.]]]",
+                equalTo: "[[[Passwords mismatch.]]]"
             }
         }
     });
-
-
 
     $('#new-password').on("change", function () {
         createPasswordPolicyRules();
         $("#new-password").valid();
     });
-    function createPasswordPolicyRules() {
-        if ($("#new-password").val() != '' && $("#new-password").next("ul").length == 0) {
-            $("#new-password").after("<ul id='password_policy_rules'></ul>");
-            $("#password_policy_rules").append("<li id='p_policy_heading'>[[[Password must meet the following requirements. It must contain,]]]</li>")
-            $("#password_policy_rules").append("<li id='p_policy_length'><span class='su su-close'></span>[[[at least 6 characters.]]]</li>")
-            $("#password_policy_rules").append("<li id='p_policy_uppercase'><span class='su su-close'></span>[[[1 uppercase.]]]</li>")
-            $("#password_policy_rules").append("<li id='p_policy_lowercase'><span class='su su-close'></span>[[[1 lowercase.]]]</li>")
-            $("#password_policy_rules").append("<li id='p_policy_number'><span class='su su-close'></span>[[[1 numeric.]]]</li>")
-            $("#password_policy_rules").append("<li id='p_policy_specialcharacter'><span class='su su-close'></span>[[[1 special character.]]]</li>")
-            if (($(parent.window).width()) > 1400) {
-                $("#confirm-password-section").css("margin-top", "-103px")
-            }
-            if (($(parent.window).width()) < 1400) {
-                $("#confirm-password-section").css("margin-top", "-73px")
-            }
-        }
-        if ($("#new-password").val() == '' && $("#new-password").next("ul").length != 0) {
-            $("#new-password").next("ul").remove();
-            $("#confirm-password-section").css("margin-top", "5px")
-        }
-    }
-
+    
     $(".edit-user-profile-field").bind("keypress", function (e) {
         if (e.keyCode == 13) {
             e.preventDefault();
@@ -271,13 +189,13 @@ $(document).ready(function () {
         $("#activate-button-click").attr("disabled", true).css("cursor", "default");
         var id = $(this).attr("id");
         $.ajax({
-            type: "POST", url: activateUserUrl, data: { username: $("#user-name").val(), email: $("#user-email").val(), firstname: $("#user-firstname").val() },
+            type: "POST", url: activateUserUrl, data: { username: $("#user-name").val(), email: $("#user-email").val(), displayname: $("#user-firstname").val() + (($("#user-lastname").val() || null) != null ? " " + $("#user-lastname").val() : "") },
             success: function (data) {
                 $("#activate-button-click").attr("disabled", false);
                 if ($.type(data) == "object") {
                     if (data.Data.result == "success" && data.Data.type == 1) {
                         $("#" + id).hide();
-                        $("<input>", { class: "primary-button password-save-button", type: "button", id: "resend-button-click", value: "[[[Resend Activation Code]]]", title: "" }).insertAfter('#' + id);
+                        $("<input>", { class: "primary-button password-save-button", type: "button", id: "resend-button-click", value: "[[[Resend activation code]]]", title: "" }).insertAfter('#' + id);
                         CheckMailSettingsAndNotify("[[[Activation code has been generated successfully. As email settings are not configured we are not able to send activation email to the user.]]] <a href='" + emailSettingsUrl + "'>[[[Please click here to configure the email settings.]]]</a>", $("#alert-message"), "[[[Activation code has been sent successfully.]]]");
                     }
                     else if (data.Data.result == "success") {
@@ -298,7 +216,7 @@ $(document).ready(function () {
         $("#resend-button-click").attr("disabled", true).css("cursor", "default");
         var id = $(this).attr("id");
         $.ajax({
-            type: "POST", url: resendactivationcodeUrl, data: { username: $("#user-name").val(), email: $("#user-email").val(), firstname: $("#user-firstname").val() },
+            type: "POST", url: resendactivationcodeUrl, data: { username: $("#user-name").val(), email: $("#user-email").val(), displayname: $("#user-firstname").val() + (($("#user-lastname").val() || null) != null ? " " + $("#user-lastname").val() : "") },
             success: function (data) {
                 $("#resend-button-click").attr("disabled", false);
                 if ($.type(data) == "object") {
@@ -342,7 +260,7 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (result) {
                     var isLoggedUser = $("#logged-user").html().toLowerCase();
-                    parent.messageBox("su-image", "[[[Change Profile picture]]]", "[[[Profile picture has been saved successfully.]]]", "success", function () {
+                    parent.messageBox("su-image", "[[[Change Profile Picture]]]", "[[[Profile picture has been saved successfully.]]]", "success", function () {
                         parent.$("#user-profile-picture").attr("src", avatarUrl + "?username=" + $("#user-name").val() + "&imageSize=110&v=" + $.now());
                         if ($("#user-name").val() == isLoggedUser) {
                             parent.$(".profile-picture,#profile-picture-menu").find("img").attr("src", avatarUrl + "?username=" + $("#user-name").val() + "&imageSize=32&v=" + $.now());
@@ -350,7 +268,7 @@ $(document).ready(function () {
                         var value = parent.$("#avatar-delete-click").length;
                         if (value == 0) {
                             $(".img-view-holder").on("mouseenter", function () {
-                                if ($("#avatar-delete-click").length == 0) {
+                                if ($("#avatar-delete-click").length == 0 && $("#user-profile-picture").attr("src").toLowerCase() != "/user/getdefaultavatar") {
                                     $("<span>", { class: "su su-delete", id: "avatar-delete-click", title: "[[[Delete profile picture]]]" }).insertAfter("#avatar-button-click").addClass("profile-picture-edit-button").css("left", "86px");
                                 }
                             });
@@ -360,7 +278,7 @@ $(document).ready(function () {
                         }
                         parent.onCloseMessageBox();
                     });
-                    $("#image-path").val("browse image path");
+                    $("#image-path").val("Browse image path");
                     $("#profile-picture").attr("src", rootBaseUrl + "/Content/Images/Preview.jpg");
                     $('#upload-image').attr("disabled", "disabled");
                     if ($(".img-container").children().hasClass("jcrop-active")) {
@@ -370,7 +288,7 @@ $(document).ready(function () {
                     ShowWaitingProgress("#avatar-upload-box", "hide");
                 },
                 error: function (result) {
-                    parent.messageBox("su-open", "[[[Change Profile picture]]]", "[[[Failed to update the Profile picture, try again later.]]]", "error", function () {
+                    parent.messageBox("su-open", "[[[Change Profile Picture]]]", "[[[Failed to update the profile picture, try again later.]]]", "error", function () {
                         parent.onCloseMessageBox();
                     });
                 }
@@ -379,14 +297,14 @@ $(document).ready(function () {
     });
 
     $(document).on("click", "#avatar-delete-click", function () {
-        messageBox("su-delete", "[[[Delete Profile Picture]]]", "<div class='delete-msg'>[[[Are you sure you want to delete the profile picture?]]]</div>", "error", function () {
+        messageBox("su-delete", "[[[Delete Profile Picture]]]", "[[[Are you sure you want to delete the profile picture?]]]", "error", function () {
             deleteUserAvatar();
         });
     });
     $(".img-view-holder").on("mouseenter", function () {
         $("#user-profile-picture").addClass("user-profile-picture");
-        $("#avatar-button-click,#avatar-delete-click").css("display", "inline");
-        if ($("#user-profile-picture").attr("src") == "/user/getdefaultavatar") {
+        $("#avatar-button-click").css("display", "inline");
+        if ($("#user-profile-picture").attr("src").toLowerCase() == "/user/getdefaultavatar") {
             $("#avatar-delete-click").css("display", "none");
         }
         else {
@@ -400,7 +318,7 @@ $(document).ready(function () {
     });
 
     $("#avatar-button-click").click(function () {
-        $("#image-path").val("browse image path").removeClass("ValidationErrorImage");
+        $("#image-path").val("Browse image path").removeClass("ValidationErrorImage");
         $("#image-path").closest("div").removeClass("has-error");
         $("#avatar-upload-box").ejDialog("open");
         $("#cancel-avatar-popup").click(function () {
@@ -413,13 +331,10 @@ $(document).ready(function () {
         });
 
         $('.e-uploadinput').val("").attr({ title: "No file selected.", accept: ".png, .jpg ,.jpeg" });
-
-        if (browser.name.toLowerCase() == "msie" || browser.name.toLowerCase() == "webkit") {
-            $(".e-selectpart").addClass("upload-box");
-        }
-        else {
-            $(".e-selectpart").removeClass("upload-box");
-        }
+        var maxIndex = getMaxZIndex() + 2;
+        $("#avatar-upload-box a.popup-close").on("mouseover", function () {
+            $(".tooltip").css("z-index", maxIndex);
+        });
     });
 
     $("#upload-picture").ejUploadbox({
@@ -458,7 +373,7 @@ $(document).ready(function () {
             $("#image-path").closest("div").removeClass("has-error");
             $("#image-path").val(uploadFileName);
             $(".jcrop-selection.jcrop-current").children("button").css("background", "");
-            $("#profile-picture").attr("src", rootBaseUrl + "/content/images/ProfilePictures/" + $("#user-name").val() + "/" + filename + "?v=" + $.now());
+            $("#profile-picture").attr("src", rootBaseUrl + "/Content/Images/ProfilePictures/" + $("#user-name").val() + "/" + filename + "?v=" + $.now());
             var cb, filter;
 
             jQuery(function ($) {
@@ -489,7 +404,6 @@ $(document).ready(function () {
                 });
                 var jcrop_api;
                 $('#profile-picture').Jcrop({
-
                     selectionComponent: CircleSel,
                     applyFilters: ['constrain', 'extent', 'backoff', 'ratio', 'round'],
                     aspectRatio: 1,
@@ -555,21 +469,17 @@ $(document).ready(function () {
                         }
 
                         cb.ui.selection.refresh();
-
                     }).on('selectstart', function (e) {
                         e.preventDefault();
                     }).on('click', 'a[data-action]', function (e) {
                         e.preventDefault();
                     });
                 }
-
             });
             ShowWaitingProgress("#avatar-upload-box", "hide");
             $('#upload-image').removeAttr("disabled");
         }
     });
-
-
 });
 
 function successMessage() {
@@ -577,7 +487,6 @@ function successMessage() {
         $("#updation-validation-message").css("display", "none");
     }
 }
-
 
 function onUserChangePasswordClick() {
     var userId = $("#user-id").val();
@@ -587,7 +496,7 @@ function onUserChangePasswordClick() {
     isValid = $('.change-password-form').valid();
 
     if (isValid && $("#new-password").val() != $("#confirm-password").val()) {
-        $("#confirm-password-validate").html("[[[Passwords mismatch]]]");
+        $("#confirm-password-validate").html("[[[Passwords mismatch.]]]");
         $("#confirm-password-validate").closest("div").prev("div").addClass("has-error");
         isValid = false;
     }
@@ -609,10 +518,13 @@ function onUserChangePasswordClick() {
                      }
                      else {
                          SuccessAlert("[[[Update Password]]]", "[[[Password has been updated successfully.]]]", 7000);
+                         $(".change-password-div").addClass("hidden");
+                         $("#password-set-button").removeClass("hidden");
+                         $("#password-set-button").val("[[[Change Password]]]");
+                         $(".profile-save-button").val("[[[Update]]]");
                      }
                  }
             );
-
 }
 function editUser(fulldata) {
     var specficuserdetails = fulldata;
@@ -622,7 +534,6 @@ function editUser(fulldata) {
     $("#user-head").html(specficuserdetails.FirstName + " " + specficuserdetails.LastName);
     $("#status-user").val(specficuserdetails.StatusDescription);
     $("#activation-div").val();
-
 
     if (specficuserdetails.Avatar.trim() == "") {
         $("#user-profile-picture").siblings("#avatar-delete-click").remove();
@@ -692,8 +603,10 @@ function SaveUserdetails() {
                          Email: updatedemail.val(),
                          Status: status.val(),
                      };
-                     SuccessAlert("[[[Update Profile]]]", result.Data.value, 7000);
 
+                     $("#user-details").attr("data-displayname", userDetails.FirstName.trim() + " " + userDetails.LastName.trim());
+                     $("#user-details").attr("data-email", userDetails.Email.trim());
+                     SuccessAlert("[[[Update Profile]]]", result.Data.value, 7000);
                      $("#password-updation-validation").css("display", "none");
                      $(".userpassword-validation-messages").css("display", "none");
                      $("#new-password-validate").closest("div").prev("div").removeClass("has-error");
@@ -702,17 +615,15 @@ function SaveUserdetails() {
                          $("#display-name").html(updatedfirstname.val() + " " + updatedlastname.val().trim());
                      }
                      $("#display-name").html(updatedfirstname.val() + " " + updatedlastname.val().trim());
-
                  }
                  else if (!result.Data.status && result.Data.key == "email") {
                      $("#email-duplicate-validation").html(result.Data.value).css("display", "block");
                      $("#email-duplicate-validation").closest("div").prev("div").addClass("has-error");
                  } else {
-                     SuccessAlert("[[[Update Profile]]]", result.Data.value, 7000);
+                     SuccessAlert("Update Profile", result.Data.value, 7000);
                      $("#password-updation-validation").css("display", "none");
                      $(".userpassword-validation-messages").css("display", "none");
                  }
-
              }
 
         );
@@ -737,6 +648,7 @@ $(document).on("click", "#edit", function (e) {
     $("#cancel-button").css("display", "inline");
     $("#group-div,#status-show,#edit,#activation-div").hide();
     $("#resend-button-click").removeClass("show");
+    $(".change-password-div").css("margin-top", "20px");
     $("#status-div").addClass("top-margin");
     $("#show-active,#show-inactive,#show-active-user").find("span").addClass("margin-top");
     $(".edit-user-profile-field").attr("disabled", false).addClass("enable");
@@ -768,3 +680,18 @@ $(document).on("click", "#cancel-button", function (e) {
 if ($("#status-user").val == "InActive") {
     $("#activate-button-click").removeClass("hide");
 }
+
+function onIsPasswordSet() {
+    $("#change-password").removeClass("hidden");
+    $("#password-set-button").addClass("hidden");
+}
+
+$(document).on("click", "#cancel-password-button", function (e) {
+    $(".change-password-div").addClass("hidden");
+    $("#password-set-button").removeClass("hidden");
+    $(".password-fields-user-profile-edit").val("");
+    $(".password-fields-user-profile-edit").closest("div").removeClass("has-error form-control");
+    $(".password-validate-holder").html("");
+    $("#new-password").next("ul").remove();
+    $("#confirm-password-section").css("margin-top", "5px");
+});
